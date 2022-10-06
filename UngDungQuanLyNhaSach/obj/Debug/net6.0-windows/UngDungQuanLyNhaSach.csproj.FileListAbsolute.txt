@@ -4,7 +4,6 @@ D:\QuanLyNhaSach\UngDungQuanLyNhaSach\bin\Debug\net6.0-windows\UngDungQuanLyNhaS
 D:\QuanLyNhaSach\UngDungQuanLyNhaSach\bin\Debug\net6.0-windows\UngDungQuanLyNhaSach.dll
 D:\QuanLyNhaSach\UngDungQuanLyNhaSach\bin\Debug\net6.0-windows\UngDungQuanLyNhaSach.pdb
 D:\QuanLyNhaSach\UngDungQuanLyNhaSach\obj\Debug\net6.0-windows\UngDungQuanLyNhaSach.csproj.AssemblyReference.cache
-D:\QuanLyNhaSach\UngDungQuanLyNhaSach\obj\Debug\net6.0-windows\Images\IconDictionary.baml
 D:\QuanLyNhaSach\UngDungQuanLyNhaSach\obj\Debug\net6.0-windows\Controls\MenuWithSubMenuControl.g.cs
 D:\QuanLyNhaSach\UngDungQuanLyNhaSach\obj\Debug\net6.0-windows\MainWindow.g.cs
 D:\QuanLyNhaSach\UngDungQuanLyNhaSach\obj\Debug\net6.0-windows\Pages\Home.g.cs

@@ -9,9 +9,6 @@ namespace UngDungQuanLyNhaSach.ViewModel
 {
     class SideMenuViewModel
     {
-        //to call resource dictionary in our code behind
-        ResourceDictionary dict = (ResourceDictionary)Application.LoadComponent(new Uri("/UngDungQuanLyNhaSach;component/Images/IconDictionary.xaml", UriKind.RelativeOrAbsolute));
-
         //Our Source List for Menu Items
         public List<MenuItemsData> MenuList
         {
@@ -21,22 +18,22 @@ namespace UngDungQuanLyNhaSach.ViewModel
                 {
                     new MenuItemsData()
                     {
-                        PathData = (PathGeometry)dict["icon_dashboard"],
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/dashboard.png",
                         MenuText = "Quản Lý",
                         SubMenuList = new List<SubMenuItemsData>
                         {
                             new SubMenuItemsData() {
-                                PathData = (PathGeometry)dict["icon_adduser"],
+                                PathData = "/UngDungQuanLyNhaSach;component/Images/book.png",
                                 SubMenuText = "Sách",
                                 Page = "Book"
                             },
                             new SubMenuItemsData() {
-                                PathData = (PathGeometry)dict["icon_alluser"],
+                                PathData = "/UngDungQuanLyNhaSach;component/Images/books.png",
                                 SubMenuText = "Dữ Liệu Sách",
                                 Page = "BookData"
                             },
                             new SubMenuItemsData() {
-                                PathData = (PathGeometry)dict["icon_adduser"],
+                                PathData = "/UngDungQuanLyNhaSach;component/Images/customer.png",
                                 SubMenuText = "Khách Hàng",
                                 Page = "Customer"
                             }
@@ -45,21 +42,21 @@ namespace UngDungQuanLyNhaSach.ViewModel
 
                     new MenuItemsData()
                     {
-                        PathData = (PathGeometry)dict["icon_users"],
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/books.png",
                         MenuText = "Kinh Doanh",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData() {
-                                PathData = (PathGeometry)dict["icon_adduser"],
+                                PathData = "/UngDungQuanLyNhaSach;component/Images/import.png",
                                 SubMenuText = "Nhập Sách",
                                 Page = "ImportBook"
                             },
                             new SubMenuItemsData() {
-                                PathData = (PathGeometry)dict["icon_alluser"],
+                                PathData = "/UngDungQuanLyNhaSach;component/Images/sell.png",
                                 SubMenuText = "Bán Sách",
                                 Page = "SellBook"
                             },
                             new SubMenuItemsData() {
-                                PathData = (PathGeometry)dict["icon_alluser"],
+                                PathData = "/UngDungQuanLyNhaSach;component/Images/collect_money.png",
                                 SubMenuText = "Thu Tiền",
                                 Page = "CollectMoney"
                             }
@@ -67,16 +64,16 @@ namespace UngDungQuanLyNhaSach.ViewModel
                     },
 
                     new MenuItemsData() {
-                        PathData = (PathGeometry)dict["icon_mails"],
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/business.png",
                         MenuText ="Tìm Kiếm",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData(){
-                                PathData = (PathGeometry)dict["icon_inbox"],
+                                PathData = "/UngDungQuanLyNhaSach;component/Images/research.png",
                                 SubMenuText = "Tìm Kiếm Sách",
                                 Page = "BookSearch"
                             },
                             new SubMenuItemsData(){
-                                PathData = (PathGeometry)dict["icon_outbox"],
+                                PathData = "/UngDungQuanLyNhaSach;component/Images/searching.png",
                                 SubMenuText = "Tìm Kiếm Khách Hàng",
                                 Page = "CustomerSearch"
                             }
@@ -84,17 +81,17 @@ namespace UngDungQuanLyNhaSach.ViewModel
                     },
 
                     new MenuItemsData(){
-                        PathData = (PathGeometry)dict["icon_settings"],
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/report.png",
                         MenuText = "Báo cáo",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData(){
-                                PathData = (PathGeometry)dict["icon_inbox"],
+                                PathData = "/UngDungQuanLyNhaSach;component/Images/inventory_report.png",
                                 SubMenuText = "Báo Cáo Tồn",
-                                Page = "ImportBook"
+                                Page = "InventoryReport"
 
                             },
                             new SubMenuItemsData(){
-                                PathData = (PathGeometry)dict["icon_outbox"],
+                                PathData = "/UngDungQuanLyNhaSach;component/Images/analysis.png",
                                 SubMenuText = "Báo Cáo Công Nợ",
                                 Page = "DebtReport"
                             }
@@ -102,11 +99,11 @@ namespace UngDungQuanLyNhaSach.ViewModel
                     },
 
                     new MenuItemsData(){
-                        PathData = (PathGeometry)dict["icon_settings"],
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/gear.png",
                         MenuText = "Tùy Chỉnh",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData(){
-                                PathData = (PathGeometry)dict["icon_inbox"],
+                                PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
                                 SubMenuText = "Thay Đổi Quy Định",
                                 Page = "RegulationChange"
                             }
@@ -120,7 +117,7 @@ namespace UngDungQuanLyNhaSach.ViewModel
     public class MenuItemsData
     {
         //Icon Data
-        public PathGeometry? PathData { get; set; }
+        public string? PathData { get; set; }
         public string? MenuText { get; set; }
         public List<SubMenuItemsData>? SubMenuList { get; set; }
         public ICommand Command { get; }
@@ -154,7 +151,7 @@ namespace UngDungQuanLyNhaSach.ViewModel
 
     public class SubMenuItemsData
     {
-        public PathGeometry? PathData { get; set; }
+        public string? PathData { get; set; }
         public string? SubMenuText { get; set; }
         public ICommand SubMenuCommand { get; }
         public string? Page { get; set; }
