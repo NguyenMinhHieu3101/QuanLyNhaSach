@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\PC\source\repos\UngDungQuanLyNhaSach\UngDungQuanLyNhaSach\obj\Debug\net6.0-windows\
+D:\QuanLyNhaSach\UngDungQuanLyNhaSach\obj\Debug\net6.0-windows\
 UngDungQuanLyNhaSach
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\PC\source\repos\UngDungQuanLyNhaSach\UngDungQuanLyNhaSach\App.xaml
-11407045341
+D:\QuanLyNhaSach\UngDungQuanLyNhaSach\App.xaml
+16-1625875638
 
-5-526423614
-1942030480316
-MainWindow.xaml;
+21-1856050723
+194-1103864946
+Controls\MenuWithSubMenuControl.xaml;Images\IconDictionary.xaml;MainWindow.xaml;Pages\Book.xaml;Pages\BookData.xaml;Pages\BookSearch.xaml;Pages\CollectMoney.xaml;Pages\Customer.xaml;Pages\CustomerSearch.xaml;Pages\DebtReport.xaml;Pages\Home.xaml;Pages\ImportBook.xaml;Pages\InventoryReport.xaml;Pages\RegulationChange.xaml;Pages\SellBook.xaml;Pages\Wellcome.xaml;
 
-False
+True
 

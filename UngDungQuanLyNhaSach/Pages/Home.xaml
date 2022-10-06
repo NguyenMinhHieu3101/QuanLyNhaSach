@@ -1,0 +1,44 @@
+﻿<Window x:Class="UngDungQuanLyNhaSach.Pages.Home"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
+        xmlns:control="clr-namespace:UngDungQuanLyNhaSach.Controls"
+        mc:Ignorable="d"
+        Title="BookStore" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="7*"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Image Source="/UngDungQuanLyNhaSach;component/Images/book-shop.png" 
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Center" Margin="20,0,0,0"/>
+            
+            <TextBlock Text="BookStore" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       FontSize="30" 
+                       FontWeight="Bold"/>
+
+            <Image Source="/UngDungQuanLyNhaSach;component/Images/man.png" 
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Center" 
+                   Margin="0,0,20,0"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+
+            <control:MenuWithSubMenuControl HasIcon="True" SubMenuPadding="15,0,0,0"/>
+
+            <Frame x:Name="MainWindowFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+        </Grid>
+    </Grid>
+</Window>

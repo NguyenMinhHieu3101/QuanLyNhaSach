@@ -7,7 +7,96 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\MenuWithSubMenuControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Book.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\BookData.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\BookSearch.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\CollectMoney.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Customer.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\CustomerSearch.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\DebtReport.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Home.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\ImportBook.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\InventoryReport.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\RegulationChange.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\SellBook.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\Wellcome.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\MenuWithSubMenuControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Images\IconDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Book.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\BookData.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\BookSearch.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\CollectMoney.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Customer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\CustomerSearch.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\DebtReport.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Home.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ImportBook.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\InventoryReport.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\RegulationChange.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\SellBook.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\Wellcome.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
