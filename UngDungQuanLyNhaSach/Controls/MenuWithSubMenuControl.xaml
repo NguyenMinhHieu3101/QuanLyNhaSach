@@ -12,7 +12,7 @@
         <Style x:Key="MenuTextStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
 
@@ -40,7 +40,7 @@
         </Style>
 
         <Style x:Key="MenuButtonStyle" TargetType="{x:Type ToggleButton}">
-            <Setter Property="Height" Value="30"/>
+            <Setter Property="Height" Value="50"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Focusable" Value="False"/>
@@ -55,7 +55,7 @@
                         
                         <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}">
                             <!--Adding Icon & Text in our Button-->
-                            <Grid Margin="5,0,5,0">
+                            <Grid Margin="10,0,5,0">
                                 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -63,7 +63,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <!--#region Menu Icon-->
-                                <Grid Width="30">
+                                <Grid Width="30" Margin="0,0,10,0">
 
                                     <!--#region Optional Hide/Show Menu Icon-->
                                     <Grid.Style>
@@ -83,9 +83,7 @@
                                     </Grid.Style>
                                     <!--#endregion-->
 
-                                    <Image Source="{Binding PathData}"
-                                        Height="25"
-                                          Width="25"/>
+                                    <Image Source="{Binding PathData}" Height="25" Width="25"/>
 
                                 </Grid>
                                 <!--#endregion-->
@@ -130,15 +128,18 @@
                 <DataTrigger Binding="{Binding SubMenuList}" Value="{x:Null}">
                     <Setter Property="Visibility" Value="Collapsed"/>
                 </DataTrigger>
+                
             </Style.Triggers>
         </Style>
         
         <Style TargetType="{x:Type ListBoxItem}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Height" Value="30"/>
+            <Setter Property="Height" Value="50"/>
             <Setter Property="Template">
+                
                 <Setter.Value>
+                    
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
                         <Border Padding="{Binding SubMenuPadding, ElementName=this, FallbackValue={StaticResource DefaultSubMenuPadding}, TargetNullValue={StaticResource DefaultSubMenuPadding}}">
 
@@ -156,15 +157,20 @@
                                 Content="{Binding SubMenuText, FallbackValue=MenuText, TargetNullValue=MenuText}"
                                 Command="{Binding SubMenuCommand}"/>
                         </Border>
+                        
                         <ControlTemplate.Triggers>
                             <!--To select ListboxItem when our button is in Checked State-->
                             <DataTrigger Binding="{Binding IsChecked, ElementName=SMenuButton}" Value="True">
                                 <Setter Property="IsSelected" Value="True"/>
                             </DataTrigger>
                         </ControlTemplate.Triggers>
+                        
                     </ControlTemplate>
+                    
                 </Setter.Value>
+                
             </Setter>
+            
         </Style>
         <!--#endregion-->
     </UserControl.Resources>
