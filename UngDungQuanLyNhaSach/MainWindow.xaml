@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UngDungQuanLyNhaSach"
         mc:Ignorable="d"
-        Title="BookStore" Height="450" Width="800">
+        WindowStartupLocation="CenterScreen"
+        Title="BookStore" Height="450" Width="800" Icon="/Images/book-shop.png">
     <Grid>
-        <Button Content="To Home" Click="Button_Click" />
+        <Button Content="Go To Home" Click="Button_Click"/>
     </Grid>
 </Window>

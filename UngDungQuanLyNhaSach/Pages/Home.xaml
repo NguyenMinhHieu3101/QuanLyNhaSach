@@ -7,18 +7,30 @@
         xmlns:control="clr-namespace:UngDungQuanLyNhaSach.Controls"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Title="BookStore" 
-        Height="550" Width="1000" MinHeight="550" MinWidth="800">
+        Height="550" Width="1000" MinHeight="550" MinWidth="800"
+        Closing="Window_Closing" Icon="/Images/book-shop.png">
     
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
             <RowDefinition/>
-            <RowDefinition Height="7*"/>
         </Grid.RowDefinitions>
 
-        <Grid>
+        <Grid Background="Aqua">
+            <!--<Grid.Effect>
+                <DropShadowEffect BlurRadius="20" 
+                                  Direction="-90"
+                                  RenderingBias="Quality" 
+                                  ShadowDepth="1"
+                                  Opacity="0.5"/>
+            </Grid.Effect>-->
+
             <Image Source="/UngDungQuanLyNhaSach;component/Images/book-shop.png" 
                    HorizontalAlignment="Left" 
-                   VerticalAlignment="Center" Margin="20,0,0,0"/>
+                   VerticalAlignment="Center" 
+                   Margin="20,0,0,0"
+                   Height="60"
+                   Width="60"/>
             
             <TextBlock Text="BookStore" 
                        HorizontalAlignment="Center" 
@@ -29,16 +41,26 @@
             <Image Source="/UngDungQuanLyNhaSach;component/Images/man.png" 
                    HorizontalAlignment="Right" 
                    VerticalAlignment="Center" 
-                   Margin="0,0,20,0"/>
+                   Margin="0,0,20,0"
+                   Height="50"
+                   Width="50"/>
         </Grid>
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="230"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="3.5*"/>
             </Grid.ColumnDefinitions>
 
-            <control:MenuWithSubMenuControl HasIcon="True" SubMenuPadding="15,0,0,0"/>
+            <control:MenuWithSubMenuControl HasIcon="True" SubMenuPadding="15,0,0,0" Background="Aqua">
+                <!--<control:MenuWithSubMenuControl.Effect>
+                    <DropShadowEffect BlurRadius="20" 
+                                  Direction="0"
+                                  RenderingBias="Quality" 
+                                  ShadowDepth="0"
+                                  Opacity="0.3"/>
+                </control:MenuWithSubMenuControl.Effect>-->
+            </control:MenuWithSubMenuControl>
 
             <Frame x:Name="MainWindowFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>
         </Grid>

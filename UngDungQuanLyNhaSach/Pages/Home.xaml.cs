@@ -22,7 +22,12 @@ namespace UngDungQuanLyNhaSach.Pages
         public Home()
         {
             InitializeComponent();
-            MainWindowFrame.Navigate(new Wellcome());
+            MainWindowFrame.Navigate(new Wellcome());           
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

@@ -42,7 +42,7 @@ namespace UngDungQuanLyNhaSach.ViewModel
 
                     new MenuItemsData()
                     {
-                        PathData = "/UngDungQuanLyNhaSach;component/Images/books.png",
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/business.png",
                         MenuText = "Kinh Doanh",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData() {
@@ -64,7 +64,7 @@ namespace UngDungQuanLyNhaSach.ViewModel
                     },
 
                     new MenuItemsData() {
-                        PathData = "/UngDungQuanLyNhaSach;component/Images/business.png",
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/magnifying-glass.png",
                         MenuText ="Tìm Kiếm",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData(){
