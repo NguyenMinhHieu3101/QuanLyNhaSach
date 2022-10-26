@@ -2,7 +2,6 @@
 
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Controls\MenuWithSubMenuControl.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\MainWindow.xaml;;
-FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\Home.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\Book.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\BookData.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\BookSearch.xaml;;
@@ -10,6 +9,7 @@ FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\CollectMoney.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\Customer.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\CustomerSearch.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\DebtReport.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\Home.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\ImportBook.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\InventoryReport.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\RegulationChange.xaml;;
