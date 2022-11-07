@@ -5,10 +5,170 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="550" d:DesignWidth="800"
+      Background="White"
       Title="ThemNhanVien">
 
-    <Grid>
-        <TextBlock Text="Thêm Nhân Viên"/>
-    </Grid>
+    <Page.Resources>
+        
+        <Style x:Key="notCalledBorder" TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="Black" />
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="Header1" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <Style TargetType="DockPanel">
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="5,5"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="AddButton">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="#002B49" BorderBrush="#ccc" BorderThickness="1,1,1,1" >
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style TargetType="Button" x:Key="CacelButton">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="White" BorderBrush="Black" BorderThickness="1,1,1,1" >
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+                x:Name="Bd" BorderBrush="Black"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+    </Page.Resources>
+
+    <StackPanel Margin="30,30">
+        <TextBlock Text="Thông tin cá nhân" 
+                   Style="{StaticResource Header1}"/>
+
+        <StackPanel Margin="50,10">
+
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="Họ Tên:"/>
+                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+            </DockPanel>
+
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="CCCD:"/>
+                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+            </DockPanel>
+
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="SĐT:"/>
+                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+            </DockPanel>
+
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="Ngày Sinh:"/>
+                <!--<DatePicker />-->
+                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+            </DockPanel>
+
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="Email:"/>
+                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+            </DockPanel>
+
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="Giới tính:"/>
+                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+            </DockPanel>
+            
+        </StackPanel>
+
+        <TextBlock Text="Thông tin nhân viên" 
+                   Style="{StaticResource Header1}"/>
+
+        <StackPanel Margin="50,10">
+
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="Chức vụ:"/>
+                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+            </DockPanel>
+
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="Lương:"/>
+                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+            </DockPanel>
+            
+        </StackPanel>
+
+        <Separator />
+
+        <DockPanel>
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                
+                <Button Content="Thêm" 
+                        Height="35" 
+                        Width="90"
+                        Margin="10,0"
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Style="{StaticResource AddButton}"/>
+                
+                <Button Content="Thoát" 
+                        Height="35" 
+                        Width="90"
+                        Margin="10,0"
+                        Foreground="Black"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Style="{StaticResource CacelButton}"/>
+                
+            </StackPanel>   
+            
+        </DockPanel>
+        
+    </StackPanel>
 </Page>
