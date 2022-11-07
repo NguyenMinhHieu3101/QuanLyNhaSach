@@ -16,7 +16,9 @@
 
   <ItemGroup>
     <Resource Include="Images\book-shop.png" />
-    <Resource Include="Images\drop-down-arrow.png" />
+    <Resource Include="Images\drop-down-arrow.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\list.png" />
     <Resource Include="Images\man.png" />
   </ItemGroup>

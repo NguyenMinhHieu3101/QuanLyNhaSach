@@ -7,8 +7,9 @@
         xmlns:control="clr-namespace:UngDungQuanLyNhaSach.Controls"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Title="BookStore" 
-        Height="700" Width="1000" MinHeight="700" MinWidth="900"
-        Closing="Window_Closing" Icon="/UngDungQuanLyNhaSach;component//Images/book-shop.png">
+        Height="710" Width="1000" MinHeight="710" MinWidth="900"
+        Closing="Window_Closing" 
+        Icon="/UngDungQuanLyNhaSach;component//Images/book-shop.png">
     
     <Grid>
         <Grid.RowDefinitions>
@@ -64,7 +65,7 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="230"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
