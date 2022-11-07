@@ -62,8 +62,11 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
+                                <!--Menu Text-->
+                                <TextBlock Style="{StaticResource MenuTextStyle}" Text="{TemplateBinding Content}"/>
+
                                 <!--#region Menu Icon-->
-                                <Grid Width="30" Margin="0,0,10,0">
+                                <Grid Width="30" Margin="0,0,10,0" Grid.Column="1">
 
                                     <!--#region Optional Hide/Show Menu Icon-->
                                     <Grid.Style>
@@ -82,14 +85,11 @@
                                         
                                     </Grid.Style>
                                     <!--#endregion-->
-
-                                    <Image Source="{Binding PathData}" Height="25" Width="25"/>
+                                    
+                                    <Image Source="{Binding PathData}" Height="25" Width="25" />
 
                                 </Grid>
                                 <!--#endregion-->
-
-                                <!--Menu Text-->
-                                <TextBlock Style="{StaticResource MenuTextStyle}" Grid.Column="1" Text="{TemplateBinding Content}"/>
 
                             </Grid>
                             

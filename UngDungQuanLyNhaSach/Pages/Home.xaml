@@ -7,8 +7,8 @@
         xmlns:control="clr-namespace:UngDungQuanLyNhaSach.Controls"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Title="BookStore" 
-        Height="550" Width="1000" MinHeight="550" MinWidth="800"
-        Closing="Window_Closing" Icon="/Images/book-shop.png">
+        Height="700" Width="1000" MinHeight="700" MinWidth="900"
+        Closing="Window_Closing" Icon="/UngDungQuanLyNhaSach;component//Images/book-shop.png">
     
     <Grid>
         <Grid.RowDefinitions>
@@ -16,7 +16,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid Background="Aqua">
+        <Grid Background="#03304F">
             <!--<Grid.Effect>
                 <DropShadowEffect BlurRadius="20" 
                                   Direction="-90"
@@ -25,25 +25,41 @@
                                   Opacity="0.5"/>
             </Grid.Effect>-->
 
-            <Image Source="/UngDungQuanLyNhaSach;component/Images/book-shop.png" 
+            <Image Source="/UngDungQuanLyNhaSach;component/Images/list.png" 
                    HorizontalAlignment="Left" 
                    VerticalAlignment="Center" 
                    Margin="20,0,0,0"
-                   Height="60"
-                   Width="60"/>
+                   Height="30"
+                   Width="30"/>
             
             <TextBlock Text="BookStore" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center" 
+                       Foreground="White"
                        FontSize="30" 
                        FontWeight="Bold"/>
 
-            <Image Source="/UngDungQuanLyNhaSach;component/Images/man.png" 
-                   HorizontalAlignment="Right" 
-                   VerticalAlignment="Center" 
-                   Margin="0,0,20,0"
-                   Height="50"
-                   Width="50"/>
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Center" >
+
+                <TextBlock Text="Trần Ngọc Tiến" 
+                           HorizontalAlignment="Right" 
+                           VerticalAlignment="Center" 
+                           FontWeight="Bold"
+                           FontSize="16"
+                           Foreground="White"
+                           Margin="0,0,10,0"/>
+                
+                <Image Source="/UngDungQuanLyNhaSach;component/Images/man.png" 
+                       HorizontalAlignment="Right" 
+                       VerticalAlignment="Center" 
+                       Margin="0,0,20,0"
+                       Height="50"
+                       Width="50"/>
+                
+            </StackPanel>
+       
         </Grid>
 
         <Grid Grid.Row="1">
@@ -52,7 +68,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <control:MenuWithSubMenuControl HasIcon="True" SubMenuPadding="15,0,0,0" Background="Aqua">
+            <control:MenuWithSubMenuControl HasIcon="True" SubMenuPadding="15,0,0,0" Background="#03304F">
                 <!--<control:MenuWithSubMenuControl.Effect>
                     <DropShadowEffect BlurRadius="20" 
                                   Direction="0"

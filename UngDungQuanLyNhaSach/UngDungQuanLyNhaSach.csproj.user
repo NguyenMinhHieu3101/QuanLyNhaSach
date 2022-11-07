@@ -10,40 +10,58 @@
     <Compile Update="Controls\MenuWithSubMenuControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\Book.xaml.cs">
+    <Compile Update="Pages\BaoCaoDoanhThu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\BookData.xaml.cs">
+    <Compile Update="Pages\BaoCaoKho.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\BookSearch.xaml.cs">
+    <Compile Update="Pages\BieuDoDoanhThu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\CollectMoney.xaml.cs">
+    <Compile Update="Pages\BieuDoKhoBienDong.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\Customer.xaml.cs">
+    <Compile Update="Pages\DanhSachHoaDon.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\CustomerSearch.xaml.cs">
+    <Compile Update="Pages\DanhSachKhachHang.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\DebtReport.xaml.cs">
+    <Compile Update="Pages\DanhSachKhuyenMai.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\DanhSachNhanVien.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\DanhSachPhieuNhapSach.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\DanhSachSachHienCo.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\Home.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\ImportBook.xaml.cs">
+    <Compile Update="Pages\PhanQuyen.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\InventoryReport.xaml.cs">
+    <Compile Update="Pages\ThayDoiQuyDinh.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\RegulationChange.xaml.cs">
+    <Compile Update="Pages\ThemHoaDon.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\SellBook.xaml.cs">
+    <Compile Update="Pages\ThemKhachHang.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\ThemKhuyenMai.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\ThemNhanVien.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\ThemPhieuNhapSach.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\Wellcome.xaml.cs">
@@ -57,40 +75,58 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\Book.xaml">
+    <Page Update="Pages\BaoCaoDoanhThu.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\BookData.xaml">
+    <Page Update="Pages\BaoCaoKho.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\BookSearch.xaml">
+    <Page Update="Pages\BieuDoDoanhThu.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\CollectMoney.xaml">
+    <Page Update="Pages\BieuDoKhoBienDong.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\Customer.xaml">
+    <Page Update="Pages\DanhSachHoaDon.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\CustomerSearch.xaml">
+    <Page Update="Pages\DanhSachKhachHang.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\DebtReport.xaml">
+    <Page Update="Pages\DanhSachKhuyenMai.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\DanhSachNhanVien.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\DanhSachPhieuNhapSach.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\DanhSachSachHienCo.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Home.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\ImportBook.xaml">
+    <Page Update="Pages\PhanQuyen.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\InventoryReport.xaml">
+    <Page Update="Pages\ThayDoiQuyDinh.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\RegulationChange.xaml">
+    <Page Update="Pages\ThemHoaDon.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\SellBook.xaml">
+    <Page Update="Pages\ThemKhachHang.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ThemKhuyenMai.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ThemNhanVien.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ThemPhieuNhapSach.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Wellcome.xaml">

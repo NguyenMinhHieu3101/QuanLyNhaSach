@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 D:\QuanLyNhaSach\UngDungQuanLyNhaSach\App.xaml
-151179823027
+211109539470
 
-21-1856050723
+27760945301
 194618410957
-Controls\MenuWithSubMenuControl.xaml;MainWindow.xaml;Pages\Book.xaml;Pages\BookData.xaml;Pages\BookSearch.xaml;Pages\CollectMoney.xaml;Pages\Customer.xaml;Pages\CustomerSearch.xaml;Pages\DebtReport.xaml;Pages\Home.xaml;Pages\ImportBook.xaml;Pages\InventoryReport.xaml;Pages\RegulationChange.xaml;Pages\SellBook.xaml;Pages\Wellcome.xaml;
+Controls\MenuWithSubMenuControl.xaml;MainWindow.xaml;Pages\BaoCaoDoanhThu.xaml;Pages\BaoCaoKho.xaml;Pages\BieuDoDoanhThu.xaml;Pages\BieuDoKhoBienDong.xaml;Pages\DanhSachHoaDon.xaml;Pages\DanhSachKhachHang.xaml;Pages\DanhSachKhuyenMai.xaml;Pages\DanhSachNhanVien.xaml;Pages\DanhSachPhieuNhapSach.xaml;Pages\DanhSachSachHienCo.xaml;Pages\Home.xaml;Pages\PhanQuyen.xaml;Pages\ThayDoiQuyDinh.xaml;Pages\ThemHoaDon.xaml;Pages\ThemKhachHang.xaml;Pages\ThemKhuyenMai.xaml;Pages\ThemNhanVien.xaml;Pages\ThemPhieuNhapSach.xaml;Pages\Wellcome.xaml;
 
 False
 

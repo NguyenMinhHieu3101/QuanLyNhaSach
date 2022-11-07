@@ -18,94 +18,145 @@ namespace UngDungQuanLyNhaSach.ViewModel
                 {
                     new MenuItemsData()
                     {
-                        PathData = "/UngDungQuanLyNhaSach;component/Images/dashboard.png",
-                        MenuText = "Quản Lý",
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
+                        MenuText = "Quản Lý Nhân Viên",
                         SubMenuList = new List<SubMenuItemsData>
                         {
                             new SubMenuItemsData() {
-                                PathData = "/UngDungQuanLyNhaSach;component/Images/book.png",
-                                SubMenuText = "Sách",
-                                Page = "Book"
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/list.png",
+                                SubMenuText = "Thêm Nhân Viên",
+                                Page = "ThemNhanVien"
                             },
                             new SubMenuItemsData() {
-                                PathData = "/UngDungQuanLyNhaSach;component/Images/books.png",
-                                SubMenuText = "Dữ Liệu Sách",
-                                Page = "BookData"
-                            },
-                            new SubMenuItemsData() {
-                                PathData = "/UngDungQuanLyNhaSach;component/Images/customer.png",
-                                SubMenuText = "Khách Hàng",
-                                Page = "Customer"
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/list.png",
+                                SubMenuText = "Danh Sách Nhân Viên",
+                                Page = "DanhSachNhanVien"
                             }
                         }
                     },
 
                     new MenuItemsData()
                     {
-                        PathData = "/UngDungQuanLyNhaSach;component/Images/business.png",
-                        MenuText = "Kinh Doanh",
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
+                        MenuText = "Quản Lý Khuyến Mãi",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData() {
-                                PathData = "/UngDungQuanLyNhaSach;component/Images/import.png",
-                                SubMenuText = "Nhập Sách",
-                                Page = "ImportBook"
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/import.png",
+                                SubMenuText = "Thêm Khuyến Mãi",
+                                Page = "ThemKhuyenMai"
                             },
                             new SubMenuItemsData() {
-                                PathData = "/UngDungQuanLyNhaSach;component/Images/sell.png",
-                                SubMenuText = "Bán Sách",
-                                Page = "SellBook"
-                            },
-                            new SubMenuItemsData() {
-                                PathData = "/UngDungQuanLyNhaSach;component/Images/collect_money.png",
-                                SubMenuText = "Thu Tiền",
-                                Page = "CollectMoney"
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/sell.png",
+                                SubMenuText = "Danh Sách Khuyến Mãi",
+                                Page = "DanhSachKhuyenMai"
                             }
                         }
                     },
 
                     new MenuItemsData() {
-                        PathData = "/UngDungQuanLyNhaSach;component/Images/magnifying-glass.png",
-                        MenuText ="Tìm Kiếm",
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
+                        MenuText ="Quản Lý Báo Cáo Doanh Thu",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData(){
-                                PathData = "/UngDungQuanLyNhaSach;component/Images/research.png",
-                                SubMenuText = "Tìm Kiếm Sách",
-                                Page = "BookSearch"
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/research.png",
+                                SubMenuText = "Báo Cáo Doanh Thu",
+                                Page = "BaoCaoDoanhThu"
                             },
                             new SubMenuItemsData(){
-                                PathData = "/UngDungQuanLyNhaSach;component/Images/searching.png",
-                                SubMenuText = "Tìm Kiếm Khách Hàng",
-                                Page = "CustomerSearch"
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/searching.png",
+                                SubMenuText = "Biểu Đồ Doanh Thu",
+                                Page = "BieuDoDoanhThu"
                             }
                         }
                     },
 
                     new MenuItemsData(){
-                        PathData = "/UngDungQuanLyNhaSach;component/Images/report.png",
-                        MenuText = "Báo cáo",
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
+                        MenuText = "Quản Lý Kho",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData(){
-                                PathData = "/UngDungQuanLyNhaSach;component/Images/inventory_report.png",
-                                SubMenuText = "Báo Cáo Tồn",
-                                Page = "InventoryReport"
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/inventory_report.png",
+                                SubMenuText = "Thêm Phiếu Nhập Sách",
+                                Page = "ThemPhieuNhapSach"
 
                             },
                             new SubMenuItemsData(){
-                                PathData = "/UngDungQuanLyNhaSach;component/Images/analysis.png",
-                                SubMenuText = "Báo Cáo Công Nợ",
-                                Page = "DebtReport"
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/analysis.png",
+                                SubMenuText = "Báo Cáo Kho",
+                                Page = "BaoCaoKho"
+                            },
+                            new SubMenuItemsData(){
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/analysis.png",
+                                SubMenuText = "Biểu Đồ Kho Biến Động",
+                                Page = "BieuDoKhoBienDong"
+                            },
+                            new SubMenuItemsData(){
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/analysis.png",
+                                SubMenuText = "Danh Sách Phiếu Nhập Sách",
+                                Page = "DanhSachPhieuNhapSach"
+                            },
+                        }
+                    },
+
+                    new MenuItemsData(){
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
+                        MenuText = "Quản Lý Sách",
+                        SubMenuList = new List<SubMenuItemsData>{
+                            new SubMenuItemsData(){
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
+                                SubMenuText = "Danh Sách Sách Hiện Có",
+                                Page = "DanhSachSachHienCo"
                             }
                         }
                     },
 
                     new MenuItemsData(){
-                        PathData = "/UngDungQuanLyNhaSach;component/Images/gear.png",
-                        MenuText = "Tùy Chỉnh",
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
+                        MenuText = "Quản Lý Hóa Đơn",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData(){
-                                PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
+                                SubMenuText = "Thêm Hóa Đơn",
+                                Page = "ThemHoaDon"
+                            },
+                            new SubMenuItemsData(){
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
+                                SubMenuText = "Danh Sách Hóa Đơn",
+                                Page = "DanhSachHoaDon"
+                            }
+                        }
+                    },
+
+                    new MenuItemsData(){
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
+                        MenuText = "Quản Lý Khách Hàng",
+                        SubMenuList = new List<SubMenuItemsData>{
+                            new SubMenuItemsData(){
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
+                                SubMenuText = "Thêm Khách Hàng",
+                                Page = "ThemKhachHang"
+                            },
+                            new SubMenuItemsData(){
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
+                                SubMenuText = "Danh Sách Khách Hàng",
+                                Page = "DanhSachKhachHang"
+                            },
+                        }
+                    },
+
+                    new MenuItemsData(){
+                        PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
+                        MenuText = "Quản Lý Hệ Thống",
+                        SubMenuList = new List<SubMenuItemsData>{
+                            new SubMenuItemsData(){
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
                                 SubMenuText = "Thay Đổi Quy Định",
-                                Page = "RegulationChange"
+                                Page = "ThayDoiQuyDinh"
+                            },
+                            new SubMenuItemsData(){
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
+                                SubMenuText = "Phân Quyền",
+                                Page = "PhanQuyen"
                             }
                         }
                     }

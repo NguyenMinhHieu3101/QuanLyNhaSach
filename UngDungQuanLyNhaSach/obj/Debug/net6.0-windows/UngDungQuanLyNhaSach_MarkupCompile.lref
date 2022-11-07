@@ -2,17 +2,23 @@
 
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Controls\MenuWithSubMenuControl.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\MainWindow.xaml;;
-FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\Book.xaml;;
-FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\BookData.xaml;;
-FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\BookSearch.xaml;;
-FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\CollectMoney.xaml;;
-FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\Customer.xaml;;
-FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\CustomerSearch.xaml;;
-FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\DebtReport.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\Home.xaml;;
-FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\ImportBook.xaml;;
-FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\InventoryReport.xaml;;
-FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\RegulationChange.xaml;;
-FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\SellBook.xaml;;
 FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\Wellcome.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\DanhSachNhanVien.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\ThemKhuyenMai.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\ThemNhanVien.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\BaoCaoDoanhThu.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\BaoCaoKho.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\BieuDoDoanhThu.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\BieuDoKhoBienDong.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\DanhSachHoaDon.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\DanhSachKhuyenMai.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\DanhSachPhieuNhapSach.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\DanhSachSachHienCo.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\ThemHoaDon.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\ThemKhachHang.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\ThemPhieuNhapSach.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\DanhSachKhachHang.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\PhanQuyen.xaml;;
+FD:\QuanLyNhaSach\UngDungQuanLyNhaSach\Pages\ThayDoiQuyDinh.xaml;;
 

@@ -8,81 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\analysis.png" />
     <None Remove="Images\book-shop.png" />
-    <None Remove="Images\book.png" />
-    <None Remove="Images\books.png" />
-    <None Remove="Images\business.png" />
-    <None Remove="Images\collect_money.png" />
-    <None Remove="Images\customer.png" />
-    <None Remove="Images\dashboard.png" />
-    <None Remove="Images\gear.png" />
-    <None Remove="Images\import.png" />
-    <None Remove="Images\inventory_report.png" />
-    <None Remove="Images\magnifying-glass.png" />
+    <None Remove="Images\drop-down-arrow.png" />
+    <None Remove="Images\list.png" />
     <None Remove="Images\man.png" />
-    <None Remove="Images\report.png" />
-    <None Remove="Images\research.png" />
-    <None Remove="Images\searching.png" />
-    <None Remove="Images\sell.png" />
-    <None Remove="Images\settings.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\analysis.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\book-shop.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\book.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\books.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\business.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\collect_money.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\customer.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\dashboard.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\gear.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\import.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\inventory_report.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\magnifying-glass.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\man.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\report.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\research.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\searching.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\sell.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\settings.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Images\book-shop.png" />
+    <Resource Include="Images\drop-down-arrow.png" />
+    <Resource Include="Images\list.png" />
+    <Resource Include="Images\man.png" />
   </ItemGroup>
 
 </Project>
