@@ -60,3 +60,4 @@ D:\QuanLyNhaSach\UngDungQuanLyNhaSach\obj\Debug\net6.0-windows\Pages\ThayDoiQuyD
 D:\QuanLyNhaSach\UngDungQuanLyNhaSach\obj\Debug\net6.0-windows\Pages\DanhSachKhachHang.baml
 D:\QuanLyNhaSach\UngDungQuanLyNhaSach\obj\Debug\net6.0-windows\Pages\PhanQuyen.baml
 D:\QuanLyNhaSach\UngDungQuanLyNhaSach\obj\Debug\net6.0-windows\Pages\ThayDoiQuyDinh.baml
+D:\QuanLyNhaSach\UngDungQuanLyNhaSach\obj\Debug\net6.0-windows\App.baml
