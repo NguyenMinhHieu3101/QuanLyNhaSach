@@ -29,5 +29,10 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             System.Windows.Application.Current.Shutdown();
         }
+
+        private void MainWindowFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+
+        }
     }
 }

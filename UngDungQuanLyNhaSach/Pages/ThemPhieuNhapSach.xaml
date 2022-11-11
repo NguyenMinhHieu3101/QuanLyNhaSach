@@ -6,9 +6,102 @@
       xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ThemPhieuNhapSach">
+      Title="ThemPhieuNhapSach" Width="937">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <Frame Foreground="#FFF4F1F1" Grid.ColumnSpan="3" Navigated="Frame_Navigated" HorizontalAlignment="Left" Width="940"/>
+        <TextBox x:Name="ten_sach_txb" HorizontalAlignment="Left" Margin="107,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="123" AutomationProperties.Name="ngay_nhap_sach" RenderTransformOrigin="0.5,0.5" Height="21">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.013"/>
+                    <RotateTransform Angle="-0.046"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <DatePicker HorizontalAlignment="Left" Margin="129,41,0,0" VerticalAlignment="Top" Height="26" Width="152"/>
+        <Label x:Name="thong_tin_phieu_lb" Content="Thông tin phiếu" HorizontalAlignment="Left" Margin="21,3,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Height="37" Width="160"/>
+        <Label x:Name="ngay_nhap_phieu_lb" Content="Ngày nhập phiếu:" HorizontalAlignment="Left" Margin="21,41,0,0" VerticalAlignment="Top" Height="26" Width="104"/>
+        <Label x:Name="label" Content="Tên sách: " HorizontalAlignment="Left" Margin="21,199,0,0" VerticalAlignment="Top" Width="86" Height="26"/>
+        <TextBox HorizontalAlignment="Left" Margin="487,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="141" AutomationProperties.Name="ngay_nhap_sach" RenderTransformOrigin="0.5,0.5" Height="21">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.052"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Label x:Name="nguoi_giao_lb" Content="Người giao:" HorizontalAlignment="Left" Margin="400,41,0,0" VerticalAlignment="Top" Height="26" Width="72"/>
+        <Label x:Name="thong_tin_sach_nhap_lb" Content="Thông tin sách nhập" HorizontalAlignment="Left" Margin="19,123,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Height="37" Width="201"/>
+        <Label Content="Gợi ý tên sách bán chạy tháng trước" HorizontalAlignment="Left" Margin="19,165,0,0" VerticalAlignment="Top" Height="26" Width="201"/>
+        <Label Content="Tên sách:" HorizontalAlignment="Left" Margin="233,165,0,0" VerticalAlignment="Top" Height="26" Width="58"/>
+        <ComboBox HorizontalAlignment="Left" Margin="314,167,0,0" VerticalAlignment="Top" Width="178" Height="22"/>
+        <TextBox x:Name="nxb_txb" HorizontalAlignment="Left" Margin="109,234,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="121" AutomationProperties.Name="ngay_nhap_sach" RenderTransformOrigin="0.5,0.5" Height="21">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.013"/>
+                    <RotateTransform Angle="-0.046"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Label x:Name="label1" Content="NXB:" HorizontalAlignment="Left" Margin="21,230,0,0" VerticalAlignment="Top" Width="86" Height="26"/>
+        <TextBox x:Name="the_loai_txb" HorizontalAlignment="Left" Margin="344,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="149" AutomationProperties.Name="ngay_nhap_sach" RenderTransformOrigin="0.5,0.5" Height="21">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.013"/>
+                    <RotateTransform Angle="-0.046"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Label x:Name="label2" Content="Thể loại:" HorizontalAlignment="Left" Margin="262,199,0,0" VerticalAlignment="Top" Width="86" Height="26"/>
+        <TextBox x:Name="nam_sx_txb" HorizontalAlignment="Left" Margin="344,234,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="147" AutomationProperties.Name="ngay_nhap_sach" RenderTransformOrigin="0.5,0.5" Height="21">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.013"/>
+                    <RotateTransform Angle="-0.046"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Label x:Name="label3" Content="Năm SX:" HorizontalAlignment="Left" Margin="262,230,0,0" VerticalAlignment="Top" Width="86" Height="26"/>
+        <TextBox x:Name="don_gia_txb" HorizontalAlignment="Left" Margin="651,198,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" AutomationProperties.Name="ngay_nhap_sach" RenderTransformOrigin="0.5,0.5" Height="21">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.013"/>
+                    <RotateTransform Angle="-0.046"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Label x:Name="label4" Content="Đơn giá:" HorizontalAlignment="Left" Margin="545,199,0,0" VerticalAlignment="Top" Width="86" Height="26"/>
+        <TextBox x:Name="so_luong_txb" HorizontalAlignment="Left" Margin="651,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" AutomationProperties.Name="ngay_nhap_sach" RenderTransformOrigin="0.5,0.5" Height="21">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.013"/>
+                    <RotateTransform Angle="-0.046"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Label x:Name="label5" Content="Số lượng:" HorizontalAlignment="Left" Margin="545,230,0,0" VerticalAlignment="Top" Width="86" Height="26"/>
+        <Label x:Name="label6" Content="Ngày nhập sách:" HorizontalAlignment="Left" Margin="21,86,0,0" VerticalAlignment="Top" Width="101" Height="26"/>
+        <DatePicker HorizontalAlignment="Left" Margin="129,86,0,0" VerticalAlignment="Top" Height="26" Width="152"/>
+        <Button x:Name="them_btn" Content="Thêm" HorizontalAlignment="Left" Margin="343,270,0,0" VerticalAlignment="Top" Background="#FF002B49" Height="26" Width="127" Foreground="#FFFBF4F4"/>
+
     </Grid>
 </Page>

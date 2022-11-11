@@ -79,7 +79,7 @@
                 </control:MenuWithSubMenuControl.Effect>-->
             </control:MenuWithSubMenuControl>
 
-            <Frame x:Name="MainWindowFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="MainWindowFrame" Grid.Column="1" NavigationUIVisibility="Hidden" Navigated="MainWindowFrame_Navigated"/>
         </Grid>
     </Grid>
 </Window>
