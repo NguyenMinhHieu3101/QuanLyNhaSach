@@ -5,10 +5,77 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
       mc:Ignorable="d" 
+      Background="White"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ThemHoaDon">
 
-    <Grid>
-        
-    </Grid>
+    <Page.Resources>
+
+        <Style x:Key="notCalledBorder" TargetType="{x:Type Border}">
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="Black" />
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="Header1" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="DockPanel">
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="5,5"/>
+        </Style>
+
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+                x:Name="Bd" BorderBrush="Black"
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+    </Page.Resources>
+
+    <StackPanel Margin="10,10,10,10">
+        <TextBlock Text="Thêm Hóa Đơn"
+                   Style="{StaticResource Header1}"/>
+        <StackPanel Height="126">
+
+            <DockPanel LastChildFill="True" Width="415">
+                <TextBlock Text="Ngày Hóa Đơn:" Width="130" FontWeight="Bold"/>
+                <DatePicker Width="180" Height="24" HorizontalAlignment="Right"/>
+            </DockPanel>
+            <DockPanel HorizontalAlignment="Center" Width="415">
+                <TextBlock Text="Nhân Viên Lập Hóa Đơn:" Width="190" FontWeight="Bold"/>
+                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" DockPanel.Dock="Left" HorizontalAlignment="Right"/>
+            </DockPanel>
+            <DockPanel HorizontalAlignment="Center" Width="413">
+                <TextBlock Text="Mã Khách Hàng:" Width="190" FontWeight="Bold"/>
+                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right"/>
+            </DockPanel>
+        </StackPanel>
+    </StackPanel>
 </Page>
