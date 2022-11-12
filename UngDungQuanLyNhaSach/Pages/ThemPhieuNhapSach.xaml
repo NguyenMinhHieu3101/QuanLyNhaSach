@@ -116,14 +116,14 @@
                 </DockPanel>
             </StackPanel>
         </StackPanel>
-        <StackPanel Height="40">
+        <StackPanel Height="40" HorizontalAlignment="Right" Width="193">
             <Button Content="Thêm" 
                         Height="37" 
-                        Width="90"
+                        Width="128"
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource AddButton}" Click="Button_Click" HorizontalAlignment="Center"/>
+                        Style="{StaticResource AddButton}" Click="Button_Click"/>
         </StackPanel>
     </StackPanel>
 </Page>
