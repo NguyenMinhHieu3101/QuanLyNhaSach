@@ -5,10 +5,94 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
       mc:Ignorable="d" 
+      Background="White"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BaoCaoKho">
 
-    <Grid>
-        
-    </Grid>
+    <Page.Resources>
+        <Style x:Key="Header1" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="Title" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="25" />
+            <!--<Setter Property="FontWeight" Value="Bold"/>-->
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+    </Page.Resources>
+
+    <StackPanel Margin="30">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <DockPanel LastChildFill="True" Width="250">
+                <TextBlock Text="Từ Ngày:" Width="70" VerticalAlignment="Center"/>
+                <DatePicker Margin="15,0,0,0"></DatePicker>
+            </DockPanel>
+            <DockPanel LastChildFill="True" Width="250" Margin="100, 0, 0, 0">
+                <TextBlock Text="Đến Ngày:" Width="80" VerticalAlignment="Center"/>
+                <DatePicker></DatePicker>
+            </DockPanel>
+        </StackPanel>
+
+        <TextBlock Text="BẢNG THỐNG KÊ XUẤT / NHẬP KHO"
+                   Style="{StaticResource Header1}"
+                   Margin="0, 30, 0, 0"/>
+
+        <DockPanel Height="200" LastChildFill="True" Margin="0, 20, 0, 20" HorizontalAlignment="Center">
+            <ListView x:Name="lsvList" Width="350">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="#" Width="50"/>
+                        <GridViewColumn Header="Sách Nhập" Width="150"/>
+                        <GridViewColumn Header="Số Tiền" Width="150"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <ListView x:Name="lsvList2" Width="350" Margin="20, 0, 0, 0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="#" Width="50"/>
+                        <GridViewColumn Header="Sách Đã Bán" Width="150" />
+                        <GridViewColumn Header="Số Tiền" Width="150"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </DockPanel>
+
+        <DockPanel LastChildFill="True" HorizontalAlignment="Center">
+            <TextBlock Text="SÁCH NHẬP:"
+                       Style="{StaticResource Title}"
+                       Width="325"/>
+            <TextBlock Text="SÁCH ĐÃ BÁN:"
+                       Style="{StaticResource Title}"
+                       Margin="50,0,0,0"
+                       Width="325"/>
+        </DockPanel>
+
+        <!--<TextBlock Text="LỢI NHUẬN:"
+                   Style="{StaticResource Title}"
+                   Margin="0, 10, 0, 0"
+                   HorizontalAlignment="Center"/>-->
+
+        <DockPanel HorizontalAlignment="Right" Margin="0, 10">
+            <Button Content="Hiện báo cáo" 
+                        Height="35" 
+                        Width="140"
+                        Margin="10,0"
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Style="{StaticResource AddButton}"/>
+        </DockPanel>
+    </StackPanel>
 </Page>
