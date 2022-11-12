@@ -7,8 +7,122 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ThayDoiQuyDinh">
+    <Page.Resources>
+        <Style x:Key="Header1" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="45" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="#d9535d"/>
+        </Style>
+        <Style x:Key="Roles" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="#205a94"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Margin" Value="20,0,0,0"/>
+            <Setter Property="Foreground" Value="#d9535d"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+           
+            
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border CornerRadius="4" Background="Transparent" BorderBrush="Black" BorderThickness="1,1,1,1" Width="20" Height="20">
 
-    <Grid>
-        
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="SaveButton">
+            <Setter Property="Background" Value="#205a94" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="#205a94" BorderBrush="Black" BorderThickness="1,1,1,1" >
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid Background="white" Margin="0,0,0,-102">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.ColumnSpan="3" Text="THAY ĐỔI QUY ĐỊNH" VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Style="{StaticResource Header1}"></TextBlock>
+
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Grid.Column="2" Grid.Row="4" >
+            <Button Content="Thay đổi" Width="100" Height="30" Margin="30,0,30,0" Style="{StaticResource SaveButton}"></Button>
+            <Button Content="Hủy" Width="100" Height="30" Margin="30,0,30,0" Style="{StaticResource CacelButton}"></Button>
+        </StackPanel>
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Grid.Column="2" Grid.Row="2" >
+            <Button Content="Thay đổi" Width="100" Height="30" Margin="30,30,30,0" Style="{StaticResource SaveButton}"></Button>
+            <Button Content="Hủy" Width="100" Height="30" Margin="30,30,30,0" Style="{StaticResource CacelButton}"></Button>
+        </StackPanel>
+        <Grid Grid.Row="1" Grid.ColumnSpan="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+     
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="6*"></RowDefinition>
+              
+            </Grid.RowDefinitions>
+            <TextBlock Text="STT"  Grid.Column="1" ></TextBlock>
+            <TextBlock Text="Tên loại khách hàng" Grid.Column="2"></TextBlock>
+            <TextBlock Text="Số tiền tối thiểu để đạt được" Grid.Column="3"></TextBlock>
+      
+        </Grid>
+        <Grid Grid.Row="3" Grid.ColumnSpan="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="6*"></RowDefinition>
+
+            </Grid.RowDefinitions>
+            <TextBlock Text="STT"  Grid.Column="1" ></TextBlock>
+            <TextBlock Text="Tên thuộc tính" Grid.Column="2"></TextBlock>
+            <TextBlock Text="Giá trị" Grid.Column="3"></TextBlock>
+       
+        </Grid>
     </Grid>
 </Page>

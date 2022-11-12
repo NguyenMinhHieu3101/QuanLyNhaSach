@@ -7,8 +7,98 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PhanQuyen">
-
-    <Grid>
+    <Page.Resources>
+        <Style x:Key="Header1" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="45" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="#d9535d"/>
+        </Style>
+        <Style x:Key="Roles" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="#205a94"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Margin" Value="20,0,0,0"/>
+            <Setter Property="Foreground" Value="#d9535d"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border CornerRadius="4" Background="Transparent" BorderBrush="Black" BorderThickness="1,1,1,1" Width="20" Height="20">
+                          
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="SaveButton">
+            <Setter Property="Background" Value="#205a94" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="10" Background="#205a94" BorderBrush="Black" BorderThickness="1,1,1,1" >
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid Background="white">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+     
+           
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.ColumnSpan="2" Text="PHÂN QUYỀN" VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Style="{StaticResource Header1}"></TextBlock>
         
+        <TextBlock Text="Quản lý báo cáo" Grid.Row="2"></TextBlock>
+        <TextBlock Text="Quản lý kho" Grid.Row="3"></TextBlock>
+        <TextBlock Text="Quản lý khách hàng" Grid.Row="4"></TextBlock>
+        <TextBlock Text="Quản lý hóa đơn" Grid.Row="5"></TextBlock>
+
+        <TextBlock Text="Nhân viên kho" Grid.Column="1" Grid.Row="1" Style="{StaticResource Roles}"></TextBlock>
+        <TextBlock Text="Nhân viên quầy" Grid.Column="2" Grid.Row="1" Style="{StaticResource Roles}"></TextBlock>
+        <TextBlock Text="Kế toán" Grid.Column="3" Grid.Row="1" Style="{StaticResource Roles}"></TextBlock>
+        
+        <CheckBox Grid.Column="1" Grid.Row="2"></CheckBox>
+        <CheckBox Grid.Column="1" Grid.Row="3"></CheckBox>
+        <CheckBox Grid.Column="1" Grid.Row="4"></CheckBox>
+        <CheckBox Grid.Column="1" Grid.Row="5"></CheckBox>
+        <CheckBox Grid.Column="2" Grid.Row="2"></CheckBox>
+        <CheckBox Grid.Column="2" Grid.Row="3"></CheckBox>
+        <CheckBox Grid.Column="2" Grid.Row="4"></CheckBox>
+        <CheckBox Grid.Column="2" Grid.Row="5"></CheckBox>
+        <CheckBox Grid.Column="3" Grid.Row="2"></CheckBox>
+        <CheckBox Grid.Column="3" Grid.Row="3"></CheckBox>
+        <CheckBox Grid.Column="3" Grid.Row="4"></CheckBox>
+        <CheckBox Grid.Column="3" Grid.Row="5"></CheckBox>
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Grid.Column="2" Grid.Row="6" >
+        <Button Content="Lưu" Width="100" Height="30" Margin="30" Style="{StaticResource SaveButton}"></Button>
+        <Button Content="Hủy" Width="100" Height="30" Style="{StaticResource CacelButton}"></Button>
+        </StackPanel>
     </Grid>
 </Page>
