@@ -16,6 +16,12 @@
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
+        
+        <Style x:Key="Header2" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="100"/>
+        </Style>
 
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="16" />
@@ -249,12 +255,29 @@
             </DockPanel>
 
             <DockPanel>
+                
                 <TextBlock Text="THỜI GIAN ÁP DỤNG:"/>
-                <ComboBox>
-                    <ComboBoxItem>ComboBox Item #1</ComboBoxItem>
-                    <ComboBoxItem IsSelected="True">ComboBox Item #2</ComboBoxItem>
-                    <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
-                </ComboBox>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <DockPanel Grid.Row="0">
+                        <TextBlock Text="Từ ngày: "
+                                   Style="{StaticResource Header2}"/>
+                        <DatePicker/>
+                    </DockPanel>
+
+                    <DockPanel Grid.Row="1">
+                        <TextBlock Text="Đến ngày:"
+                                   Style="{StaticResource Header2}"/>
+                        <DatePicker/>
+                    </DockPanel>
+
+                </Grid>
+
             </DockPanel>
 
         </StackPanel>
