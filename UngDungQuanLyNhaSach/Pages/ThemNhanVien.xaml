@@ -10,7 +10,7 @@
       Title="ThemNhanVien">
 
     <Page.Resources>
-        
+
         <Style x:Key="notCalledBorder" TargetType="{x:Type Border}">
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="BorderBrush" Value="Black" />
@@ -38,9 +38,33 @@
 
         <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
             <Border Background="{TemplateBinding Background}" 
-                x:Name="Bd" BorderBrush="Black"
-                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                    x:Name="Bd" BorderBrush="Black"
+                    BorderThickness="{TemplateBinding BorderThickness}" 
+                    CornerRadius="10">
                 <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="DatePickerControlTemplate" TargetType="{x:Type DatePicker}">
+            <Border Background="{TemplateBinding Background}" 
+                    x:Name="Bd" BorderBrush="Black"
+                    BorderThickness="{TemplateBinding BorderThickness}" 
+                    CornerRadius="10">
+                <!--<ScrollViewer x:Name="PART_ContentHost"/>-->
+                <DatePicker BorderBrush="Transparent"/>
+                <!--<ContentPresenter/>-->
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
@@ -81,8 +105,7 @@
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Ngày Sinh:"/>
-                <!--<DatePicker />-->
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <DatePicker Template="{StaticResource DatePickerControlTemplate}"/>
             </DockPanel>
 
             <DockPanel LastChildFill="True">
@@ -94,7 +117,7 @@
                 <TextBlock Text="Giới tính:"/>
                 <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
-            
+
         </StackPanel>
 
         <TextBlock Text="Thông tin nhân viên" 
@@ -111,15 +134,15 @@
                 <TextBlock Text="Lương:"/>
                 <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
-            
+
         </StackPanel>
 
         <Separator />
 
         <DockPanel>
-            
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                
+
                 <Button Content="Thêm" 
                         Height="35" 
                         Width="90"
@@ -128,7 +151,7 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}"/>
-                
+
                 <Button Content="Thoát" 
                         Height="35" 
                         Width="90"
@@ -137,10 +160,10 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource CacelButton}"/>
-                
-            </StackPanel>   
-            
+
+            </StackPanel>
+
         </DockPanel>
-        
+
     </StackPanel>
 </Page>

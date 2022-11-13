@@ -25,13 +25,6 @@
                                   ShadowDepth="1"
                                   Opacity="0.5"/>
             </Grid.Effect>-->
-
-            <Image Source="/UngDungQuanLyNhaSach;component/Images/list.png" 
-                   HorizontalAlignment="Left" 
-                   VerticalAlignment="Center" 
-                   Margin="20,0,0,0"
-                   Height="30"
-                   Width="30"/>
             
             <TextBlock Text="BookStore" 
                        HorizontalAlignment="Center" 
