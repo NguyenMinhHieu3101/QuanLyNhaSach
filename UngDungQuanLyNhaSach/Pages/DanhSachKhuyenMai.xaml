@@ -241,12 +241,14 @@
 
         </Grid>
 
-        <DataGrid Margin="5,10" Style="{DynamicResource DataGridStyle}" 
+        <DataGrid x:Name="khuyenMaiTable" 
+                  Margin="5,10" Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
-                  RowStyle="{StaticResource DataGridRowStyle}">
+                  RowStyle="{StaticResource DataGridRowStyle}" 
+                  AutoGeneratingColumn="khuyenMaiTable_AutoGeneratingColumn">
 
-            <DataGrid.Columns>
+            <!--<DataGrid.Columns>
                 <DataGridTextColumn Header="Mã khuyến mãi" IsReadOnly="True" CanUserResize="True" Width="*"/>
                 <DataGridTextColumn Header="Số lượng" IsReadOnly="True" CanUserResize="True" Width="*"/>
                 <DataGridTextColumn Header="Trạng thái" IsReadOnly="True" CanUserResize="True" Width="*"/>
@@ -255,7 +257,7 @@
                 <DataGridTextColumn Header="Loại khách hàng" IsReadOnly="True" CanUserResize="True" Width="*"/>
                 <DataGridTextColumn Header="Giá đã giảm" IsReadOnly="True" CanUserResize="True" Width="*"/>
                 <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-            </DataGrid.Columns>
+            </DataGrid.Columns>-->
 
         </DataGrid>
 

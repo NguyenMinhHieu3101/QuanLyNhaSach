@@ -242,12 +242,13 @@
 
         </Grid>
 
-        <DataGrid Margin="5,10" Style="{DynamicResource DataGridStyle}" 
+        <DataGrid x:Name="nhanVienTable" Margin="5,10" Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
-                  RowStyle="{StaticResource DataGridRowStyle}">
+                  RowStyle="{StaticResource DataGridRowStyle}" 
+                  AutoGeneratingColumn="nhanVienTable_AutoGeneratingColumn">
 
-            <DataGrid.Columns>
+            <!--<DataGrid.Columns>
                 <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                 <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                 <DataGridTextColumn Header="Mã nhân viên" IsReadOnly="True" CanUserResize="True" Width="*"/>
@@ -259,7 +260,7 @@
                 <DataGridTextColumn Header="Số điện thoại" IsReadOnly="True" CanUserResize="True" Width="*"/>
                 <DataGridTextColumn Header="Lương" IsReadOnly="True" CanUserResize="True" Width="*"/>
                 <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-            </DataGrid.Columns>
+            </DataGrid.Columns>-->
 
         </DataGrid>
 

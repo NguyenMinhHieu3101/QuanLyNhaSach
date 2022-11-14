@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Images\book-shop.png" />
     <Resource Include="Images\drop-down-arrow.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
