@@ -30,9 +30,6 @@ namespace UngDungQuanLyNhaSach.Pages
             InitializeComponent();
             try
             {
-                SqlConnection thisConnection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-                thisConnection.Open();
-
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
 
                 connection.Open();

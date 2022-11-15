@@ -229,22 +229,32 @@
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Họ Tên:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="SĐT:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+            </DockPanel>
+            
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="Email:"/>
+                <TextBox x:Name="email" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+            </DockPanel>
+            
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="Địa Chỉ:"/>
+                <TextBox x:Name="diaChi" Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Ngày Sinh:"/>
-                <DatePicker />
+                <DatePicker x:Name="ngaySinh"/>
             </DockPanel>
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Giới tính:"/>
-                <ComboBox>
+                <ComboBox x:Name="gioiTinh">
                     <ComboBoxItem IsSelected="True">Nam</ComboBoxItem>
                     <ComboBoxItem>Nữ</ComboBoxItem>
                 </ComboBox>
@@ -256,7 +266,7 @@
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Ngày đăng ký:"/>
-                <DatePicker/>
+                <DatePicker x:Name="ngayDangKy"/>
             </DockPanel>
 
         </StackPanel>
@@ -274,7 +284,7 @@
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource AddButton}"/>
+                        Style="{StaticResource AddButton}" Click="Button_Click"/>
 
                 <Button Content="Thoát" 
                         Height="35" 

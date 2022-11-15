@@ -236,7 +236,7 @@
 
             <DockPanel>
                 <TextBlock Text="LOẠI KHÁCH HÀNG ÁP DỤNG:"/>
-                <ComboBox>
+                <ComboBox x:Name="loaiKhachHang">
                     <ComboBoxItem>Vãng Lai</ComboBoxItem>
                     <ComboBoxItem IsSelected="True">Bạc</ComboBoxItem>
                     <ComboBoxItem>Vàng</ComboBoxItem>
@@ -246,12 +246,12 @@
 
             <DockPanel>
                 <TextBlock Text="SỐ LƯỢNG ÁP DỤNG:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox x:Name="soLuong" Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
 
             <DockPanel>
                 <TextBlock Text="PHẦN TRĂM GIẢM GIÁ:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox x:Name="giamGia" Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
 
             <DockPanel>
@@ -267,13 +267,13 @@
                     <DockPanel Grid.Row="0">
                         <TextBlock Text="Từ ngày: "
                                    Style="{StaticResource Header2}"/>
-                        <DatePicker/>
+                        <DatePicker x:Name="batDau"/>
                     </DockPanel>
 
                     <DockPanel Grid.Row="1">
                         <TextBlock Text="Đến ngày:"
                                    Style="{StaticResource Header2}"/>
-                        <DatePicker/>
+                        <DatePicker x:Name="ketThuc"/>
                     </DockPanel>
 
                 </Grid>
@@ -296,7 +296,7 @@
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource AddButton}"/>
+                        Style="{StaticResource AddButton}" Click="Button_Click"/>
 
                 <Button Content="Thoát" 
                         Height="35" 

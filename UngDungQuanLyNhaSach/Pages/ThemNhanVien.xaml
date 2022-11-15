@@ -253,32 +253,37 @@
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Họ Tên:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="CCCD:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox x:Name="cccd" Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="SĐT:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Ngày Sinh:"/>
-                <DatePicker Template="{StaticResource DatePickerControlTemplate}"/>
+                <DatePicker x:Name="ngaySinh" Template="{StaticResource DatePickerControlTemplate}"/>
             </DockPanel>
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Email:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox x:Name="email" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+            </DockPanel>
+            
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="Địa Chỉ:"/>
+                <TextBox x:Name="diaChi" Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Giới tính:"/>
-                <ComboBox>
+                <ComboBox x:Name="gioiTinh">
                     <ComboBoxItem IsSelected="True">Nam</ComboBoxItem>
                     <ComboBoxItem>Nữ</ComboBoxItem>
                 </ComboBox>
@@ -293,7 +298,7 @@
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Chức vụ:"/>
-                <ComboBox>
+                <ComboBox x:Name="chucVu">
                     <ComboBoxItem>Admin</ComboBoxItem>
                     <ComboBoxItem IsSelected="True">Nhân Viên Bán Hàng</ComboBoxItem>
                     <ComboBoxItem>Nhân Viên Kho</ComboBoxItem>
@@ -302,7 +307,7 @@
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Lương:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox x:Name="luong" Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
 
         </StackPanel>
@@ -320,7 +325,7 @@
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource AddButton}"/>
+                        Style="{StaticResource AddButton}" Click="Button_Click"/>
 
                 <Button Content="Thoát" 
                         Height="35" 
