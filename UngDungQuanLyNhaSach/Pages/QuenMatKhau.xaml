@@ -90,31 +90,31 @@
 
             <DockPanel Grid.Column="1">
                 <TextBlock Text="EMAIL ĐÃ ĐĂNG KÝ:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="320" />
+                <TextBox Name="txt_email" Template="{StaticResource TextBoxBaseControlTemplate}" Width="320" />
             </DockPanel>
-
             <Button 
                 Content="NHẬN MÃ OTP" 
                 Height="40" 
                 Width="110"
-                Margin="40,0,20,0"
                 Foreground="black"
-                VerticalAlignment="Center"
-                HorizontalAlignment="Right"
                 FontSize="12"
                 FontWeight="Bold"               
                 Style="{StaticResource SignInButton}"
-                Background="#1cadb5"></Button>
+                Background="#1cadb5"
+                HorizontalAlignment="Right"
+                Click="OTP_Button"/>
+
+
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="2" Margin="30">
 
             <DockPanel Grid.Column="1">
                 <TextBlock Text="MÃ OTP:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="320" />
+                <TextBox Name="txt_OTP" Template="{StaticResource TextBoxBaseControlTemplate}" Width="320" />
             </DockPanel>
             <DockPanel Grid.Column="1">
                 <TextBlock Text="MẬT KHẨU MỚI:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="320"/>
+                <TextBox Name="txt_newpass" Template="{StaticResource TextBoxBaseControlTemplate}" Width="320"/>
 
             </DockPanel>
 

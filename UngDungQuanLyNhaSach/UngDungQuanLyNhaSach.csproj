@@ -8,8 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\background.png" />
     <None Remove="Images\book-shop.png" />
     <None Remove="Images\drop-down-arrow.png" />
+    <None Remove="Images\forgetpass.png" />
+    <None Remove="Images\Lock.jpg" />
     <None Remove="Images\man.png" />
   </ItemGroup>
 
@@ -18,8 +21,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\background.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\book-shop.png" />
     <Resource Include="Images\drop-down-arrow.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\forgetpass.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Lock.jpg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\man.png" />

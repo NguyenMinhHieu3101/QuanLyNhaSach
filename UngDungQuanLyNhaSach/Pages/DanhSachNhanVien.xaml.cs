@@ -29,7 +29,7 @@ namespace UngDungQuanLyNhaSach.Pages
         public DanhSachNhanVien()
         {
             InitializeComponent();
-            try
+            //try
             {
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
 
@@ -53,10 +53,10 @@ namespace UngDungQuanLyNhaSach.Pages
                     nhanVienTable.ItemsSource = nhanVienList;
                 }
             }
-            catch
+           /* catch
             {
                 MessageBox.Show("db error");
-            }
+            }*/
         }
 
         private void nhanVienTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)

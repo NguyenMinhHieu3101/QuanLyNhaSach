@@ -87,11 +87,11 @@
           
             <DockPanel Grid.Column="1">
                 <TextBlock Text="TÊN ĐĂNG NHẬP:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" />
+                <TextBox Name="txtEmail" Template="{StaticResource TextBoxBaseControlTemplate}" />
             </DockPanel>
             <DockPanel Grid.Column="1">
                 <TextBlock Text="MẬT KHẨU:"/>
-                <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox Name="txtMatKhau" Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
         </StackPanel>
         <StackPanel Grid.Row="2" 

@@ -40,8 +40,8 @@ namespace UngDungQuanLyNhaSach.Pages
                 SqlCommand commandReader = new SqlCommand(readString, connection);
                 Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
 
-                string insertString = "INSERT INTO NHANVIEN(MaNhanVien, MatKhau, HoTen, MaChucVu, NgaySinh, CCCD, GioiTinh, SDT, DiaChi, Luong, TrangThai) " +
-                    "VALUES(@MaNhanVien, @MatKhau, @HoTen, @MaChucVu, @NgaySinh, @CCCD, @GioiTinh, @SDT, @DiaChi, @Luong, @TrangThai)";
+                string insertString = "INSERT INTO NHANVIEN(MaNhanVien, MatKhau, HoTen, MaChucVu, NgaySinh, Email, CCCD, GioiTinh, SDT, DiaChi, Luong, TrangThai) " +
+                    "VALUES(@MaNhanVien, @MatKhau, @HoTen, @MaChucVu, @NgaySinh, @Email, @CCCD, @GioiTinh, @SDT, @DiaChi, @Luong, @TrangThai)";
                 SqlCommand command = new SqlCommand(insertString, connection);
 
                 command.Parameters.Add("@MaNhanVien", SqlDbType.VarChar);
@@ -61,6 +61,8 @@ namespace UngDungQuanLyNhaSach.Pages
                 command.Parameters["@NgaySinh"].Value = DateTime.Now;
 
                 //MessageBox.Show(ngaySinh.SelectedDate.Value.Date.ToString());
+                command.Parameters.Add("@Email", SqlDbType.VarChar);
+                command.Parameters["@Email"].Value = email.Text;
 
                 command.Parameters.Add("@CCCD", SqlDbType.VarChar);
                 command.Parameters["@CCCD"].Value = cccd.Text;
