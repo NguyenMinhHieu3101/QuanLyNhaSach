@@ -26,6 +26,10 @@ namespace UngDungQuanLyNhaSach.Pages
         private void Sign_In_Button(object sender, RoutedEventArgs e)
         {
 
+            Home home = new Home();
+            home.Show();
+            this.Hide();
+            /*
             if (getID(txtEmail.Text, txtMatKhau.Text))
             {
                
@@ -37,7 +41,7 @@ namespace UngDungQuanLyNhaSach.Pages
             else
             {
                 MessageBox.Show("Email hoặc mật khẩu không đúng !");
-            }
+            }*/
         }
     
         private void Cancel_Button(object sender, RoutedEventArgs e)

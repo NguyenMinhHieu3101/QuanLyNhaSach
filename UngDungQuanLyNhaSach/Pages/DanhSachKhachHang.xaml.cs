@@ -43,10 +43,10 @@ namespace UngDungQuanLyNhaSach.Pages
                 while (reader.Read())
                 {
                     count++;
-                    khachHangList.Add(new KhachHang(stt: count, maKhachHang: reader["MaKhachHang"].ToString(),
-                        tenKhachHang: reader["TenKhachHang"].ToString(), diaChi: reader["DiaChi"].ToString(),
-                        gioiTinh: reader["GioiTinh"].ToString(), maLoaiKhachHang: reader["MaLoaiKhachHang"].ToString(),
-                        sdt: reader["SDT"].ToString(), email: reader["Email"].ToString(), trangThai: reader["TrangThai"].ToString()));
+                    khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
+                        tenKhachHang: (String)reader["TenKhachHang"], diaChi: (String)reader["DiaChi"],
+                        gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["MaLoaiKhachHang"],
+                        sdt: (String)reader["SDT"], email: (String)reader["Email"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0?"Không tồn tại":"Còn sử dụng"));
                     khachHangTable.ItemsSource = khachHangList;
                 }
             }

@@ -43,11 +43,11 @@ namespace UngDungQuanLyNhaSach.Pages
                 while (reader.Read())
                 {
                     count++;
-                    khuyenMaiList.Add(new KhuyenMai(stt: count, maKhuyenMai: reader["MaKhuyenMai"].ToString(),
-                        batDau: DateTime.ParseExact(reader["ThoiGianBatDau"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture), 
-                        ketThuc: DateTime.ParseExact(reader["ThoiGianKetThuc"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture), 
-                        maLoaiKhachHang: reader["MaLoaiKhachHang"].ToString(), 
-                        soLuong: int.Parse(reader["SoLuongKhuyenMai"].ToString()),trangThai: reader["TrangThai"].ToString()));
+                    khuyenMaiList.Add(new KhuyenMai(stt: count, maKhuyenMai: (String)reader["MaKhuyenMai"],
+                        batDau: (DateTime)reader["ThoiGianBatDau"], //DateTime.ParseExact(reader["ThoiGianBatDau"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                        ketThuc: (DateTime)reader["ThoiGianKetThuc"], //DateTime.ParseExact(reader["ThoiGianKetThuc"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                        maLoaiKhachHang: (String)reader["MaLoaiKhachHang"],
+                        soLuong: (int)reader["SoLuongKhuyenMai"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn hiệu lực"));
                     khuyenMaiTable.ItemsSource = khuyenMaiList;
                 }
             }

@@ -29,7 +29,7 @@ namespace UngDungQuanLyNhaSach.Pages
         public DanhSachNhanVien()
         {
             InitializeComponent();
-            //try
+            try
             {
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
 
@@ -45,18 +45,19 @@ namespace UngDungQuanLyNhaSach.Pages
                 {
                     count++;
 
-                    nhanVienList.Add(new NhanVien(stt: count, maNhanVien: reader["MaNhanVien"].ToString(),
-                        hoTen: reader["HoTen"].ToString(), maChucVu: reader["MaChucVu"].ToString(),
-                        ngaySinh: DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
-                        cccd: reader["CCCD"].ToString(),gioiTinh: reader["GioiTinh"].ToString(), sdt: reader["SDT"].ToString(),
-                        diaChi: reader["DiaChi"].ToString(), luong: double.Parse(reader["Luong"].ToString()), trangThai: reader["TrangThai"].ToString()));
+                    nhanVienList.Add(new NhanVien(stt: count, maNhanVien: (String)reader["MaNhanVien"],
+                        hoTen: (String)reader["HoTen"], maChucVu: (String)reader["MaChucVu"],
+                        ngaySinh: (DateTime)reader["NgaySinh"],  //DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                        cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"],
+                        diaChi: (String)reader["DiaChi"], luong: double.Parse(reader["Luong"].ToString()),
+                        trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động"));
                     nhanVienTable.ItemsSource = nhanVienList;
                 }
             }
-           /* catch
+            catch
             {
                 MessageBox.Show("db error");
-            }*/
+            }
         }
 
         private void nhanVienTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
