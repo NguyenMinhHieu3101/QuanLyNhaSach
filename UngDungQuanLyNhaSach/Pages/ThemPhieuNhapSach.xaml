@@ -60,10 +60,10 @@
     </Page.Resources>
 
     <StackPanel Margin="30,10,0,10" HorizontalAlignment="Left" Width="745">
-        <StackPanel Height="102">
+        <StackPanel Height="99">
             <TextBlock Text="Thông tin phiếu" 
                    Style="{StaticResource Header1}"/>
-            <StackPanel Width="728" Height="95">
+            <StackPanel Width="728" Height="78">
                 <DockPanel LastChildFill="True" Width="708">
                     <DockPanel Width="340">
                         <TextBlock Text="Ngày Lập Phiếu:" Width="130"/>
@@ -125,6 +125,39 @@
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}" Click="Button_Click"/>
         </StackPanel>
+        <DataGrid x:Name="phieuNhapSachTable" Margin="5,10" Style="{DynamicResource DataGridStyle}" 
+                  CellStyle="{StaticResource DataGridCellStyle}" 
+                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
+                  RowStyle="{StaticResource DataGridRowStyle}" 
+                  AutoGeneratingColumn="phieuNhapSachTable_AutoGeneratingColumn" Background="{x:Null}">
 
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
+                <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
+                <DataGridTextColumn Header="Tên sách" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Thể loại" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Đơn giá" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Số lượng" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Thành tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Lưu" 
+                        Height="37" 
+                        Width="128"
+                        Margin="10"
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Style="{StaticResource AddButton}" Click="Button_Click"/>
+            <Button Content="Hủy" 
+                        Height="37" 
+                        Width="128"
+                        Foreground="#002b49"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Style="{StaticResource CacelButton}" Click="Button_Click"/>
+        </StackPanel>
     </StackPanel>
 </Page>

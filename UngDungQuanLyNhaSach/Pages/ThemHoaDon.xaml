@@ -77,5 +77,40 @@
                 <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right"/>
             </DockPanel>
         </StackPanel>
+        <StackPanel>
+            <DataGrid x:Name="hoaDonTable" Margin="5,10" Style="{DynamicResource DataGridStyle}" 
+                  CellStyle="{StaticResource DataGridCellStyle}" 
+                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
+                  RowStyle="{StaticResource DataGridRowStyle}" 
+                  AutoGeneratingColumn="hoaDonTable_AutoGeneratingColumn" Background="{x:Null}">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
+                    <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
+                    <DataGridTextColumn Header="Tên sách" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                    <DataGridTextColumn Header="Đơn giá" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                    <DataGridTextColumn Header="Số lượng" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                    <DataGridTextColumn Header="Ghi chú" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                    <DataGridTextColumn Header="Thành tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+            <TextBlock Text="Tổng tiền:" FontWeight="Bold" FontSize="22"/>
+            <Label Content="..." FontSize="22"/>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+            <Button Content="Xuất" 
+                        Height="37" 
+                        Width="128"
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Bold"/>
+                        <!--Style="{StaticResource AddButton}" Click="Button_Click"-->
+
+        </StackPanel>
     </StackPanel>
 </Page>

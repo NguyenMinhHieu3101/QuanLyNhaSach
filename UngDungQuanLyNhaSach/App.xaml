@@ -71,6 +71,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
         
         <SolidColorBrush x:Key="{x:Static DataGrid.FocusBorderBrushKey}" Color="#FF000000"/>
         
