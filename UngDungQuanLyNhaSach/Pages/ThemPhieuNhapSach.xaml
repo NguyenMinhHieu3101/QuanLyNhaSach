@@ -59,7 +59,7 @@
 
     </Page.Resources>
 
-    <StackPanel Margin="30,10,0,10" HorizontalAlignment="Left" Width="745">
+    <StackPanel Margin="30,10,0,10" HorizontalAlignment="Left" Width="796">
         <StackPanel Height="99">
             <TextBlock Text="Thông tin phiếu" 
                    Style="{StaticResource Header1}"/>

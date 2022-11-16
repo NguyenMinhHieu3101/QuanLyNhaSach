@@ -230,7 +230,7 @@
             </Grid.ColumnDefinitions>
 
             <ComboBox Margin="15,0">
-                <ComboBoxItem>Mã phiế</ComboBoxItem>
+                <ComboBoxItem>Mã phiếu</ComboBoxItem>
                 <ComboBoxItem IsSelected="True">Lượng sách nhập</ComboBoxItem>
                 <ComboBoxItem>Ngày lập phiếu</ComboBoxItem>
                 <ComboBoxItem>Nhười lập phiếu</ComboBoxItem>
