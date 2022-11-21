@@ -398,23 +398,7 @@
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="nhanVienTable_AutoGeneratingColumn">
-
-            <!--<DataGrid.Columns>
-                <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                <DataGridTextColumn Header="Mã nhân viên" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Tên nhân viên" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="CCCD" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Ngày sinh" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Email" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Chức vụ" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Số điện thoại" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Lương" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-            </DataGrid.Columns>-->
-
-        </DataGrid>
+                  AutoGeneratingColumn="nhanVienTable_AutoGeneratingColumn"/>
 
     </Grid>
 
