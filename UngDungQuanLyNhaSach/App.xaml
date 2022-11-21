@@ -11,7 +11,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="10" Background="#002B49" BorderBrush="#ccc" BorderThickness="1,1,1,1" >
+                        <Border CornerRadius="10" Background="#1FAD7A" BorderBrush="#ccc" BorderThickness="1,1,1,1" >
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                     </ControlTemplate>
@@ -32,20 +32,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
-        <Style TargetType="Button" x:Key="DeleteButton">
-            <Setter Property="Background" Value="#3FE8AB" />
-            <Setter Property="TextBlock.TextAlignment" Value="Center" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="10" Background="#F94973" BorderBrush="#ccc" BorderThickness="1,1,1,1" >
-                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
 
         <Style TargetType="Button" x:Key="CacelButton">
             <Setter Property="Background" Value="White" />
@@ -60,7 +46,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
+        
         <Style x:Key="DataGridRowStyle" TargetType="{x:Type DataGridRow}">
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
             <Setter Property="SnapsToDevicePixels" Value="true"/>
@@ -100,6 +86,7 @@
             </Style.Triggers>
         </Style>
 
+        
         <SolidColorBrush x:Key="{x:Static DataGrid.FocusBorderBrushKey}" Color="#FF000000"/>
         
         <Style x:Key="DataGridCellStyle" TargetType="{x:Type DataGridCell}">
@@ -162,7 +149,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
                         <Grid>
-                            <theme:DataGridHeaderBorder Background="#3FE8AB" 
+                            <theme:DataGridHeaderBorder Background="#3FE8ab" 
                                                         BorderBrush="{TemplateBinding BorderBrush}" 
                                                         BorderThickness="{TemplateBinding BorderThickness}" 
                                                         IsPressed="{TemplateBinding IsPressed}" 
