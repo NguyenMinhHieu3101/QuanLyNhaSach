@@ -16,28 +16,25 @@
     <Compile Update="Pages\BaoCaoKho.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\BieuDoDoanhThu.xaml.cs">
+    <Compile Update="Pages\BaoCaoSanPham.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\BieuDoKhoBienDong.xaml.cs">
+    <Compile Update="Pages\TraCuuHoaDon.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\DanhSachHoaDon.xaml.cs">
+    <Compile Update="Pages\TraCuuKhachHang.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\DanhSachKhachHang.xaml.cs">
+    <Compile Update="Pages\TraCuuKhuyenMai.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\DanhSachKhuyenMai.xaml.cs">
+    <Compile Update="Pages\TraCuuNhanVien.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\DanhSachNhanVien.xaml.cs">
+    <Compile Update="Pages\TraCuuPhieuNhapSach.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\DanhSachPhieuNhapSach.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Pages\DanhSachSachHienCo.xaml.cs">
+    <Compile Update="Pages\TraCuuSanPham.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\Home.xaml.cs">
@@ -81,28 +78,25 @@
     <Page Update="Pages\BaoCaoKho.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\BieuDoDoanhThu.xaml">
+    <Page Update="Pages\BaoCaoSanPham.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\BieuDoKhoBienDong.xaml">
+    <Page Update="Pages\TraCuuHoaDon.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\DanhSachHoaDon.xaml">
+    <Page Update="Pages\TraCuuKhachHang.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\DanhSachKhachHang.xaml">
+    <Page Update="Pages\TraCuuKhuyenMai.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\DanhSachKhuyenMai.xaml">
+    <Page Update="Pages\TraCuuNhanVien.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\DanhSachNhanVien.xaml">
+    <Page Update="Pages\TraCuuPhieuNhapSach.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\DanhSachPhieuNhapSach.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Pages\DanhSachSachHienCo.xaml">
+    <Page Update="Pages\TraCuuSanPham.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Home.xaml">

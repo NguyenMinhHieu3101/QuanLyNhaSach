@@ -19,13 +19,13 @@ using UngDungQuanLyNhaSach.Model;
 namespace UngDungQuanLyNhaSach.Pages
 {
     /// <summary>
-    /// Interaction logic for DanhSachKhachHang.xaml
+    /// Interaction logic for DanhSachKhuyenMai.xaml
     /// </summary>
-    public partial class DanhSachKhachHang : Page
+    public partial class TraCuuKhuyenMai : Page
     {
-        List<KhachHang> khachHangList = new List<KhachHang>();
+        List<KhuyenMai> khuyenMaiList = new List<KhuyenMai>();
 
-        public DanhSachKhachHang()
+        public TraCuuKhuyenMai()
         {
             InitializeComponent();
             try
@@ -33,7 +33,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
 
                 connection.Open();
-                string readString = "select * from KHACHHANG";
+                string readString = "select * from KHUYENMAI";
                 SqlCommand command = new SqlCommand(readString, connection);
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -43,11 +43,12 @@ namespace UngDungQuanLyNhaSach.Pages
                 while (reader.Read())
                 {
                     count++;
-                    khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
-                        tenKhachHang: (String)reader["TenKhachHang"], diaChi: (String)reader["DiaChi"],
-                        gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["MaLoaiKhachHang"],
-                        sdt: (String)reader["SDT"], email: (String)reader["Email"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0?"Không tồn tại":"Còn sử dụng"));
-                    khachHangTable.ItemsSource = khachHangList;
+                    khuyenMaiList.Add(new KhuyenMai(stt: count, maKhuyenMai: (String)reader["MaKhuyenMai"],
+                        batDau: (DateTime)reader["ThoiGianBatDau"], //DateTime.ParseExact(reader["ThoiGianBatDau"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                        ketThuc: (DateTime)reader["ThoiGianKetThuc"], //DateTime.ParseExact(reader["ThoiGianKetThuc"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                        maLoaiKhachHang: (String)reader["MaLoaiKhachHang"],
+                        soLuong: (int)reader["SoLuongKhuyenMai"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn hiệu lực"));
+                    khuyenMaiTable.ItemsSource = khuyenMaiList;
                 }
             }
             catch
@@ -56,7 +57,7 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-        private void khachHangTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        private void khuyenMaiTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             var desc = e.PropertyDescriptor as PropertyDescriptor;
             var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;

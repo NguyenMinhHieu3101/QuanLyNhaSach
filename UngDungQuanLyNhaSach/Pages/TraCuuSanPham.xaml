@@ -1,4 +1,4 @@
-﻿<Page x:Class="UngDungQuanLyNhaSach.Pages.DanhSachHoaDon"
+﻿<Page x:Class="UngDungQuanLyNhaSach.Pages.TraCuuSanPham"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       Background="White"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="DanhSachHoaDon"
+      Title="DanhSachSachHienCo"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
     <Page.Resources>
@@ -230,9 +230,10 @@
             </Grid.ColumnDefinitions>
 
             <ComboBox Margin="15,0">
-                <ComboBoxItem IsSelected="True">Mã hóa đơn</ComboBoxItem>
-                <ComboBoxItem>Ngày lập hóa</ComboBoxItem>
-                <ComboBoxItem>Nhười lập hóa đơn</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">Mã Sách</ComboBoxItem>
+                <ComboBoxItem>Tên Sách</ComboBoxItem>
+                <ComboBoxItem>Tác Giả</ComboBoxItem>
+                <ComboBoxItem>Thể Loại</ComboBoxItem>
             </ComboBox>
 
             <TextBox Grid.Column="1" 
@@ -242,20 +243,25 @@
 
         </Grid>
 
-        <DataGrid x:Name="danhSachHDTable" Margin="5,10" Style="{DynamicResource DataGridStyle}" 
+        <DataGrid x:Name="sachTable" Margin="5,10" Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="danhSachHDTable_AutoGeneratingColumn">
+                  AutoGeneratingColumn="sachTable_AutoGeneratingColumn">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                 <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                <DataGridTextColumn Header="Mã hóa đơn" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Tổng tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Ngày lập hóa đơn" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Người lập hóa đơn" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Giá phiếu" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Mã sách" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Tên sách" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Tác giả" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Thể loại" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Tổng đã bán" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Tổng đã nhập" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Giá nhập" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Giá bán" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="Số lượng" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
             </DataGrid.Columns>
 
         </DataGrid>
@@ -263,5 +269,3 @@
     </StackPanel>
 
 </Page>
-
-

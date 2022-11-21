@@ -20,9 +20,9 @@ namespace UngDungQuanLyNhaSach.Pages
     /// <summary>
     /// Interaction logic for DanhSachHoaDon.xaml
     /// </summary>
-    public partial class DanhSachHoaDon : Page
+    public partial class TraCuuHoaDon : Page
     {
-        public DanhSachHoaDon()
+        public TraCuuHoaDon()
         {
             InitializeComponent();
         }

@@ -18,15 +18,15 @@ using UngDungQuanLyNhaSach.Model;
 namespace UngDungQuanLyNhaSach.Pages
 {
     /// <summary>
-    /// Interaction logic for DanhSachPhieuNhapSach.xaml
+    /// Interaction logic for DanhSachSachHienCo.xaml
     /// </summary>
-    public partial class DanhSachPhieuNhapSach : Page
+    public partial class TraCuuSanPham : Page
     {
-        public DanhSachPhieuNhapSach()
+        public TraCuuSanPham()
         {
             InitializeComponent();
         }
-        private void danhSachPNSTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        private void sachTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             var desc = e.PropertyDescriptor as PropertyDescriptor;
             var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;

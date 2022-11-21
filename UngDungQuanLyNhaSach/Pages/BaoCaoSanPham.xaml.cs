@@ -18,9 +18,9 @@ namespace UngDungQuanLyNhaSach.Pages
     /// <summary>
     /// Interaction logic for BieuDoDoanhThu.xaml
     /// </summary>
-    public partial class BieuDoDoanhThu : Page
+    public partial class BaoCaoSanPham : Page
     {
-        public BieuDoDoanhThu()
+        public BaoCaoSanPham()
         {
             InitializeComponent();
         }

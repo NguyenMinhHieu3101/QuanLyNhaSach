@@ -22,11 +22,11 @@ namespace UngDungQuanLyNhaSach.Pages
     /// <summary>
     /// Interaction logic for DanhSachNhanVien.xaml
     /// </summary>
-    public partial class DanhSachNhanVien : Page
+    public partial class TraCuuNhanVien : Page
     {
         List<NhanVien> nhanVienList = new List<NhanVien>();
 
-        public DanhSachNhanVien()
+        public TraCuuNhanVien()
         {
             InitializeComponent();
             try
