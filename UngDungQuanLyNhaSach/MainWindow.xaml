@@ -47,8 +47,9 @@
             </StackPanel>
         </Grid>
        
-        <Image Grid.Row="1" Source="/UngDungQuanLyNhaSach;component/Images/background.png" Stretch="Fill"></Image>
-       
+        <!--<Image Grid.Row="1" Source="/UngDungQuanLyNhaSach;component/Images/background.png" Stretch="Fill"></Image>-->
+        <Image Grid.Row="1" Source="/UngDungQuanLyNhaSach;component/Images/BookStore.png" Stretch="Fill"></Image>
+
     </Grid>
 
 
