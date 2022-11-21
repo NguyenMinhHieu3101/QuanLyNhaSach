@@ -7,7 +7,7 @@
       mc:Ignorable="d" 
       Background="White"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="DanhSachHoaDon"
+      Title="TraCuuHoaDon"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
     <Page.Resources>
@@ -209,6 +209,7 @@
                 <TextBox x:Name="tongtien" Template="{StaticResource TextBoxBaseControlTemplate}" Margin="10,0,0,0"/>
             </DockPanel>
             
+            
         </StackPanel>
 
         <StackPanel Grid.Row="2">
@@ -236,7 +237,7 @@
         <StackPanel Margin="30,30,10,10" Grid.Column="1">
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Mã hóa đơn:" FontStyle="Italic"/>
-                <ComboBox x:Name="maKhachHang" Grid.Column="1" Margin="10,0,0,0">
+                <ComboBox x:Name="maHoaDon" Grid.Column="1" Margin="10,0,0,0">
                     <ComboBoxItem IsSelected="True">KH001</ComboBoxItem>
                     <ComboBoxItem></ComboBoxItem>
                 </ComboBox>
@@ -248,6 +249,34 @@
                     <ComboBoxItem></ComboBoxItem>
                 </ComboBox>
             </DockPanel>
+            <DockPanel Margin="25,10,0,0">
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                    <Button Content="Tìm Kiếm" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10,0"
+                            Foreground="White"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="add"
+                            Style="{StaticResource FindButton}" />
+                    <!--Click="add_Click"/>-->
+
+                    <Button Content="Làm Lại" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10,0"
+                            Foreground="Black"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="cancel"
+                            Style="{StaticResource CacelButton}"/>
+
+                </StackPanel>
+
+            </DockPanel>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="2">
             <DockPanel>
@@ -256,7 +285,7 @@
                                   CellStyle="{StaticResource DataGridCellStyle}" 
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
-                                  AutoGeneratingColumn="danhSachHDTable_AutoGeneratingColumn">
+                                  AutoGeneratingColumn="chitietHDTable_AutoGeneratingColumn">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
@@ -272,5 +301,6 @@
     </Grid>
 
 </Page>
+    
 
 
