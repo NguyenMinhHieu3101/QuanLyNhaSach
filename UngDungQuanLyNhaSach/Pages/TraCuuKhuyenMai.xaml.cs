@@ -28,6 +28,22 @@ namespace UngDungQuanLyNhaSach.Pages
         public TraCuuKhuyenMai()
         {
             InitializeComponent();
+            loadData();
+        }
+
+        private void resultKhuyenMaiTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            var desc = e.PropertyDescriptor as PropertyDescriptor;
+            var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
+            if (att != null)
+            {
+                e.Column.Header = att.Name;
+                e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            }
+        }
+
+        void loadData()
+        {
             try
             {
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
@@ -47,24 +63,13 @@ namespace UngDungQuanLyNhaSach.Pages
                         batDau: (DateTime)reader["ThoiGianBatDau"], //DateTime.ParseExact(reader["ThoiGianBatDau"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
                         ketThuc: (DateTime)reader["ThoiGianKetThuc"], //DateTime.ParseExact(reader["ThoiGianKetThuc"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
                         maLoaiKhachHang: (String)reader["MaLoaiKhachHang"],
-                        soLuong: (int)reader["SoLuongKhuyenMai"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn hiệu lực"));
-                    khuyenMaiTable.ItemsSource = khuyenMaiList;
+                        soLuong: (int)reader["SoLuongKhuyenMai"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
+                    resultKhuyenMaiTable.ItemsSource = khuyenMaiList;
                 }
             }
             catch
             {
                 MessageBox.Show("db error");
-            }
-        }
-
-        private void khuyenMaiTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
-        {
-            var desc = e.PropertyDescriptor as PropertyDescriptor;
-            var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
-            if (att != null)
-            {
-                e.Column.Header = att.Name;
-                e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
         }
     }
