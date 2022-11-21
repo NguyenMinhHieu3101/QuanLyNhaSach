@@ -34,7 +34,63 @@ namespace UngDungQuanLyNhaSach.Pages
             loadListStaff();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void resetData()
+        {
+            name.Text = "";
+            chucVu.SelectedIndex = 0;
+            cccd.Text = "";
+            sdt.Text = "";
+            diaChi.Text = "";
+            luong.Text = "";
+        }
+
+        void loadListStaff()
+        {
+            nhanVienList = new List<NhanVien>();
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+
+                connection.Open();
+                string readString = "select * from NHANVIEN";
+                SqlCommand command = new SqlCommand(readString, connection);
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                int count = 0;
+
+                while (reader.Read())
+                {
+                    count++;
+
+                    nhanVienList.Add(new NhanVien(stt: count, maNhanVien: (String)reader["MaNhanVien"],
+                        hoTen: (String)reader["HoTen"], maChucVu: (String)reader["MaChucVu"],
+                        ngaySinh: (DateTime)reader["NgaySinh"],  //DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                        cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"],
+                        diaChi: (String)reader["DiaChi"], luong: double.Parse(reader["Luong"].ToString()),
+                        trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động"));
+                    nhanVienTable.ItemsSource = nhanVienList;
+                }
+                connection.Close();
+            }
+            catch
+            {
+                MessageBox.Show("db error");
+            }
+        }
+
+        private void nhanVienTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            var desc = e.PropertyDescriptor as PropertyDescriptor;
+            var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
+            if (att != null)
+            {
+                e.Column.Header = att.Name;
+                e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            }
+        }
+
+        private void add_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -96,62 +152,6 @@ namespace UngDungQuanLyNhaSach.Pages
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
-        }
-
-        void resetData()
-        {
-            name.Text = "";
-            chucVu.SelectedIndex = 0;
-            cccd.Text = "";
-            sdt.Text = "";
-            diaChi.Text = "";
-            luong.Text = "";
-        }
-
-        void loadListStaff()
-        {
-            nhanVienList = new List<NhanVien>();
-            try
-            {
-                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-
-                connection.Open();
-                string readString = "select * from NHANVIEN";
-                SqlCommand command = new SqlCommand(readString, connection);
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                int count = 0;
-
-                while (reader.Read())
-                {
-                    count++;
-
-                    nhanVienList.Add(new NhanVien(stt: count, maNhanVien: (String)reader["MaNhanVien"],
-                        hoTen: (String)reader["HoTen"], maChucVu: (String)reader["MaChucVu"],
-                        ngaySinh: (DateTime)reader["NgaySinh"],  //DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
-                        cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"],
-                        diaChi: (String)reader["DiaChi"], luong: double.Parse(reader["Luong"].ToString()),
-                        trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động"));
-                    nhanVienTable.ItemsSource = nhanVienList;
-                }
-                connection.Close();
-            }
-            catch
-            {
-                MessageBox.Show("db error");
-            }
-        }
-
-        private void nhanVienTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
-        {
-            var desc = e.PropertyDescriptor as PropertyDescriptor;
-            var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
-            if (att != null)
-            {
-                e.Column.Header = att.Name;
-                e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
         }
     }

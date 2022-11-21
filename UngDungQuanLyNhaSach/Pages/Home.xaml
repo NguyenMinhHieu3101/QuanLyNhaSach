@@ -17,7 +17,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Grid Background="#383535">
+        <Grid Background="#1FAD7A">
             <!--<Grid.Effect>
                 <DropShadowEffect BlurRadius="20" 
                                   Direction="-90"
@@ -62,14 +62,9 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <control:MenuWithSubMenuControl HasIcon="True" SubMenuPadding="0,0,0,0" Background="#383535">
-                <!--<control:MenuWithSubMenuControl.Effect>
-                    <DropShadowEffect BlurRadius="20" 
-                                  Direction="0"
-                                  RenderingBias="Quality" 
-                                  ShadowDepth="0"
-                                  Opacity="0.3"/>
-                </control:MenuWithSubMenuControl.Effect>-->
+            <control:MenuWithSubMenuControl HasIcon="True" 
+                                            SubMenuPadding="0,0,0,0" 
+                                            Background="#1FAD7A">
             </control:MenuWithSubMenuControl>
 
             <Frame x:Name="MainWindowFrame" Grid.Column="1" NavigationUIVisibility="Hidden" Navigated="MainWindowFrame_Navigated"/>

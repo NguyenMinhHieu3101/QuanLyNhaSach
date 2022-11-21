@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using UngDungQuanLyNhaSach.Model;
+using System.ComponentModel;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -23,12 +25,15 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class ThemKhuyenMai : Page
     {
+        List<KhuyenMai> khuyenMaiList = new List<KhuyenMai>();
+
         public ThemKhuyenMai()
         {
             InitializeComponent();
+            loadData();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void add_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -70,6 +75,48 @@ namespace UngDungQuanLyNhaSach.Pages
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void khuyenMaiTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            var desc = e.PropertyDescriptor as PropertyDescriptor;
+            var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
+            if (att != null)
+            {
+                e.Column.Header = att.Name;
+                e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            }
+        }
+
+        void loadData()
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+
+                connection.Open();
+                string readString = "select * from KHUYENMAI";
+                SqlCommand command = new SqlCommand(readString, connection);
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                int count = 0;
+
+                while (reader.Read())
+                {
+                    count++;
+                    khuyenMaiList.Add(new KhuyenMai(stt: count, maKhuyenMai: (String)reader["MaKhuyenMai"],
+                        batDau: (DateTime)reader["ThoiGianBatDau"], //DateTime.ParseExact(reader["ThoiGianBatDau"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                        ketThuc: (DateTime)reader["ThoiGianKetThuc"], //DateTime.ParseExact(reader["ThoiGianKetThuc"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                        maLoaiKhachHang: (String)reader["MaLoaiKhachHang"],
+                        soLuong: (int)reader["SoLuongKhuyenMai"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
+                    khuyenMaiTable.ItemsSource = khuyenMaiList;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("db error");
             }
         }
     }
