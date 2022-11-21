@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Images\background.png" />
     <None Remove="Images\book-shop.png" />
+    <None Remove="Images\BookStore.png" />
     <None Remove="Images\drop-down-arrow.png" />
     <None Remove="Images\forgetpass.png" />
     <None Remove="Images\Lock.jpg" />
@@ -25,6 +26,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\book-shop.png" />
+    <Resource Include="Images\BookStore.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\drop-down-arrow.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
