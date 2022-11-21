@@ -11,7 +11,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="10" Background="#002B49" BorderBrush="#ccc" BorderThickness="1,1,1,1" >
+                        <Border CornerRadius="10" Background="#1FAD7A" BorderBrush="#ccc" BorderThickness="1,1,1,1" >
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                     </ControlTemplate>
@@ -149,7 +149,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
                         <Grid>
-                            <theme:DataGridHeaderBorder Background="#F94973" 
+                            <theme:DataGridHeaderBorder Background="#3FE8ab" 
                                                         BorderBrush="{TemplateBinding BorderBrush}" 
                                                         BorderThickness="{TemplateBinding BorderThickness}" 
                                                         IsPressed="{TemplateBinding IsPressed}" 
