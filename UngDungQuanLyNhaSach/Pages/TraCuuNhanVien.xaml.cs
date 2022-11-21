@@ -29,6 +29,23 @@ namespace UngDungQuanLyNhaSach.Pages
         public TraCuuNhanVien()
         {
             InitializeComponent();
+            loadListStaff();
+        }
+
+        private void nhanVienTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            var desc = e.PropertyDescriptor as PropertyDescriptor;
+            var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
+            if (att != null)
+            {
+                e.Column.Header = att.Name;
+                e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            }
+        }
+
+        void loadListStaff()
+        {
+            nhanVienList = new List<NhanVien>();
             try
             {
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
@@ -51,23 +68,13 @@ namespace UngDungQuanLyNhaSach.Pages
                         cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"],
                         diaChi: (String)reader["DiaChi"], luong: double.Parse(reader["Luong"].ToString()),
                         trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động"));
-                    nhanVienTable.ItemsSource = nhanVienList;
+                    resultNhanVienTable.ItemsSource = nhanVienList;
                 }
+                connection.Close();
             }
             catch
             {
                 MessageBox.Show("db error");
-            }
-        }
-
-        private void nhanVienTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
-        {
-            var desc = e.PropertyDescriptor as PropertyDescriptor;
-            var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
-            if (att != null)
-            {
-                e.Column.Header = att.Name;
-                e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
         }
     }
