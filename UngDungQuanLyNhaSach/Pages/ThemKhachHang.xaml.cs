@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UngDungQuanLyNhaSach.Model;
+using System.ComponentModel;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -22,12 +24,15 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class ThemKhachHang : Page
     {
+        List<KhachHang> khachHangList = new List<KhachHang>();
+
         public ThemKhachHang()
         {
             InitializeComponent();
+            loadData();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void add_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -69,10 +74,54 @@ namespace UngDungQuanLyNhaSach.Pages
                 command.ExecuteNonQuery();
 
                 MessageBox.Show("Thêm thành công");
+                connection.Close();
+                loadData();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        void loadData()
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+
+                connection.Open();
+                string readString = "select * from KHACHHANG";
+                SqlCommand command = new SqlCommand(readString, connection);
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                int count = 0;
+
+                while (reader.Read())
+                {
+                    count++;
+                    khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
+                        tenKhachHang: (String)reader["TenKhachHang"], diaChi: (String)reader["DiaChi"],
+                        gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["MaLoaiKhachHang"],
+                        sdt: (String)reader["SDT"], email: (String)reader["Email"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng"));
+                    khachHangTable.ItemsSource = khachHangList;
+                }
+                connection.Close();
+            }
+            catch
+            {
+                MessageBox.Show("db error");
+            }
+        }
+
+        private void khachHangTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            var desc = e.PropertyDescriptor as PropertyDescriptor;
+            var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
+            if (att != null)
+            {
+                e.Column.Header = att.Name;
+                e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
         }
     }

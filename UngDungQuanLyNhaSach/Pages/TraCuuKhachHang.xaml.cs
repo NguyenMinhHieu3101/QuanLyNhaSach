@@ -28,6 +28,11 @@ namespace UngDungQuanLyNhaSach.Pages
         public TraCuuKhachHang()
         {
             InitializeComponent();
+            loadData();
+        }
+
+        void loadData()
+        {
             try
             {
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
@@ -46,9 +51,10 @@ namespace UngDungQuanLyNhaSach.Pages
                     khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
                         tenKhachHang: (String)reader["TenKhachHang"], diaChi: (String)reader["DiaChi"],
                         gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["MaLoaiKhachHang"],
-                        sdt: (String)reader["SDT"], email: (String)reader["Email"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0?"Không tồn tại":"Còn sử dụng"));
-                    khachHangTable.ItemsSource = khachHangList;
+                        sdt: (String)reader["SDT"], email: (String)reader["Email"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng"));
+                    resultKhachHangTable.ItemsSource = khachHangList;
                 }
+                connection.Close();
             }
             catch
             {
@@ -56,7 +62,7 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-        private void khachHangTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        private void resultKhachHangTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             var desc = e.PropertyDescriptor as PropertyDescriptor;
             var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;

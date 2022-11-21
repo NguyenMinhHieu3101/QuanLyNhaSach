@@ -71,6 +71,8 @@ namespace UngDungQuanLyNhaSach.Pages
                 command.ExecuteNonQuery();
 
                 MessageBox.Show("Thêm thành công");
+                connection.Close();
+                loadData();
             }
             catch (Exception ex)
             {
@@ -113,6 +115,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         soLuong: (int)reader["SoLuongKhuyenMai"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
                     khuyenMaiTable.ItemsSource = khuyenMaiList;
                 }
+                connection.Close();
             }
             catch
             {

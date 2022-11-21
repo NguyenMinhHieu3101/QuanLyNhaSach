@@ -13,7 +13,12 @@
 
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="16" />
+            <Setter Property="Width" Value="135"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="DockPanel">
+            <Setter Property="Margin" Value="0,5"/>
         </Style>
 
         <Style TargetType="TextBox">
@@ -23,11 +28,34 @@
 
         <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
             <Border Background="{TemplateBinding Background}" 
-                x:Name="Bd" BorderBrush="#FDD5D5"
-                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="20">
+                    x:Name="Bd" BorderBrush="Black"
+                    BorderThickness="{TemplateBinding BorderThickness}" 
+                    CornerRadius="10">
                 <ScrollViewer x:Name="PART_ContentHost"/>
             </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
 
+        <ControlTemplate x:Key="DatePickerControlTemplate" TargetType="{x:Type DatePicker}">
+            <Border Background="{TemplateBinding Background}" 
+                    x:Name="Bd" BorderBrush="Black"
+                    BorderThickness="{TemplateBinding BorderThickness}" 
+                    CornerRadius="10">
+                <!--<ScrollViewer x:Name="PART_ContentHost"/>-->
+                <DatePicker BorderBrush="Transparent"/>
+                <!--<ContentPresenter/>-->
+            </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
@@ -54,40 +82,26 @@
                   x:Name="Border" 
                   Grid.ColumnSpan="2"
                   CornerRadius="10"
-                  Background="#FDD5D5"
-                  BorderBrush="#FDD5D5"
+                  Background="White"
+                  BorderBrush="Black"
                   BorderThickness="1" />
 
                 <Border 
                   Grid.Column="0"
                   CornerRadius="10,0,0,10" 
-                  Background="#FDD5D5" 
-                  BorderBrush="#FDD5D5"
-                  BorderThickness="0,0,1,0" />
+                  Background="White" 
+                  BorderBrush="Black"
+                  BorderThickness="1,1,1,1" />
 
                 <Path 
                   x:Name="Arrow"
                   Grid.Column="1"     
-                  Fill="White"
+                  Fill="Black"
                   HorizontalAlignment="Center"
                   VerticalAlignment="Center"
                   Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"/>
 
             </Grid>
-            <!--<ControlTemplate.Triggers>
-            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#808080" />
-            </Trigger>
-            <Trigger Property="ToggleButton.IsChecked" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
-                <Setter TargetName="Border" Property="BorderBrush" Value="#AAAAAA" />
-                <Setter Property="Foreground" Value="#888888"/>
-                <Setter TargetName="Arrow" Property="Fill" Value="#888888" />
-            </Trigger>
-        </ControlTemplate.Triggers>-->
         </ControlTemplate>
 
         <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
@@ -207,59 +221,125 @@
 
     </Page.Resources>
 
-    <StackPanel Margin="10">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="180"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-        <Grid Margin="0,10">
-
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Tìm kiếm theo"/>
-            <TextBlock Text="Nội dung tìm kiếm" Grid.Column="1"/>
+            <StackPanel Margin="10,0">
+
+                <DockPanel LastChildFill="True">
+                    <TextBlock Text="Mã Khách Hàng:"/>
+                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                </DockPanel>
+
+                <DockPanel LastChildFill="True">
+                    <TextBlock Text="Loại Khách Hàng:"/>
+                    <ComboBox>
+                        <ComboBoxItem IsSelected="True">Vãng Lai</ComboBoxItem>
+                        <ComboBoxItem>Bạc</ComboBoxItem>
+                        <ComboBoxItem>Vàng</ComboBoxItem>
+                        <ComboBoxItem>Kim Cương</ComboBoxItem>
+                    </ComboBox>
+                </DockPanel>
+
+                <DockPanel LastChildFill="True">
+                    <TextBlock Text="Tên khách hàng:"/>
+                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                </DockPanel>
+
+                <DockPanel LastChildFill="True">
+                    <TextBlock Text="Tổng tiền đã mua:"/>
+                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                </DockPanel>
+                
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="10,0">
+
+                <DockPanel LastChildFill="True">
+                    <TextBlock Text="Ngày sinh:"/>
+                    <DatePicker x:Name="ngaySinh" Template="{StaticResource DatePickerControlTemplate}"/>
+                </DockPanel>
+
+                <DockPanel LastChildFill="True">
+                    <TextBlock Text="Số điện thoại:"/>
+                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                </DockPanel>
+
+                <DockPanel LastChildFill="True">
+                    <TextBlock Text="Trạng Thái:"/>
+                    <ComboBox>
+                        <ComboBoxItem IsSelected="True">Hết hạn</ComboBoxItem>
+                        <ComboBoxItem>Còn hiệu lực</ComboBoxItem>
+                    </ComboBox>
+                </DockPanel>
+
+            </StackPanel>
 
         </Grid>
 
-        <Grid Margin="0,10">
+        <Grid Grid.Row="1">
+            <DockPanel>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5*"/>
-            </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-            <ComboBox Margin="15,0">
-                <ComboBoxItem>Mã khách hàng</ComboBoxItem>
-                <ComboBoxItem IsSelected="True">Loại khách hàng</ComboBoxItem>
-                <ComboBoxItem>Số điện thoại</ComboBoxItem>
-            </ComboBox>
+                    <Button Content="Tìm kiếm" 
+                        Height="35" 
+                        Width="90"
+                        Margin="20,0"
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Style="{StaticResource FindButton}"/>
 
-            <TextBox Grid.Column="1" 
-                     Margin="15,0"
-                     Background="#FDD5D5"
-                     Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <Button Content="Làm lại" 
+                        Height="35" 
+                        Width="90"
+                        Margin="20,0"
+                        Foreground="Black"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Style="{StaticResource CacelButton}"/>
+
+                </StackPanel>
+
+            </DockPanel>
 
         </Grid>
 
-        <DataGrid x:Name="khachHangTable" Margin="5,10" Style="{DynamicResource DataGridStyle}" 
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <DataGrid Grid.Column="0" 
+                  x:Name="resultKhachHangTable" Margin="5,10" 
+                  Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="khachHangTable_AutoGeneratingColumn">
+                  AutoGeneratingColumn="resultKhachHangTable_AutoGeneratingColumn"/>
 
-            <!--<DataGrid.Columns>
-                <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                <DataGridTextColumn Header="Mã khách hàng" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Tên khách hàng" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Loại khách hàng" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Ngày sinh" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Tổng tiền mua" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Số điện thoại" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-            </DataGrid.Columns>-->
+            <DataGrid Grid.Column="1" 
+                  x:Name="chooseKhachHangTable" Margin="5,10" 
+                  Style="{DynamicResource DataGridStyle}" 
+                  CellStyle="{StaticResource DataGridCellStyle}" 
+                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
+                  RowStyle="{StaticResource DataGridRowStyle}" 
+                  AutoGeneratingColumn="resultKhachHangTable_AutoGeneratingColumn"/>
 
-        </DataGrid>
+        </Grid>
 
-    </StackPanel>
+    </Grid>
 
 </Page>

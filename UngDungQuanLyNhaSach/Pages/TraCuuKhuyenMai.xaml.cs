@@ -66,6 +66,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         soLuong: (int)reader["SoLuongKhuyenMai"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
                     resultKhuyenMaiTable.ItemsSource = khuyenMaiList;
                 }
+                connection.Close();
             }
             catch
             {
