@@ -221,7 +221,7 @@
                                   RowStyle="{StaticResource DataGridRowStyle}" 
                                   AutoGeneratingColumn="danhSachPNSTable_AutoGeneratingColumn">
 
-                    <DataGrid.Columns>
+                    <!--<DataGrid.Columns>
                         <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                         <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                         <DataGridTextColumn Header="Mã sách" IsReadOnly="True" CanUserResize="True" Width="*"/>
@@ -234,7 +234,7 @@
                         <DataGridTextColumn Header="Giá bán" IsReadOnly="True" CanUserResize="True" Width="*"/>
                         <DataGridTextColumn Header="Số lượng trong kho" IsReadOnly="True" CanUserResize="True" Width="*"/>
 
-                    </DataGrid.Columns>
+                    </DataGrid.Columns>-->
                 </DataGrid>
             </DockPanel>
         </StackPanel>
@@ -290,7 +290,7 @@
                                   CellStyle="{StaticResource DataGridCellStyle}" 
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
-                                  AutoGeneratingColumn="chiTietPNSTable_AutoGeneratingColumn">
+                                  AutoGeneratingColumn="danhSachPNSTable_AutoGeneratingColumn">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
