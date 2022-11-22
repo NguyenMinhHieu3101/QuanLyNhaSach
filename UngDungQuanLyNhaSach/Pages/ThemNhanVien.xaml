@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="550" d:DesignWidth="800"
+      d:DesignHeight="850" d:DesignWidth="800"
       Background="White"
       Title="ThemNhanVien">
 
@@ -272,12 +272,14 @@
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="CCCD:"/>
-                            <TextBox x:Name="cccd" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            <TextBox x:Name="cccd" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                     PreviewTextInput="cccd_PreviewTextInput"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="SĐT:"/>
-                            <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                     PreviewTextInput="sdt_PreviewTextInput"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
@@ -332,7 +334,7 @@
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Lương:"/>
-                            <TextBox x:Name="luong" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            <TextBox x:Name="luong" Template="{StaticResource TextBoxBaseControlTemplate}" PreviewTextInput="luong_PreviewTextInput"/>
                         </DockPanel>
 
                     </StackPanel>
@@ -341,24 +343,46 @@
 
             </Border>
 
-            <DockPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel Orientation="Vertical" 
+                            HorizontalAlignment="Center">
 
                     <Button Content="Xóa" 
                             Height="35" 
                             Width="90"
-                            Margin="10,0"
+                            Margin="10"
                             Foreground="White"
+                            Background="#F94973"
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="delete"
                             Style="{StaticResource DeleteButton}"/>
-                    
+
+                    <Button Content="Cập Nhập" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10"
+                            Foreground="White"                            
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="update"
+                            Style="{StaticResource FindButton}"/>
+
+                </StackPanel>
+
+
+                <StackPanel Grid.Column="1" Orientation="Vertical" 
+                            HorizontalAlignment="Center">
+
                     <Button Content="Thêm" 
                             Height="35" 
                             Width="90"
-                            Margin="10,0"
+                            Margin="10"
                             Foreground="White"
                             FontSize="16"
                             FontWeight="Bold"
@@ -366,20 +390,10 @@
                             Style="{StaticResource FindButton}" 
                             Click="add_Click"/>
 
-                    <Button Content="Cập Nhập" 
-                            Height="35" 
-                            Width="90"
-                            Margin="10,0"
-                            Foreground="White"                            
-                            FontSize="16"
-                            FontWeight="Bold"
-                            x:Name="update"
-                            Style="{StaticResource FindButton}"/>
-                    
                     <Button Content="Thoát" 
                             Height="35" 
                             Width="90"
-                            Margin="10,0"
+                            Margin="10"
                             Foreground="Black"
                             FontSize="16"
                             FontWeight="Bold"
@@ -387,8 +401,8 @@
                             Style="{StaticResource CacelButton}"/>
 
                 </StackPanel>
-
-            </DockPanel>
+                
+            </Grid>
 
         </StackPanel>
 

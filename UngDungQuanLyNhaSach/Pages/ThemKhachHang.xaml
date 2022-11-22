@@ -6,11 +6,10 @@
       xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
       mc:Ignorable="d" 
       Background="White"
-      d:DesignHeight="550" d:DesignWidth="800"
+      d:DesignHeight="850" d:DesignWidth="800"
       Title="ThemKhachHang">
 
     <Page.Resources>
-
         <Style x:Key="notCalledBorder" TargetType="{x:Type Border}">
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="BorderBrush" Value="Black" />
@@ -259,7 +258,8 @@
                         
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Tên khách hàng:"/>
-                            <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                     TextChanged="name_TextChanged"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
@@ -302,7 +302,8 @@
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Tổng tiền đã mua:"/>
-                            <TextBox x:Name="totalMoney" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            <TextBox x:Name="totalMoney" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                     PreviewTextInput="totalMoney_PreviewTextInput"/>
                         </DockPanel>
 
                     </StackPanel>
@@ -311,24 +312,46 @@
 
             </Border>
 
-            <DockPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel Orientation="Vertical" 
+                            HorizontalAlignment="Center">
 
                     <Button Content="Xóa" 
                             Height="35" 
                             Width="90"
-                            Margin="10,0"
+                            Margin="10"
                             Foreground="White"
+                            Background="#F94973"
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="delete"
                             Style="{StaticResource DeleteButton}"/>
 
+                    <Button Content="Cập Nhập" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10"
+                            Foreground="White"                            
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="update"
+                            Style="{StaticResource FindButton}"/>
+
+                </StackPanel>
+
+
+                <StackPanel Grid.Column="1" Orientation="Vertical" 
+                            HorizontalAlignment="Center">
+
                     <Button Content="Thêm" 
                             Height="35" 
                             Width="90"
-                            Margin="10,0"
+                            Margin="10"
                             Foreground="White"
                             FontSize="16"
                             FontWeight="Bold"
@@ -336,20 +359,10 @@
                             Style="{StaticResource FindButton}" 
                             Click="add_Click"/>
 
-                    <Button Content="Cập Nhập" 
-                            Height="35" 
-                            Width="90"
-                            Margin="10,0"
-                            Foreground="White"                            
-                            FontSize="16"
-                            FontWeight="Bold"
-                            x:Name="update"
-                            Style="{StaticResource FindButton}"/>
-
                     <Button Content="Thoát" 
                             Height="35" 
                             Width="90"
-                            Margin="10,0"
+                            Margin="10"
                             Foreground="Black"
                             FontSize="16"
                             FontWeight="Bold"
@@ -357,8 +370,8 @@
                             Style="{StaticResource CacelButton}"/>
 
                 </StackPanel>
-
-            </DockPanel>
+                
+            </Grid>
 
         </StackPanel>
 

@@ -26,7 +26,12 @@ namespace UngDungQuanLyNhaSach.Pages
         }
         private void Sign_In_Button(object sender, RoutedEventArgs e)
         {
-            if(txtEmail.Text == "" || txtMatKhau.Text =="" )
+            Home home = new Home();
+            //MessageBox.Show("Chào mừng!" + Current_User[2].ToString());
+            home.Show();
+            this.Hide();
+
+            /*if (txtEmail.Text == "" || txtMatKhau.Text =="" )
             {
                 MessageBox.Show("Vui lòng nhập Email và mật khẩu");
             }    else
@@ -42,7 +47,7 @@ namespace UngDungQuanLyNhaSach.Pages
             else
             {
                 MessageBox.Show("Email hoặc mật khẩu không đúng !");
-            }
+            }*/
         }
     
         private void Cancel_Button(object sender, RoutedEventArgs e)
