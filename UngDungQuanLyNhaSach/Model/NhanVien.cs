@@ -28,6 +28,8 @@ namespace UngDungQuanLyNhaSach.Model
 
         [ColumnName("Giới Tính")]
         public String gioiTinh { get; set; }
+        [ColumnName("Email")]
+        public String email { get; set; }
 
         [ColumnName("SĐT")]
         public String sdt { get; set; }
@@ -42,7 +44,7 @@ namespace UngDungQuanLyNhaSach.Model
         public String trangThai { get; set; }
 
         public NhanVien(string maNhanVien, string hoTen, string maChucVu, 
-            DateTime ngaySinh, string cccd, string gioiTinh, string sdt, 
+            DateTime ngaySinh, string cccd, string gioiTinh, string sdt, string email, 
             string diaChi, double luong, string trangThai)
         {
             this.maNhanVien = maNhanVien;
@@ -52,13 +54,14 @@ namespace UngDungQuanLyNhaSach.Model
             this.cccd = cccd;
             this.gioiTinh = gioiTinh;
             this.sdt = sdt;
+            this.email = email;
             this.diaChi = diaChi;
             this.luong = luong;
             this.trangThai = trangThai;
         }
         
         public NhanVien(int stt,string maNhanVien, string hoTen, string maChucVu, 
-            DateTime ngaySinh, string cccd, string gioiTinh, string sdt, 
+            DateTime ngaySinh, string cccd, string gioiTinh, string sdt, string email, 
             string diaChi, double luong, string trangThai)
         {
             this.stt = stt;
@@ -69,6 +72,7 @@ namespace UngDungQuanLyNhaSach.Model
             this.cccd = cccd;
             this.gioiTinh = gioiTinh;
             this.sdt = sdt;
+            this.email = email;
             this.diaChi = diaChi;
             this.luong = luong;
             this.trangThai = trangThai;

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UngDungQuanLyNhaSach.Model;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -22,144 +25,155 @@ namespace UngDungQuanLyNhaSach.Pages
 
     public partial class PhanQuyen : Page
     {
+     
+
         public PhanQuyen()
         {
             InitializeComponent();
         }
-    }
-   /* public List<PhanQuyen> GetPhanQuyen()
-    {
-        using (MySqlConnection connectioncheck = this.GetConnection())
+        public SqlConnection GetConnection()
         {
-            connectioncheck.Open();
+            SqlConnection con = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+            return con;
+        }
 
-            string query = "SELECT pq.MaQuyen, quyen.TenQuyen, cv.MaChucVu, cv.TenChucVu " +
-                "FROM (phanquyen pq INNER JOIN chucvu cv on pq.MaChucVu = cv.MaChucVu) " +
-                        "INNER JOIN quyen ON quyen.MaQuyen = pq.MaQuyen " +
-                "ORDER BY `cv`.`MaChucVu` ASC, `pq`.`MaQuyen` ASC";
-
-            MySqlCommand cmd = new MySqlCommand(query, connectioncheck);
-            List<PhanQuyen> phanQuyens = new List<PhanQuyen>();
-            using (var reader = cmd.ExecuteReader())
+        public List<Model.PhanQuyen> GetPhanQuyen()
+        {
+            using (SqlConnection connectioncheck = this.GetConnection())
             {
-                if (reader.HasRows)
+                connectioncheck.Open();
+
+                string query = "SELECT pq.MaQuyen, quyen.TenQuyen, cv.MaChucVu, cv.TenChucVu " +
+                    "FROM (phanquyen pq INNER JOIN chucvu cv on pq.MaChucVu = cv.MaChucVu) " +
+                            "INNER JOIN quyen ON quyen.MaQuyen = pq.MaQuyen " +
+                    "ORDER BY `cv`.`MaChucVu` ASC, `pq`.`MaQuyen` ASC";
+
+                SqlCommand cmd = new SqlCommand(query, connectioncheck);
+                List<Model.PhanQuyen> phanQuyens = new List<Model.PhanQuyen>();
+                using (var reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        PhanQuyen ph = new PhanQuyen();
-                        ph.MaQuyen = Convert.ToInt32(reader["MaQuyen"]);
-                        ph.TenQuyen = reader["TenQuyen"].ToString();
-                        ph.MaChucVu = Convert.ToInt32(reader["MaChucVu"]);
-                        ph.TenChucVu = reader["TenChucVu"].ToString();
-                        phanQuyens.Add(ph);
+                        while (reader.Read())
+                        {
+                            Model.PhanQuyen ph = new Model.PhanQuyen();
+                           
+                            ph.MaQuyen = (reader["MaQuyen"]).ToString();
+                            ph.TenQuyen = reader["TenQuyen"].ToString();
+                            ph.MaChucVu = (reader["MaChucVu"]).ToString();
+                            ph.TenChucVu = reader["TenChucVu"].ToString();
+                            phanQuyens.Add(ph);
+                        }
+                        return phanQuyens;
                     }
-                    return phanQuyens;
+                    else return null;
                 }
-                else return null;
             }
         }
-    }
-    public List<Quyen> GetQuyen()
-    {
-        using (MySqlConnection connectioncheck = this.GetConnection())
+
+        public List<Quyen> GetQuyen()
         {
-            connectioncheck.Open();
-
-            string query = "SELECT * FROM `quyen` ORDER BY `quyen`.`MaQuyen` ASC;";
-
-            MySqlCommand cmd = new MySqlCommand(query, connectioncheck);
-            List<Quyen> quyens = new List<Quyen>();
-            using (var reader = cmd.ExecuteReader())
+            using (SqlConnection connectioncheck = this.GetConnection())
             {
-                if (reader.HasRows)
+                connectioncheck.Open();
+
+                string query = "SELECT * FROM `quyen` ORDER BY `quyen`.`MaQuyen` ASC;";
+
+                SqlCommand cmd = new SqlCommand(query, connectioncheck);
+                List<Quyen> quyens = new List<Quyen>();
+                using (var reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        Quyen quyen = new Quyen();
-                        quyen.MaQuyen = Convert.ToInt32(reader["MaQuyen"]);
-                        quyen.TenQuyen = reader["TenQuyen"].ToString();
-                        quyens.Add(quyen);
+                        while (reader.Read())
+                        {
+                            Quyen quyen = new Quyen();
+                           
+                            quyen.MaQuyen = reader["MaQuyen"].ToString();
+                            quyen.TenQuyen = reader["TenQuyen"].ToString();
+                            quyens.Add(quyen);
+                        }
+                        return quyens;
                     }
-                    return quyens;
-                }
-                else return null;
-            }
-        }
-    }
-
-    public bool Decentralization(string stringPermission)
-    {
-        List<string> permissions = new List<string>();
-        permissions = stringPermission.Split("@@@").ToList();
-        permissions.RemoveAt(permissions.Count - 1);
-        int length = permissions.Count;
-        bool needInsert = (length > 0) ? true : false;
-
-        string submit = "INSERT INTO phanquyen VALUES ";
-        for (int i = 0; i < length; i++)
-        {
-            List<string> str = permissions[i].Split("$$").ToList();
-            string maChucVu = str[0];
-            List<string> listQuyen = str[1].Split("#").ToList();
-            listQuyen.RemoveAt(listQuyen.Count - 1);
-            int lengthListQuyen = listQuyen.Count;
-            for (int j = 0; j < lengthListQuyen; j++)
-            {
-                if (listQuyen[j] != "0")
-                {
-                    submit += "(" + maChucVu + "," + (j + 1) + "),";
+                    else return null;
                 }
             }
         }
-        submit = submit.Remove(submit.Length - 1);
-        string deleteOldPermission = "DELETE FROM phanquyen WHERE MaChucVu <> 1;";
 
-        using (MySqlConnection conn = GetConnection())
+        public bool Decentralization(string stringPermission)
         {
-            conn.Open();
-            string str = "Decentralization";
+            List<string> permissions = new List<string>();
+            permissions = stringPermission.Split("@@@").ToList();
+            permissions.RemoveAt(permissions.Count - 1);
+            int length = permissions.Count;
+            bool needInsert = (length > 0) ? true : false;
 
-            MySqlCommand cmd = new MySqlCommand(str, conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.AddWithValue("@deleteOldPermission", deleteOldPermission);
-            cmd.Parameters["@deleteOldPermission"].Direction = ParameterDirection.Input;
-            cmd.Parameters.AddWithValue("@insertNewPermision", submit);
-            cmd.Parameters["@insertNewPermision"].Direction = ParameterDirection.Input;
-            cmd.Parameters.AddWithValue("@needInsert", needInsert);
-            cmd.Parameters["@needInsert"].Direction = ParameterDirection.Input;
-
-            cmd.Parameters.Add("@isSucccess", MySqlDbType.Int32);
-            cmd.Parameters["@isSucccess"].Direction = ParameterDirection.Output;
-            cmd.ExecuteNonQuery();
-            return Convert.ToBoolean(cmd.Parameters["@isSucccess"].Value);
-        }
-    }
-    public string GetPhanQuyenForSession(int maChucVu)
-    {
-        using (MySqlConnection connectioncheck = this.GetConnection())
-        {
-            connectioncheck.Open();
-
-            string query = "SELECT pq.MaQuyen " +
-                "FROM phanquyen pq INNER JOIN chucvu cv on pq.MaChucVu = cv.MaChucVu " +
-                "WHERE pq.MaChucVu = @maChucVu " +
-                "ORDER BY pq.`MaQuyen` ASC";
-
-            MySqlCommand cmd = new MySqlCommand(query, connectioncheck);
-            cmd.Parameters.AddWithValue("maChucVu", maChucVu);
-            string permissionPerNhanVien = "";
-            using (var reader = cmd.ExecuteReader())
+            string submit = "INSERT INTO phanquyen VALUES ";
+            for (int i = 0; i < length; i++)
             {
-                if (reader.HasRows)
+                List<string> str = permissions[i].Split("$$").ToList();
+                string maChucVu = str[0];
+                List<string> listQuyen = str[1].Split("#").ToList();
+                listQuyen.RemoveAt(listQuyen.Count - 1);
+                int lengthListQuyen = listQuyen.Count;
+                for (int j = 0; j < lengthListQuyen; j++)
                 {
-                    while (reader.Read())
+                    if (listQuyen[j] != "0")
                     {
-                        permissionPerNhanVien += reader["MaQuyen"].ToString();
+                        submit += "(" + maChucVu + "," + (j + 1) + "),";
                     }
                 }
-                return permissionPerNhanVien;
+            }
+            submit = submit.Remove(submit.Length - 1);
+            string deleteOldPermission = "DELETE FROM phanquyen WHERE MaChucVu <> 1;";
+
+            using (SqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                string str = "Decentralization";
+
+                SqlCommand cmd = new SqlCommand(str, conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@deleteOldPermission", deleteOldPermission);
+                cmd.Parameters["@deleteOldPermission"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@insertNewPermision", submit);
+                cmd.Parameters["@insertNewPermision"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@needInsert", needInsert);
+                cmd.Parameters["@needInsert"].Direction = ParameterDirection.Input;
+
+                cmd.Parameters.Add("@isSucccess", SqlDbType.Int);
+                cmd.Parameters["@isSucccess"].Direction = ParameterDirection.Output;
+                cmd.ExecuteNonQuery();
+                return Convert.ToBoolean(cmd.Parameters["@isSucccess"].Value);
             }
         }
-    }*/
+        public string GetPhanQuyenForSession(int maChucVu)
+        {
+            using (SqlConnection connectioncheck = this.GetConnection())
+            {
+                connectioncheck.Open();
+
+                string query = "SELECT pq.MaQuyen " +
+                    "FROM phanquyen pq INNER JOIN chucvu cv on pq.MaChucVu = cv.MaChucVu " +
+                    "WHERE pq.MaChucVu = @maChucVu " +
+                    "ORDER BY pq.`MaQuyen` ASC";
+
+                SqlCommand cmd = new SqlCommand(query, connectioncheck);
+                cmd.Parameters.AddWithValue("maChucVu", maChucVu);
+                string permissionPerNhanVien = "";
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            permissionPerNhanVien += reader["MaQuyen"].ToString();
+                        }
+                    }
+                    return permissionPerNhanVien;
+                }
+            }
+        }
+    }
 }

@@ -67,7 +67,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         nhanVienList.Add(new NhanVien(stt: count, maNhanVien: (String)reader["MaNhanVien"],
                             hoTen: (String)reader["HoTen"], maChucVu: (String)reader["MaChucVu"],
                             ngaySinh: (DateTime)reader["NgaySinh"],  //DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
-                            cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"],
+                            cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"], email: (String)reader["Email"],
                             diaChi: (String)reader["DiaChi"], luong: double.Parse(reader["Luong"].ToString()),
                             trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động"));
                     }
@@ -76,6 +76,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         resultNhanVienTable.ItemsSource = nhanVienList;
                     }));
                     connection.Close();
+
                 }
                 catch
                 {

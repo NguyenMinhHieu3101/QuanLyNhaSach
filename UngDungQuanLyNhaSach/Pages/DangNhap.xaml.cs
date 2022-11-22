@@ -13,6 +13,7 @@ namespace UngDungQuanLyNhaSach.Pages
     public partial class DangNhap : Window
     {
         public static DataRow Current_User;
+        public static NhanVien currentStaff;
         public DangNhap()
         {
             InitializeComponent();
@@ -25,23 +26,23 @@ namespace UngDungQuanLyNhaSach.Pages
         }
         private void Sign_In_Button(object sender, RoutedEventArgs e)
         {
+            if(txtEmail.Text == "" || txtMatKhau.Text =="" )
+            {
+                MessageBox.Show("Vui lòng nhập Email và mật khẩu");
+            }    else
 
-            Home home = new Home();
-            home.Show();
-            this.Hide();
+            if (getID(txtEmail.Text, txtMatKhau.Text))
+            {
 
-            //if (getID(txtEmail.Text, txtMatKhau.Text))
-            //{
-
-            //    Home home = new Home();
-            //    MessageBox.Show("Chào mừng!" + Current_User[2].ToString());
-            //    home.Show();
-            //    this.Hide();
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Email hoặc mật khẩu không đúng !");
-            //}
+                Home home = new Home();
+                MessageBox.Show("Chào mừng!" + Current_User[2].ToString());
+                home.Show();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Email hoặc mật khẩu không đúng !");
+            }
         }
     
         private void Cancel_Button(object sender, RoutedEventArgs e)
@@ -50,6 +51,7 @@ namespace UngDungQuanLyNhaSach.Pages
             mainWindow.Show();
             this.Hide();
         }
+       
         private Boolean getID(string username, string pass)
         {
             SqlConnection con = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
@@ -57,7 +59,7 @@ namespace UngDungQuanLyNhaSach.Pages
             try
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM NHANVIEN WHERE Email ='" + username + "' and MatKhau='" + pass + "'", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM NHANVIEN WHERE Email ='" + username + "' and MatKhau='" + pass + "' and TrangThai <> '0'" , con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -66,9 +68,20 @@ namespace UngDungQuanLyNhaSach.Pages
                     foreach (DataRow dr in dt.Rows)
                     {
                         Current_User = dr;
-                        
                         return true;
                     }
+                /*    currentStaff.maNhanVien = Current_User[0].ToString();
+                    currentStaff.hoTen = Current_User[2].ToString();
+                    currentStaff.maChucVu = Current_User[3].ToString();
+                    currentStaff.ngaySinh = Convert.ToDateTime(Current_User[4]);
+                    currentStaff.cccd = Current_User[5].ToString();
+                    currentStaff.email = Current_User[6].ToString();
+                    currentStaff.gioiTinh = Current_User[7].ToString();
+                    currentStaff.sdt = Current_User[8].ToString();
+                    currentStaff.diaChi = Current_User[9].ToString();
+                    currentStaff.luong = Convert.ToDouble(Current_User[10]);*/
+
+
                 }
                 return false;
             }
