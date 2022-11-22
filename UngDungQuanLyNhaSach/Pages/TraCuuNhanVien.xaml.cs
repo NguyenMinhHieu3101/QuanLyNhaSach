@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,8 +25,6 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class TraCuuNhanVien : Page
     {
-        List<NhanVien> nhanVienList = new List<NhanVien>();
-
         public TraCuuNhanVien()
         {
             InitializeComponent();
@@ -45,37 +44,46 @@ namespace UngDungQuanLyNhaSach.Pages
 
         void loadListStaff()
         {
-            nhanVienList = new List<NhanVien>();
-            try
+            Thread thread = new Thread(new ThreadStart(() =>
             {
-                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                List<NhanVien> nhanVienList = new List<NhanVien>();
 
-                connection.Open();
-                string readString = "select * from NHANVIEN";
-                SqlCommand command = new SqlCommand(readString, connection);
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                int count = 0;
-
-                while (reader.Read())
+                try
                 {
-                    count++;
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
 
-                    nhanVienList.Add(new NhanVien(stt: count, maNhanVien: (String)reader["MaNhanVien"],
-                        hoTen: (String)reader["HoTen"], maChucVu: (String)reader["MaChucVu"],
-                        ngaySinh: (DateTime)reader["NgaySinh"],  //DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
-                        cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"],
-                        diaChi: (String)reader["DiaChi"], luong: double.Parse(reader["Luong"].ToString()),
-                        trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động"));
-                    resultNhanVienTable.ItemsSource = nhanVienList;
+                    connection.Open();
+                    string readString = "select * from NHANVIEN";
+                    SqlCommand command = new SqlCommand(readString, connection);
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    int count = 0;
+
+                    while (reader.Read())
+                    {
+                        count++;
+
+                        nhanVienList.Add(new NhanVien(stt: count, maNhanVien: (String)reader["MaNhanVien"],
+                            hoTen: (String)reader["HoTen"], maChucVu: (String)reader["MaChucVu"],
+                            ngaySinh: (DateTime)reader["NgaySinh"],  //DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                            cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"],
+                            diaChi: (String)reader["DiaChi"], luong: double.Parse(reader["Luong"].ToString()),
+                            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động"));
+                    }
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        resultNhanVienTable.ItemsSource = nhanVienList;
+                    }));
+                    connection.Close();
                 }
-                connection.Close();
-            }
-            catch
-            {
-                MessageBox.Show("db error");
-            }
+                catch
+                {
+                    MessageBox.Show("db error");
+                }
+            }));
+            thread.IsBackground = true;
+            thread.Start();
         }
     }
 }

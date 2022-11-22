@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UngDungQuanLyNhaSach.Model;
 using System.ComponentModel;
+using System.Threading;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -24,8 +25,6 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class ThemKhachHang : Page
     {
-        List<KhachHang> khachHangList = new List<KhachHang>();
-
         public ThemKhachHang()
         {
             InitializeComponent();
@@ -85,33 +84,44 @@ namespace UngDungQuanLyNhaSach.Pages
 
         void loadData()
         {
-            try
+            Thread thread = new Thread(new ThreadStart(() =>
             {
-                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                List<KhachHang> khachHangList = new List<KhachHang>();
 
-                connection.Open();
-                string readString = "select * from KHACHHANG";
-                SqlCommand command = new SqlCommand(readString, connection);
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                int count = 0;
-
-                while (reader.Read())
+                try
                 {
-                    count++;
-                    khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
-                        tenKhachHang: (String)reader["TenKhachHang"], diaChi: (String)reader["DiaChi"],
-                        gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["MaLoaiKhachHang"],
-                        sdt: (String)reader["SDT"], email: (String)reader["Email"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng"));
-                    khachHangTable.ItemsSource = khachHangList;
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+
+                    connection.Open();
+                    string readString = "select * from KHACHHANG";
+                    SqlCommand command = new SqlCommand(readString, connection);
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    int count = 0;
+
+                    while (reader.Read())
+                    {
+                        count++;
+                        khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
+                            tenKhachHang: (String)reader["TenKhachHang"], diaChi: (String)reader["DiaChi"],
+                            gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["MaLoaiKhachHang"],
+                            sdt: (String)reader["SDT"], email: (String)reader["Email"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng"));
+                    }
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        khachHangTable.ItemsSource = khachHangList;
+                    }));
+
+                    connection.Close();
                 }
-                connection.Close();
-            }
-            catch
-            {
-                MessageBox.Show("db error");
-            }
+                catch
+                {
+                    MessageBox.Show("db error");
+                }
+            }));
+            thread.IsBackground = true;
+            thread.Start();
         }
 
         private void khachHangTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
