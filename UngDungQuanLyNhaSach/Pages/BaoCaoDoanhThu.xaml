@@ -68,7 +68,8 @@
                             <TextBlock Text="Từ Ngày:" 
                                        Width="70" 
                                        VerticalAlignment="Center"/>
-                            <DatePicker Template="{StaticResource DatePickerControlTemplate}"/>
+                            <DatePicker Name="dPickerTuNgay"
+                                        Template="{StaticResource DatePickerControlTemplate}"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True" 
@@ -78,7 +79,8 @@
                                        Width="80" 
                                        VerticalAlignment="Center"/>
 
-                            <DatePicker Template="{StaticResource DatePickerControlTemplate}"/>
+                            <DatePicker Name="dPickerDenNgay"
+                                        Template="{StaticResource DatePickerControlTemplate}"/>
                         </DockPanel>
                     </DockPanel>
 
@@ -139,15 +141,18 @@
 
                     <StackPanel Margin="20, 0, 0, 0"
                                 HorizontalAlignment="Left">
-                        <TextBlock Text="TỔNG CHI:"
+                        <TextBlock x:Name="txtTongThu"
+                                   Text="TỔNG THU:"
                                    Style="{StaticResource Title}"
                                    Width="325"/>
 
-                        <TextBlock Text="TỔNG THU:"
+                        <TextBlock x:Name="txtTongChi"
+                                   Text="TỔNG CHI:"
                                    Style="{StaticResource Title}"
                                    Width="325"/>
 
-                        <TextBlock Text="LỢI NHUẬN:"
+                        <TextBlock x:Name="txtLoiNhuan"
+                                   Text="LỢI NHUẬN:"
                                    Style="{StaticResource Title}"
                                    Width="325"/>
                     </StackPanel>
