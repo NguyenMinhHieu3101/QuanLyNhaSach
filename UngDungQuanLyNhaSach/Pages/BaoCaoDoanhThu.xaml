@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
       mc:Ignorable="d" 
       Background="White"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="550" d:DesignWidth="800"
       Title="BaoCaoDoanhThu">
 
     <Page.Resources>
@@ -24,7 +24,6 @@
 
         <Style x:Key="Title" TargetType="TextBlock">
             <Setter Property="FontSize" Value="25" />
-            <!--<Setter Property="FontWeight" Value="Bold"/>-->
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
 
@@ -33,9 +32,7 @@
                     x:Name="Bd" BorderBrush="Black"
                     BorderThickness="{TemplateBinding BorderThickness}" 
                     CornerRadius="10">
-                <!--<ScrollViewer x:Name="PART_ContentHost"/>-->
                 <DatePicker BorderBrush="Transparent"/>
-                <!--<ContentPresenter/>-->
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
@@ -53,91 +50,110 @@
 
     </Page.Resources>
 
-    <StackPanel Margin="30">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <DockPanel LastChildFill="True" Width="250">
-                <TextBlock Text="Từ Ngày:" Width="70" VerticalAlignment="Center"/>
-                <DatePicker Template="{StaticResource DatePickerControlTemplate}"/>
-            </DockPanel>
-            <DockPanel LastChildFill="True" Width="250" Margin="100, 0, 0, 0">
-                <TextBlock Text="Đến Ngày:" Width="80" VerticalAlignment="Center"/>
-                <DatePicker Template="{StaticResource DatePickerControlTemplate}"/>
-            </DockPanel>
-        </StackPanel>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
 
-        <TextBlock Text="BẢNG THỐNG KÊ DOANH THU THÁNG"
-                   Style="{StaticResource Header1}"
-                   Margin="0, 30, 0, 0"/>
+        <StackPanel Margin="10">
+            <Border CornerRadius="6" 
+                    BorderBrush="Gray" 
+                    BorderThickness="1">
+                <StackPanel Margin="10">
+                    <DockPanel LastChildFill="True" 
+                               HorizontalAlignment="Center">
+                        <DockPanel LastChildFill="True" 
+                                   Width="175">
+                            <TextBlock Text="Từ Ngày:" 
+                                       Width="70" 
+                                       VerticalAlignment="Center"/>
+                            <DatePicker Template="{StaticResource DatePickerControlTemplate}"/>
+                        </DockPanel>
 
-        <DockPanel Height="200" LastChildFill="True" Margin="0, 20, 0, 20" HorizontalAlignment="Center">
-            <!--<ListView x:Name="lsvList" Width="350">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="#" Width="50"/>
-                        <GridViewColumn Header="Chi Trả" Width="150"/>
-                        <GridViewColumn Header="Số Tiền" Width="150"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>-->
-            <DataGrid x:Name="chiTraTable" Width="350" Style="{DynamicResource DataGridStyle}" 
-                  CellStyle="{StaticResource DataGridCellStyle}" 
-                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
-                  RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="chiTraTable_AutoGeneratingColumn">
+                        <DockPanel LastChildFill="True" 
+                                   Width="185" 
+                                   Margin="75, 0, 0, 0">
+                            <TextBlock Text="Đến Ngày:" 
+                                       Width="80" 
+                                       VerticalAlignment="Center"/>
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                    <DataGridTextColumn Header="Chi Trả" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                    <DataGridTextColumn Header="Số Tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                </DataGrid.Columns>
+                            <DatePicker Template="{StaticResource DatePickerControlTemplate}"/>
+                        </DockPanel>
+                    </DockPanel>
 
-            </DataGrid>
+                    <DockPanel HorizontalAlignment="Right" 
+                               Margin="0, 15">
+                        <Button Content="Hiện báo cáo" 
+                                Height="35" 
+                                Width="140"
+                                Margin="10,0"
+                                Foreground="White"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Style="{StaticResource AddButton}"
+                                Click="Button_Click" RenderTransformOrigin="0.527,-8.981"/>
+                    </DockPanel>
 
+                    <TextBlock Style="{StaticResource Header1}"
+                               Margin="0, 5, 0, 0"
+                               TextAlignment="Center">
+                        BẢNG THỐNG KÊ DOANH THU
+                        <LineBreak />
+                        TỪ ... ĐẾN ...
+                    </TextBlock>
 
-            <!--<ListView x:Name="lsvList2" Width="350" Margin="20, 0, 0, 0">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="#" Width="50"/>
-                        <GridViewColumn Header="Thu Nhập" Width="150" />
-                        <GridViewColumn Header="Số Tiền" Width="150"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>-->
-            <DataGrid x:Name="thuNhapTable" Width="350" Margin="20,0,0,0" Style="{DynamicResource DataGridStyle}" 
-                  CellStyle="{StaticResource DataGridCellStyle}" 
-                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
-                  RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="thuNhapTable_AutoGeneratingColumn">
+                    <DockPanel Height="225" 
+                               LastChildFill="True" 
+                               Margin="0, 10, 0, 20" 
+                               HorizontalAlignment="Center">
+                        <DataGrid x:Name="sachNhapTable" 
+                                  Width="225" 
+                                  Style="{DynamicResource DataGridStyle}" 
+                                  CellStyle="{StaticResource DataGridCellStyle}" 
+                                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
+                                  RowStyle="{StaticResource DataGridRowStyle}" 
+                                  AutoGeneratingColumn="chiTraTable_AutoGeneratingColumn">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
+                                <DataGridTextColumn Header="Chi Trả" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                                <DataGridTextColumn Header="Số Tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                    <DataGridTextColumn Header="Thu Nhập" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                    <DataGridTextColumn Header="Số Tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                </DataGrid.Columns>
+                        <DataGrid x:Name="sachDaBanTable" 
+                                  Width="225" 
+                                  Margin="15, 0, 0, 0" 
+                                  Style="{DynamicResource DataGridStyle}" 
+                                  CellStyle="{StaticResource DataGridCellStyle}" 
+                                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
+                                  RowStyle="{StaticResource DataGridRowStyle}" 
+                                  AutoGeneratingColumn="thuNhapTable_AutoGeneratingColumn">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
+                                <DataGridTextColumn Header="Thu Nhập" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                                <DataGridTextColumn Header="Số Tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
 
-            </DataGrid>
+                    <StackPanel Margin="20, 0, 0, 0"
+                                HorizontalAlignment="Left">
+                        <TextBlock Text="TỔNG CHI:"
+                                   Style="{StaticResource Title}"
+                                   Width="325"/>
 
-        </DockPanel>
+                        <TextBlock Text="TỔNG THU:"
+                                   Style="{StaticResource Title}"
+                                   Width="325"/>
 
-        <DockPanel LastChildFill="True" HorizontalAlignment="Center">
-            <TextBlock Text="TỔNG CHI:"
-                       Style="{StaticResource Title}"
-                   Width="325"
-                       />
-            <TextBlock Text="TỔNG THU:"
-                       Style="{StaticResource Title}"
-                       Margin="30,0,0,0"
-                       Width="325"
-                   />
-        </DockPanel>
+                        <TextBlock Text="LỢI NHUẬN:"
+                                   Style="{StaticResource Title}"
+                                   Width="325"/>
+                    </StackPanel>
 
-        <TextBlock Text="LỢI NHUẬN:"
-                   Style="{StaticResource Title}"
-                   Margin="0, 10, 0, 0"
-                   HorizontalAlignment="Center"/>
-
-        <DockPanel HorizontalAlignment="Right">
-            <Button Content="Hiện báo cáo" 
+                    <DockPanel HorizontalAlignment="Right">
+                        <Button Content="Xuất PDF" 
                         Height="35" 
                         Width="140"
                         Margin="10,0"
@@ -145,7 +161,10 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}"
-                        Click="Button_Click"/>
-        </DockPanel>
-    </StackPanel>
+                        Click="Button_Click" RenderTransformOrigin="0.527,-8.981"/>
+                    </DockPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
 </Page>
