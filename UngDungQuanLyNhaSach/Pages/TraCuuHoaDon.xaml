@@ -220,16 +220,6 @@
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
                                   AutoGeneratingColumn="danhSachHDTable_AutoGeneratingColumn">
-
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                        <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                        <DataGridTextColumn Header="Mã hóa đơn" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Tổng tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Ngày lập hóa đơn" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Người lập hóa đơn" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Giá phiếu" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                    </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
         </StackPanel>
@@ -285,16 +275,8 @@
                                   CellStyle="{StaticResource DataGridCellStyle}" 
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
-                                  AutoGeneratingColumn="chitietHDTable_AutoGeneratingColumn">
+                                  AutoGeneratingColumn="danhSachHDTable_AutoGeneratingColumn">
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                        <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                        <DataGridTextColumn Header="Mã hóa đơn" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Tổng tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Người lập hóa đơn" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Ngày lập hóa đơn" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                    </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
         </StackPanel>
