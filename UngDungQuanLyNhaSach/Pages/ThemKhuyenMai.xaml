@@ -254,7 +254,16 @@
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Mã khuyến mãi:"/>
-                            <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            <Border BorderThickness="1" BorderBrush="Black" 
+                                    CornerRadius="10"
+                                    Background="Gray">
+
+                                <TextBlock x:Name="maKM" Height="30"
+                                           TextAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                            <!--<TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}"/>-->
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
@@ -350,7 +359,7 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="cancel"
-                            Style="{StaticResource CacelButton}"/>
+                            Style="{StaticResource CacelButton}" Click="cancel_Click"/>
 
                 </StackPanel>
             </Grid>

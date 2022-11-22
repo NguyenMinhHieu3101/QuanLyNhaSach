@@ -29,7 +29,31 @@ namespace UngDungQuanLyNhaSach.Pages
         public ThemKhachHang()
         {
             InitializeComponent();
+            updateMaKhachHang();
             loadData();
+        }
+
+        void updateMaKhachHang()
+        {
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+
+                    string readString = "select Count(*) from KHACHHANG";
+                    SqlCommand commandReader = new SqlCommand(readString, connection);
+                    Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        maKH.Text = "NV" + count.ToString();
+                    }));
+                }
+                catch (Exception ex) { }
+            }));
+            thread.IsBackground = true;
+            thread.Start();
         }
 
         private void add_Click(object sender, RoutedEventArgs e)
@@ -77,6 +101,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     connection.Close();
                     loadData();
+                    updateMaKhachHang();
                     MessageBox.Show("Thêm thành công");
                 }
                 catch (Exception ex)
@@ -176,6 +201,11 @@ namespace UngDungQuanLyNhaSach.Pages
             //    if (i < list.Length - 1) text += " ";
             //}    
             //name.Text = text;
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

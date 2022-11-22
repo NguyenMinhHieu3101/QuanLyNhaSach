@@ -31,6 +31,7 @@ namespace UngDungQuanLyNhaSach.Pages
         public ThemKhuyenMai()
         {
             InitializeComponent();
+            updateMaKhuyenMai();
             loadData();
         }
 
@@ -47,6 +48,29 @@ namespace UngDungQuanLyNhaSach.Pages
                 return false;
             }    
             return true;
+        }
+
+        void updateMaKhuyenMai()
+        {
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+
+                    string readString = "select Count(*) from KHUYENMAI";
+                    SqlCommand commandReader = new SqlCommand(readString, connection);
+                    Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        maKM.Text = "KM" + count.ToString();
+                    }));
+                }
+                catch (Exception ex) { }
+            }));
+            thread.IsBackground = true;
+            thread.Start();
         }
 
         private void add_Click(object sender, RoutedEventArgs e)
@@ -90,6 +114,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     connection.Close();
                     loadData();
+                    updateMaKhuyenMai();
                     MessageBox.Show("Thêm thành công");
                 }
                 catch (Exception ex)
@@ -162,6 +187,11 @@ namespace UngDungQuanLyNhaSach.Pages
         private void sdt_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !_regex.IsMatch(e.Text);
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

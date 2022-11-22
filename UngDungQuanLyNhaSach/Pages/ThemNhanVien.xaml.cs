@@ -154,7 +154,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@MaChucVu"].Value = chucVu.SelectedIndex == 0 ? "Admin" :
                         (chucVu.SelectedIndex == 1 ? "NVBH" : "NVK");
 
-                    //MessageBox.Show(ngaySinh.SelectedDate.ToString());
+                    //MessageBox.Show(ngaySinh.);
 
                     command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
                     command.Parameters["@NgaySinh"].Value = DateTime.Now;
@@ -207,6 +207,18 @@ namespace UngDungQuanLyNhaSach.Pages
         private void cccd_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !_regex.IsMatch(e.Text);
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        private void ngaySinh_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var picker = sender as DatePicker;
+            DateTime? date = picker.SelectedDate;
+            MessageBox.Show(date.ToString());
         }
     }
 }

@@ -284,7 +284,7 @@
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Ngày Sinh:"/>
-                            <DatePicker x:Name="ngaySinh" Template="{StaticResource DatePickerControlTemplate}"/>
+                            <DatePicker x:Name="ngaySinh" Template="{StaticResource DatePickerControlTemplate}" SelectedDateChanged="ngaySinh_SelectedDateChanged"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
@@ -398,7 +398,7 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="cancel"
-                            Style="{StaticResource CacelButton}"/>
+                            Style="{StaticResource CacelButton}" Click="cancel_Click"/>
 
                 </StackPanel>
                 

@@ -26,6 +26,10 @@
             <Setter Property="FontWeight" Value="Bold" />
         </Style>
 
+        <Style x:Key="normal" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+        </Style>
+
         <Style TargetType="DockPanel">
             <Setter Property="Margin" Value="0,5"/>
         </Style>
@@ -253,7 +257,17 @@
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Mã khách hàng:"/>
-                            <TextBox x:Name="maKH" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            <Border BorderThickness="1" BorderBrush="Black" 
+                                    CornerRadius="10"
+                                    Background="Gray">
+                                
+                                <TextBlock x:Name="maKH" Height="30"
+                                           Style="{StaticResource normal}"
+                                           TextAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+                            <!--<TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>-->
                         </DockPanel>
                         
                         <DockPanel LastChildFill="True">
@@ -367,7 +381,7 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="cancel"
-                            Style="{StaticResource CacelButton}"/>
+                            Style="{StaticResource CacelButton}" Click="cancel_Click"/>
 
                 </StackPanel>
                 
