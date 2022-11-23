@@ -17,7 +17,7 @@
 
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="16" />
-            <Setter Property="Width" Value="125"/>
+            <Setter Property="Width" Value="135"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
@@ -237,8 +237,9 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Margin="10">
@@ -257,23 +258,16 @@
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Mã khách hàng:"/>
-                            <Border BorderThickness="1" BorderBrush="Black" 
-                                    CornerRadius="10"
-                                    Background="Gray">
-                                
-                                <TextBlock x:Name="maKH" Height="30"
-                                           Style="{StaticResource normal}"
-                                           TextAlignment="Center"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
-                            </Border>
-                            <!--<TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>-->
+                            <TextBox x:Name="maKH" 
+                                     Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                     IsEnabled="False" 
+                                     TextAlignment="Center"/>
                         </DockPanel>
                         
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Tên khách hàng:"/>
                             <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     TextChanged="name_TextChanged"/>
+                                     TextChanged="name_TextChanged" />
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
@@ -326,16 +320,9 @@
 
             </Border>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                <StackPanel Orientation="Vertical" 
-                            HorizontalAlignment="Center">
-
-                    <Button Content="Xóa" 
+                <Button Content="Xóa" 
                             Height="35" 
                             Width="90"
                             Margin="10"
@@ -346,23 +333,7 @@
                             x:Name="delete"
                             Style="{StaticResource DeleteButton}"/>
 
-                    <Button Content="Cập Nhập" 
-                            Height="35" 
-                            Width="90"
-                            Margin="10"
-                            Foreground="White"                            
-                            FontSize="16"
-                            FontWeight="Bold"
-                            x:Name="update"
-                            Style="{StaticResource FindButton}"/>
-
-                </StackPanel>
-
-
-                <StackPanel Grid.Column="1" Orientation="Vertical" 
-                            HorizontalAlignment="Center">
-
-                    <Button Content="Thêm" 
+                <Button Content="Thêm" 
                             Height="35" 
                             Width="90"
                             Margin="10"
@@ -373,7 +344,17 @@
                             Style="{StaticResource FindButton}" 
                             Click="add_Click"/>
 
-                    <Button Content="Thoát" 
+                <Button Content="Cập Nhập" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10"
+                            Foreground="White"                            
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="update"
+                            Style="{StaticResource FindButton}"/>
+
+                <Button Content="Thoát" 
                             Height="35" 
                             Width="90"
                             Margin="10"
@@ -383,13 +364,13 @@
                             x:Name="cancel"
                             Style="{StaticResource CacelButton}" Click="cancel_Click"/>
 
-                </StackPanel>
-                
-            </Grid>
+            </WrapPanel>
 
         </StackPanel>
 
-        <DataGrid Grid.Column="1" 
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+
+        <DataGrid Grid.Column="2" 
                   x:Name="khachHangTable" Margin="5,10" 
                   Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 

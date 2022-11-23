@@ -318,8 +318,9 @@
 
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <DataGrid Grid.Column="0" 
@@ -330,7 +331,9 @@
                   RowStyle="{StaticResource DataGridRowStyle}" 
                   AutoGeneratingColumn="resultKhuyenMaiTable_AutoGeneratingColumn"/>
 
-            <DataGrid Grid.Column="1" 
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
+
+            <DataGrid Grid.Column="2" 
                   x:Name="chooseKhuyenMaiTable" Margin="5,10" 
                   Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 
