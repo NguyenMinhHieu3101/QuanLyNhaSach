@@ -19,6 +19,15 @@
     <Compile Update="Pages\BaoCaoSanPham.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\CapNhatKhachHang.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\CapNhatKhuyenMai.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\CapNhatNhanVien.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\TraCuuHoaDon.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -79,6 +88,15 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\BaoCaoSanPham.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\CapNhatKhachHang.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\CapNhatKhuyenMai.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\CapNhatNhanVien.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\TraCuuHoaDon.xaml">

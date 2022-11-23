@@ -352,7 +352,7 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="update"
-                            Style="{StaticResource FindButton}"/>
+                            Style="{StaticResource FindButton}" Click="update_Click"/>
 
                 <Button Content="Thoát" 
                             Height="35" 

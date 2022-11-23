@@ -220,5 +220,11 @@ namespace UngDungQuanLyNhaSach.Pages
             DateTime? date = picker.SelectedDate;
             MessageBox.Show(date.ToString());
         }
+
+        private void update_Click(object sender, RoutedEventArgs e)
+        {
+            var window = Window.GetWindow(this);
+            ((Home)window).MainWindowFrame.Navigate(new Uri(string.Format("{0}{1}{2}", "Pages/", "CapNhatNhanVien", ".xaml"), UriKind.RelativeOrAbsolute));
+        }
     }
 }

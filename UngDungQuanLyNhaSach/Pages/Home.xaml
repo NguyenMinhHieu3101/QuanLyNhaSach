@@ -10,6 +10,107 @@
         Height="800" Width="1200" MinHeight="800" MinWidth="1000"
         Closing="Window_Closing" 
         Icon="/UngDungQuanLyNhaSach;component//Images/book-shop.png">
+
+    <Window.Resources>
+
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+
+            <Image Source="/UngDungQuanLyNhaSach;component/Images/man.png" 
+                       HorizontalAlignment="Right" 
+                       VerticalAlignment="Center" 
+                       Margin="0,0,20,0"
+                       Height="50"
+                       Width="50"/>
+
+        </ControlTemplate>
+
+        <Style x:Key="{x:Type ComboBox}" TargetType="{x:Type ComboBox}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="MinWidth" Value="70"/>
+            <Setter Property="MinHeight" Value="35"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+
+                        <Grid>
+
+                            <ToggleButton Name="ToggleButton" 
+                                        Template="{StaticResource ComboBoxToggleButton}" 
+                                        Grid.Column="2" 
+                                        Focusable="false"
+                                        IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                        ClickMode="Press"/>
+
+                            <Popup Name="Popup"
+                                Placement="Bottom"
+                                IsOpen="{TemplateBinding IsDropDownOpen}"
+                                AllowsTransparency="True" 
+                                Focusable="False"
+                                PopupAnimation="Slide">
+
+                                <Grid Name="DropDown"
+                                      SnapsToDevicePixels="True"                
+                                      MinWidth="{TemplateBinding ActualWidth}"
+                                      MaxHeight="{TemplateBinding MaxDropDownHeight}">
+
+                                    <Border x:Name="DropDownBorder"
+                                            Background="#FDD5D5"
+                                            BorderThickness="1"
+                                            BorderBrush="#FDD5D5"/>
+
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" 
+                                                    KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+
+                                </Grid>
+
+                            </Popup>
+
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="5"/>
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEditable"  Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+        
+    </Window.Resources>
     
     <Grid>
         <Grid.RowDefinitions>
@@ -18,14 +119,7 @@
         </Grid.RowDefinitions>
 
         <Grid Background="#1FAD7A">
-            <!--<Grid.Effect>
-                <DropShadowEffect BlurRadius="20" 
-                                  Direction="-90"
-                                  RenderingBias="Quality" 
-                                  ShadowDepth="1"
-                                  Opacity="0.5"/>
-            </Grid.Effect>-->
-            
+
             <TextBlock Text="BookStore" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center" 
@@ -45,12 +139,17 @@
                            Foreground="White"
                            Margin="0,0,10,0"/>
                 
-                <Image Source="/UngDungQuanLyNhaSach;component/Images/man.png" 
+                <!--<Image Source="/UngDungQuanLyNhaSach;component/Images/man.png" 
                        HorizontalAlignment="Right" 
                        VerticalAlignment="Center" 
                        Margin="0,0,20,0"
                        Height="50"
-                       Width="50"/>
+                       Width="50"/>-->
+
+                <ComboBox x:Name="info" SelectionChanged="info_SelectionChanged">
+                    <ComboBoxItem>Thông tin nhân viên</ComboBoxItem>
+                    <ComboBoxItem>Đăng xuất</ComboBoxItem>
+                </ComboBox>
                 
             </StackPanel>
        

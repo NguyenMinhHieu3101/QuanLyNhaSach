@@ -207,5 +207,11 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             System.Windows.Application.Current.Shutdown();
         }
+
+        private void update_Click(object sender, RoutedEventArgs e)
+        {
+            var window = Window.GetWindow(this);
+            ((Home)window).MainWindowFrame.Navigate(new Uri(string.Format("{0}{1}{2}", "Pages/", "CapNhatKhachHang", ".xaml"), UriKind.RelativeOrAbsolute));
+        }
     }
 }

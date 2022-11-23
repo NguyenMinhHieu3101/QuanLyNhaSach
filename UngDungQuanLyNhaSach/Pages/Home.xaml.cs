@@ -19,6 +19,8 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class Home : Window
     {
+        bool check = false;
+
         public Home()
         {
             InitializeComponent();
@@ -27,12 +29,27 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            if (!check) System.Windows.Application.Current.Shutdown();
         }
 
         private void MainWindowFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
 
+        }
+
+        private void info_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (info.SelectedIndex == 1)
+            {
+                check = true;
+                DangNhap dangNhap = new DangNhap();
+                dangNhap.Show();
+                this.Close();
+            }
+            else
+            {
+
+            }    
         }
     }
 }
