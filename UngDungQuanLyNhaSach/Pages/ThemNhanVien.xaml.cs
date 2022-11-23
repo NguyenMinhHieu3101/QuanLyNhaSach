@@ -27,6 +27,8 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class ThemNhanVien : Page
     {
+        List<NhanVien> nhanVienList = new List<NhanVien>();
+
         public ThemNhanVien()
         {
             InitializeComponent();
@@ -47,7 +49,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
-                List<NhanVien> nhanVienList = new List<NhanVien>();
+                nhanVienList = new List<NhanVien>();
 
                 try
                 {
@@ -223,8 +225,15 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void update_Click(object sender, RoutedEventArgs e)
         {
-            var window = Window.GetWindow(this);
-            ((Home)window).MainWindowFrame.Navigate(new Uri(string.Format("{0}{1}{2}", "Pages/", "CapNhatNhanVien", ".xaml"), UriKind.RelativeOrAbsolute));
+            if (nhanVienTable.SelectedIndex != -1)
+            {
+                var window = Window.GetWindow(this);
+                ((Home)window).MainWindowFrame.Navigate(new CapNhatNhanVien(nhanVienList[nhanVienTable.SelectedIndex].maNhanVien));
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một nhân viên để chỉnh sửa");
+            }
         }
     }
 }

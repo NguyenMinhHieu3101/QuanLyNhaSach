@@ -28,6 +28,8 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class ThemKhuyenMai : Page
     {
+        List<KhuyenMai> khuyenMaiList = new List<KhuyenMai>();
+
         public ThemKhuyenMai()
         {
             InitializeComponent();
@@ -139,7 +141,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
-                List<KhuyenMai> khuyenMaiList = new List<KhuyenMai>();
+                khuyenMaiList = new List<KhuyenMai>();
 
                 try
                 {
@@ -196,8 +198,15 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void update_Click(object sender, RoutedEventArgs e)
         {
-            var window = Window.GetWindow(this);
-            ((Home)window).MainWindowFrame.Navigate(new Uri(string.Format("{0}{1}{2}", "Pages/", "CapNhatKhuyenMai", ".xaml"), UriKind.RelativeOrAbsolute));
+            if (khuyenMaiTable.SelectedIndex != -1)
+            {
+                var window = Window.GetWindow(this);
+                ((Home)window).MainWindowFrame.Navigate(new CapNhatKhuyenMai(khuyenMaiList[khuyenMaiTable.SelectedIndex].maKhuyenMai));
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một khuyến mãi để chỉnh sửa");
+            }
         }
     }
 }

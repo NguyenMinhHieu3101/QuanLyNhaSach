@@ -26,6 +26,8 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class ThemKhachHang : Page
     {
+        List<KhachHang> khachHangList = new List<KhachHang>();
+
         public ThemKhachHang()
         {
             InitializeComponent();
@@ -135,7 +137,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
-                List<KhachHang> khachHangList = new List<KhachHang>();
+                khachHangList = new List<KhachHang>();
 
                 try
                 {
@@ -210,8 +212,15 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void update_Click(object sender, RoutedEventArgs e)
         {
-            var window = Window.GetWindow(this);
-            ((Home)window).MainWindowFrame.Navigate(new Uri(string.Format("{0}{1}{2}", "Pages/", "CapNhatKhachHang", ".xaml"), UriKind.RelativeOrAbsolute));
+            if (khachHangTable.SelectedIndex != -1)
+            {
+                var window = Window.GetWindow(this);
+                ((Home)window).MainWindowFrame.Navigate(new CapNhatKhachHang(khachHangList[khachHangTable.SelectedIndex].maKhachHang));
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một khách hàng để chỉnh sửa");
+            }    
         }
     }
 }
