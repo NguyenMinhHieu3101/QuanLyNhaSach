@@ -27,6 +27,17 @@ namespace UngDungQuanLyNhaSach.Model
             set { maQuyen = value; }
         }
         private string tenQuyen;
+
+        public PhanQuyen(string maChucVu, string maQuyen)
+        {
+            this.maChucVu = maChucVu;
+            this.maQuyen = maQuyen;
+        }
+        public PhanQuyen()
+        {
+         
+        }
+
         public string TenQuyen
         {
             get { return tenQuyen; }
