@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using UngDungQuanLyNhaSach.Model;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -24,7 +25,8 @@ namespace UngDungQuanLyNhaSach.Pages
         public Home()
         {
             InitializeComponent();
-            MainWindowFrame.Navigate(new Wellcome());           
+            MainWindowFrame.Navigate(new Wellcome());
+            TenNguoiDangDangNhap.Text = NhanVienDangDangNhap.HoTen;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
