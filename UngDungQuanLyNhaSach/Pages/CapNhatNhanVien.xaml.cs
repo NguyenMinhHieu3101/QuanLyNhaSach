@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,7 +36,7 @@ namespace UngDungQuanLyNhaSach.Pages
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             var window = Window.GetWindow(this);
-            ((Home)window).MainWindowFrame.Navigate(new Uri(string.Format("{0}{1}{2}", "Pages/", "ThemNhanVien", ".xaml"), UriKind.RelativeOrAbsolute));
+            ((Home)window).MainWindowFrame.Navigate(new ThemNhanVien());
         }
 
         void loadData()
@@ -71,7 +72,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         diaChi.Text = nhanVien.diaChi;
                         gioiTinh.SelectedIndex = nhanVien.gioiTinh == "Nam" ? 0 : 1;
                         luong.Text = nhanVien.luong.ToString();
-                        chucVu.SelectedIndex = nhanVien.maNhanVien == "NVBH" ? 1 : (nhanVien.maNhanVien == "NVK" ? 2 : 0);
+                        chucVu.SelectedIndex = nhanVien.maChucVu == "NVBH" ? 1 : (nhanVien.maChucVu == "NVK" ? 2 : 0);
                     }));
                     connection.Close();
                 }
@@ -83,6 +84,93 @@ namespace UngDungQuanLyNhaSach.Pages
 
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        bool checkDataInput()
+        {
+            double distance;
+            if (cccd.Text.Length == 0 || cccd.Text.Length < 10 || !double.TryParse(cccd.Text, out distance))
+            {
+                MessageBox.Show("CCCD không hợp lệ");
+                return false;
+            }
+            if (sdt.Text.Length == 0 || !Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ");
+                return false;
+            }
+            if (!Regex.IsMatch(email.Text, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"))
+            {
+                MessageBox.Show("Email không hợp lệ");
+                return false;
+            }
+            if (!double.TryParse(luong.Text, out distance))
+            {
+                MessageBox.Show("Lương không hợp lệ");
+                return false;
+            }
+            return true;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkDataInput())
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+
+                    string updateString = "UPDATE NHANVIEN SET HoTen = @HoTen, MaChucVu = @MaChucVu, NgaySinh = @NgaySinh, Email = @Email, CCCD = @CCCD, GioiTinh = @GioiTinh, SDT = @SDT, DiaChi = @DiaChi, Luong = @Luong, TrangThai = @TrangThai " +
+                        "Where MaNhanVien = @MaNhanVien";
+                    SqlCommand command = new SqlCommand(updateString, connection);
+
+                    command.Parameters.Add("@MaNhanVien", SqlDbType.NVarChar);
+                    command.Parameters["@MaNhanVien"].Value = data;
+                    
+                    command.Parameters.Add("@HoTen", SqlDbType.NVarChar);
+                    command.Parameters["@HoTen"].Value = name.Text;
+
+                    command.Parameters.Add("@MaChucVu", SqlDbType.VarChar);
+                    command.Parameters["@MaChucVu"].Value = chucVu.SelectedIndex == 0 ? "Admin" :
+                        (chucVu.SelectedIndex == 1 ? "NVBH" : "NVK");
+
+                    command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
+                    command.Parameters["@NgaySinh"].Value = DateTime.Now;
+
+                    command.Parameters.Add("@Email", SqlDbType.VarChar);
+                    command.Parameters["@Email"].Value = email.Text;
+
+                    command.Parameters.Add("@CCCD", SqlDbType.VarChar);
+                    command.Parameters["@CCCD"].Value = cccd.Text;
+
+                    command.Parameters.Add("@GioiTinh", SqlDbType.NVarChar);
+                    command.Parameters["@GioiTinh"].Value = gioiTinh.Text;
+
+                    command.Parameters.Add("@SDT", SqlDbType.VarChar);
+                    command.Parameters["@SDT"].Value = sdt.Text;
+
+                    command.Parameters.Add("@DiaChi", SqlDbType.NVarChar);
+                    command.Parameters["@DiaChi"].Value = diaChi.Text;
+
+                    command.Parameters.Add("@Luong", SqlDbType.Money);
+                    command.Parameters["@Luong"].Value = luong.Text;
+
+                    command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
+                    command.Parameters["@TrangThai"].Value = "1";
+
+                    command.ExecuteNonQuery();
+
+                    connection.Close();
+                    MessageBox.Show("Sửa thành công");
+                    var window = Window.GetWindow(this);
+                    ((Home)window).MainWindowFrame.Navigate(new ThemNhanVien());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }

@@ -37,7 +37,7 @@ namespace UngDungQuanLyNhaSach.Pages
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             var window = Window.GetWindow(this);
-            ((Home)window).MainWindowFrame.Navigate(new Uri(string.Format("{0}{1}{2}", "Pages/", "ThemKhachHang", ".xaml"), UriKind.RelativeOrAbsolute));
+            ((Home)window).MainWindowFrame.Navigate(new ThemKhachHang());
         }
 
         private void name_TextChanged(object sender, TextChangedEventArgs e)
@@ -96,9 +96,75 @@ namespace UngDungQuanLyNhaSach.Pages
             thread.Start();
         }
 
+        bool checkDataInput()
+        {
+            if (sdt.Text.Length == 0 || !Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ");
+                return false;
+            }
+            if (!Regex.IsMatch(email.Text, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"))
+            {
+                MessageBox.Show("Email không hợp lệ");
+                return false;
+            }
+            if (totalMoney.Text.Length == 0)
+            {
+                MessageBox.Show("Lương không hợp lệ");
+                return false;
+            }
+            return true;
+        }
+
         private void update_Click(object sender, RoutedEventArgs e)
         {
+            if (checkDataInput())
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
 
+                    string updateString = "UPDATE KHACHHANG SET TenKhachHang = @TenKhachHang, DiaChi = @DiaChi, GioiTinh = @GioiTinh, MaLoaiKhachHang = @MaLoaiKhachHang, SDT = @SDT, Email = @Email, TrangThai = @TrangThai " +
+                        "WHERE MaKhachHang = @MaKhachHang";
+                    SqlCommand command = new SqlCommand(updateString, connection);
+
+                    command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
+                    command.Parameters["@MaKhachHang"].Value = data;
+
+                    command.Parameters.Add("@TenKhachHang", SqlDbType.NVarChar);
+                    command.Parameters["@TenKhachHang"].Value = name.Text;
+
+                    command.Parameters.Add("@DiaChi", SqlDbType.NVarChar);
+                    command.Parameters["@DiaChi"].Value = diaChi.Text;
+
+                    command.Parameters.Add("@GioiTinh", SqlDbType.NVarChar);
+                    command.Parameters["@GioiTinh"].Value = gioiTinh.Text;
+
+                    command.Parameters.Add("@MaLoaiKhachHang", SqlDbType.VarChar);
+                    command.Parameters["@MaLoaiKhachHang"].Value = "VL";
+
+                    command.Parameters.Add("@SDT", SqlDbType.VarChar);
+                    command.Parameters["@SDT"].Value = sdt.Text;
+
+                    command.Parameters.Add("@Email", SqlDbType.VarChar);
+                    command.Parameters["@Email"].Value = email.Text;
+
+                    command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
+                    command.Parameters["@TrangThai"].Value = "1";
+
+                    command.ExecuteNonQuery();
+
+                    connection.Close();
+                    MessageBox.Show("Cập nhật thành công");
+                    var window = Window.GetWindow(this);
+                    ((Home)window).MainWindowFrame.Navigate(new ThemKhachHang());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }

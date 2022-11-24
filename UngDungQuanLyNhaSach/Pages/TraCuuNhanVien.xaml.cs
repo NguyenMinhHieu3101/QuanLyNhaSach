@@ -53,7 +53,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
 
                     connection.Open();
-                    string readString = "select * from NHANVIEN";
+                    string readString = "select * from NHANVIEN, CHUCVU WHERE NHANVIEN.MaChucVu = CHUCVU.MaChucVu";
                     SqlCommand command = new SqlCommand(readString, connection);
 
                     SqlDataReader reader = command.ExecuteReader();
@@ -65,7 +65,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         count++;
 
                         nhanVienList.Add(new NhanVien(stt: count, maNhanVien: (String)reader["MaNhanVien"],
-                            hoTen: (String)reader["HoTen"], maChucVu: (String)reader["MaChucVu"],
+                            hoTen: (String)reader["HoTen"], maChucVu: (String)reader["TenChucVu"],
                             ngaySinh: (DateTime)reader["NgaySinh"],  //DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
                             cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"], email: (String)reader["Email"],
                             diaChi: (String)reader["DiaChi"], luong: double.Parse(reader["Luong"].ToString()),

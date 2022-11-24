@@ -292,7 +292,7 @@
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource AddButton}"/>
+                        Style="{StaticResource AddButton}" Click="update_Click"/>
 
                 <Button Content="Thoát" 
                         x:Name="cancel"

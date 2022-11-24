@@ -37,7 +37,7 @@ namespace UngDungQuanLyNhaSach.Pages
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             var window = Window.GetWindow(this);
-            ((Home)window).MainWindowFrame.Navigate(new Uri(string.Format("{0}{1}{2}", "Pages/", "ThemKhuyenMai", ".xaml"), UriKind.RelativeOrAbsolute));
+            ((Home)window).MainWindowFrame.Navigate(new ThemKhuyenMai());
         }
 
         private static readonly Regex _regex = new Regex("[0-9]+");
@@ -92,6 +92,67 @@ namespace UngDungQuanLyNhaSach.Pages
             }));
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        bool checkDataInput()
+        {
+            if (soLuong.Text.Length == 0)
+            {
+                MessageBox.Show("Số lượng không hợp lệ");
+                return false;
+            }
+            if (phanTram.Text.Length == 0)
+            {
+                MessageBox.Show("Phần trăm không hợp lệ");
+                return false;
+            }
+            return true;
+        }
+
+        private void update_Click(object sender, RoutedEventArgs e)
+        {
+            if (checkDataInput())
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+
+                    string updateString = "UPDATE KHUYENMAI SET ThoiGianBatDau = @ThoiGianBatDau, ThoiGianKetThuc = @ThoiGianKetThuc, MaLoaiKhachHang = @MaLoaiKhachHang, SoLuongKhuyenMai = @SoLuongKhuyenMai, TrangThai = @TrangThai " +
+                        "WHERE MaKhuyenMai = @MaKhuyenMai";
+                    SqlCommand command = new SqlCommand(updateString, connection);
+
+                    command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
+                    command.Parameters["@MaKhuyenMai"].Value = data;
+
+                    command.Parameters.Add("@ThoiGianBatDau", SqlDbType.SmallDateTime);
+                    command.Parameters["@ThoiGianBatDau"].Value = DateTime.Now;
+
+                    command.Parameters.Add("@ThoiGianKetThuc", SqlDbType.SmallDateTime);
+                    command.Parameters["@ThoiGianKetThuc"].Value = DateTime.Now;
+
+                    command.Parameters.Add("@MaLoaiKhachHang", SqlDbType.VarChar);
+                    command.Parameters["@MaLoaiKhachHang"].Value = loaiKhachHang.SelectedIndex == 0 ? "VL" :
+                        (loaiKhachHang.SelectedIndex == 1 ? "B" : (loaiKhachHang.SelectedIndex == 2 ? "V" : "KC"));
+
+                    command.Parameters.Add("@SoLuongKhuyenMai", SqlDbType.Int);
+                    command.Parameters["@SoLuongKhuyenMai"].Value = int.Parse(soLuong.Text);
+
+                    command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
+                    command.Parameters["@TrangThai"].Value = "1";
+
+                    command.ExecuteNonQuery();
+
+                    connection.Close();
+                    MessageBox.Show("Cập nhật thành công");
+                    var window = Window.GetWindow(this);
+                    ((Home)window).MainWindowFrame.Navigate(new ThemKhuyenMai());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }
