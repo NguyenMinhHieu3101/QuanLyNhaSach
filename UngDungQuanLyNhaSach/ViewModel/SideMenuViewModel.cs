@@ -4,9 +4,6 @@ using System.Windows.Media;
 using System.Windows;
 using System.Windows.Input;
 using UngDungQuanLyNhaSach.Pages;
-using UngDungQuanLyNhaSach.Model;
-using System.Data.SqlClient;
-using System.Data;
 
 namespace UngDungQuanLyNhaSach.ViewModel
 {
@@ -17,9 +14,7 @@ namespace UngDungQuanLyNhaSach.ViewModel
         {
             get
             {
-                if (NhanVienDangDangNhap.MaChucVu == "ADMIN")
-                {
-                    return new List<MenuItemsData>
+                return new List<MenuItemsData>
                 {
                     new MenuItemsData()
                     {
@@ -28,12 +23,12 @@ namespace UngDungQuanLyNhaSach.ViewModel
                         SubMenuList = new List<SubMenuItemsData>
                         {
                             new SubMenuItemsData() {
-
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/list.png",
                                 SubMenuText = "Thêm Nhân Viên",
                                 Page = "ThemNhanVien"
                             },
                             new SubMenuItemsData() {
-
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/list.png",
                                 SubMenuText = "Tra Cứu Nhân Viên",
                                 Page = "TraCuuNhanVien"
                             }
@@ -46,12 +41,12 @@ namespace UngDungQuanLyNhaSach.ViewModel
                         MenuText = "Quản Lý Khuyến Mãi",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData() {
-
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/import.png",
                                 SubMenuText = "Thêm Khuyến Mãi",
                                 Page = "ThemKhuyenMai"
                             },
                             new SubMenuItemsData() {
-
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/sell.png",
                                 SubMenuText = "Tra Cứu Khuyến Mãi",
                                 Page = "TraCuuKhuyenMai"
                             }
@@ -63,12 +58,12 @@ namespace UngDungQuanLyNhaSach.ViewModel
                         MenuText = "Quản Lý Khách Hàng",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData(){
-
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
                                 SubMenuText = "Thêm Khách Hàng",
                                 Page = "ThemKhachHang"
                             },
                             new SubMenuItemsData(){
-
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
                                 SubMenuText = "Tra Cứu Khách Hàng",
                                 Page = "TraCuuKhachHang"
                             },
@@ -80,12 +75,13 @@ namespace UngDungQuanLyNhaSach.ViewModel
                         MenuText = "Quản Lý Kho",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData(){
-
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/inventory_report.png",
+                                SubMenuText = "Thêm Phiếu Nhập Sách",
                                 Page = "ThemPhieuNhapSach"
 
-                            },
+                            },   
                             new SubMenuItemsData(){
-
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/analysis.png",
                                 SubMenuText = "Tra Cưu Phiếu Nhập Sách",
                                 Page = "TraCuuPhieuNhapSach"
                             },
@@ -97,7 +93,7 @@ namespace UngDungQuanLyNhaSach.ViewModel
                         MenuText = "Quản Lý Sản Phẩm",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData(){
-
+                                //PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
                                 SubMenuText = "Tra Cứu Sản Phẩm",
                                 Page = "TraCuuSanPham"
                             }
@@ -160,118 +156,6 @@ namespace UngDungQuanLyNhaSach.ViewModel
                         }
                     }
                 };
-                }
-                else
-                {
-                    List<Model.PhanQuyen> phanquyenlist = new List<Model.PhanQuyen>();
-                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-
-                    connection.Open();
-                    string readString = "SELECT * FROM PHANQUYEN WHERE MaChucVu = '" +NhanVienDangDangNhap.MaChucVu +"'";
-                    SqlCommand command = new SqlCommand(readString, connection);
-
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    int count = 0;
-
-                    while (reader.Read())
-                    {
-                        count++;
-                        phanquyenlist.Add(new Model.PhanQuyen(maChucVu: (string)reader["MaChucVu"], maQuyen: (string)reader["Maquyen"]));
-                    }
-
-                    connection.Close();
-                 
-                    MenuItemsData dataBaoCao = new MenuItemsData()  {
-                                        PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
-                                        MenuText ="Quản Lý Báo Cáo",
-                                        SubMenuList = new List<SubMenuItemsData>{
-                                            new SubMenuItemsData(){
-                                                //PathData = "/UngDungQuanLyNhaSach;component/Images/research.png",
-                                                SubMenuText = "Báo Cáo Doanh Thu",
-                                                Page = "BaoCaoDoanhThu"
-                                            },
-                                            new SubMenuItemsData(){
-                                                //PathData = "/UngDungQuanLyNhaSach;component/Images/analysis.png",
-                                                SubMenuText = "Báo Cáo Kho",
-                                                Page = "BaoCaoKho"
-                                            },
-                                            new SubMenuItemsData(){
-                                                //PathData = "/UngDungQuanLyNhaSach;component/Images/searching.png",
-                                                SubMenuText = "Báo Cáo Sản Phẩm",
-                                                Page = "BaoCaoSanPham"
-                                            }
-                                        }
-                                    
-                                     };
-                    MenuItemsData dataKho = new MenuItemsData()
-                                        {
-                                            PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
-                                            MenuText = "Quản Lý Kho",
-                                            SubMenuList = new List<SubMenuItemsData>{
-                                                                new SubMenuItemsData(){
-
-                                                                    Page = "ThemPhieuNhapSach"
-
-                                                                },
-                                                                new SubMenuItemsData(){
-
-                                                                    SubMenuText = "Tra Cưu Phiếu Nhập Sách",
-                                                                    Page = "TraCuuPhieuNhapSach"
-                                                                },
-                                                            }
-                                        };
-
-                    MenuItemsData dataHoaDon = new MenuItemsData()
-                                        {
-                                            PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
-                                            MenuText = "Quản Lý Hóa Đơn",
-                                            SubMenuList = new List<SubMenuItemsData>{
-                                                                new SubMenuItemsData(){
-                                                                    //PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
-                                                                    SubMenuText = "Thêm Hóa Đơn",
-                                                                    Page = "ThemHoaDon"
-                                                                },
-                                                                new SubMenuItemsData(){
-                                                                    //PathData = "/UngDungQuanLyNhaSach;component/Images/settings.png",
-                                                                    SubMenuText = "Tra Cứu Hóa Đơn",
-                                                                    Page = "TraCuuHoaDon"
-                                                                }
-                                                            }
-                                        };
-
-                    MenuItemsData dataKhachHang = new MenuItemsData()
-                                        {
-                                            PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
-                                            MenuText = "Quản Lý Khách Hàng",
-                                            SubMenuList = new List<SubMenuItemsData>{
-                                                                new SubMenuItemsData(){
-
-                                                                    SubMenuText = "Thêm Khách Hàng",
-                                                                    Page = "ThemKhachHang"
-                                                                },
-                                                                new SubMenuItemsData(){
-
-                                                                    SubMenuText = "Tra Cứu Khách Hàng",
-                                                                    Page = "TraCuuKhachHang"
-                                                                },
-                                                            }
-                                        };
-
-                    List<MenuItemsData> dataList = new List<MenuItemsData>() { dataBaoCao, dataKho, dataHoaDon, dataKhachHang };
-                    List<MenuItemsData> dataListShow = new List<MenuItemsData>();
-                   
-                
-                        if (phanquyenlist.Count > 0)
-                            for (int k = 0; k < phanquyenlist.Count; k++)
-                            {
-                                dataListShow.Add(dataList[int.Parse(phanquyenlist[k].MaQuyen) - 1]);
-                            }
-                        else
-                            return null;
-         
-                    return dataListShow;
-                }    
             }
         }
     }

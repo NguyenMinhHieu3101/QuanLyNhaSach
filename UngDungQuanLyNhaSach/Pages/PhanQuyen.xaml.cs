@@ -25,291 +25,17 @@ namespace UngDungQuanLyNhaSach.Pages
 
     public partial class PhanQuyen : Page
     {
-        List<Model.PhanQuyen> phanQuyens = new List<Model.PhanQuyen>();
+     
+
         public PhanQuyen()
         {
-        
             InitializeComponent();
-            using (SqlConnection connectioncheck = this.GetConnection())
-            {
-                connectioncheck.Open();
-                
-                string query = "SELECT pq.MaQuyen, quyen.TenQuyen, cv.MaChucVu, cv.TenChucVu " +
-                    "FROM (phanquyen pq INNER JOIN chucvu cv on pq.MaChucVu = cv.MaChucVu) " +
-                            "INNER JOIN quyen ON quyen.MaQuyen = pq.MaQuyen ";
-
-                SqlCommand cmd = new SqlCommand(query, connectioncheck);
-               
-                using (var reader = cmd.ExecuteReader())
-                {
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-                         
-                            Model.PhanQuyen ph = new Model.PhanQuyen();
-                       
-                            ph.MaQuyen = (reader["MaQuyen"]).ToString();
-                            ph.TenQuyen = reader["TenQuyen"].ToString();
-                            ph.MaChucVu = (reader["MaChucVu"]).ToString();
-                            ph.TenChucVu = reader["TenChucVu"].ToString();
-                            phanQuyens.Add(ph);
-                        }
-
-                    }
-                    foreach(Model.PhanQuyen ph in phanQuyens)
-                    {
-                        if(ph.MaChucVu != "ADMIN")
-                        {
-                            string name = ph.MaChucVu + ph.MaQuyen;
-                                       
-                            object wantedNode = grid.FindName(name);
-                            if (wantedNode is CheckBox)
-                            {
-                                // Following executed if Text element was found.
-                                CheckBox wantedChild = wantedNode as CheckBox;
-                                wantedChild.IsChecked = true;
-                            }
-                        }
-                    }
-                }
-                connectioncheck.Close();
-            }
         }
-    
         public SqlConnection GetConnection()
         {
             SqlConnection con = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
             return con;
         }
-
-        private void Save_Button(object sender, RoutedEventArgs e)
-        {
-   
-            using (SqlConnection connectioncheck = this.GetConnection())
-            {
-                int countChange = 0;
-                connectioncheck.Open();
-                string reset = "DELETE FROM PHANQUYEN WHERE MaChucVu = @MaChucVu AND MaQuyen = @MaQuyen";
-//3 dòng for tiếp theo là để xóa những cái không được chọn trong checkbox
-                for (int maquyen = 1; maquyen <= 4; maquyen++)
-                {
-                    string name = "NVK" + maquyen.ToString();
-                    object wantedNode = grid.FindName(name);
-                    if (wantedNode is CheckBox)
-                    {
-                        CheckBox wantedChild = wantedNode as CheckBox;
-              
-                        if (wantedChild.IsChecked == false)
-                        {
-                            SqlCommand command = new SqlCommand(reset, connectioncheck);
-                            command.Parameters.Add("@MaChucVu", SqlDbType.VarChar);
-                            command.Parameters["@MaChucVu"].Value = "NVK";
-                            command.Parameters.Add("@MaQuyen", SqlDbType.VarChar);
-                            command.Parameters["@MaQuyen"].Value = maquyen.ToString();
-                            command.ExecuteNonQuery();
-                           
-
-                        }
-
-                    }
-
-                }
-                for (int maquyen = 1; maquyen <= 4; maquyen++)
-                {
-                    string name = "NVBH" + maquyen.ToString();
-                    object wantedNode = grid.FindName(name);
-                    if (wantedNode is CheckBox)
-                    {
-                        CheckBox wantedChild = wantedNode as CheckBox;
-                       
-                        if (wantedChild.IsChecked ==false)
-                        {
-                            SqlCommand command = new SqlCommand(reset, connectioncheck);
-                            command.Parameters.Add("@MaChucVu", SqlDbType.VarChar);
-                            command.Parameters["@MaChucVu"].Value = "NVBH";
-                            command.Parameters.Add("@MaQuyen", SqlDbType.VarChar);
-                            command.Parameters["@MaQuyen"].Value = maquyen.ToString();
-                            command.ExecuteNonQuery();
-                        
-
-                        }
-
-                    }
-
-                }
-                for (int maquyen = 1; maquyen <= 4; maquyen++)
-                {
-                    string name = "NVKT" + maquyen.ToString();
-                    object wantedNode = grid.FindName(name);
-                    if (wantedNode is CheckBox)
-                    {
-                        CheckBox wantedChild = wantedNode as CheckBox;
-                   
-                        if (wantedChild.IsChecked == false)
-                        {
-                            SqlCommand command = new SqlCommand(reset, connectioncheck);
-                            command.Parameters.Add("@MaChucVu", SqlDbType.VarChar);
-                            command.Parameters["@MaChucVu"].Value = "NVKT";
-                            command.Parameters.Add("@MaQuyen", SqlDbType.VarChar);
-                            command.Parameters["@MaQuyen"].Value = maquyen.ToString();
-                            command.ExecuteNonQuery();
-                           
-
-                        }
-
-                    }
-
-                }
-                string insertstring = "INSERT INTO PHANQUYEN (MaChucVu, MaQuyen) VALUES (@MaChucVu, @MaQuyen)";
-
-//3 dòng for tiếp theo là để thêm những cái được chọn trong checkbox
-                for (int maquyen = 1; maquyen <= 4; maquyen++)
-                {
-                    string name = "NVK" + maquyen.ToString();
-                    object wantedNode = grid.FindName(name);
-                    if(wantedNode is CheckBox)
-                    {
-                        CheckBox wantedChild = wantedNode as CheckBox;
-                        bool flag = true;
-                        for (int i = 0; i < phanQuyens.Count; i++)
-                        {
-                            if(phanQuyens[i].MaChucVu == "NVK" && phanQuyens[i].MaQuyen == maquyen.ToString())
-                            {
-                                flag = false;
-                                break;
-                            }    
-
-                        }
-                        if (wantedChild.IsChecked == true && flag ==true)
-                        {
-                            SqlCommand command = new SqlCommand(insertstring, connectioncheck);
-                            command.Parameters.Add("@MaChucVu", SqlDbType.VarChar);
-                            command.Parameters["@MaChucVu"].Value = "NVK";
-                            command.Parameters.Add("@MaQuyen", SqlDbType.VarChar);
-                            command.Parameters["@MaQuyen"].Value = maquyen.ToString();
-                            command.ExecuteNonQuery();
-                           
-
-                        }
-         
-                    }    
-                   
-                }
-                for (int maquyen = 1; maquyen <= 4; maquyen++)
-                {
-                    string name = "NVBH" + maquyen.ToString();
-                    object wantedNode = grid.FindName(name);
-                    if (wantedNode is CheckBox)
-                    {
-                        CheckBox wantedChild = wantedNode as CheckBox;
-                        bool flag = true;
-                        for (int i = 0; i < phanQuyens.Count; i++)
-                        {
-                            if (phanQuyens[i].MaChucVu == "NVBH" && phanQuyens[i].MaQuyen == maquyen.ToString())
-                            {
-                                flag = false;
-                                break;
-                            }
-
-                        }
-                        if (wantedChild.IsChecked == true && flag == true)
-                        {
-                            SqlCommand command = new SqlCommand(insertstring, connectioncheck);
-                            command.Parameters.Add("@MaChucVu", SqlDbType.VarChar);
-                            command.Parameters["@MaChucVu"].Value = "NVBH";
-                            command.Parameters.Add("@MaQuyen", SqlDbType.VarChar);
-                            command.Parameters["@MaQuyen"].Value = maquyen.ToString();
-                            command.ExecuteNonQuery();
-                            countChange++;
-
-                        }
-
-                    }
-
-                }
-                for (int maquyen = 1; maquyen <= 4; maquyen++)
-                {
-                    string name = "NVKT" + maquyen.ToString();
-                    object wantedNode = grid.FindName(name);
-                    if (wantedNode is CheckBox)
-                    {
-                        CheckBox wantedChild = wantedNode as CheckBox;
-                        bool flag = true;
-                        for (int i = 0; i < phanQuyens.Count; i++)
-                        {
-                            if (phanQuyens[i].MaChucVu == "NVKT" && phanQuyens[i].MaQuyen == maquyen.ToString())
-                            {
-                                flag = false;
-                                break;
-                            }
-
-                        }
-                        if (wantedChild.IsChecked == true && flag == true)
-                        {
-                            SqlCommand command = new SqlCommand(insertstring, connectioncheck);
-                            command.Parameters.Add("@MaChucVu", SqlDbType.VarChar);
-                            command.Parameters["@MaChucVu"].Value = "NVKT";
-                            command.Parameters.Add("@MaQuyen", SqlDbType.VarChar);
-                            command.Parameters["@MaQuyen"].Value = maquyen.ToString();
-                            command.ExecuteNonQuery();
-                          
-
-                        }
-
-                    }
-
-                }
-                phanQuyens.Clear();
-                string query = "SELECT pq.MaQuyen, quyen.TenQuyen, cv.MaChucVu, cv.TenChucVu " +
-                  "FROM (phanquyen pq INNER JOIN chucvu cv on pq.MaChucVu = cv.MaChucVu) " +
-                          "INNER JOIN quyen ON quyen.MaQuyen = pq.MaQuyen ";
-
-                SqlCommand cmd = new SqlCommand(query, connectioncheck);
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    if (reader.HasRows)
-                    {
-                        while (reader.Read())
-                        {
-
-                            Model.PhanQuyen ph = new Model.PhanQuyen();
-
-                            ph.MaQuyen = (reader["MaQuyen"]).ToString();
-                            ph.TenQuyen = reader["TenQuyen"].ToString();
-                            ph.MaChucVu = (reader["MaChucVu"]).ToString();
-                            ph.TenChucVu = reader["TenChucVu"].ToString();
-                            phanQuyens.Add(ph);
-                        }
-
-                    }
-                    foreach (Model.PhanQuyen ph in phanQuyens)
-                    {
-                        if (ph.MaChucVu != "ADMIN")
-                        {
-                            string name = ph.MaChucVu + ph.MaQuyen;
-
-                            object wantedNode = grid.FindName(name);
-                            if (wantedNode is CheckBox)
-                            {
-                                // Following executed if Text element was found.
-                                CheckBox wantedChild = wantedNode as CheckBox;
-                                wantedChild.IsChecked = true;
-                            }
-                        }
-                    }
-                }
-
-                connectioncheck.Close();
-                MessageBox.Show("Thành công.");
-            }
-        }
-
-
-
-
-
 
         public List<Model.PhanQuyen> GetPhanQuyen()
         {
@@ -319,7 +45,8 @@ namespace UngDungQuanLyNhaSach.Pages
 
                 string query = "SELECT pq.MaQuyen, quyen.TenQuyen, cv.MaChucVu, cv.TenChucVu " +
                     "FROM (phanquyen pq INNER JOIN chucvu cv on pq.MaChucVu = cv.MaChucVu) " +
-                            "INNER JOIN quyen ON quyen.MaQuyen = pq.MaQuyen ";
+                            "INNER JOIN quyen ON quyen.MaQuyen = pq.MaQuyen " +
+                    "ORDER BY `cv`.`MaChucVu` ASC, `pq`.`MaQuyen` ASC";
 
                 SqlCommand cmd = new SqlCommand(query, connectioncheck);
                 List<Model.PhanQuyen> phanQuyens = new List<Model.PhanQuyen>();
@@ -398,7 +125,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 }
             }
             submit = submit.Remove(submit.Length - 1);
-            string deleteOldPermission = "DELETE FROM phanquyen WHERE MaChucVu <> 'ADMIN';";
+            string deleteOldPermission = "DELETE FROM phanquyen WHERE MaChucVu <> 1;";
 
             using (SqlConnection conn = GetConnection())
             {
@@ -421,7 +148,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 return Convert.ToBoolean(cmd.Parameters["@isSucccess"].Value);
             }
         }
-        public string GetPhanQuyenForSession(string maChucVu)
+        public string GetPhanQuyenForSession(int maChucVu)
         {
             using (SqlConnection connectioncheck = this.GetConnection())
             {
@@ -448,7 +175,5 @@ namespace UngDungQuanLyNhaSach.Pages
                 }
             }
         }
-
-     
     }
 }

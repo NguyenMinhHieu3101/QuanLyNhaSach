@@ -131,7 +131,7 @@
                         HorizontalAlignment="Right" 
                         VerticalAlignment="Center" >
 
-                <TextBlock Name="TenNguoiDangDangNhap"
+                <TextBlock Text="Trần Ngọc Tiến" 
                            HorizontalAlignment="Right" 
                            VerticalAlignment="Center" 
                            FontWeight="Bold"

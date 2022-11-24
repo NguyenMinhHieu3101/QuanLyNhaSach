@@ -13,6 +13,7 @@ namespace UngDungQuanLyNhaSach.Pages
     public partial class DangNhap : Window
     {
         public static DataRow Current_User;
+        public static NhanVien currentStaff;
         public DangNhap()
         {
             InitializeComponent();
@@ -25,20 +26,18 @@ namespace UngDungQuanLyNhaSach.Pages
         }
         private void Sign_In_Button(object sender, RoutedEventArgs e)
         {
-            /*Home home = new Home();
-            MessageBox.Show("Chào mừng!" + Current_User[2].ToString());
+            Home home = new Home();
+            //MessageBox.Show("Chào mừng!" + Current_User[2].ToString());
             home.Show();
-            this.Hide();*/
+            this.Hide();
 
-            if (txtEmail.Text == "" || txtMatKhau.Text =="" )
+            /*if (txtEmail.Text == "" || txtMatKhau.Text =="" )
             {
                 MessageBox.Show("Vui lòng nhập Email và mật khẩu");
             }    else
 
             if (getID(txtEmail.Text, txtMatKhau.Text))
             {
-                NhanVienDangDangNhap.MaChucVu = Current_User[3].ToString();
-                NhanVienDangDangNhap.HoTen = Current_User[2].ToString();
 
                 Home home = new Home();
                 MessageBox.Show("Chào mừng!" + Current_User[2].ToString());
@@ -47,8 +46,8 @@ namespace UngDungQuanLyNhaSach.Pages
             }
             else
             {
-                MessageBox.Show("Email hoặc mật khẩu không đúng HOẶC NHÂN VIÊN CÓ TRẠNG THÁI ĐÃ NGHỈ VIỆC!");
-            }
+                MessageBox.Show("Email hoặc mật khẩu không đúng !");
+            }*/
         }
     
         private void Cancel_Button(object sender, RoutedEventArgs e)
@@ -76,6 +75,17 @@ namespace UngDungQuanLyNhaSach.Pages
                         Current_User = dr;
                         return true;
                     }
+                /*    currentStaff.maNhanVien = Current_User[0].ToString();
+                    currentStaff.hoTen = Current_User[2].ToString();
+                    currentStaff.maChucVu = Current_User[3].ToString();
+                    currentStaff.ngaySinh = Convert.ToDateTime(Current_User[4]);
+                    currentStaff.cccd = Current_User[5].ToString();
+                    currentStaff.email = Current_User[6].ToString();
+                    currentStaff.gioiTinh = Current_User[7].ToString();
+                    currentStaff.sdt = Current_User[8].ToString();
+                    currentStaff.diaChi = Current_User[9].ToString();
+                    currentStaff.luong = Convert.ToDouble(Current_User[10]);*/
+
 
                 }
                 return false;
