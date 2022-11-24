@@ -18,6 +18,7 @@ using UngDungQuanLyNhaSach.Model;
 using System.ComponentModel;
 using System.Threading;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -49,7 +50,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        maKH.Text = "NV" + count.ToString();
+                        maKH.Text = "KH" + count.ToString();
                     }));
                 }
                 catch (Exception ex) { }
@@ -76,7 +77,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlCommand command = new SqlCommand(insertString, connection);
 
                     command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
-                    command.Parameters["@MaKhachHang"].Value = "NV" + count.ToString();
+                    command.Parameters["@MaKhachHang"].Value = "KH" + count.ToString();
 
                     command.Parameters.Add("@TenKhachHang", SqlDbType.NVarChar);
                     command.Parameters["@TenKhachHang"].Value = name.Text;
@@ -221,6 +222,40 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 MessageBox.Show("Vui lòng chọn một khách hàng để chỉnh sửa");
             }    
+        }
+
+        private void delete_Click(object sender, RoutedEventArgs e)
+        {
+            if (khachHangTable.SelectedIndex != -1)
+            {
+                var result = MessageBox.Show("Bạn thật sự muốn xóa?", "Thông báo!", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    try
+                    {
+                        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                        connection.Open();
+
+                        string deleteString = "Delete From KHACHHANG Where MaKhachHang = @MaKhachHang";
+                        SqlCommand command = new SqlCommand(deleteString, connection);
+                        command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
+                        command.Parameters["@MaKhachHang"].Value = khachHangList[khachHangTable.SelectedIndex].maKhachHang;
+
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                        loadData();
+                        MessageBox.Show("Xóa khách hàng thành công");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Xóa không thành công");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một khách hàng để xóa");
+            }
         }
     }
 }

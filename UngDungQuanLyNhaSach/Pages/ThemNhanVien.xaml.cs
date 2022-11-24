@@ -235,5 +235,39 @@ namespace UngDungQuanLyNhaSach.Pages
                 MessageBox.Show("Vui lòng chọn một nhân viên để chỉnh sửa");
             }
         }
+
+        private void delete_Click(object sender, RoutedEventArgs e)
+        {
+            if (nhanVienTable.SelectedIndex != -1)
+            {
+                var result = MessageBox.Show("Bạn thật sự muốn xóa?", "Thông báo!", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    try
+                    {
+                        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                        connection.Open();
+
+                        string deleteString = "Delete From NHANVIEN Where MaNhanVien = @MaNhanVien";
+                        SqlCommand command = new SqlCommand(deleteString, connection);
+                        command.Parameters.Add("@MaNhanVien", SqlDbType.VarChar);
+                        command.Parameters["@MaNhanVien"].Value = nhanVienList[nhanVienTable.SelectedIndex].maNhanVien;
+
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                        loadListStaff();
+                        MessageBox.Show("Xóa nhân viên thành công");
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Xóa không thành công");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn một nhân viên để xóa");
+            }    
+        }
     }
 }

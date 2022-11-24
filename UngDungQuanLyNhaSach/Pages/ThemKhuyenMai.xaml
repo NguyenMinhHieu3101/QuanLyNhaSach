@@ -310,7 +310,7 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="delete"
-                            Style="{StaticResource DeleteButton}"/>
+                            Style="{StaticResource DeleteButton}" Click="delete_Click"/>
 
                 <Button Content="Thêm" 
                             Height="35" 
