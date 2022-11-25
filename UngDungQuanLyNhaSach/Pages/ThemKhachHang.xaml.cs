@@ -33,6 +33,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             InitializeComponent();
             updateMaKhachHang();
+            ngaySinh.SelectedDate = DateTime.Now;
             loadData();
         }
 
@@ -45,6 +46,7 @@ namespace UngDungQuanLyNhaSach.Pages
             sdt.Text = "";
             email.Text = "";
             totalMoney.Text = "";
+            ngaySinh.SelectedDate = DateTime.Now;
         }
 
         void updateMaKhachHang()

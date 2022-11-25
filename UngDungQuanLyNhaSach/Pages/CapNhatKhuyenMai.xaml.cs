@@ -106,6 +106,13 @@ namespace UngDungQuanLyNhaSach.Pages
                 MessageBox.Show("Phần trăm không hợp lệ");
                 return false;
             }
+            DateTime start = ngayBatDau.SelectedDate ?? DateTime.Now;
+            DateTime end = ngayKetThuc.SelectedDate ?? DateTime.Now;
+            if (end.Subtract(start).TotalSeconds < 0)
+            {
+                MessageBox.Show("Ngày bắt đầu và ngày kết thúc không hợp lệ!");
+                return false;
+            }
             return true;
         }
 
@@ -126,10 +133,10 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@MaKhuyenMai"].Value = data;
 
                     command.Parameters.Add("@ThoiGianBatDau", SqlDbType.SmallDateTime);
-                    command.Parameters["@ThoiGianBatDau"].Value = DateTime.Now;
+                    command.Parameters["@ThoiGianBatDau"].Value = ngayBatDau.SelectedDate;
 
                     command.Parameters.Add("@ThoiGianKetThuc", SqlDbType.SmallDateTime);
-                    command.Parameters["@ThoiGianKetThuc"].Value = DateTime.Now;
+                    command.Parameters["@ThoiGianKetThuc"].Value = ngayKetThuc.SelectedDate;
 
                     command.Parameters.Add("@MaLoaiKhachHang", SqlDbType.VarChar);
                     command.Parameters["@MaLoaiKhachHang"].Value = loaiKhachHang.SelectedIndex == 0 ? "VL" :

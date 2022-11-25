@@ -65,6 +65,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
+                        ngaySinh.SelectedDate = nhanVien.ngaySinh;
                         name.Text = nhanVien.hoTen;
                         cccd.Text = nhanVien.cccd;
                         sdt.Text = nhanVien.sdt;
@@ -136,7 +137,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         (chucVu.SelectedIndex == 1 ? "NVBH" : "NVK");
 
                     command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
-                    command.Parameters["@NgaySinh"].Value = DateTime.Now;
+                    command.Parameters["@NgaySinh"].Value = ngaySinh.SelectedDate;
 
                     command.Parameters.Add("@Email", SqlDbType.VarChar);
                     command.Parameters["@Email"].Value = email.Text;

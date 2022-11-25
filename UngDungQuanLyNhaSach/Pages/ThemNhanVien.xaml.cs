@@ -32,6 +32,7 @@ namespace UngDungQuanLyNhaSach.Pages
         public ThemNhanVien()
         {
             InitializeComponent();
+            ngaySinh.SelectedDate = DateTime.Now;
             loadListStaff();
         }
 
@@ -44,6 +45,8 @@ namespace UngDungQuanLyNhaSach.Pages
             diaChi.Text = "";
             luong.Text = "";
             gioiTinh.SelectedIndex = 0;
+            email.Text = "";
+            ngaySinh.SelectedDate = DateTime.Now;
         }
 
         void loadListStaff()
@@ -158,7 +161,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         (chucVu.SelectedIndex == 1 ? "NVBH" : (chucVu.SelectedIndex == 2 ? "NVK" : "NVKT") );
 
                     command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
-                    command.Parameters["@NgaySinh"].Value = DateTime.Now;
+                    command.Parameters["@NgaySinh"].Value = ngaySinh.SelectedDate;
 
                     command.Parameters.Add("@Email", SqlDbType.VarChar);
                     command.Parameters["@Email"].Value = email.Text;
