@@ -43,6 +43,7 @@ namespace UngDungQuanLyNhaSach.Pages
             sdt.Text = "";
             diaChi.Text = "";
             luong.Text = "";
+            gioiTinh.SelectedIndex = 0;
         }
 
         void loadListStaff()
@@ -156,8 +157,6 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@MaChucVu"].Value = chucVu.SelectedIndex == 0 ? "Admin" :
                         (chucVu.SelectedIndex == 1 ? "NVBH" : "NVK");
 
-                    //MessageBox.Show(ngaySinh.);
-
                     command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
                     command.Parameters["@NgaySinh"].Value = DateTime.Now;
 
@@ -187,6 +186,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     connection.Close();
                     loadListStaff();
                     MessageBox.Show("Thêm thành công");
+                    resetData();
                 }
                 catch (Exception ex)
                 {
@@ -196,17 +196,7 @@ namespace UngDungQuanLyNhaSach.Pages
         }
 
         private static readonly Regex _regex = new Regex("[0-9]+");
-        private void luong_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !_regex.IsMatch(e.Text);
-        }
-
-        private void sdt_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !_regex.IsMatch(e.Text);
-        }
-
-        private void cccd_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void previewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !_regex.IsMatch(e.Text);
         }

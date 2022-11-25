@@ -238,13 +238,14 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Mã Khách Hàng:"/>
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="maKH" Template="{StaticResource TextBoxBaseControlTemplate}"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Loại Khách Hàng:"/>
-                    <ComboBox>
-                        <ComboBoxItem IsSelected="True">Vãng Lai</ComboBoxItem>
+                    <ComboBox x:Name="loaiKH">
+                        <ComboBoxItem IsSelected="True"></ComboBoxItem>
+                        <ComboBoxItem>Vãng Lai</ComboBoxItem>
                         <ComboBoxItem>Bạc</ComboBoxItem>
                         <ComboBoxItem>Vàng</ComboBoxItem>
                         <ComboBoxItem>Kim Cương</ComboBoxItem>
@@ -253,12 +254,13 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Tên khách hàng:"/>
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Tổng tiền đã mua:"/>
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="totalMoney" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                             PreviewTextInput="previewTextInput"/>
                 </DockPanel>
                 
             </StackPanel>
@@ -272,13 +274,15 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Số điện thoại:"/>
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                             PreviewTextInput="previewTextInput"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Trạng Thái:"/>
-                    <ComboBox>
-                        <ComboBoxItem IsSelected="True">Hết hạn</ComboBoxItem>
+                    <ComboBox x:Name="trangThai">
+                        <ComboBoxItem IsSelected="True"></ComboBoxItem>
+                        <ComboBoxItem>Hết hạn</ComboBoxItem>
                         <ComboBoxItem>Còn hiệu lực</ComboBoxItem>
                     </ComboBox>
                 </DockPanel>
@@ -293,22 +297,24 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
                     <Button Content="Tìm kiếm" 
+                            x:Name="search"
                         Height="35" 
                         Width="90"
                         Margin="20,0"
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource FindButton}"/>
+                        Style="{StaticResource FindButton}" Click="search_Click"/>
 
                     <Button Content="Làm lại" 
+                            x:Name="reset"
                         Height="35" 
                         Width="90"
                         Margin="20,0"
                         Foreground="Black"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource CacelButton}"/>
+                        Style="{StaticResource CacelButton}" Click="reset_Click"/>
 
                 </StackPanel>
 
@@ -329,7 +335,8 @@
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="resultKhachHangTable_AutoGeneratingColumn"/>
+                  AutoGeneratingColumn="resultKhachHangTable_AutoGeneratingColumn" 
+                      SelectionChanged="resultKhachHangTable_SelectionChanged"/>
 
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
 

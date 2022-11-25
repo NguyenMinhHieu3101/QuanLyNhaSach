@@ -37,6 +37,13 @@ namespace UngDungQuanLyNhaSach.Pages
             loadData();
         }
 
+        void reset()
+        {
+            soLuong.Text = "";
+            phanTram.Text = "";
+            loaiKhachHang.SelectedIndex = 0;
+        }
+
         bool checkDataInput()
         {
             if (soLuong.Text.Length == 0)
@@ -116,8 +123,9 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     connection.Close();
                     loadData();
-                    updateMaKhuyenMai();
                     MessageBox.Show("Thêm thành công");
+                    updateMaKhuyenMai();
+                    reset();
                 }
                 catch (Exception ex)
                 {
@@ -181,12 +189,7 @@ namespace UngDungQuanLyNhaSach.Pages
         }
 
         private static readonly Regex _regex = new Regex("[0-9]+");
-        private void soLuong_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !_regex.IsMatch(e.Text);
-        }
-
-        private void sdt_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void previewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !_regex.IsMatch(e.Text);
         }

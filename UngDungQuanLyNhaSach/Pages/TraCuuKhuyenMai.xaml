@@ -238,12 +238,12 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Mã Khuyến Mãi:"/>
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="maKM" Template="{StaticResource TextBoxBaseControlTemplate}"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Số lượng:"/>
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="soLuong" Template="{StaticResource TextBoxBaseControlTemplate}"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
@@ -262,12 +262,12 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Phần Trăm Giảm:"/>
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="phanTram" Template="{StaticResource TextBoxBaseControlTemplate}"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Loại Khách Hàng:"/>
-                    <ComboBox>
+                    <ComboBox x:Name="loaiKhachHang">
                         <ComboBoxItem IsSelected="True">Vãng Lai</ComboBoxItem>
                         <ComboBoxItem>Bạc</ComboBoxItem>
                         <ComboBoxItem>Vàng</ComboBoxItem>
@@ -277,7 +277,8 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Trạng Thái:"/>
-                    <ComboBox>
+                    <ComboBox x:Name="trangThai">
+                        <ComboBoxItem></ComboBoxItem>
                         <ComboBoxItem IsSelected="True">Hết hạn</ComboBoxItem>
                         <ComboBoxItem>Còn hiệu lực</ComboBoxItem>
                     </ComboBox>
@@ -293,22 +294,24 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
                     <Button Content="Tìm kiếm" 
+                            x:Name="search"
                         Height="35" 
                         Width="90"
                         Margin="20,0"
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource FindButton}"/>
+                        Style="{StaticResource FindButton}" Click="search_Click"/>
 
                     <Button Content="Làm lại" 
+                            x:Name="reset"
                         Height="35" 
                         Width="90"
                         Margin="20,0"
                         Foreground="Black"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource CacelButton}"/>
+                        Style="{StaticResource CacelButton}" Click="reset_Click"/>
 
                 </StackPanel>
 
@@ -329,7 +332,7 @@
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="resultKhuyenMaiTable_AutoGeneratingColumn"/>
+                  AutoGeneratingColumn="resultKhuyenMaiTable_AutoGeneratingColumn" SelectionChanged="resultKhuyenMaiTable_SelectionChanged"/>
 
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
 

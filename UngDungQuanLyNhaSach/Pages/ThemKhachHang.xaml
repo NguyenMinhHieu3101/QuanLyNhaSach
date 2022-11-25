@@ -295,7 +295,8 @@
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="SĐT:"/>
-                            <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                     PreviewTextInput="previewTextInput"/>
                         </DockPanel>
                         
                         <DockPanel LastChildFill="True">
@@ -311,7 +312,7 @@
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Tổng tiền đã mua:"/>
                             <TextBox x:Name="totalMoney" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="totalMoney_PreviewTextInput"/>
+                                     PreviewTextInput="previewTextInput"/>
                         </DockPanel>
 
                     </StackPanel>

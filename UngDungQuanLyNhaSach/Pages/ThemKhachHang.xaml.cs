@@ -36,6 +36,17 @@ namespace UngDungQuanLyNhaSach.Pages
             loadData();
         }
 
+        void reset()
+        {
+            name.Text = "";
+            gioiTinh.SelectedIndex = 0;
+            diaChi.Text = "";
+            loaiKhachHang.Text = "";
+            sdt.Text = "";
+            email.Text = "";
+            totalMoney.Text = "";
+        }
+
         void updateMaKhachHang()
         {
             Thread thread = new Thread(new ThreadStart(() =>
@@ -104,8 +115,9 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     connection.Close();
                     loadData();
-                    updateMaKhachHang();
                     MessageBox.Show("Thêm thành công");
+                    updateMaKhachHang();
+                    reset();
                 }
                 catch (Exception ex)
                 {
@@ -188,7 +200,7 @@ namespace UngDungQuanLyNhaSach.Pages
         }
 
         private static readonly Regex _regex = new Regex("[0-9]+");
-        private void totalMoney_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void previewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !_regex.IsMatch(e.Text);
         }

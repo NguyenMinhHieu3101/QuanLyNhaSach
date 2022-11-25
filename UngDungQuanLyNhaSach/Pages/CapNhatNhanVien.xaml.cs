@@ -172,5 +172,11 @@ namespace UngDungQuanLyNhaSach.Pages
                 }
             }
         }
+
+        private static readonly Regex _regex = new Regex("[0-9]+");
+        private void luong_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !_regex.IsMatch(e.Text);
+        }
     }
 }

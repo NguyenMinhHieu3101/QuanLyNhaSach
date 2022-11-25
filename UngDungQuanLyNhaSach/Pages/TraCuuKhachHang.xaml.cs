@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,6 +25,9 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class TraCuuKhachHang : Page
     {
+        List<KhachHang> selectedKhachHang = new List<KhachHang>();
+        List<KhachHang> khachHangList = new List<KhachHang>();
+
         public TraCuuKhachHang()
         {
             InitializeComponent();
@@ -34,7 +38,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
-                List<KhachHang> khachHangList = new List<KhachHang>();
+                khachHangList = new List<KhachHang>();
 
                 try
                 {
@@ -54,7 +58,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
                             tenKhachHang: (String)reader["TenKhachHang"], diaChi: (String)reader["DiaChi"],
                             gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
-                            sdt: (String)reader["SDT"], email: (String)reader["Email"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng"));
+                            sdt: (String)reader["SDT"], email: (String)reader["Email"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
                     }
                     this.Dispatcher.BeginInvoke(new Action(() => {
                         resultKhachHangTable.ItemsSource = khachHangList;
@@ -80,6 +84,65 @@ namespace UngDungQuanLyNhaSach.Pages
                 e.Column.Header = att.Name;
                 e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
+        }
+
+        private void reset_Click(object sender, RoutedEventArgs e)
+        {
+            maKH.Text = "";
+            loaiKH.SelectedIndex = 0;
+            name.Text = "";
+            totalMoney.Text = "";
+            sdt.Text = "";
+            trangThai.SelectedIndex = 0;
+            selectedKhachHang = new List<KhachHang>();
+            chooseKhachHangTable.ItemsSource = new List<KhachHang>();
+        }
+
+        private static readonly Regex _regex = new Regex("[0-9]+");
+        private void previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !_regex.IsMatch(e.Text);
+        }
+
+        private void resultKhachHangTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (resultKhachHangTable.SelectedIndex != -1)
+            {
+                selectedKhachHang.Remove(khachHangList[resultKhachHangTable.SelectedIndex]);
+                selectedKhachHang.Add(khachHangList[resultKhachHangTable.SelectedIndex]);
+                List < KhachHang> showSelectedKhachHang = selectedKhachHang.OrderBy(e => e.maKhachHang).ToList();
+                for (int i = 0; i < showSelectedKhachHang.Count; i++) 
+                {
+                    showSelectedKhachHang[i].stt = i + 1;
+                }    
+                chooseKhachHangTable.ItemsSource = new List<KhachHang>();
+                chooseKhachHangTable.ItemsSource = showSelectedKhachHang;
+            }
+        }
+
+        bool checkSearch(KhachHang khachHang)
+        {
+            if (!khachHang.maKhachHang.ToLower().Contains(maKH.Text.ToLower())) return false;
+            if (!khachHang.tenKhachHang.ToLower().Contains(name.Text.ToLower())) return false;
+            if (!khachHang.sdt.Contains(sdt.Text)) return false;
+            MessageBox.Show(khachHang.trangThai + " " + trangThai.SelectedIndex);
+            if (trangThai.SelectedIndex != 0 && !trangThai.SelectedIndex.ToString().Contains(khachHang.trangThai)) 
+                return false;
+            return true;
+        }
+
+        private void search_Click(object sender, RoutedEventArgs e)
+        {
+            List<KhachHang> searchList = new List<KhachHang>();
+            foreach (KhachHang kh in khachHangList)
+            {
+                if (checkSearch(kh))
+                {
+                    searchList.Add(kh);
+                }    
+            }
+            resultKhachHangTable.ItemsSource = new List<KhachHang>();
+            resultKhachHangTable.ItemsSource = searchList;
         }
     }
 }

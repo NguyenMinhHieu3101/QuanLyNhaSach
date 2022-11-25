@@ -307,7 +307,7 @@
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Lương:"/>
-                <TextBox x:Name="luong" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox x:Name="luong" Template="{StaticResource TextBoxBaseControlTemplate}" PreviewTextInput="luong_PreviewTextInput"/>
             </DockPanel>
 
         </StackPanel>

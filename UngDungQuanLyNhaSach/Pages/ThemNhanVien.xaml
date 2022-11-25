@@ -274,13 +274,13 @@
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="CCCD:"/>
                             <TextBox x:Name="cccd" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="cccd_PreviewTextInput"/>
+                                     PreviewTextInput="previewTextInput"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="SĐT:"/>
                             <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="sdt_PreviewTextInput"/>
+                                     PreviewTextInput="previewTextInput"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
@@ -335,7 +335,7 @@
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Lương:"/>
-                            <TextBox x:Name="luong" Template="{StaticResource TextBoxBaseControlTemplate}" PreviewTextInput="luong_PreviewTextInput"/>
+                            <TextBox x:Name="luong" Template="{StaticResource TextBoxBaseControlTemplate}" PreviewTextInput="previewTextInput"/>
                         </DockPanel>
 
                     </StackPanel>

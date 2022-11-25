@@ -24,6 +24,9 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class TraCuuKhuyenMai : Page
     {
+        List<KhuyenMai> selectedKhachHang = new List<KhuyenMai>();
+        List<KhuyenMai> khuyenMaiList = new List<KhuyenMai>();
+
         public TraCuuKhuyenMai()
         {
             InitializeComponent();
@@ -45,7 +48,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
-                List<KhuyenMai> khuyenMaiList = new List<KhuyenMai>();
+                khuyenMaiList = new List<KhuyenMai>();
 
                 try
                 {
@@ -81,6 +84,50 @@ namespace UngDungQuanLyNhaSach.Pages
             }));
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        bool checkSearch(KhuyenMai khuyenMai)
+        {
+            if (!maKM.Text.ToLower().Contains(khuyenMai.maKhuyenMai)) return false;
+            if (!soLuong.Text.Contains(khuyenMai.soLuong.ToString())) return false;
+            return true;
+        }
+
+        private void search_Click(object sender, RoutedEventArgs e)
+        {
+            List<KhuyenMai> searchList = new List<KhuyenMai>();
+            foreach (KhuyenMai km in khuyenMaiList)
+                if (checkSearch(km))
+                {
+                    searchList.Add(km);
+                }
+            resultKhuyenMaiTable.ItemsSource = new List<KhuyenMai>();
+            resultKhuyenMaiTable.ItemsSource = searchList;
+        }
+
+        private void reset_Click(object sender, RoutedEventArgs e)
+        {
+            maKM.Text = "";
+            soLuong.Text = "";
+            phanTram.Text = "";
+            loaiKhachHang.SelectedIndex = 0;
+            trangThai.SelectedIndex = 0;
+        }
+
+        private void resultKhuyenMaiTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (resultKhuyenMaiTable.SelectedIndex != -1)
+            {
+                selectedKhachHang.Remove(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex]);
+                selectedKhachHang.Add(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex]);
+                List<KhuyenMai> showSelectedKhachHang = selectedKhachHang.OrderBy(e => e.maKhuyenMai).ToList();
+                for (int i = 0; i < showSelectedKhachHang.Count; i++)
+                {
+                    showSelectedKhachHang[i].stt = i + 1;
+                }
+                chooseKhuyenMaiTable.ItemsSource = new List<KhachHang>();
+                chooseKhuyenMaiTable.ItemsSource = showSelectedKhachHang;
+            }
         }
     }
 }

@@ -264,13 +264,13 @@
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Số lượng:"/>
                             <TextBox x:Name="soLuong" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="soLuong_PreviewTextInput"/>
+                                     PreviewTextInput="previewTextInput"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Phần trăm:"/>
                             <TextBox x:Name="phanTram" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="sdt_PreviewTextInput"/>
+                                     PreviewTextInput="previewTextInput"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
