@@ -330,6 +330,7 @@
                                 <ComboBoxItem>Admin</ComboBoxItem>
                                 <ComboBoxItem IsSelected="True">Nhân Viên Bán Hàng</ComboBoxItem>
                                 <ComboBoxItem>Nhân Viên Kho</ComboBoxItem>
+                                <ComboBoxItem>Nhân Viên Kế Toán</ComboBoxItem>
                             </ComboBox>
                         </DockPanel>
 

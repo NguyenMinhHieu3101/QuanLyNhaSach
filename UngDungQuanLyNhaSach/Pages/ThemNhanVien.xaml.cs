@@ -155,7 +155,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     command.Parameters.Add("@MaChucVu", SqlDbType.VarChar);
                     command.Parameters["@MaChucVu"].Value = chucVu.SelectedIndex == 0 ? "Admin" :
-                        (chucVu.SelectedIndex == 1 ? "NVBH" : "NVK");
+                        (chucVu.SelectedIndex == 1 ? "NVBH" : (chucVu.SelectedIndex == 2 ? "NVK" : "NVKT") );
 
                     command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
                     command.Parameters["@NgaySinh"].Value = DateTime.Now;
