@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -30,14 +31,42 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
             try
             {
+                int tongBanRa = 0;
+
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                 connection.Open();
-            }
-            catch
-            {
 
+                if (dPickerTuNgay.SelectedDate == null || dPickerDenNgay.SelectedDate == null)
+                {
+                    MessageBox.Show("Vui lòng chọn khoảng thời gian cần xuất báo cáo!");
+                }
+                else
+                {
+                    string readString = "SELECT SUM(SoLuong) AS TongBanRa FROM CHITIETHOADON, HOADON WHERE (CHITIETHOADON.MaHoaDon = HOADON.MaHoaDon) AND (NgayLapHoaDon BETWEEN @TuNgay AND @DenNgay)";
+
+                    SqlCommand command = new SqlCommand(readString, connection);
+
+                    command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
+
+                    command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
+
+                    SqlDataAdapter da = new SqlDataAdapter(command);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    tongBanRa = (int)dt.Rows[0]["TongBanRa"];
+                    txtTongBanRa.Text = "TỔNG BÁN RA: " + tongBanRa;
+                }
+                connection.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+                //MessageBox.Show("Vui lòng chọn khoảng thời gian hợp lí!");
             }
         }
 

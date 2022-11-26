@@ -36,44 +36,57 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 decimal tongThu = 0;
                 decimal tongChi = 0;
-                DateTime? datepicker1 = dPickerTuNgay.SelectedDate;
-                DateTime? datepicker2 = dPickerDenNgay.SelectedDate;
+
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                 connection.Open();
 
-                if (datepicker1 == null || datepicker2 == null)
+                if (dPickerTuNgay.SelectedDate == null || dPickerDenNgay.SelectedDate == null)
                 {
-                    MessageBox.Show("Null òi");
+                    MessageBox.Show("Vui lòng chọn khoảng thời gian cần xuất báo cáo!");
                 }
                 else
                 {
-                    MessageBox.Show(datepicker1.Value.ToString());
-                    string readString1 = "SELECT SUM(TongTienHoaDon) AS TongThu FROM HOADON  WHERE NgayLapHoaDon BETWEEN '" + datepicker1.Value.ToString() + "' AND '" + datepicker2.Value.ToString() + "'";
+                    string readString1 = "SELECT SUM(TongTienHoaDon) AS TongThu FROM HOADON WHERE NgayLapHoaDon BETWEEN @TuNgay AND @DenNgay";
 
                     SqlCommand command = new SqlCommand(readString1, connection);
+
+                    command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
+
+                    command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
+
                     SqlDataAdapter da = new SqlDataAdapter(command);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
                     tongThu = (decimal)dt.Rows[0]["TongThu"];
                     txtTongThu.Text = "TỔNG THU: " + tongThu;
+
+                    string readString2 = "SELECT SUM(TongTien) AS TongChi FROM PHIEUNHAP WHERE NgayNhap BETWEEN @TuNgay AND @DenNgay";
+
+                    command = new SqlCommand(readString2, connection);
+
+                    command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
+
+                    command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
+
+                    da = new SqlDataAdapter(command);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    tongChi = (decimal)dt.Rows[0]["TongChi"];
+                    txtTongChi.Text = "TỔNG CHI: " + tongChi;
+
+                    decimal loiNhuan = tongThu - tongChi;
+                    txtLoiNhuan.Text = "LỢI NHUẬN: " + loiNhuan;
                 }
-
-                //string readString2 = "SELECT SUM(ChiPhi) AS TongChi FROM CHITIETBAOCAODOANHTHU";
-                //command = new SqlCommand(readString2, connection);
-                //da = new SqlDataAdapter(command);
-                //dt = new DataTable();
-                //da.Fill(dt);
-                //tongChi = (decimal)dt.Rows[0]["TongChi"];
-                //txtTongChi.Text = "TỔNG CHI: " + tongChi;
-
-                //decimal loiNhuan = tongThu - tongChi;
-                //txtLoiNhuan.Text = "LỢI NHUẬN: " + loiNhuan;
-
                 connection.Close();
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
+                //MessageBox.Show("Vui lòng chọn khoảng thời gian hợp lí!");
             }
         }
 

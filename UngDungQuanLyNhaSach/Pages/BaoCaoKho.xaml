@@ -54,7 +54,7 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        
+
         <StackPanel Margin="10">
             <Border CornerRadius="6" 
                     BorderBrush="Gray" 
@@ -67,17 +67,26 @@
                             <TextBlock Text="Từ Ngày:" 
                                        Width="70" 
                                        VerticalAlignment="Center"/>
-                            <DatePicker Template="{StaticResource DatePickerControlTemplate}"/>
+                            
+                            <Border BorderBrush="Black" 
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                <DatePicker x:Name="dPickerTuNgay" BorderBrush="Transparent"/>
+                            </Border>
                         </DockPanel>
-                        
+
                         <DockPanel LastChildFill="True" 
                                    Width="185" 
                                    Margin="75, 0, 0, 0">
                             <TextBlock Text="Đến Ngày:" 
                                        Width="80" 
                                        VerticalAlignment="Center"/>
-                            
-                            <DatePicker Template="{StaticResource DatePickerControlTemplate}"/>
+
+                            <Border BorderBrush="Black" 
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                <DatePicker x:Name="dPickerDenNgay" BorderBrush="Transparent"/>
+                            </Border>
                         </DockPanel>
                     </DockPanel>
 
@@ -138,15 +147,15 @@
 
                     <StackPanel Margin="20, 0, 0, 0"
                                 HorizontalAlignment="Left">
-                        <TextBlock Text="TỔNG NHẬP:"
+                        <TextBlock x:Name="txtTongNhap" Text="TỔNG NHẬP:"
                                    Style="{StaticResource Title}"
                                    Width="325"/>
 
-                        <TextBlock Text="TỔNG XUẤT:"
+                        <TextBlock x:Name="txtTongXuat" Text="TỔNG XUẤT:"
                                    Style="{StaticResource Title}"
                                    Width="325"/>
 
-                        <TextBlock Text="CHÊNH LỆCH:"
+                        <TextBlock x:Name="txtChenhLech" Text="CHÊNH LỆCH:"
                                    Style="{StaticResource Title}"
                                    Width="325"/>
                     </StackPanel>

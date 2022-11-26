@@ -68,7 +68,12 @@
                             <TextBlock Text="Từ Ngày:" 
                                        Width="70" 
                                        VerticalAlignment="Center"/>
-                            <DatePicker Template="{StaticResource DatePickerControlTemplate}"/>
+                            
+                            <Border BorderBrush="Black" 
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                <DatePicker x:Name="dPickerTuNgay" BorderBrush="Transparent"/>
+                            </Border>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True" 
@@ -78,7 +83,11 @@
                                        Width="80" 
                                        VerticalAlignment="Center"/>
 
-                            <DatePicker Template="{StaticResource DatePickerControlTemplate}"/>
+                            <Border BorderBrush="Black" 
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                <DatePicker x:Name="dPickerDenNgay" BorderBrush="Transparent"/>
+                            </Border>
                         </DockPanel>
                     </DockPanel>
 
@@ -121,7 +130,7 @@
 
                     <StackPanel Margin="10, 0, 0, 0"
                                 HorizontalAlignment="Left">
-                        <TextBlock Text="TỔNG BÁN RA:"
+                        <TextBlock x:Name="txtTongBanRa" Text="TỔNG BÁN RA:"
                                    Style="{StaticResource Title}"
                                    Width="325"/>
                     </StackPanel>

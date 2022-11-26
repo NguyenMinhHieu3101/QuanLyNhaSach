@@ -68,8 +68,12 @@
                             <TextBlock Text="Từ Ngày:" 
                                        Width="70" 
                                        VerticalAlignment="Center"/>
-                            <DatePicker Name="dPickerTuNgay"
-                                        Template="{StaticResource DatePickerControlTemplate}"/>
+                            
+                            <Border BorderBrush="Black" 
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                <DatePicker x:Name="dPickerTuNgay" BorderBrush="Transparent"/>
+                            </Border>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True" 
@@ -79,8 +83,11 @@
                                        Width="80" 
                                        VerticalAlignment="Center"/>
 
-                            <DatePicker Name="dPickerDenNgay"
-                                        Template="{StaticResource DatePickerControlTemplate}"/>
+                            <Border BorderBrush="Black" 
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                <DatePicker x:Name="dPickerDenNgay" BorderBrush="Transparent"/>
+                            </Border>
                         </DockPanel>
                     </DockPanel>
 
