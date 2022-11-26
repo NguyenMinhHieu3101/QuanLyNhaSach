@@ -210,13 +210,13 @@ namespace UngDungQuanLyNhaSach.ViewModel
                                             MenuText = "Quản Lý Kho",
                                             SubMenuList = new List<SubMenuItemsData>{
                                                                 new SubMenuItemsData(){
-
+                                                                    SubMenuText = "Thêm Phiếu Nhập Sách",
                                                                     Page = "ThemPhieuNhapSach"
 
                                                                 },
                                                                 new SubMenuItemsData(){
 
-                                                                    SubMenuText = "Tra Cưu Phiếu Nhập Sách",
+                                                                    SubMenuText = "Tra Cứu Phiếu Nhập Sách",
                                                                     Page = "TraCuuPhieuNhapSach"
                                                                 },
                                                             }
