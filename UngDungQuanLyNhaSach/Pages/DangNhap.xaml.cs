@@ -25,15 +25,16 @@ namespace UngDungQuanLyNhaSach.Pages
         }
         private void Sign_In_Button(object sender, RoutedEventArgs e)
         {
-            /*Home home = new Home();
-            MessageBox.Show("Chào mừng!" + Current_User[2].ToString());
-            home.Show();
-            this.Hide();*/
+            //Home home = new Home();
+            //MessageBox.Show("Chào mừng!" + Current_User[2].ToString());
+            //home.Show();
+            //this.Hide();
 
-            if (txtEmail.Text == "" || txtMatKhau.Text =="" )
+            if (txtEmail.Text == "" || txtMatKhau.Text == "")
             {
                 MessageBox.Show("Vui lòng nhập Email và mật khẩu");
-            }    else
+            }
+            else
 
             if (getID(txtEmail.Text, txtMatKhau.Text))
             {

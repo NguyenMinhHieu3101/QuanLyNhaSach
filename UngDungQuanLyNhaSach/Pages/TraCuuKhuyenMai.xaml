@@ -230,11 +230,12 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="151*"/>
+                <ColumnDefinition Width="49*"/>
+                <ColumnDefinition Width="200*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Margin="10,0">
+            <StackPanel Margin="10,0,10,0" Grid.ColumnSpan="2">
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Mã Khuyến Mãi:"/>
@@ -258,7 +259,7 @@
 
             </StackPanel>
 
-            <StackPanel Grid.Column="1" Margin="10,0">
+            <StackPanel Grid.Column="2" Margin="10,0,10,0">
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Phần Trăm Giảm:"/>

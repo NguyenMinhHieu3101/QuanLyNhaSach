@@ -272,6 +272,7 @@ INSERT INTO NHANVIEN (MaNhanVien, MatKhau, HoTen, MaChucVu, NgaySinh, Email, CCC
 INSERT INTO NHANVIEN (MaNhanVien, MatKhau, HoTen, MaChucVu, NgaySinh, Email, CCCD, GioiTinh, SDT, DiaChi, Luong, TrangThai) VALUES ('NV08', '123456', N'Lê Thị Phương Quyên', 'NVBH', '23/01/2000', 'phuongquyen@gmail.com', '312503558', N'Nữ', '0334161130', N'Hương Trà, Huế', '12000000', '0');
 INSERT INTO NHANVIEN (MaNhanVien, MatKhau, HoTen, MaChucVu, NgaySinh, Email, CCCD, GioiTinh, SDT, DiaChi, Luong, TrangThai) VALUES ('NV09', '123456', N'Trần Thị Thủy Tiên', 'NVBH', '24/01/2000', 'thuytien@gmail.com', '312503559', N'Nữ', '0334161131', N'An Dương, Hải Phòng', '9000000', '0');
 INSERT INTO NHANVIEN (MaNhanVien, MatKhau, HoTen, MaChucVu, NgaySinh, Email, CCCD, GioiTinh, SDT, DiaChi, Luong, TrangThai) VALUES ('NV10', '123456', N'Nguyễn Lê Ngọc Văn', 'NVK', '25/01/2000', 'ngocvan@gmail.com', '312503560', N'Nam', '0334161132', N'Tuy Hòa, Phú Yên', '7000000', '1');
+INSERT INTO NHANVIEN (MaNhanVien, MatKhau, HoTen, MaChucVu, NgaySinh, Email, CCCD, GioiTinh, SDT, DiaChi, Luong, TrangThai) VALUES ('NV11', '123456', N'Mai', 'ADMIN', '22/01/2001', 'mai@gmail.com', '312503557', N'Nữ', '0334161129', N'Tân Thành, Cà Mau', '13000000', '1');
 
 INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN01', 'NV02', 'K01', N'VPP Hoàng Hà', '10/01/2022', '2500000');
 INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN02', 'NV03', 'K02', N'VPP Phượng Vũ', '25/02/2022', '3000000');

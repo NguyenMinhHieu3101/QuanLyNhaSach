@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
       mc:Ignorable="d" 
       Background="White"
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" 
       Title="ThemPhieuNhapSach">
 
     <Page.Resources>
@@ -59,64 +59,112 @@
 
     </Page.Resources>
 
-    <StackPanel Margin="30,10,0,10" HorizontalAlignment="Left" Width="796">
-        <StackPanel Height="99">
+    <Grid>
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="68*"/>
+            <RowDefinition Height="172*"/>
+            <RowDefinition Height="38*"/>
+            <RowDefinition Height="119*"/>
+            <RowDefinition Height="53*"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
             <TextBlock Text="Thông tin phiếu" 
                    Style="{StaticResource Header1}"/>
-            <StackPanel Width="728" Height="78">
-                <DockPanel LastChildFill="True" Width="708">
-                    <DockPanel Width="340">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <DockPanel LastChildFill="True">
                         <TextBlock Text="Ngày Lập Phiếu:" Width="130"/>
-                        <DatePicker Width="200" Height="24"/>
+                        <DatePicker x:Name="ngaylapphieu" Width="200" Height="24"/>
                     </DockPanel>
-                    <TextBlock Text="              Người Giao:" Width="152" HorizontalAlignment="Right"/>
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="211"/>
-                </DockPanel>
-                <DockPanel LastChildFill="True" Width="340">
-                    <TextBlock Text="Ngày Nhập Sách:" Width="130"/>
-                    <DatePicker Width="200" Height="24"/>
-                </DockPanel>
-            </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <DockPanel LastChildFill="True">
+                        <TextBlock Text="Ngày Nhập Sách:" Width="130"/>
+                        <DatePicker x:Name="ngaynhapsach" Width="200" Height="24"/>
+                    </DockPanel>
+                </StackPanel>
+            </Grid>
         </StackPanel>
-        <StackPanel Height="173" Width="741">
+        <StackPanel Grid.Row="1">
             <TextBlock Text="Thông tin sách nhập" 
                    Style="{StaticResource Header1}"/>
-            <StackPanel Width="731" Height="181">
-                <DockPanel LastChildFill="True" Width="723">
-                    <TextBlock Text="Gợi ý tên sách bán chạy tháng trước: " Width="269"/>
-                    <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="421"/>
-                </DockPanel>
-                <DockPanel Width="724">
-                    <DockPanel LastChildFill="True" Width="240">
-                        <TextBlock Text="Tên sách:" Width="80"/>
-                        <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="110"/>
-                    </DockPanel>
-                    <DockPanel LastChildFill="True" Width="240">
-                        <TextBlock Text="Thể loại:" Width="80"/>
-                        <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="110"/>
-                    </DockPanel>
-                    <DockPanel LastChildFill="True" Width="240">
-                        <TextBlock Text="Đơn giá:" Width="80"/>
-                        <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="130"/>
-                    </DockPanel>
-                </DockPanel>
-                <DockPanel Width="724">
-                    <DockPanel LastChildFill="True" Width="240">
-                        <TextBlock Text="NxB:" Width="80"/>
-                        <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="110"/>
-                    </DockPanel>
-                    <DockPanel LastChildFill="True" Width="240">
-                        <TextBlock Text="Năm XB:" Width="80"/>
-                        <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="110"/>
-                    </DockPanel>
-                    <DockPanel LastChildFill="True" Width="240">
-                        <TextBlock Text="Số lượng:" Width="80"/>
-                        <TextBox Template="{StaticResource TextBoxBaseControlTemplate}" Width="130"/>
-                    </DockPanel>
-                </DockPanel>
+            <StackPanel>
+                <Grid Height="145">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="5,5,15,5" Grid.Column="0" Grid.Row="0">
+                        <DockPanel  LastChildFill="True" Width="250">
+                            <TextBlock Text="Tên sách:" Width="80"/>
+                            <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,15,5" Grid.Column="1" Grid.Row="0" >
+                        <DockPanel  LastChildFill="True" Width="250">
+                            <TextBlock Text="Thể loại:" Width="80"/>
+                            <TextBox x:Name="category" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,15,5" Grid.Column="2" Grid.Row="0">
+                        <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
+                            <TextBlock Text="Đơn giá:" Width="80"/>
+                            <TextBox x:Name="cost" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,15,5" Grid.Column="0" Grid.Row="1" >
+                        <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
+                            <TextBlock Text="NXB:" Width="80"/>
+                            <TextBox x:Name="nxb" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,15,5" Grid.Column="1" Grid.Row="1" >
+                        <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
+                            <TextBlock Text="Năm XB:" Width="80"/>
+                            <TextBox x:Name="year" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,15,5" Grid.Column="2" Grid.Row="1" >
+                        <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
+                            <TextBlock Text="Tác giả:" Width="80"/>
+                            <TextBox x:Name="author" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,15,5" Grid.Column="0" Grid.Row="2" >
+                        <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
+                            <TextBlock Text="Số lượng:" Width="80"/>
+                            <TextBox x:Name="number" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Margin="0,10,25,5" Grid.Column="2" Grid.Row="2" >
+                        <Button
+                                HorizontalAlignment="Right" 
+                                Content="Thêm tác giả" 
+                                Height="37" 
+                                Width="150"
+                                Foreground="White"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Style="{StaticResource AddButton}" Click="Button_Click"/>
+                    </StackPanel>
+                </Grid>
+
             </StackPanel>
         </StackPanel>
-        <StackPanel Height="40" HorizontalAlignment="Right" Width="193">
+        <StackPanel Grid.Row="2">
             <Button Content="Thêm" 
                         Height="37" 
                         Width="128"
@@ -125,28 +173,19 @@
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}" Click="Button_Click"/>
         </StackPanel>
-        <DataGrid x:Name="phieuNhapSachTable" Margin="5,10" Style="{DynamicResource DataGridStyle}" 
+        <StackPanel Grid.Row="3">
+            <DataGrid x:Name="phieuNhapSachTable" Margin="5,10" Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
                   AutoGeneratingColumn="phieuNhapSachTable_AutoGeneratingColumn" Background="{x:Null}">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                <DataGridTextColumn Header="Tên sách" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Thể loại" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Đơn giá" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Số lượng" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                <DataGridTextColumn Header="Thành tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
-            </DataGrid.Columns>
-
-        </DataGrid>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            </DataGrid>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Left" Margin="534,0,0,0" Width="276">
             <Button Content="Lưu" 
                         Height="37" 
                         Width="128"
-                        Margin="10"
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
@@ -159,5 +198,6 @@
                         FontWeight="Bold"
                         Style="{StaticResource CacelButton}" Click="Button_Click"/>
         </StackPanel>
-    </StackPanel>
+    </Grid>
+
 </Page>
