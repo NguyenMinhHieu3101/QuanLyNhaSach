@@ -358,7 +358,7 @@
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="khachHangTable_AutoGeneratingColumn"/>
+                  AutoGeneratingColumn="khachHangTable_AutoGeneratingColumn" SelectionChanged="khachHangTable_SelectionChanged"/>
 
     </Grid>
     

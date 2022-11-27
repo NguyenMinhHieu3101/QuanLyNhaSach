@@ -20,6 +20,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Text.RegularExpressions;
 using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Markup;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -33,6 +34,8 @@ namespace UngDungQuanLyNhaSach.Pages
         public ThemKhuyenMai()
         {
             InitializeComponent();
+            update.IsEnabled = false;
+            delete.IsEnabled = false;
             ngayBatDau.SelectedDate = DateTime.Now;
             ngayKetThuc.SelectedDate = DateTime.Now;
             updateMaKhuyenMai();
@@ -46,6 +49,7 @@ namespace UngDungQuanLyNhaSach.Pages
             loaiKhachHang.SelectedIndex = 0;
             ngayBatDau.SelectedDate = DateTime.Now;
             ngayKetThuc.SelectedDate = DateTime.Now;
+            updateMaKhuyenMai();
         }
 
         bool checkDataInput()
@@ -135,7 +139,6 @@ namespace UngDungQuanLyNhaSach.Pages
                     connection.Close();
                     loadData();
                     MessageBox.Show("Thêm thành công");
-                    updateMaKhuyenMai();
                     reset();
                 }
                 catch (Exception ex)
@@ -212,7 +215,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void update_Click(object sender, RoutedEventArgs e)
         {
-            if (khuyenMaiTable.SelectedIndex != -1)
+            /*if (khuyenMaiTable.SelectedIndex != -1)
             {
                 var window = Window.GetWindow(this);
                 ((Home)window).MainWindowFrame.Navigate(new CapNhatKhuyenMai(khuyenMaiList[khuyenMaiTable.SelectedIndex].maKhuyenMai));
@@ -220,6 +223,48 @@ namespace UngDungQuanLyNhaSach.Pages
             else
             {
                 MessageBox.Show("Vui lòng chọn một khuyến mãi để chỉnh sửa");
+            }*/
+            if (checkDataInput())
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+
+                    string updateString = "UPDATE KHUYENMAI SET ThoiGianBatDau = @ThoiGianBatDau, ThoiGianKetThuc = @ThoiGianKetThuc, MaLoaiKhachHang = @MaLoaiKhachHang, SoLuongKhuyenMai = @SoLuongKhuyenMai, TrangThai = @TrangThai " +
+                        "WHERE MaKhuyenMai = @MaKhuyenMai";
+                    SqlCommand command = new SqlCommand(updateString, connection);
+
+                    command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
+                    command.Parameters["@MaKhuyenMai"].Value = khuyenMaiList[khuyenMaiTable.SelectedIndex].maKhuyenMai;
+
+                    command.Parameters.Add("@ThoiGianBatDau", SqlDbType.SmallDateTime);
+                    command.Parameters["@ThoiGianBatDau"].Value = ngayBatDau.SelectedDate;
+
+                    command.Parameters.Add("@ThoiGianKetThuc", SqlDbType.SmallDateTime);
+                    command.Parameters["@ThoiGianKetThuc"].Value = ngayKetThuc.SelectedDate;
+
+                    command.Parameters.Add("@MaLoaiKhachHang", SqlDbType.VarChar);
+                    command.Parameters["@MaLoaiKhachHang"].Value = loaiKhachHang.SelectedIndex == 0 ? "VL" :
+                        (loaiKhachHang.SelectedIndex == 1 ? "B" : (loaiKhachHang.SelectedIndex == 2 ? "V" : "KC"));
+
+                    command.Parameters.Add("@SoLuongKhuyenMai", SqlDbType.Int);
+                    command.Parameters["@SoLuongKhuyenMai"].Value = int.Parse(soLuong.Text);
+
+                    command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
+                    command.Parameters["@TrangThai"].Value = "1";
+
+                    command.ExecuteNonQuery();
+
+                    connection.Close();
+                    loadData();
+                    reset();
+                    MessageBox.Show("Cập nhật thành công");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
@@ -254,6 +299,30 @@ namespace UngDungQuanLyNhaSach.Pages
             else
             {
                 MessageBox.Show("Vui lòng chọn một khuyến mãi để xóa");
+            }
+        }
+
+        void loadKM()
+        {
+            KhuyenMai khuyenMai = khuyenMaiList[khuyenMaiTable.SelectedIndex];
+            maKM.Text = khuyenMai.maKhuyenMai;
+            soLuong.Text = khuyenMai.soLuong.ToString();
+            loaiKhachHang.SelectedIndex = khuyenMai.maLoaiKhachHang == "Vãng Lai" ? 0 :
+            (khuyenMai.maLoaiKhachHang == "Bạc" ? 1 : (khuyenMai.maLoaiKhachHang == "Vàng" ? 2 : 3));
+            ngayBatDau.SelectedDate = khuyenMai.batDau;
+            ngayKetThuc.SelectedDate = khuyenMai.ketThuc;
+        }
+
+        private void khuyenMaiTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (khuyenMaiTable.SelectedIndex != -1)
+            {
+                update.IsEnabled = true;
+                loadKM();
+            }
+            else
+            {
+                update.IsEnabled = false;
             }
         }
     }

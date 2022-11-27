@@ -19,6 +19,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using System.Windows.Markup;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -32,6 +33,8 @@ namespace UngDungQuanLyNhaSach.Pages
         public ThemKhachHang()
         {
             InitializeComponent();
+            update.IsEnabled = false;
+            delete.IsEnabled = false;
             updateMaKhachHang();
             ngaySinh.SelectedDate = DateTime.Now;
             loadData();
@@ -47,6 +50,7 @@ namespace UngDungQuanLyNhaSach.Pages
             email.Text = "";
             totalMoney.Text = "";
             ngaySinh.SelectedDate = DateTime.Now;
+            updateMaKhachHang();
         }
 
         void updateMaKhachHang()
@@ -102,7 +106,8 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@GioiTinh"].Value = gioiTinh.Text;
 
                     command.Parameters.Add("@MaLoaiKhachHang", SqlDbType.VarChar);
-                    command.Parameters["@MaLoaiKhachHang"].Value = "VL";
+                    command.Parameters["@MaLoaiKhachHang"].Value = loaiKhachHang.SelectedIndex == 0 ? "VL" :
+                        (loaiKhachHang.SelectedIndex == 1 ? "B" : (loaiKhachHang.SelectedIndex == 2 ? "V" : "KC"));
 
                     command.Parameters.Add("@SDT", SqlDbType.VarChar);
                     command.Parameters["@SDT"].Value = sdt.Text;
@@ -227,7 +232,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void update_Click(object sender, RoutedEventArgs e)
         {
-            if (khachHangTable.SelectedIndex != -1)
+            /*if (khachHangTable.SelectedIndex != -1)
             {
                 var window = Window.GetWindow(this);
                 ((Home)window).MainWindowFrame.Navigate(new CapNhatKhachHang(khachHangList[khachHangTable.SelectedIndex].maKhachHang));
@@ -235,7 +240,55 @@ namespace UngDungQuanLyNhaSach.Pages
             else
             {
                 MessageBox.Show("Vui lòng chọn một khách hàng để chỉnh sửa");
-            }    
+            }   */
+            if (checkDataInput())
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+
+                    string updateString = "UPDATE KHACHHANG SET TenKhachHang = @TenKhachHang, DiaChi = @DiaChi, GioiTinh = @GioiTinh, MaLoaiKhachHang = @MaLoaiKhachHang, SDT = @SDT, Email = @Email, TrangThai = @TrangThai " +
+                        "WHERE MaKhachHang = @MaKhachHang";
+                    SqlCommand command = new SqlCommand(updateString, connection);
+
+                    command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
+                    command.Parameters["@MaKhachHang"].Value = khachHangList[khachHangTable.SelectedIndex].maKhachHang;
+
+                    command.Parameters.Add("@TenKhachHang", SqlDbType.NVarChar);
+                    command.Parameters["@TenKhachHang"].Value = name.Text;
+
+                    command.Parameters.Add("@DiaChi", SqlDbType.NVarChar);
+                    command.Parameters["@DiaChi"].Value = diaChi.Text;
+
+                    command.Parameters.Add("@GioiTinh", SqlDbType.NVarChar);
+                    command.Parameters["@GioiTinh"].Value = gioiTinh.Text;
+
+                    command.Parameters.Add("@MaLoaiKhachHang", SqlDbType.VarChar);
+                    command.Parameters["@MaLoaiKhachHang"].Value = loaiKhachHang.SelectedIndex == 0 ? "VL" :
+                        (loaiKhachHang.SelectedIndex == 1 ? "B" : (loaiKhachHang.SelectedIndex == 2 ? "V" : "KC"));
+
+                    command.Parameters.Add("@SDT", SqlDbType.VarChar);
+                    command.Parameters["@SDT"].Value = sdt.Text;
+
+                    command.Parameters.Add("@Email", SqlDbType.VarChar);
+                    command.Parameters["@Email"].Value = email.Text;
+
+                    command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
+                    command.Parameters["@TrangThai"].Value = "1";
+
+                    command.ExecuteNonQuery();
+
+                    connection.Close();
+                    loadData();
+                    reset();
+                    MessageBox.Show("Cập nhật thành công");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         private void delete_Click(object sender, RoutedEventArgs e)
@@ -270,6 +323,34 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 MessageBox.Show("Vui lòng chọn một khách hàng để xóa");
             }
+        }
+
+        private void khachHangTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (khachHangTable.SelectedIndex != -1)
+            {
+                update.IsEnabled = true;
+                delete.IsEnabled = true;
+                loadKH();
+            }
+            else
+            {
+                update.IsEnabled = false;
+                delete.IsEnabled = false;
+            }
+        }
+
+        void loadKH()
+        {
+            KhachHang khachHangData = khachHangList[khachHangTable.SelectedIndex];
+            maKH.Text = khachHangData.maKhachHang;
+            name.Text = khachHangData.tenKhachHang;
+            gioiTinh.SelectedIndex = khachHangData.gioiTinh == "Nam" ? 0 : 1;
+            diaChi.Text = khachHangData.diaChi;
+            loaiKhachHang.SelectedIndex = khachHangData.maLoaiKhachHang == "Vãng Lai" ? 0 :
+            (khachHangData.maLoaiKhachHang == "Bạc" ? 1 : (khachHangData.maLoaiKhachHang == "Vàng" ? 2 : 3));
+            sdt.Text = khachHangData.sdt;
+            email.Text = khachHangData.email;
         }
     }
 }

@@ -13,6 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -34,6 +35,8 @@ namespace UngDungQuanLyNhaSach.Pages
             InitializeComponent();
             ngaySinh.SelectedDate = DateTime.Now;
             loadListStaff();
+            update.IsEnabled = false;
+            delete.IsEnabled = false;
         }
 
         void resetData()
@@ -218,7 +221,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void update_Click(object sender, RoutedEventArgs e)
         {
-            if (nhanVienTable.SelectedIndex != -1)
+            /*if (nhanVienTable.SelectedIndex != -1)
             {
                 var window = Window.GetWindow(this);
                 ((Home)window).MainWindowFrame.Navigate(new CapNhatNhanVien(nhanVienList[nhanVienTable.SelectedIndex].maNhanVien));
@@ -226,6 +229,63 @@ namespace UngDungQuanLyNhaSach.Pages
             else
             {
                 MessageBox.Show("Vui lòng chọn một nhân viên để chỉnh sửa");
+            }*/
+            if (checkDataInput())
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+
+                    string updateString = "UPDATE NHANVIEN SET HoTen = @HoTen, MaChucVu = @MaChucVu, NgaySinh = @NgaySinh, Email = @Email, CCCD = @CCCD, GioiTinh = @GioiTinh, SDT = @SDT, DiaChi = @DiaChi, Luong = @Luong, TrangThai = @TrangThai " +
+                        "Where MaNhanVien = @MaNhanVien";
+                    SqlCommand command = new SqlCommand(updateString, connection);
+
+                    command.Parameters.Add("@MaNhanVien", SqlDbType.NVarChar);
+                    command.Parameters["@MaNhanVien"].Value = nhanVienList[nhanVienTable.SelectedIndex].maNhanVien;
+
+                    command.Parameters.Add("@HoTen", SqlDbType.NVarChar);
+                    command.Parameters["@HoTen"].Value = name.Text;
+
+                    command.Parameters.Add("@MaChucVu", SqlDbType.VarChar);
+                    command.Parameters["@MaChucVu"].Value = chucVu.SelectedIndex == 0 ? "Admin" :
+                        (chucVu.SelectedIndex == 1 ? "Nhân Viên Bán Hàng" : "Nhân Viên Kho");
+
+                    command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
+                    command.Parameters["@NgaySinh"].Value = ngaySinh.SelectedDate;
+
+                    command.Parameters.Add("@Email", SqlDbType.VarChar);
+                    command.Parameters["@Email"].Value = email.Text;
+
+                    command.Parameters.Add("@CCCD", SqlDbType.VarChar);
+                    command.Parameters["@CCCD"].Value = cccd.Text;
+
+                    command.Parameters.Add("@GioiTinh", SqlDbType.NVarChar);
+                    command.Parameters["@GioiTinh"].Value = gioiTinh.Text;
+
+                    command.Parameters.Add("@SDT", SqlDbType.VarChar);
+                    command.Parameters["@SDT"].Value = sdt.Text;
+
+                    command.Parameters.Add("@DiaChi", SqlDbType.NVarChar);
+                    command.Parameters["@DiaChi"].Value = diaChi.Text;
+
+                    command.Parameters.Add("@Luong", SqlDbType.Money);
+                    command.Parameters["@Luong"].Value = luong.Text;
+
+                    command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
+                    command.Parameters["@TrangThai"].Value = "1";
+
+                    command.ExecuteNonQuery();
+
+                    connection.Close();
+                    loadListStaff();
+                    resetData();
+                    MessageBox.Show("Sửa thành công");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
@@ -262,5 +322,34 @@ namespace UngDungQuanLyNhaSach.Pages
                 MessageBox.Show("Vui lòng chọn một nhân viên để xóa");
             }    
         }
+
+        void loadNV()
+        {
+            NhanVien nhanVien = nhanVienList[nhanVienTable.SelectedIndex];
+            ngaySinh.SelectedDate = nhanVien.ngaySinh;
+            name.Text = nhanVien.hoTen;
+            cccd.Text = nhanVien.cccd;
+            sdt.Text = nhanVien.sdt;
+            email.Text = nhanVien.email;
+            diaChi.Text = nhanVien.diaChi;
+            gioiTinh.SelectedIndex = nhanVien.gioiTinh == "Nam" ? 0 : 1;
+            luong.Text = nhanVien.luong.ToString();
+            chucVu.SelectedIndex = nhanVien.maChucVu == "NVBH" ? 1 : (nhanVien.maChucVu == "NVK" ? 2 : 0);
+        }
+
+        private void nhanVienTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (nhanVienTable.SelectedIndex != -1)
+            {
+                update.IsEnabled = true;
+                delete.IsEnabled = true;
+                loadNV();
+            }
+            else
+            {
+                update.IsEnabled = false;
+                delete.IsEnabled = false;
+            }
+        }    
     }
 }

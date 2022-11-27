@@ -382,7 +382,7 @@
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="nhanVienTable_AutoGeneratingColumn"/>
+                  AutoGeneratingColumn="nhanVienTable_AutoGeneratingColumn" SelectionChanged="nhanVienTable_SelectionChanged"/>
 
     </Grid>
 

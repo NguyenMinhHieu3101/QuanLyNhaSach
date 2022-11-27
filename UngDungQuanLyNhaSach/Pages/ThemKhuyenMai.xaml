@@ -341,7 +341,7 @@
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="khuyenMaiTable_AutoGeneratingColumn"/>
+                  AutoGeneratingColumn="khuyenMaiTable_AutoGeneratingColumn" SelectionChanged="khuyenMaiTable_SelectionChanged"/>
 
     </Grid>
 
