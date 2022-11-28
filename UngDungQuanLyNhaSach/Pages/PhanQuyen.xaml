@@ -53,8 +53,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.5*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="2.3*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
      
            
         </Grid.ColumnDefinitions>
@@ -65,6 +65,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="2.5*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock Grid.ColumnSpan="2" Text="PHÂN QUYỀN" VerticalAlignment="Center" HorizontalAlignment="Center"

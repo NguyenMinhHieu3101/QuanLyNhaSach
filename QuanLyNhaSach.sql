@@ -71,7 +71,7 @@ CREATE TABLE LOAIKHACHHANG
 (
 	MaLoaiKhachHang VARCHAR(20) CONSTRAINT PK_MALKH PRIMARY KEY,
 	TenLoaiKhachHang NVARCHAR(20),
-	TienToiThieu MONEY
+	TienToiThieu FLOAT
 )
 CREATE TABLE KHUYENMAI
 (
@@ -151,6 +151,8 @@ CREATE TABLE THAMSO
 	TenThuocTinh NVARCHAR(100),
 	GiaTri FLOAT
 )
+
+
 SET DATEFORMAT DMY
 
 
@@ -279,12 +281,14 @@ INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, Ton
 INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN03', 'NV10', 'K03', N'VPP Hà Nội', '03/12/2021', '2400000');
 INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN04', 'NV05', 'K04', N'VPP Ánh Dương Xanh', '13/11/2021', '2120000');
 
-
-
 INSERT INTO THAMSO (MaThuocTinh, TenThuocTinh, GiaTri) VALUES ('TS01', N'Hệ số lợi nhuận sách', '1.5');
 INSERT INTO THAMSO (MaThuocTinh, TenThuocTinh, GiaTri) VALUES ('TS02', N'Hệ số lợi nhuận văn phòng phẩm', '1.8');
 INSERT INTO THAMSO (MaThuocTinh, TenThuocTinh, GiaTri) VALUES ('TS03', N'Số lượng nhập tối đa', '500');
 INSERT INTO THAMSO (MaThuocTinh, TenThuocTinh, GiaTri) VALUES ('TS04', N'Giá dịch vụ gói quà', '25000');
+
+INSERT INTO THAMSO (MaThuocTinh, TenThuocTinh, GiaTri) VALUES ('TS05', N'Thuế', '25000');
+INSERT INTO THAMSO (MaThuocTinh, TenThuocTinh, GiaTri) VALUES ('TS06', N'Mặt bằng', '3000000');
+INSERT INTO THAMSO (MaThuocTinh, TenThuocTinh, GiaTri) VALUES ('TS07', N'Tuổi tối thiểu khách hàng', '10');
 
 INSERT INTO SANPHAM  VALUES ('SP01', N'Vật Lý 12', N'Bộ Giáo Dục', N'Sách thiếu nhi', N'NXB Giáo Dục Việt Nam', '17000', '2022', 'K01', '1');
 INSERT INTO SANPHAM  VALUES ('SP02', N'Thám tử lừng danh Conan', N'Aoyama Gōshō', N'Sách tham khảo', N'NXB Kim Đồng', '20000', '2020', 'K02', '0');

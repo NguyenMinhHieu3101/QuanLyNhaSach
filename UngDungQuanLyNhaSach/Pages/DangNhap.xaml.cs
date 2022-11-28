@@ -67,7 +67,7 @@ namespace UngDungQuanLyNhaSach.Pages
             try
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("SELECT * FROM NHANVIEN WHERE Email ='" + username + "' and MatKhau='" + pass + "' and TrangThai <> '0'" , con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM NHANVIEN WHERE (Email ='" + username + "' or MaNhanVien ='" + username+ "'or CCCD ='" + username + "'or SDT ='" + username + "') and MatKhau='" + pass + "' and TrangThai <> '0'" , con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);

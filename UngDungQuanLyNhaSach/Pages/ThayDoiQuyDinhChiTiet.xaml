@@ -1,0 +1,51 @@
+﻿<Window x:Class="UngDungQuanLyNhaSach.Pages.ThayDoiQuyDinhChiTiet"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Background="white"
+        Title="ThayDoiQuyDinhChiTiet" Height="350" Width="500">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="1.5*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.ColumnSpan="2" Margin="40,10,40,0" Content="THAY ĐỔI QUY ĐỊNH" Foreground="#3fe8ab" FontSize="23" HorizontalAlignment="Center"></Label>
+        <Label Grid.Row="1" Foreground="black" FontSize="14" Content="Thay đổi quy định về: "></Label>
+        <TextBlock Name="tenThuocTinh" Grid.Row="2" Text="Mẫu1"  Foreground="#3fe8ab" FontSize="12" Margin="10,30,25,15" TextAlignment="Center"></TextBlock>
+
+        <TextBox Name="giaTri" Grid.Column="1" Grid.Row="2" Margin="18,24,18,28" FontSize="13" Template="{StaticResource TextBoxBaseControlTemplate}" TextAlignment="Center" Height="20" Text="Mẫu 2"></TextBox>
+        
+        <StackPanel  Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
+            <Button  Content="Cập Nhập" 
+                            Height="25" 
+                            Width="50"
+                            Margin="30,10,10,10"
+                            Foreground="White"                            
+                            FontSize="8"
+                            FontWeight="Bold"
+                            x:Name="update"
+                            Style="{StaticResource FindButton}" Click="update_Click"/>
+            <Button Content="Hủy" 
+                            Height="25" 
+                            Width="50"
+                            Margin="10"
+                            Foreground="#3fe8ab"
+                            FontSize="8"
+                            FontWeight="Bold"
+                            x:Name="cancel"
+                            Style="{StaticResource CacelButton}" Click="cancel_Click"/>
+        </StackPanel>
+        
+    </Grid>
+</Window>

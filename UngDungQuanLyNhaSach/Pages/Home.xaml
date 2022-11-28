@@ -9,6 +9,8 @@
         mc:Ignorable="d" Title="BookStore" 
         Height="800" Width="1200" MinHeight="800" MinWidth="1000"
         Closing="Window_Closing" 
+          WindowState="Maximized"
+        
         Icon="/UngDungQuanLyNhaSach;component//Images/book-shop.png">
 
     <Window.Resources>
@@ -165,8 +167,16 @@
                                             SubMenuPadding="0,0,0,0" 
                                             Background="#1FAD7A">
             </control:MenuWithSubMenuControl>
-
-            <Frame x:Name="MainWindowFrame" Grid.Column="1" NavigationUIVisibility="Hidden" Navigated="MainWindowFrame_Navigated"/>
+           
+                <Frame  Grid.Column="1" Grid.Row="1" x:Name="MainWindowFrame"  NavigationUIVisibility="Hidden" Navigated="MainWindowFrame_Navigated"        
+                   Width="Auto"
+                   Height="Auto"
+                   VerticalAlignment="Stretch"
+                   HorizontalAlignment="Stretch"
+                   ScrollViewer.CanContentScroll="True"
+                   ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                   ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+          
         </Grid>
     </Grid>
 </Window>

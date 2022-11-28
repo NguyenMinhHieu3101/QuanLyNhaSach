@@ -28,6 +28,9 @@
     <Compile Update="Pages\CapNhatNhanVien.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\ThayDoiQuyDinhChiTiet.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\TraCuuHoaDon.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -97,6 +100,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\CapNhatNhanVien.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ThayDoiQuyDinhChiTiet.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\TraCuuHoaDon.xaml">
