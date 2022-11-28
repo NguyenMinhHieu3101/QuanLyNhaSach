@@ -45,8 +45,9 @@ namespace UngDungQuanLyNhaSach.Pages
                 }
                 else
                 {
-                    string readString = "SELECT SUM(SoLuong) AS TongBanRa FROM CHITIETHOADON, HOADON WHERE (CHITIETHOADON.MaHoaDon = HOADON.MaHoaDon) AND (NgayLapHoaDon BETWEEN @TuNgay AND @DenNgay)";
+                    txtThoiGian.Text = "TỪ " + dPickerTuNgay.SelectedDate.Value.ToShortDateString() + " ĐẾN " + dPickerDenNgay.SelectedDate.Value.ToShortDateString();
 
+                    string readString = "SELECT SUM(SoLuong) AS TongBanRa FROM CHITIETHOADON, HOADON WHERE (CHITIETHOADON.MaHoaDon = HOADON.MaHoaDon) AND (NgayLapHoaDon BETWEEN @TuNgay AND @DenNgay)";
                     SqlCommand command = new SqlCommand(readString, connection);
 
                     command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
@@ -55,11 +56,36 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
                     command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
 
-                    SqlDataAdapter da = new SqlDataAdapter(command);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    tongBanRa = (int)dt.Rows[0]["TongBanRa"];
+                    tongBanRa = (int)command.ExecuteScalar();
                     txtTongBanRa.Text = "TỔNG BÁN RA: " + tongBanRa;
+
+
+                    //string readString2 = "SELECT COUNT(*) FROM CHITIETBAOCAOSANPHAM";
+                    //command = new SqlCommand(readString2, connection);
+                    //Int32 count = (Int32)command.ExecuteScalar() + 1;
+
+                    //string insertString = "INSERT INTO CHITIETBAOCAOSANPHAM (MaChiTietBaoCao, MaSanPham, MaNVBC, TuNgay, DenNgay, SoLuongDaBan) VALUES (@MaChiTietBaoCao, @MaSanPham, @MaNVBC, @TuNgay, @DenNgay, @SoLuongDaBan)";
+                    //command = new SqlCommand(insertString, connection);
+
+                    //command.Parameters.Add("@MaChiTietBaoCao", SqlDbType.VarChar);
+                    //command.Parameters["@MaChiTietBaoCao"].Value = "BCSP" + count.ToString();
+
+                    //command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
+                    //command.Parameters["@MaSanPham"].Value = "???";
+
+                    //command.Parameters.Add("@MaNVBC", SqlDbType.VarChar);
+                    //command.Parameters["@MaNVBC"].Value = NhanVienDangDangNhap.MaNhanVien; 
+
+                    //command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
+                    //command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
+
+                    //command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
+                    //command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
+
+                    //command.Parameters.Add("@SoLuongDaBan", SqlDbType.Int);
+                    //command.Parameters["@SoLuongDaBan"].Value = "???";
+
+                    //command.ExecuteNonQuery();
                 }
                 connection.Close();
             }

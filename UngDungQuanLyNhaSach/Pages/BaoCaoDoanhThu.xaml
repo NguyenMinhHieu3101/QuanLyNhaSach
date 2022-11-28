@@ -108,7 +108,11 @@
                                Margin="0, 5, 0, 0"
                                TextAlignment="Center">
                         BẢNG THỐNG KÊ DOANH THU
-                        <LineBreak />
+                    </TextBlock>
+
+                    <TextBlock x:Name="txtThoiGian" 
+                               Style="{StaticResource Header1}"
+                               TextAlignment="Center">
                         TỪ ... ĐẾN ...
                     </TextBlock>
 

@@ -67,8 +67,9 @@ namespace UngDungQuanLyNhaSach.Pages
                 }
                 else
                 {
-                    string readString1 = "SELECT SUM(SoLuong) AS TongNhap FROM CHITIETPHIEUNHAP, PHIEUNHAP  WHERE (CHITIETPHIEUNHAP.MaPhieuNhap = PHIEUNHAP.MaPhieuNhap) AND (NgayNhap BETWEEN @TuNgay AND @DenNgay)";
+                    txtThoiGian.Text = "TỪ " + dPickerTuNgay.SelectedDate.Value.ToShortDateString() + " ĐẾN " + dPickerDenNgay.SelectedDate.Value.ToShortDateString();
 
+                    string readString1 = "SELECT SUM(SoLuong) AS TongNhap FROM CHITIETPHIEUNHAP, PHIEUNHAP  WHERE (CHITIETPHIEUNHAP.MaPhieuNhap = PHIEUNHAP.MaPhieuNhap) AND (NgayNhap BETWEEN @TuNgay AND @DenNgay)";
                     SqlCommand command = new SqlCommand(readString1, connection);
 
                     command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
@@ -77,14 +78,11 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
                     command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
 
-                    SqlDataAdapter da = new SqlDataAdapter(command);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    tongNhap = (int)dt.Rows[0]["TongNhap"];
+                    tongNhap = (int)command.ExecuteScalar();
                     txtTongNhap.Text = "TỔNG NHẬP: " + tongNhap;
 
-                    string readString2 = "SELECT SUM(SoLuong) AS TongXuat FROM CHITIETHOADON, HOADON WHERE (CHITIETHOADON.MaHoaDon = HOADON.MaHoaDon) AND (NgayLapHoaDon BETWEEN @TuNgay AND @DenNgay)";
 
+                    string readString2 = "SELECT SUM(SoLuong) AS TongXuat FROM CHITIETHOADON, HOADON WHERE (CHITIETHOADON.MaHoaDon = HOADON.MaHoaDon) AND (NgayLapHoaDon BETWEEN @TuNgay AND @DenNgay)";
                     command = new SqlCommand(readString2, connection);
 
                     command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
@@ -93,14 +91,36 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
                     command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
 
-                    da = new SqlDataAdapter(command);
-                    dt = new DataTable();
-                    da.Fill(dt);
-                    tongXuat = (int)dt.Rows[0]["TongXuat"];
+                    tongXuat = (int)command.ExecuteScalar();
                     txtTongXuat.Text = "TỔNG XUẤT: " + tongXuat;
 
                     int chenhLech = tongNhap - tongXuat;
                     txtChenhLech.Text = "CHÊNH LỆCH: " + chenhLech;
+
+
+                    //string readString3 = "SELECT COUNT(*) FROM CHITIETBAOCAOKHO";
+                    //command = new SqlCommand(readString3, connection);
+                    //Int32 count = (Int32)command.ExecuteScalar() + 1;
+
+                    //string insertString = "INSERT INTO CHITIETBAOCAOKHO (MaChiTietBaoCao, TuNgay, DenNgay, MaNVBC, MaKho) VALUES (@MaChiTietBaoCao, @TuNgay, @DenNgay, @MaNVBC, @MaKho)";
+                    //command = new SqlCommand(insertString, connection);
+
+                    //command.Parameters.Add("@MaChiTietBaoCao", SqlDbType.VarChar);
+                    //command.Parameters["@MaChiTietBaoCao"].Value = "BCK" + count.ToString();
+
+                    //command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
+                    //command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
+
+                    //command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
+                    //command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
+
+                    //command.Parameters.Add("@MaNVBC", SqlDbType.VarChar);
+                    //command.Parameters["@MaNVBC"].Value = NhanVienDangDangNhap.MaNhanVien;
+
+                    //command.Parameters.Add("@MaKho", SqlDbType.VarChar);
+                    //command.Parameters["@MaKho"].Value = "???";
+
+                    //command.ExecuteNonQuery();
                 }
                 connection.Close();
             }

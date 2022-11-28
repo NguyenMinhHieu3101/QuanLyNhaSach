@@ -40,6 +40,7 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 NhanVienDangDangNhap.MaChucVu = Current_User[3].ToString();
                 NhanVienDangDangNhap.HoTen = Current_User[2].ToString();
+                NhanVienDangDangNhap.MaNhanVien = Current_User[0].ToString();
 
                 Home home = new Home();
                 MessageBox.Show("Chào mừng!" + Current_User[2].ToString());

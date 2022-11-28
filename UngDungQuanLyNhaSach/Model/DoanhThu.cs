@@ -17,12 +17,6 @@ namespace UngDungQuanLyNhaSach.Model
         [ColumnName("Số Tiền")]
         public decimal soTien { get; set; }
 
-        public DoanhThu(string chiTra, decimal soTien)
-        {
-            this.chiTra = chiTra;
-            this.soTien = soTien;
-        }
-
         public DoanhThu(int stt, string chiTra, decimal soTien)
         {
             this.stt = stt;

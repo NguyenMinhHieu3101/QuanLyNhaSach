@@ -46,8 +46,9 @@ namespace UngDungQuanLyNhaSach.Pages
                 }
                 else
                 {
-                    string readString1 = "SELECT SUM(TongTienHoaDon) AS TongThu FROM HOADON WHERE NgayLapHoaDon BETWEEN @TuNgay AND @DenNgay";
+                    txtThoiGian.Text = "TỪ " + dPickerTuNgay.SelectedDate.Value.ToShortDateString() + " ĐẾN " + dPickerDenNgay.SelectedDate.Value.ToShortDateString();
 
+                    string readString1 = "SELECT SUM(TongTienHoaDon) AS TongThu FROM HOADON WHERE NgayLapHoaDon BETWEEN @TuNgay AND @DenNgay";
                     SqlCommand command = new SqlCommand(readString1, connection);
 
                     command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
@@ -56,14 +57,11 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
                     command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
 
-                    SqlDataAdapter da = new SqlDataAdapter(command);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    tongThu = (decimal)dt.Rows[0]["TongThu"];
+                    tongThu = (decimal)command.ExecuteScalar();
                     txtTongThu.Text = "TỔNG THU: " + tongThu;
 
-                    string readString2 = "SELECT SUM(TongTien) AS TongChi FROM PHIEUNHAP WHERE NgayNhap BETWEEN @TuNgay AND @DenNgay";
 
+                    string readString2 = "SELECT SUM(TongTien) AS TongChi FROM PHIEUNHAP WHERE NgayNhap BETWEEN @TuNgay AND @DenNgay";
                     command = new SqlCommand(readString2, connection);
 
                     command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
@@ -72,14 +70,39 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
                     command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
 
-                    da = new SqlDataAdapter(command);
-                    dt = new DataTable();
-                    da.Fill(dt);
-                    tongChi = (decimal)dt.Rows[0]["TongChi"];
+                    tongChi = (decimal)command.ExecuteScalar();
                     txtTongChi.Text = "TỔNG CHI: " + tongChi;
 
                     decimal loiNhuan = tongThu - tongChi;
                     txtLoiNhuan.Text = "LỢI NHUẬN: " + loiNhuan;
+
+
+                    string readString3 = "SELECT COUNT(*) FROM CHITIETBAOCAODOANHTHU";
+                    command = new SqlCommand(readString3, connection);
+                    Int32 count = (Int32)command.ExecuteScalar() + 1;
+
+                    string insertString = "INSERT INTO CHITIETBAOCAODOANHTHU (MaChiTietBaoCao, TuNgay, DenNgay, MaNVBC, DoanhThu, ChiPhi) VALUES (@MaChiTietBaoCao, @TuNgay, @DenNgay, @MaNVBC, @DoanhThu, @ChiPhi)";
+                    command = new SqlCommand(insertString, connection);
+
+                    command.Parameters.Add("@MaChiTietBaoCao", SqlDbType.VarChar);
+                    command.Parameters["@MaChiTietBaoCao"].Value = "DT" + count.ToString();
+
+                    command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
+
+                    command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
+
+                    command.Parameters.Add("@MaNVBC", SqlDbType.VarChar);
+                    command.Parameters["@MaNVBC"].Value = NhanVienDangDangNhap.MaNhanVien;
+
+                    command.Parameters.Add("@DoanhThu", SqlDbType.Money);
+                    command.Parameters["@DoanhThu"].Value = tongThu.ToString();
+
+                    command.Parameters.Add("@ChiPhi", SqlDbType.Money);
+                    command.Parameters["@ChiPhi"].Value = tongChi.ToString();
+
+                    command.ExecuteNonQuery();
                 }
                 connection.Close();
             }
