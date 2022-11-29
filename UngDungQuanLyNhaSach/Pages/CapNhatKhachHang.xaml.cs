@@ -69,20 +69,18 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     reader.Read();
                     KhachHang khachHangData = new KhachHang(stt: 0, maKhachHang: (String)reader["MaKhachHang"],
-                        tenKhachHang: (String)reader["TenKhachHang"], diaChi: (String)reader["DiaChi"],
+                        tenKhachHang: (String)reader["TenKhachHang"],
                         gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["MaLoaiKhachHang"],
-                        sdt: (String)reader["SDT"], email: (String)reader["Email"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng");
+                        sdt: (String)reader["SDT"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng");
                     
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         maKH.Text = khachHangData.maKhachHang;
                         name.Text = khachHangData.tenKhachHang;
                         gioiTinh.SelectedIndex = khachHangData.gioiTinh == "Nam" ? 0 : 1;
-                        diaChi.Text = khachHangData.diaChi;
                         loaiKhachHang.SelectedIndex = khachHangData.maLoaiKhachHang == "VL" ? 0 :
                         (khachHangData.maLoaiKhachHang == "B" ? 1 : (khachHangData.maLoaiKhachHang == "V" ? 2 : 3));
                         sdt.Text = khachHangData.sdt;
-                        email.Text = khachHangData.email;
                     }));
 
                     connection.Close();

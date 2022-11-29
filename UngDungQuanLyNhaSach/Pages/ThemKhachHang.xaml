@@ -256,11 +256,6 @@
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
-                            <TextBlock Text="Địa chỉ:"/>
-                            <TextBox x:Name="diaChi" Template="{StaticResource TextBoxBaseControlTemplate}"/>
-                        </DockPanel>
-
-                        <DockPanel LastChildFill="True">
                             <TextBlock Text="Loại Khách hàng:"/>
                             <ComboBox x:Name="loaiKhachHang">
                                 <ComboBoxItem IsSelected="True">Vãng Lai</ComboBoxItem>
@@ -275,25 +270,15 @@
                             <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
                                      PreviewTextInput="previewTextInput"/>
                         </DockPanel>
-                        
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="Email:"/>
-                            <TextBox x:Name="email" Template="{StaticResource TextBoxBaseControlTemplate}"/>
-                        </DockPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Ngày Sinh:"/>
                             <Border BorderBrush="Black" 
                                     BorderThickness="1"
-                                    CornerRadius="10">  
-                                <DatePicker x:Name="ngaySinh" BorderBrush="Transparent"/>
+                                    CornerRadius="10">
+                                <DatePicker x:Name="ngaySinh" BorderBrush="Transparent" FontSize="16"/>
                             </Border>
-                        </DockPanel>
-
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="Tổng tiền đã mua:"/>
-                            <TextBox x:Name="totalMoney" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="previewTextInput"/>
+                            
                         </DockPanel>
 
                     </StackPanel>

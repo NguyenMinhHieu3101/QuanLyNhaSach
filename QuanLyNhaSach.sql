@@ -60,11 +60,9 @@ CREATE TABLE KHACHHANG
 (
 	MaKhachHang VARCHAR(20) CONSTRAINT PK_MAKH PRIMARY KEY,
 	TenKhachHang NVARCHAR(100),
-	DiaChi NVARCHAR(100),
 	GioiTinh NVARCHAR(3),
 	MaLoaiKhachHang VARCHAR(20),
 	SDT VARCHAR(20),
-	Email VARCHAR(100),
 	TrangThai VARCHAR(1)
 )
 CREATE TABLE LOAIKHACHHANG
@@ -80,6 +78,7 @@ CREATE TABLE KHUYENMAI
 	ThoiGianKetThuc SMALLDATETIME,
 	MaLoaiKhachHang VARCHAR(20),
 	SoLuongKhuyenMai INT,
+	PhanTram INT,
 	TrangThai VARCHAR(1)
 )
 CREATE TABLE PHIEUNHAP
@@ -232,32 +231,32 @@ INSERT INTO CHUCVU (MaChucVu, TenChucVu) VALUES ('NVK', 'Nhân viên kho');
 INSERT INTO CHUCVU (MaChucVu, TenChucVu) VALUES ('NVBH', 'Nhân viên bán hàng');
 INSERT INTO CHUCVU (MaChucVu, TenChucVu) VALUES ('NVKT', 'Nhân viên kế toán');
 
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, MaLoaiKhachHang, SDT, Email, TrangThai) VALUES ('KH01', N'Nguyễn Ngọc Trinh', N'Ninh Hòa, Khánh Hòa', N'Nam', 'VL', '0354161123', 'ngoctrinh@gmail.com', '1');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, MaLoaiKhachHang, SDT, Email, TrangThai) VALUES ('KH02', N'Huỳnh Thế Vĩ', N'Quận 1, Hồ Chí Minh', N'Nữ', 'B', '0354161124', 'thevi@gmail.com', '1');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, MaLoaiKhachHang, SDT, Email, TrangThai) VALUES ('KH03', N'Bùi Lê Hoài An', N'Quận Hoàn Kiếm, Hà Nội', N'Nữ', 'V', '0354161125', 'hoaian@gmail.com', '0');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, MaLoaiKhachHang, SDT, Email, TrangThai) VALUES ('KH04', N'Phạm Nhật Minh', N'Quận Hải Châu, Đà Nẵng', N'Nữ', 'KC', '0354161126', 'nhatminh@gmail.com', '0');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, MaLoaiKhachHang, SDT, Email, TrangThai) VALUES ('KH05', N'Phan Xuân Quang', N'Ninh Hải, Ninh Thuận', N'Nam', 'VL', '0354161127', 'xuanquang@gmail.com', '0');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, MaLoaiKhachHang, SDT, Email, TrangThai) VALUES ('KH06', N'Tôn Nữ Hoài Thương', N'Rạch Giá, Kiên Giang', N'Nam', 'B', '0354161128', 'hoaithuong@gmail.com', '1');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, MaLoaiKhachHang, SDT, Email, TrangThai) VALUES ('KH07', N'Nguyễn Viết Đức', N'Tân Thành, Cà Mau', N'Nữ', 'V', '0354161129', 'vietduc@gmail.com', '0');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, MaLoaiKhachHang, SDT, Email, TrangThai) VALUES ('KH08', N'Dín Hiền Dũng', N'Hương Trà, Huế', N'Nữ', 'KC', '0354161130', 'hiendung@gmail.com', '0');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, MaLoaiKhachHang, SDT, Email, TrangThai) VALUES ('KH09', N'Lê Sỹ Hội', N'An Dương, Hải Phòng', N'Nữ', 'VL', '0354161131', 'syhoi@gmail.com', '1');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, MaLoaiKhachHang, SDT, Email, TrangThai) VALUES ('KH10', N'Ngô Quang Khoa', N'Tuy Hòa, Phú Yên', N'Nữ', 'B', '0354161132', 'quangkhoa@gmail.com', '1');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH01', N'Nguyễn Ngọc Trinh', N'Nữ', 'VL', '0354161123', '1');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH02', N'Huỳnh Thế Vĩ', N'Nam', 'B', '0354161124', '1');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH03', N'Bùi Lê Hoài An', N'Nữ', 'V', '0354161125', '0');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH04', N'Phạm Nhật Minh', N'Nữ', 'KC', '0354161126', '0');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH05', N'Phan Xuân Quang', N'Nam', 'VL', '0354161127', '0');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH06', N'Tôn Nữ Hoài Thương', N'Nam', 'B', '0354161128', '1');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH07', N'Nguyễn Viết Đức', N'Nữ', 'V', '0354161129', '0');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH08', N'Dín Hiền Dũng', N'Nữ', 'KC', '0354161130', '0');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH09', N'Lê Sỹ Hội', N'Nữ', 'VL', '0354161131', '1');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH10', N'Ngô Quang Khoa', N'Nữ', 'B', '0354161132', '1');
 
 INSERT INTO KHO (MaKho, TenKho, SucChua, DaChua) VALUES ('K01', N'Quận 1', '10000', '1250');
 INSERT INTO KHO (MaKho, TenKho, SucChua, DaChua) VALUES ('K02', N'Quận 9', '20000', '2250');
 INSERT INTO KHO (MaKho, TenKho, SucChua, DaChua) VALUES ('K03', N'Quận Bình Thạnh', '5000', '3250');
 INSERT INTO KHO (MaKho, TenKho, SucChua, DaChua) VALUES ('K04', N'Quận Gò Vấp', '10000', '2400');
 
-INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, TrangThai) VALUES ('KM01', '01/01/2022', '02/01/2022', 'B', '100', '1');
-INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, TrangThai) VALUES ('KM02', '07/01/2022', '08/01/2022', 'VL', '150', '1');
-INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, TrangThai) VALUES ('KM03', '08/01/2022', '09/01/2022', 'KC', '50', '0');
-INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, TrangThai) VALUES ('KM04', '09/01/2022', '10/01/2022', 'V', '50', '1');
-INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, TrangThai) VALUES ('KM05', '19/01/2022', '20/01/2022', 'B', '100', '0');
-INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, TrangThai) VALUES ('KM06', '20/01/2022', '21/01/2022', 'KC', '50', '1');
-INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, TrangThai) VALUES ('KM07', '21/01/2022', '22/01/2022', 'VL', '150', '1');
-INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, TrangThai) VALUES ('KM08', '22/01/2022', '23/01/2022', 'KC', '50', '0');
-INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, TrangThai) VALUES ('KM09', '23/01/2022', '24/01/2022', 'B', '150', '0');
-INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, TrangThai) VALUES ('KM10', '24/01/2022', '25/01/2022', 'V', '50', '0');
+INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) VALUES ('KM01', '01/01/2022', '02/01/2022', 'B', '100', '10', '1');
+INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) VALUES ('KM02', '07/01/2022', '08/01/2022', 'VL', '150', '5', '1');
+INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) VALUES ('KM03', '08/01/2022', '09/01/2022', 'KC', '50', '15', '0');
+INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) VALUES ('KM04', '09/01/2022', '10/01/2022', 'V', '50', '20', '1');
+INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) VALUES ('KM05', '19/01/2022', '20/01/2022', 'B', '100', '30', '0');
+INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) VALUES ('KM06', '20/01/2022', '21/01/2022', 'KC', '50', '10', '1');
+INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) VALUES ('KM07', '21/01/2022', '22/01/2022', 'VL', '150', '15', '1');
+INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) VALUES ('KM08', '22/01/2022', '23/01/2022', 'KC', '50', '5', '0');
+INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) VALUES ('KM09', '23/01/2022', '24/01/2022', 'B', '150', '15', '0');
+INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) VALUES ('KM10', '24/01/2022', '25/01/2022', 'V', '50', '10', '0');
 
 INSERT INTO LOAIKHACHHANG (MaLoaiKhachHang, TenLoaiKhachHang, TienToiThieu) VALUES ('VL', N'Vãng Lai', '0');
 INSERT INTO LOAIKHACHHANG (MaLoaiKhachHang, TenLoaiKhachHang, TienToiThieu) VALUES ('B', N'Bạc', '5000000');

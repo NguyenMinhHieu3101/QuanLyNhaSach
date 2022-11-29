@@ -139,7 +139,7 @@
                                     Margin="3,3,23,3"
                                     FontSize="16"
                                     Focusable="True" 
-                                    Background="#FF3F3F3F"
+                                    Background="Transparent"
                                     Foreground="Green"
                                     Visibility="Hidden"
                                     IsReadOnly="{TemplateBinding IsReadOnly}"/>
@@ -246,16 +246,22 @@
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Phần trăm:"/>
-                            <TextBox x:Name="phanTram" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="previewTextInput"/>
+                            <ComboBox IsEditable="True" x:Name="phanTram" 
+                                     PreviewTextInput="previewTextInput">
+                                <ComboBoxItem IsSelected="True">5</ComboBoxItem>
+                                <ComboBoxItem>10</ComboBoxItem>
+                                <ComboBoxItem>15</ComboBoxItem>
+                                <ComboBoxItem>20</ComboBoxItem>
+                                <ComboBoxItem>30</ComboBoxItem>
+                            </ComboBox>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Ngày bắt đầu:"/>
                             <Border BorderBrush="Black" 
                                     BorderThickness="1"
-                                    CornerRadius="10">  
-                                <DatePicker x:Name="ngayBatDau" BorderBrush="Transparent"/>
+                                    CornerRadius="10">
+                                <DatePicker x:Name="ngayBatDau" BorderBrush="Transparent" FontSize="16"/>
                             </Border>
                         </DockPanel>
                         
@@ -264,7 +270,7 @@
                             <Border BorderBrush="Black" 
                                     BorderThickness="1"
                                     CornerRadius="10">  
-                                <DatePicker x:Name="ngayKetThuc" BorderBrush="Transparent"/>
+                                <DatePicker x:Name="ngayKetThuc" BorderBrush="Transparent" FontSize="16"/>
                             </Border>
                         </DockPanel>
 

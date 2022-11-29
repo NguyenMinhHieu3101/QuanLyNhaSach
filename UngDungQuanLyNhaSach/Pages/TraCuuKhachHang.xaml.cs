@@ -56,9 +56,9 @@ namespace UngDungQuanLyNhaSach.Pages
                     {
                         count++;
                         khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
-                            tenKhachHang: (String)reader["TenKhachHang"], diaChi: (String)reader["DiaChi"],
+                            tenKhachHang: (String)reader["TenKhachHang"],
                             gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
-                            sdt: (String)reader["SDT"], email: (String)reader["Email"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
+                            sdt: (String)reader["SDT"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
                     }
                     this.Dispatcher.BeginInvoke(new Action(() => {
                         resultKhachHangTable.ItemsSource = khachHangList;

@@ -44,11 +44,8 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             name.Text = "";
             gioiTinh.SelectedIndex = 0;
-            diaChi.Text = "";
             loaiKhachHang.Text = "";
             sdt.Text = "";
-            email.Text = "";
-            totalMoney.Text = "";
             ngaySinh.SelectedDate = DateTime.Now;
             updateMaKhachHang();
         }
@@ -70,7 +67,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         maKH.Text = "KH" + count.ToString();
                     }));
                 }
-                catch (Exception ex) { }
+                catch { }
             }));
             thread.IsBackground = true;
             thread.Start();
@@ -89,8 +86,8 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlCommand commandReader = new SqlCommand(readString, connection);
                     Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
 
-                    string insertString = "INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, DiaChi, GioiTinh, MaLoaiKhachHang, SDT, Email, TrangThai) " +
-                        "VALUES (@MaKhachHang, @TenKhachHang, @DiaChi, @GioiTinh, @MaLoaiKhachHang, @SDT, @Email, @TrangThai)";
+                    string insertString = "INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) " +
+                        "VALUES (@MaKhachHang, @TenKhachHang, @GioiTinh, @MaLoaiKhachHang, @SDT, @TrangThai)";
                     SqlCommand command = new SqlCommand(insertString, connection);
 
                     command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
@@ -98,9 +95,6 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     command.Parameters.Add("@TenKhachHang", SqlDbType.NVarChar);
                     command.Parameters["@TenKhachHang"].Value = name.Text;
-
-                    command.Parameters.Add("@DiaChi", SqlDbType.NVarChar);
-                    command.Parameters["@DiaChi"].Value = diaChi.Text;
 
                     command.Parameters.Add("@GioiTinh", SqlDbType.NVarChar);
                     command.Parameters["@GioiTinh"].Value = gioiTinh.Text;
@@ -111,9 +105,6 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     command.Parameters.Add("@SDT", SqlDbType.VarChar);
                     command.Parameters["@SDT"].Value = sdt.Text;
-
-                    command.Parameters.Add("@Email", SqlDbType.VarChar);
-                    command.Parameters["@Email"].Value = email.Text;
 
                     command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
                     command.Parameters["@TrangThai"].Value = "1";
@@ -140,16 +131,14 @@ namespace UngDungQuanLyNhaSach.Pages
                 MessageBox.Show("Số điện thoại không hợp lệ");
                 return false;
             }
-            if (!Regex.IsMatch(email.Text, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"))
+            foreach (KhachHang khachHang in khachHangList)
             {
-                MessageBox.Show("Email không hợp lệ");
-                return false;
-            }
-            if (totalMoney.Text.Length == 0)
-            {
-                MessageBox.Show("Lương không hợp lệ");
-                return false;
-            }
+                if (khachHang.sdt == sdt.Text)
+                {
+                    MessageBox.Show("Số điện thoại đã có trong hệ thống");
+                    return false;
+                }    
+            }    
             return true;
         }
 
@@ -175,9 +164,9 @@ namespace UngDungQuanLyNhaSach.Pages
                     {
                         count++;
                         khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
-                            tenKhachHang: (String)reader["TenKhachHang"], diaChi: (String)reader["DiaChi"],
+                            tenKhachHang: (String)reader["TenKhachHang"],
                             gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
-                            sdt: (String)reader["SDT"], email: (String)reader["Email"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng"));
+                            sdt: (String)reader["SDT"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng"));
                     }
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
@@ -258,9 +247,6 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters.Add("@TenKhachHang", SqlDbType.NVarChar);
                     command.Parameters["@TenKhachHang"].Value = name.Text;
 
-                    command.Parameters.Add("@DiaChi", SqlDbType.NVarChar);
-                    command.Parameters["@DiaChi"].Value = diaChi.Text;
-
                     command.Parameters.Add("@GioiTinh", SqlDbType.NVarChar);
                     command.Parameters["@GioiTinh"].Value = gioiTinh.Text;
 
@@ -270,9 +256,6 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     command.Parameters.Add("@SDT", SqlDbType.VarChar);
                     command.Parameters["@SDT"].Value = sdt.Text;
-
-                    command.Parameters.Add("@Email", SqlDbType.VarChar);
-                    command.Parameters["@Email"].Value = email.Text;
 
                     command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
                     command.Parameters["@TrangThai"].Value = "1";
@@ -346,11 +329,9 @@ namespace UngDungQuanLyNhaSach.Pages
             maKH.Text = khachHangData.maKhachHang;
             name.Text = khachHangData.tenKhachHang;
             gioiTinh.SelectedIndex = khachHangData.gioiTinh == "Nam" ? 0 : 1;
-            diaChi.Text = khachHangData.diaChi;
             loaiKhachHang.SelectedIndex = khachHangData.maLoaiKhachHang == "Vãng Lai" ? 0 :
             (khachHangData.maLoaiKhachHang == "Bạc" ? 1 : (khachHangData.maLoaiKhachHang == "Vàng" ? 2 : 3));
             sdt.Text = khachHangData.sdt;
-            email.Text = khachHangData.email;
         }
     }
 }

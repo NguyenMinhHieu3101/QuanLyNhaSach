@@ -29,12 +29,14 @@ namespace UngDungQuanLyNhaSach.Pages
     public partial class ThemNhanVien : Page
     {
         List<NhanVien> nhanVienList = new List<NhanVien>();
+        int currentSelected = -1;
 
         public ThemNhanVien()
         {
             InitializeComponent();
             ngaySinh.SelectedDate = DateTime.Now;
             loadListStaff();
+            updateMaNhanVien();
             update.IsEnabled = false;
             delete.IsEnabled = false;
         }
@@ -50,6 +52,7 @@ namespace UngDungQuanLyNhaSach.Pages
             gioiTinh.SelectedIndex = 0;
             email.Text = "";
             ngaySinh.SelectedDate = DateTime.Now;
+            updateMaNhanVien();
         }
 
         void loadListStaff()
@@ -96,6 +99,31 @@ namespace UngDungQuanLyNhaSach.Pages
             thread.Start();
         }
 
+        void updateMaNhanVien()
+        {
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+
+                    string readString = "select Count(*) from NHANVIEN";
+                    SqlCommand commandReader = new SqlCommand(readString, connection);
+                    Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        maNv.Text = "NV" + count.ToString();
+                    }));
+                }
+                catch (Exception e) {
+                    MessageBox.Show(e.ToString());
+                }
+            }));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
         private void nhanVienTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             var desc = e.PropertyDescriptor as PropertyDescriptor;
@@ -129,6 +157,30 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 MessageBox.Show("Lương không hợp lệ");
                 return false;
+            }    
+            if (DateTime.Now.AddYears(-18) < ngaySinh.SelectedDate)
+            {
+                MessageBox.Show("Ngày sinh chưa đủ 18 tuổi");
+                return false;
+            }    
+            foreach (NhanVien nhanVien in nhanVienList)
+            {
+                if (nhanVien.sdt == sdt.Text || nhanVien.cccd == cccd.Text || nhanVien.email == email.Text)
+                {
+                    if (nhanVien.sdt == sdt.Text)
+                    {
+                        MessageBox.Show("Số điện thoại đã có trong hệ thống");
+                    }
+                    else if (nhanVien.cccd == cccd.Text)
+                    {
+                        MessageBox.Show("CCCD đã có trong hệ thống");
+                    }
+                    else if (nhanVien.email == email.Text)
+                    {
+                        MessageBox.Show("Email đã có trong hệ thống");
+                    }
+                    return false;
+                }    
             }    
             return true;
         }
@@ -335,12 +387,28 @@ namespace UngDungQuanLyNhaSach.Pages
             gioiTinh.SelectedIndex = nhanVien.gioiTinh == "Nam" ? 0 : 1;
             luong.Text = nhanVien.luong.ToString();
             chucVu.SelectedIndex = nhanVien.maChucVu == "NVBH" ? 1 : (nhanVien.maChucVu == "NVK" ? 2 : 0);
+            maNv.Text = nhanVien.maNhanVien;
         }
 
         private void nhanVienTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (nhanVienTable.SelectedIndex != -1)
             {
+                if (currentSelected != -1)
+                {
+                    DataGridRow curentRow = (DataGridRow)nhanVienTable.ItemContainerGenerator.ContainerFromIndex(currentSelected);
+                    Setter normal = new Setter(TextBlock.FontWeightProperty, FontWeights.Normal, null);
+                    Style normalStyle = new Style(curentRow.GetType());
+                    normalStyle.Setters.Add(normal);
+                    curentRow.Style = normalStyle;
+                }    
+                DataGridRow row = (DataGridRow)nhanVienTable.ItemContainerGenerator.ContainerFromIndex(nhanVienTable.SelectedIndex);
+                Setter bold = new Setter(TextBlock.FontWeightProperty, FontWeights.Bold, null);
+                Style newStyle = new Style(row.GetType());
+                newStyle.Setters.Add(bold);
+                row.Style = newStyle;
+                currentSelected = nhanVienTable.SelectedIndex;
+
                 update.IsEnabled = true;
                 delete.IsEnabled = true;
                 loadNV();

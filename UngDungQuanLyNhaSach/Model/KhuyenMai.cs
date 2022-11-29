@@ -25,23 +25,27 @@ namespace UngDungQuanLyNhaSach.Model
 
         [ColumnName("Số Lượng")]
         public int soLuong { get; set; }
+        
+        [ColumnName("Phần Trăm")]
+        public int phanTram { get; set; }
 
         [ColumnName("Trạng Thái")]
         public String trangThai { get; set; }
 
         public KhuyenMai(string maKhuyenMai, DateTime batDau, DateTime ketThuc, 
-            string maLoaiKhachHang, int soLuong, string trangThai)
+            string maLoaiKhachHang, int soLuong, int phanTram, string trangThai)
         {
             this.maKhuyenMai = maKhuyenMai;
             this.batDau = batDau;
             this.ketThuc = ketThuc;
             this.maLoaiKhachHang = maLoaiKhachHang;
             this.soLuong = soLuong;
+            this.phanTram = phanTram;
             this.trangThai = trangThai;
         }
         
         public KhuyenMai(int stt, string maKhuyenMai, DateTime batDau, DateTime ketThuc, 
-            string maLoaiKhachHang, int soLuong, string trangThai)
+            string maLoaiKhachHang, int soLuong, int phanTram, string trangThai)
         {
             this.stt = stt;
             this.maKhuyenMai = maKhuyenMai;
@@ -50,6 +54,7 @@ namespace UngDungQuanLyNhaSach.Model
             this.maLoaiKhachHang = maLoaiKhachHang;
             this.soLuong = soLuong;
             this.trangThai = trangThai;
+            this.phanTram = phanTram;
         }
     }
 }

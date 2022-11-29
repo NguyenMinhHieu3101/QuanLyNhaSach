@@ -30,6 +30,7 @@ namespace UngDungQuanLyNhaSach.Pages
     public partial class ThemKhuyenMai : Page
     {
         List<KhuyenMai> khuyenMaiList = new List<KhuyenMai>();
+        int currentSelected = -1;
 
         public ThemKhuyenMai()
         {
@@ -66,11 +67,16 @@ namespace UngDungQuanLyNhaSach.Pages
             }
             DateTime start = ngayBatDau.SelectedDate ?? DateTime.Now;
             DateTime end = ngayKetThuc.SelectedDate ?? DateTime.Now;
-            if (end.Subtract(start).TotalSeconds < 0)
+            if (end.Subtract(start).TotalDays < 0)
             {
                 MessageBox.Show("Ngày bắt đầu và ngày kết thúc không hợp lệ!");
                 return false;
             }    
+            if (end.Subtract(DateTime.Now).TotalDays < 0)
+            {
+                MessageBox.Show("Ngày kết thúc phải lớn hơn ngày hiện tại!");
+                return false;
+            }
             return true;
         }
 
@@ -111,8 +117,8 @@ namespace UngDungQuanLyNhaSach.Pages
                     Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
 
 
-                    string insertString = "INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, TrangThai) " +
-                        "VALUES (@MaKhuyenMai, @ThoiGianBatDau, @ThoiGianKetThuc, @MaLoaiKhachHang, @SoLuongKhuyenMai, @TrangThai)";
+                    string insertString = "INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) " +
+                        "VALUES (@MaKhuyenMai, @ThoiGianBatDau, @ThoiGianKetThuc, @MaLoaiKhachHang, @SoLuongKhuyenMai, @PhanTram, @TrangThai)";
                     SqlCommand command = new SqlCommand(insertString, connection);
 
                     command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
@@ -130,6 +136,9 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     command.Parameters.Add("@SoLuongKhuyenMai", SqlDbType.Int);
                     command.Parameters["@SoLuongKhuyenMai"].Value = int.Parse(soLuong.Text);
+                    
+                    command.Parameters.Add("@PhanTram", SqlDbType.Int);
+                    command.Parameters["@PhanTram"].Value = int.Parse(phanTram.Text);
 
                     command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
                     command.Parameters["@TrangThai"].Value = "1";
@@ -184,7 +193,7 @@ namespace UngDungQuanLyNhaSach.Pages
                             batDau: (DateTime)reader["ThoiGianBatDau"], //DateTime.ParseExact(reader["ThoiGianBatDau"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
                             ketThuc: (DateTime)reader["ThoiGianKetThuc"], //DateTime.ParseExact(reader["ThoiGianKetThuc"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
                             maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
-                            soLuong: (int)reader["SoLuongKhuyenMai"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
+                            soLuong: (int)reader["SoLuongKhuyenMai"], phanTram: (int)reader["PhanTram"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
                     }
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
@@ -231,7 +240,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                     connection.Open();
 
-                    string updateString = "UPDATE KHUYENMAI SET ThoiGianBatDau = @ThoiGianBatDau, ThoiGianKetThuc = @ThoiGianKetThuc, MaLoaiKhachHang = @MaLoaiKhachHang, SoLuongKhuyenMai = @SoLuongKhuyenMai, TrangThai = @TrangThai " +
+                    string updateString = "UPDATE KHUYENMAI SET ThoiGianBatDau = @ThoiGianBatDau, ThoiGianKetThuc = @ThoiGianKetThuc, MaLoaiKhachHang = @MaLoaiKhachHang, SoLuongKhuyenMai = @SoLuongKhuyenMai, PhanTram = @PhanTram, TrangThai = @TrangThai " +
                         "WHERE MaKhuyenMai = @MaKhuyenMai";
                     SqlCommand command = new SqlCommand(updateString, connection);
 
@@ -250,6 +259,9 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     command.Parameters.Add("@SoLuongKhuyenMai", SqlDbType.Int);
                     command.Parameters["@SoLuongKhuyenMai"].Value = int.Parse(soLuong.Text);
+                    
+                    command.Parameters.Add("@PhanTram", SqlDbType.Int);
+                    command.Parameters["@PhanTram"].Value = int.Parse(phanTram.Text);
 
                     command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
                     command.Parameters["@TrangThai"].Value = "1";
@@ -307,6 +319,7 @@ namespace UngDungQuanLyNhaSach.Pages
             KhuyenMai khuyenMai = khuyenMaiList[khuyenMaiTable.SelectedIndex];
             maKM.Text = khuyenMai.maKhuyenMai;
             soLuong.Text = khuyenMai.soLuong.ToString();
+            phanTram.Text = khuyenMai.phanTram.ToString();
             loaiKhachHang.SelectedIndex = khuyenMai.maLoaiKhachHang == "Vãng Lai" ? 0 :
             (khuyenMai.maLoaiKhachHang == "Bạc" ? 1 : (khuyenMai.maLoaiKhachHang == "Vàng" ? 2 : 3));
             ngayBatDau.SelectedDate = khuyenMai.batDau;
@@ -317,11 +330,28 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             if (khuyenMaiTable.SelectedIndex != -1)
             {
+                if (currentSelected != -1)
+                {
+                    DataGridRow curentRow = (DataGridRow)khuyenMaiTable.ItemContainerGenerator.ContainerFromIndex(currentSelected);
+                    Setter normal = new Setter(TextBlock.FontWeightProperty, FontWeights.Normal, null);
+                    Style normalStyle = new Style(curentRow.GetType());
+                    normalStyle.Setters.Add(normal);
+                    curentRow.Style = normalStyle;
+                }
+                DataGridRow row = (DataGridRow)khuyenMaiTable.ItemContainerGenerator.ContainerFromIndex(khuyenMaiTable.SelectedIndex);
+                Setter bold = new Setter(TextBlock.FontWeightProperty, FontWeights.Bold, null);
+                Style newStyle = new Style(row.GetType());
+                newStyle.Setters.Add(bold);
+                row.Style = newStyle;
+                currentSelected = khuyenMaiTable.SelectedIndex;
+
                 update.IsEnabled = true;
+                delete.IsEnabled = true;
                 loadKM();
             }
             else
             {
+                delete.IsEnabled = false;
                 update.IsEnabled = false;
             }
         }
