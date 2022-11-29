@@ -6,8 +6,8 @@
       xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
       mc:Ignorable="d" 
       Background="White"
-      d:DesignHeight="450"  d:DesignWidth="800"
-      Title="ThemPhieuNhapSach">
+      d:DesignWidth="800" d:DesignHeight="850"
+      Title="ThemPhieuNhapSach" >
 
     <Page.Resources>
 
@@ -59,14 +59,14 @@
 
     </Page.Resources>
 
-    <Grid>
+    <Grid Margin="20, 0,5,0">
         <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>-->
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="0.7*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -86,7 +86,7 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1">
                     <DockPanel LastChildFill="True">
-                        <TextBlock Text="Ngày Nhập Sách:" Width="130"/>
+                        <TextBlock Text="Ngày Nhập Sản Phẩm:" Width="180"/>
                         <DatePicker x:Name="ngaynhapsach" Width="200" Height="24"/>
                     </DockPanel>
                 </StackPanel>
@@ -164,16 +164,16 @@
 
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="2">
+        <StackPanel Grid.Row="2" Height="60" VerticalAlignment="Top" Margin="-10,10,10,0">
             <DockPanel HorizontalAlignment="Center" LastChildFill="True">
-                <Button Margin="0,0,20,0"
+                <Button x:Name="deleteBtn" Margin="0,0,20,0"
                         Content="Xóa" 
                         Height="37" 
                         Width="128"
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource DeleteButton}"/>
+                        Style="{StaticResource DeleteButton}" Click="deleteBtn_Click"/>
                 <Button x:Name="addBtn" Margin="0,0,20,0"
                         Content="Thêm" 
                         Height="37" 
@@ -182,14 +182,14 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}" Click="addBtn_Click" />
-                <Button Content="Cập nhật" 
+                <Button x:Name="updateBtn" Content="Cập nhật" 
                         Margin="0,0,20,0"
                         Height="37" 
                         Width="128"
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource AddButton}"/>
+                        Style="{StaticResource AddButton}" Click="updateBtn_Click"/>
                 <Button x:Name="cancelBtn" Content="Thoát" 
                         Margin="0,0,20,0"
                         Height="37" 
@@ -206,10 +206,10 @@
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
                   VerticalScrollBarVisibility="Auto"
-                  AutoGeneratingColumn="phieuNhapSachTable_AutoGeneratingColumn" Background="{x:Null}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="True">
+                  AutoGeneratingColumn="phieuNhapSachTable_AutoGeneratingColumn" Background="{x:Null}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="True" Height="400" SelectionChanged="phieuNhapSachTable_SelectionChanged">
             </DataGrid>
         </StackPanel>
-        <StackPanel Grid.Row="3"  HorizontalAlignment="Left" Margin="433,0,0,0" Width="367"  VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Height="40" Grid.RowSpan="2">
+        <StackPanel Grid.Row="4"  HorizontalAlignment="Left" Margin="329,0,0,14" Width="366"  VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Height="52">
             <StackPanel.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="1"/>
@@ -218,7 +218,15 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </StackPanel.RenderTransform>
-            <DockPanel Width="344" Height="34">
+            <DockPanel Width="344" Height="50" RenderTransformOrigin="0.5,0.5">
+                <DockPanel.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleX="2.497"/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0.741"/>
+                    </TransformGroup>
+                </DockPanel.RenderTransform>
                 <Button Content="Lưu" 
                         Height="37" 
                         Width="128"
