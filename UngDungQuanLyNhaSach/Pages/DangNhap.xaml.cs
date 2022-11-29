@@ -43,7 +43,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 NhanVienDangDangNhap.MaNhanVien = Current_User[0].ToString();
 
                 Home home = new Home();
-                MessageBox.Show("Chào mừng!" + Current_User[2].ToString());
+                MessageBox.Show("Chào mừng " + Current_User[2].ToString() + "!");
                 home.Show();
                 this.Hide();
             }

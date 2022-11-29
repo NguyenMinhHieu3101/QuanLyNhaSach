@@ -24,6 +24,9 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class BaoCaoKho : Page
     {
+        List<NhapKho> nhapList = new List<NhapKho>();
+        List<XuatKho> xuatList = new List<XuatKho>();
+
         public BaoCaoKho()
         {
             InitializeComponent();
@@ -55,6 +58,9 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             try
             {
+                nhapList = new List<NhapKho>();
+                xuatList = new List<XuatKho>();
+
                 int tongNhap = 0;
                 int tongXuat = 0;
 
@@ -69,21 +75,10 @@ namespace UngDungQuanLyNhaSach.Pages
                 {
                     txtThoiGian.Text = "TỪ " + dPickerTuNgay.SelectedDate.Value.ToShortDateString() + " ĐẾN " + dPickerDenNgay.SelectedDate.Value.ToShortDateString();
 
-                    string readString1 = "SELECT SUM(SoLuong) AS TongNhap FROM CHITIETPHIEUNHAP, PHIEUNHAP  WHERE (CHITIETPHIEUNHAP.MaPhieuNhap = PHIEUNHAP.MaPhieuNhap) AND (NgayNhap BETWEEN @TuNgay AND @DenNgay)";
+                    //Xử lí số liệu sách đã bán
+
+                    string readString1 = "SELECT SUM(SoLuong) AS TongXuat FROM CHITIETHOADON, HOADON WHERE (CHITIETHOADON.MaHoaDon = HOADON.MaHoaDon) AND (NgayLapHoaDon BETWEEN @TuNgay AND @DenNgay)";
                     SqlCommand command = new SqlCommand(readString1, connection);
-
-                    command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
-                    command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
-
-                    command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
-                    command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
-
-                    tongNhap = (int)command.ExecuteScalar();
-                    txtTongNhap.Text = "TỔNG NHẬP: " + tongNhap;
-
-
-                    string readString2 = "SELECT SUM(SoLuong) AS TongXuat FROM CHITIETHOADON, HOADON WHERE (CHITIETHOADON.MaHoaDon = HOADON.MaHoaDon) AND (NgayLapHoaDon BETWEEN @TuNgay AND @DenNgay)";
-                    command = new SqlCommand(readString2, connection);
 
                     command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
                     command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
@@ -93,6 +88,23 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     tongXuat = (int)command.ExecuteScalar();
                     txtTongXuat.Text = "TỔNG XUẤT: " + tongXuat;
+
+                    xuatList.Add(new XuatKho(1, "Bán sách", tongXuat));
+                    sachDaBanTable.ItemsSource = xuatList;
+
+                    //Xử lí số liệu sách nhập
+
+                    string readString2 = "SELECT SUM(SoLuong) AS TongNhap FROM CHITIETPHIEUNHAP, PHIEUNHAP  WHERE (CHITIETPHIEUNHAP.MaPhieuNhap = PHIEUNHAP.MaPhieuNhap) AND (NgayNhap BETWEEN @TuNgay AND @DenNgay)";
+                    command = new SqlCommand(readString2, connection);
+
+                    command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
+
+                    command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
+
+                    tongNhap = (int)command.ExecuteScalar();
+                    txtTongNhap.Text = "TỔNG NHẬP: " + tongNhap;
 
                     int chenhLech = tongNhap - tongXuat;
                     txtChenhLech.Text = "CHÊNH LỆCH: " + chenhLech;

@@ -64,7 +64,7 @@
                     <DockPanel LastChildFill="True" 
                                HorizontalAlignment="Center">
                         <DockPanel LastChildFill="True" 
-                                   Width="175">
+                                   Width="215">
                             <TextBlock Text="Từ Ngày:" 
                                        Width="70" 
                                        VerticalAlignment="Center"/>
@@ -77,8 +77,8 @@
                         </DockPanel>
 
                         <DockPanel LastChildFill="True" 
-                                   Width="185" 
-                                   Margin="75, 0, 0, 0">
+                                   Width="225" 
+                                   Margin="100, 0, 0, 0">
                             <TextBlock Text="Đến Ngày:" 
                                        Width="80" 
                                        VerticalAlignment="Center"/>
@@ -121,15 +121,16 @@
                               Margin="10"
                               Style="{DynamicResource DataGridStyle}" 
                               CellStyle="{StaticResource DataGridCellStyle}" 
-                              ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
+                              ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
+                              VerticalScrollBarVisibility="Auto"
                               RowStyle="{StaticResource DataGridRowStyle}" 
                               AutoGeneratingColumn="sanPhamTable_AutoGeneratingColumn">
-                        <DataGrid.Columns>
+                        <!--<DataGrid.Columns>
                             <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                             <DataGridTextColumn Header="Tên Sản Phẩm" IsReadOnly="True" CanUserResize="True" Width="3*"/>
                             <DataGridTextColumn Header="Số Lượng Bán" IsReadOnly="True" CanUserResize="True" Width="2*"/>
                             <DataGridTextColumn Header="Số Lượng Tồn" IsReadOnly="True" CanUserResize="True" Width="2*"/>
-                        </DataGrid.Columns>
+                        </DataGrid.Columns>-->
                     </DataGrid>
 
                     <StackPanel Margin="10, 0, 0, 0"

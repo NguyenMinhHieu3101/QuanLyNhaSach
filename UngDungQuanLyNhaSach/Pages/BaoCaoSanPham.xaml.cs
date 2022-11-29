@@ -31,7 +31,6 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 int tongBanRa = 0;
