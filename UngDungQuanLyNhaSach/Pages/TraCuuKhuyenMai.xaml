@@ -47,29 +47,6 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
-        <ControlTemplate x:Key="DatePickerControlTemplate" TargetType="{x:Type DatePicker}">
-            <Border Background="{TemplateBinding Background}" 
-                    x:Name="Bd" BorderBrush="Black"
-                    BorderThickness="{TemplateBinding BorderThickness}" 
-                    CornerRadius="10">
-                <!--<ScrollViewer x:Name="PART_ContentHost"/>-->
-                <DatePicker BorderBrush="Transparent"/>
-                <!--<ContentPresenter/>-->
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
-                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                </Trigger>
-                <Trigger Property="Width" Value="Auto">
-                    <Setter Property="MinWidth" Value="100"/>
-                </Trigger>
-                <Trigger Property="Height" Value="Auto">
-                    <Setter Property="MinHeight" Value="20"/>
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-
         <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
             <Grid>
 
@@ -249,12 +226,20 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Ngày Bắt Đầu:"/>
-                    <DatePicker x:Name="ngayBatDau" Template="{StaticResource DatePickerControlTemplate}"/>
+                    <Border BorderBrush="Black" 
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                        <DatePicker x:Name="ngayBatDau" BorderBrush="Transparent" FontSize="16"/>
+                    </Border>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Ngày Kết Thúc:"/>
-                    <DatePicker x:Name="ngayKetThuc" Template="{StaticResource DatePickerControlTemplate}"/>
+                    <Border BorderBrush="Black" 
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                        <DatePicker x:Name="ngayKetThuc" BorderBrush="Transparent" FontSize="16"/>
+                    </Border>
                 </DockPanel>
 
             </StackPanel>
@@ -269,19 +254,20 @@
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Loại Khách Hàng:"/>
                     <ComboBox x:Name="loaiKhachHang">
-                        <ComboBoxItem IsSelected="True">Vãng Lai</ComboBoxItem>
+                        <ComboBoxItem>Vãng Lai</ComboBoxItem>
                         <ComboBoxItem>Bạc</ComboBoxItem>
                         <ComboBoxItem>Vàng</ComboBoxItem>
                         <ComboBoxItem>Kim Cương</ComboBoxItem>
+                        <ComboBoxItem IsSelected="True"></ComboBoxItem>
                     </ComboBox>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Trạng Thái:"/>
                     <ComboBox x:Name="trangThai">
-                        <ComboBoxItem></ComboBoxItem>
-                        <ComboBoxItem IsSelected="True">Hết hạn</ComboBoxItem>
+                        <ComboBoxItem>Hết hạn</ComboBoxItem>
                         <ComboBoxItem>Còn hiệu lực</ComboBoxItem>
+                        <ComboBoxItem IsSelected="True"></ComboBoxItem>
                     </ComboBox>
                 </DockPanel>
 

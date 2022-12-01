@@ -56,7 +56,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (maKHText.Length > 0) readString += " AND MaKhachHang Like '%" + maKHText + "%'";
                     if (loaiKHText.Length > 0) readString += " AND TenLoaiKhachHang = N'" + loaiKHText + "'";
                     if (tenKHText.Length > 0) readString += " AND TenKhachHang Like N'%" + tenKHText + "%'";
-                    if (dateTime != null) readString += " AND NgaySinh = " + ((dateTime??DateTime.Now).ToString("MM-dd-yyyy")) + "'";
+                    if (dateTime != null) readString += " AND NgaySinh = '" + ((dateTime??DateTime.Now).ToString("MM/dd/yyyy")) + "'";
                     if (sdtText.Length > 0) readString += " AND SDT Like '%" + sdtText + "%'";
                     if (index != 2) readString += " AND TrangThai = '" + index + "'";
 

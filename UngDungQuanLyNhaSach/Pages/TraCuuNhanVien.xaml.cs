@@ -86,5 +86,15 @@ namespace UngDungQuanLyNhaSach.Pages
             thread.IsBackground = true;
             thread.Start();
         }
+
+        private void search_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void reset_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

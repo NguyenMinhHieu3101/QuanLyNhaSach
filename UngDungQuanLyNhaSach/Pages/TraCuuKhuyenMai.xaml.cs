@@ -46,6 +46,14 @@ namespace UngDungQuanLyNhaSach.Pages
 
         void loadData()
         {
+            String maKMText = maKM.Text;
+            String soLuongText = soLuong.Text;
+            String phanTramText = phanTram.Text;
+            String loaiKH = loaiKhachHang.Text;
+            int index = trangThai.SelectedIndex;
+            DateTime? start = ngayBatDau.SelectedDate;
+            DateTime? finish = ngayKetThuc.SelectedDate;
+
             Thread thread = new Thread(new ThreadStart(() =>
             {
                 khuyenMaiList = new List<KhuyenMai>();
@@ -56,6 +64,14 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     connection.Open();
                     string readString = "select * from KHUYENMAI, LOAIKHACHHANG WHERE KHUYENMAI.MaLoaiKhachHang = LOAIKHACHHANG.MaLoaiKhachHang";
+                    if (maKMText.Length > 0) readString += " AND MaKhuyenMai Like '%" + maKMText + "%'";
+                    if (soLuongText.Length > 0) readString += " AND SoLuongKhuyenMai = " + soLuongText;
+                    if (phanTramText.Length > 0) readString += " AND PhanTram = " + phanTramText;
+                    if (loaiKH.Length > 0) readString += " AND TenLoaiKhachHang = N'" + loaiKH + "'";
+                    if (index != 2) readString += " AND TrangThai = '" + index + "'";
+                    if (start != null) readString += " AND ThoiGianBatDau = '" + ((start ?? DateTime.Now).ToString("MM/dd/yyyy")) + "'";
+                    if (finish != null) readString += " AND ThoiGianKetThuc = '" + ((finish ?? DateTime.Now).ToString("MM/dd/yyyy")) + "'";
+
                     SqlCommand command = new SqlCommand(readString, connection);
 
                     SqlDataReader reader = command.ExecuteReader();
@@ -90,23 +106,9 @@ namespace UngDungQuanLyNhaSach.Pages
             thread.Start();
         }
 
-        bool checkSearch(KhuyenMai khuyenMai)
-        {
-            if (!maKM.Text.ToLower().Contains(khuyenMai.maKhuyenMai)) return false;
-            if (!soLuong.Text.Contains(khuyenMai.soLuong.ToString())) return false;
-            return true;
-        }
-
         private void search_Click(object sender, RoutedEventArgs e)
         {
-            List<KhuyenMai> searchList = new List<KhuyenMai>();
-            foreach (KhuyenMai km in khuyenMaiList)
-                if (checkSearch(km))
-                {
-                    searchList.Add(km);
-                }
-            resultKhuyenMaiTable.ItemsSource = new List<KhuyenMai>();
-            resultKhuyenMaiTable.ItemsSource = searchList;
+            loadData();
         }
 
         private void reset_Click(object sender, RoutedEventArgs e)
