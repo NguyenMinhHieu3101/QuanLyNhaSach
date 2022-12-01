@@ -30,6 +30,8 @@ namespace UngDungQuanLyNhaSach.Pages
         public TraCuuKhuyenMai()
         {
             InitializeComponent();
+            ngayBatDau.SelectedDate= DateTime.Now;
+            ngayKetThuc.SelectedDate= DateTime.Now;
             loadData();
         }
 
@@ -116,6 +118,8 @@ namespace UngDungQuanLyNhaSach.Pages
             maKM.Text = "";
             soLuong.Text = "";
             phanTram.Text = "";
+            ngayKetThuc.SelectedDate = DateTime.Now;
+            ngayBatDau.SelectedDate = DateTime.Now;
             loaiKhachHang.SelectedIndex = 0;
             trangThai.SelectedIndex = 0;
         }

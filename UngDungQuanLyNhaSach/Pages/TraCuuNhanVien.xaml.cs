@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,6 +29,7 @@ namespace UngDungQuanLyNhaSach.Pages
         public TraCuuNhanVien()
         {
             InitializeComponent();
+            ngaySinh.SelectedDate = DateTime.Now;
             loadListStaff();
         }
 
@@ -44,6 +46,15 @@ namespace UngDungQuanLyNhaSach.Pages
 
         void loadListStaff()
         {
+            String maNVText = maNV.Text;
+            String tenNV = name.Text;
+            String cccdText = cccd.Text;
+            DateTime? dateTime = ngaySinh.SelectedDate;
+            String emailText = email.Text;
+            String chucVuText = chucVu.Text;
+            String luongText = luong.Text;
+            int index = trangThai.SelectedIndex;
+
             Thread thread = new Thread(new ThreadStart(() =>
             {
                 List<NhanVien> nhanVienList = new List<NhanVien>();
@@ -54,6 +65,15 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     connection.Open();
                     string readString = "select * from NHANVIEN, CHUCVU WHERE NHANVIEN.MaChucVu = CHUCVU.MaChucVu";
+                    if (maNVText.Length > 0) readString += " AND MaNhanVien Like '%" + maNVText + "%'";
+                    if (tenNV.Length > 0) readString += " AND HoTen Like N'%" + tenNV + "%'";
+                    if (dateTime != null) readString += " AND NgaySinh = '" + ((dateTime ?? DateTime.Now).ToString("MM/dd/yyyy")) + "'";
+                    if (cccdText.Length > 0) readString += " AND CCCD Like '%" + cccdText + "%'";
+                    if (emailText.Length > 0) readString += " AND Email Like '%" + emailText + "%'";
+                    if (luongText.Length > 0) readString += " AND Luong = " + luongText;
+                    if (index != 2) readString += " AND TrangThai = " + index;
+                    if (chucVuText.Length > 0) readString += " AND TenChucVu = N'" + chucVuText + "'";
+
                     SqlCommand command = new SqlCommand(readString, connection);
 
                     SqlDataReader reader = command.ExecuteReader();
@@ -89,12 +109,24 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void search_Click(object sender, RoutedEventArgs e)
         {
-
+            loadListStaff();
         }
 
         private void reset_Click(object sender, RoutedEventArgs e)
         {
-
+            maNV.Text = "";
+            luong.Text = "";
+            email.Text = "";
+            trangThai.SelectedIndex = 2;
+            chucVu.SelectedIndex = 3;
+            ngaySinh.SelectedDate = DateTime.Now;
+            cccd.Text = "";
+            name.Text = "";
+        }
+        private static readonly Regex _regex = new Regex("[0-9]+");
+        private void previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !_regex.IsMatch(e.Text);
         }
     }
 }

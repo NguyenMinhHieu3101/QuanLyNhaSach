@@ -31,6 +31,7 @@ namespace UngDungQuanLyNhaSach.Pages
         public TraCuuKhachHang()
         {
             InitializeComponent();
+            ngaySinh.SelectedDate = DateTime.Now;
             loadData();
         }
 
@@ -107,6 +108,7 @@ namespace UngDungQuanLyNhaSach.Pages
             name.Text = "";
             sdt.Text = "";
             trangThai.SelectedIndex = 0;
+            ngaySinh.SelectedDate = DateTime.Now;
             selectedKhachHang = new List<KhachHang>();
             chooseKhachHangTable.ItemsSource = new List<KhachHang>();
         }
