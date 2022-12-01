@@ -223,7 +223,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="180"/>
+            <RowDefinition Height="150"/>
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -257,12 +257,6 @@
                     <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}"/>
                 </DockPanel>
 
-                <DockPanel LastChildFill="True">
-                    <TextBlock Text="Tổng tiền đã mua:"/>
-                    <TextBox x:Name="totalMoney" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                             PreviewTextInput="previewTextInput"/>
-                </DockPanel>
-                
             </StackPanel>
 
             <StackPanel Grid.Column="1" Margin="10,0">
@@ -281,9 +275,9 @@
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Trạng Thái:"/>
                     <ComboBox x:Name="trangThai">
-                        <ComboBoxItem IsSelected="True"></ComboBoxItem>
                         <ComboBoxItem>Hết hạn</ComboBoxItem>
                         <ComboBoxItem>Còn hiệu lực</ComboBoxItem>
+                        <ComboBoxItem IsSelected="True"></ComboBoxItem>
                     </ComboBox>
                 </DockPanel>
 

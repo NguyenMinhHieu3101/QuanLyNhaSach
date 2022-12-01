@@ -36,6 +36,13 @@ namespace UngDungQuanLyNhaSach.Pages
 
         void loadData()
         {
+            String maKHText = maKH.Text;
+            String loaiKHText = loaiKH.Text;
+            String tenKHText = name.Text;
+            DateTime? dateTime = ngaySinh.SelectedDate;
+            String sdtText = sdt.Text;
+            int index = trangThai.SelectedIndex;
+
             Thread thread = new Thread(new ThreadStart(() =>
             {
                 khachHangList = new List<KhachHang>();
@@ -46,6 +53,13 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     connection.Open();
                     string readString = "select * from KHACHHANG, LOAIKHACHHANG WHERE KHACHHANG.MaLoaiKhachHang = LOAIKHACHHANG.MaLoaiKhachHang";
+                    if (maKHText.Length > 0) readString += " AND MaKhachHang Like '%" + maKHText + "%'";
+                    if (loaiKHText.Length > 0) readString += " AND TenLoaiKhachHang = N'" + loaiKHText + "'";
+                    if (tenKHText.Length > 0) readString += " AND TenKhachHang Like N'%" + tenKHText + "%'";
+                    if (dateTime != null) readString += " AND NgaySinh = " + ((dateTime??DateTime.Now).ToString("MM-dd-yyyy")) + "'";
+                    if (sdtText.Length > 0) readString += " AND SDT Like '%" + sdtText + "%'";
+                    if (index != 2) readString += " AND TrangThai = '" + index + "'";
+
                     SqlCommand command = new SqlCommand(readString, connection);
 
                     SqlDataReader reader = command.ExecuteReader();
@@ -56,7 +70,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     {
                         count++;
                         khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
-                            tenKhachHang: (String)reader["TenKhachHang"],
+                            tenKhachHang: (String)reader["TenKhachHang"], ngaySinh: (DateTime)reader["NgaySinh"],
                             gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
                             sdt: (String)reader["SDT"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
                     }
@@ -66,9 +80,9 @@ namespace UngDungQuanLyNhaSach.Pages
                     
                     connection.Close();
                 }
-                catch
+                catch (Exception ex)
                 {
-                    MessageBox.Show("db error");
+                    MessageBox.Show(ex.Message);
                 }
             }));
             thread.IsBackground = true;
@@ -91,7 +105,6 @@ namespace UngDungQuanLyNhaSach.Pages
             maKH.Text = "";
             loaiKH.SelectedIndex = 0;
             name.Text = "";
-            totalMoney.Text = "";
             sdt.Text = "";
             trangThai.SelectedIndex = 0;
             selectedKhachHang = new List<KhachHang>();
@@ -120,29 +133,9 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-        bool checkSearch(KhachHang khachHang)
-        {
-            if (!khachHang.maKhachHang.ToLower().Contains(maKH.Text.ToLower())) return false;
-            if (!khachHang.tenKhachHang.ToLower().Contains(name.Text.ToLower())) return false;
-            if (!khachHang.sdt.Contains(sdt.Text)) return false;
-            MessageBox.Show(khachHang.trangThai + " " + trangThai.SelectedIndex);
-            if (trangThai.SelectedIndex != 0 && !trangThai.SelectedIndex.ToString().Contains(khachHang.trangThai)) 
-                return false;
-            return true;
-        }
-
         private void search_Click(object sender, RoutedEventArgs e)
         {
-            List<KhachHang> searchList = new List<KhachHang>();
-            foreach (KhachHang kh in khachHangList)
-            {
-                if (checkSearch(kh))
-                {
-                    searchList.Add(kh);
-                }    
-            }
-            resultKhachHangTable.ItemsSource = new List<KhachHang>();
-            resultKhachHangTable.ItemsSource = searchList;
+            loadData();
         }
     }
 }

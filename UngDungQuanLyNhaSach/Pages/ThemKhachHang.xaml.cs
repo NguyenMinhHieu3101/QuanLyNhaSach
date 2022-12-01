@@ -86,8 +86,8 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlCommand commandReader = new SqlCommand(readString, connection);
                     Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
 
-                    string insertString = "INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) " +
-                        "VALUES (@MaKhachHang, @TenKhachHang, @GioiTinh, @MaLoaiKhachHang, @SDT, @TrangThai)";
+                    string insertString = "INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) " +
+                        "VALUES (@MaKhachHang, @TenKhachHang, @NgaySinh, @GioiTinh, @MaLoaiKhachHang, @SDT, @TrangThai)";
                     SqlCommand command = new SqlCommand(insertString, connection);
 
                     command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
@@ -95,6 +95,9 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     command.Parameters.Add("@TenKhachHang", SqlDbType.NVarChar);
                     command.Parameters["@TenKhachHang"].Value = name.Text;
+                    
+                    command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
+                    command.Parameters["@NgaySinh"].Value = ngaySinh.SelectedDate;
 
                     command.Parameters.Add("@GioiTinh", SqlDbType.NVarChar);
                     command.Parameters["@GioiTinh"].Value = gioiTinh.Text;
@@ -164,7 +167,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     {
                         count++;
                         khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
-                            tenKhachHang: (String)reader["TenKhachHang"],
+                            tenKhachHang: (String)reader["TenKhachHang"], ngaySinh: (DateTime)reader["NgaySinh"],
                             gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
                             sdt: (String)reader["SDT"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng"));
                     }

@@ -5,6 +5,8 @@ GO
 USE QUANLYNHASACH
 GO
 
+Select * from KHACHHANG, LOAIKHACHHANG where KHACHHANG.MaLoaiKhachHang = LOAIKHACHHANG.MaLoaiKhachHang AND NgaySinh = '01/01/2022'
+
 CREATE TABLE NHANVIEN
 (
 	MaNhanVien VARCHAR(20) CONSTRAINT PK_MANV PRIMARY KEY,
@@ -60,6 +62,7 @@ CREATE TABLE KHACHHANG
 (
 	MaKhachHang VARCHAR(20) CONSTRAINT PK_MAKH PRIMARY KEY,
 	TenKhachHang NVARCHAR(100),
+	NgaySinh SMALLDATETIME,
 	GioiTinh NVARCHAR(3),
 	MaLoaiKhachHang VARCHAR(20),
 	SDT VARCHAR(20),
@@ -154,7 +157,6 @@ CREATE TABLE THAMSO
 
 SET DATEFORMAT DMY
 
-
 INSERT INTO CHITIETBAOCAODOANHTHU (MaChiTietBaoCao, TuNgay, DenNgay, MaNVBC, DoanhThu, ChiPhi) VALUES ('DT01', '01/01/2022', '02/01/2022', 'NV01', '2500000', '750000');
 INSERT INTO CHITIETBAOCAODOANHTHU (MaChiTietBaoCao, TuNgay, DenNgay, MaNVBC, DoanhThu, ChiPhi) VALUES ('DT02', '02/01/2022', '03/01/2022', 'NV02', '2800000', '1750000');
 INSERT INTO CHITIETBAOCAODOANHTHU (MaChiTietBaoCao, TuNgay, DenNgay, MaNVBC, DoanhThu, ChiPhi) VALUES ('DT03', '03/01/2022', '04/01/2022', 'NV03', '2500000', '1350000');
@@ -231,16 +233,16 @@ INSERT INTO CHUCVU (MaChucVu, TenChucVu) VALUES ('NVK', 'Nhân viên kho');
 INSERT INTO CHUCVU (MaChucVu, TenChucVu) VALUES ('NVBH', 'Nhân viên bán hàng');
 INSERT INTO CHUCVU (MaChucVu, TenChucVu) VALUES ('NVKT', 'Nhân viên kế toán');
 
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH01', N'Nguyễn Ngọc Trinh', N'Nữ', 'VL', '0354161123', '1');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH02', N'Huỳnh Thế Vĩ', N'Nam', 'B', '0354161124', '1');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH03', N'Bùi Lê Hoài An', N'Nữ', 'V', '0354161125', '0');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH04', N'Phạm Nhật Minh', N'Nữ', 'KC', '0354161126', '0');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH05', N'Phan Xuân Quang', N'Nam', 'VL', '0354161127', '0');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH06', N'Tôn Nữ Hoài Thương', N'Nam', 'B', '0354161128', '1');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH07', N'Nguyễn Viết Đức', N'Nữ', 'V', '0354161129', '0');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH08', N'Dín Hiền Dũng', N'Nữ', 'KC', '0354161130', '0');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH09', N'Lê Sỹ Hội', N'Nữ', 'VL', '0354161131', '1');
-INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH10', N'Ngô Quang Khoa', N'Nữ', 'B', '0354161132', '1');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH01', N'Nguyễn Ngọc Trinh','01/01/2022', N'Nữ', 'VL', '0354161123', '1');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH02', N'Huỳnh Thế Vĩ', '01/01/2022', N'Nam', 'B', '0354161124', '1');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH03', N'Bùi Lê Hoài An', '01/01/2022', N'Nữ', 'V', '0354161125', '0');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH04', N'Phạm Nhật Minh', '01/01/2022', N'Nữ', 'KC', '0354161126', '0');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH05', N'Phan Xuân Quang', '01/01/2022', N'Nam', 'VL', '0354161127', '0');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH06', N'Tôn Nữ Hoài Thương', '01/01/2022', N'Nam', 'B', '0354161128', '1');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH07', N'Nguyễn Viết Đức', '01/01/2022', N'Nữ', 'V', '0354161129', '0');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH08', N'Dín Hiền Dũng', '01/01/2022', N'Nữ', 'KC', '0354161130', '0');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH09', N'Lê Sỹ Hội', '01/01/2022', N'Nữ', 'VL', '0354161131', '1');
+INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) VALUES ('KH10', N'Ngô Quang Khoa', '01/01/2022', N'Nữ', 'B', '0354161132', '1');
 
 INSERT INTO KHO (MaKho, TenKho, SucChua, DaChua) VALUES ('K01', N'Quận 1', '10000', '1250');
 INSERT INTO KHO (MaKho, TenKho, SucChua, DaChua) VALUES ('K02', N'Quận 9', '20000', '2250');

@@ -75,6 +75,9 @@ namespace UngDungQuanLyNhaSach.Pages
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         resultKhuyenMaiTable.ItemsSource = khuyenMaiList;
+                        //DataGridCheckBoxColumn checkBoxColumn = new DataGridCheckBoxColumn();
+                        //checkBoxColumn.Header = "";
+                        //resultKhuyenMaiTable.Columns.Add(checkBoxColumn);
                     }));
                     connection.Close();
                 }

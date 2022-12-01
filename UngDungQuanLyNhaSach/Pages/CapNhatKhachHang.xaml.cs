@@ -69,7 +69,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     reader.Read();
                     KhachHang khachHangData = new KhachHang(stt: 0, maKhachHang: (String)reader["MaKhachHang"],
-                        tenKhachHang: (String)reader["TenKhachHang"],
+                        tenKhachHang: (String)reader["TenKhachHang"], ngaySinh: (DateTime)reader["NgaySinh"],
                         gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["MaLoaiKhachHang"],
                         sdt: (String)reader["SDT"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng");
                     
