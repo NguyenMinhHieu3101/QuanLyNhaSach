@@ -43,6 +43,8 @@ namespace UngDungQuanLyNhaSach.Pages
                 decimal tongChi = 0;
                 decimal tongLuong = 0;
                 decimal tongTienNhap = 0;
+                double tienThue = 0;
+                double tienMatBang = 0;
 
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                 connection.Open();
@@ -83,19 +85,25 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
                     command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
 
-                    tongTienNhap = (decimal)command.ExecuteScalar();                  
+                    tongTienNhap = (decimal)command.ExecuteScalar();
+                    chiTraList.Add(new ChiTra(1, "Tiền nhập sách", tongTienNhap));
+
+                    string readString3 = "SELECT GiaTri FROM THAMSO WHERE MaThuocTinh = 'TS05'";
+                    command = new SqlCommand(readString3, connection);
+                    tienThue = (double)command.ExecuteScalar();
+                    chiTraList.Add(new ChiTra(2, "Thuế", (decimal)tienThue));
+
+                    string readString4 = "SELECT GiaTri FROM THAMSO WHERE MaThuocTinh = 'TS06'";
+                    command = new SqlCommand(readString4, connection);
+                    tienMatBang = (double)command.ExecuteScalar();
+                    chiTraList.Add(new ChiTra(3, "Tiền mặt bằng", (decimal)tienMatBang));
 
                     if (dPickerTuNgay.SelectedDate.Value.Day == 1 || dPickerDenNgay.SelectedDate.Value.Day == 1)
                     {
-                        string readString3 = "SELECT SUM(Luong) AS TongLuong FROM NHANVIEN";
-                        command = new SqlCommand(readString3, connection);
+                        string readString5 = "SELECT SUM(Luong) AS TongLuong FROM NHANVIEN";
+                        command = new SqlCommand(readString5, connection);
                         tongLuong= (decimal)command.ExecuteScalar();
-                        chiTraList.Add(new ChiTra(1, "Lương nhân viên", tongLuong));
-                        chiTraList.Add(new ChiTra(2, "Tiền nhập sách", tongTienNhap));
-                    }
-                    else
-                    {
-                        chiTraList.Add(new ChiTra(1, "Tiền nhập sách", tongTienNhap));
+                        chiTraList.Add(new ChiTra(4, "Lương nhân viên", tongLuong));
                     }
 
                     chiTraTable.ItemsSource = chiTraList;
@@ -108,8 +116,8 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     //Insert chi tiết báo cáo vào database
 
-                    string readString4 = "SELECT COUNT(*) FROM CHITIETBAOCAODOANHTHU";
-                    command = new SqlCommand(readString4, connection);
+                    string readString6 = "SELECT COUNT(*) FROM CHITIETBAOCAODOANHTHU";
+                    command = new SqlCommand(readString6, connection);
                     Int32 count = (Int32)command.ExecuteScalar() + 1;
 
                     string insertString = "INSERT INTO CHITIETBAOCAODOANHTHU (MaChiTietBaoCao, TuNgay, DenNgay, MaNVBC, DoanhThu, ChiPhi) VALUES (@MaChiTietBaoCao, @TuNgay, @DenNgay, @MaNVBC, @DoanhThu, @ChiPhi)";

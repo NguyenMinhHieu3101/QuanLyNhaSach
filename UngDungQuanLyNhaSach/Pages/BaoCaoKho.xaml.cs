@@ -110,29 +110,53 @@ namespace UngDungQuanLyNhaSach.Pages
                     txtChenhLech.Text = "CHÊNH LỆCH: " + chenhLech;
 
 
-                    //string readString3 = "SELECT COUNT(*) FROM CHITIETBAOCAOKHO";
-                    //command = new SqlCommand(readString3, connection);
-                    //Int32 count = (Int32)command.ExecuteScalar() + 1;
+                    string readString3 = "SELECT CHITIETPHIEUNHAP.MaPhieuNhap, SUM(SoLuong) AS TongSoNhap FROM PHIEUNHAP, CHITIETPHIEUNHAP WHERE (PHIEUNHAP.MaPhieuNhap = CHITIETPHIEUNHAP.MaPhieuNhap) AND (NgayNhap BETWEEN @TuNgay AND @DenNgay) GROUP BY CHITIETPHIEUNHAP.MaPhieuNhap";
+                    command = new SqlCommand(readString3, connection);
 
-                    //string insertString = "INSERT INTO CHITIETBAOCAOKHO (MaChiTietBaoCao, TuNgay, DenNgay, MaNVBC, MaKho) VALUES (@MaChiTietBaoCao, @TuNgay, @DenNgay, @MaNVBC, @MaKho)";
-                    //command = new SqlCommand(insertString, connection);
+                    command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
 
-                    //command.Parameters.Add("@MaChiTietBaoCao", SqlDbType.VarChar);
-                    //command.Parameters["@MaChiTietBaoCao"].Value = "BCK" + count.ToString();
+                    command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
 
-                    //command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
-                    //command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
+                    SqlDataReader reader = command.ExecuteReader();
 
-                    //command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
-                    //command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
+                    int countPN = 0;
 
-                    //command.Parameters.Add("@MaNVBC", SqlDbType.VarChar);
-                    //command.Parameters["@MaNVBC"].Value = NhanVienDangDangNhap.MaNhanVien;
+                    while (reader.Read())
+                    {
+                        countPN++;
+                        nhapList.Add(new NhapKho(stt: countPN, maPhieuNhap: (String)reader["MaPhieuNhap"],
+                            soLuongSP: (int)reader["TongSoNhap"]));
+                    }
+                    sachNhapTable.ItemsSource = nhapList;
+                    reader.Close();
 
-                    //command.Parameters.Add("@MaKho", SqlDbType.VarChar);
-                    //command.Parameters["@MaKho"].Value = "???";
+                    //Insert chi tiết báo cáo vào database
 
-                    //command.ExecuteNonQuery();
+                    string readString4 = "SELECT COUNT(*) FROM CHITIETBAOCAOKHO";
+                    command = new SqlCommand(readString4, connection);
+                    Int32 count = (Int32)command.ExecuteScalar() + 1;
+
+                    string insertString = "INSERT INTO CHITIETBAOCAOKHO (MaChiTietBaoCao, TuNgay, DenNgay, MaNVBC, MaKho) VALUES (@MaChiTietBaoCao, @TuNgay, @DenNgay, @MaNVBC, @MaKho)";
+                    command = new SqlCommand(insertString, connection);
+
+                    command.Parameters.Add("@MaChiTietBaoCao", SqlDbType.VarChar);
+                    command.Parameters["@MaChiTietBaoCao"].Value = "BCK" + count.ToString();
+
+                    command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
+
+                    command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
+
+                    command.Parameters.Add("@MaNVBC", SqlDbType.VarChar);
+                    command.Parameters["@MaNVBC"].Value = NhanVienDangDangNhap.MaNhanVien;
+
+                    command.Parameters.Add("@MaKho", SqlDbType.VarChar);
+                    command.Parameters["@MaKho"].Value = "K01";
+
+                    command.ExecuteNonQuery();
                 }
                 connection.Close();
             }

@@ -24,6 +24,7 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class BaoCaoSanPham : Page
     {
+        List<ThongKeSanPham> thongKeList = new List<ThongKeSanPham>();
         public BaoCaoSanPham()
         {
             InitializeComponent();
@@ -33,6 +34,8 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             try
             {
+                thongKeList = new List<ThongKeSanPham>();
+
                 int tongBanRa = 0;
 
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
@@ -58,6 +61,33 @@ namespace UngDungQuanLyNhaSach.Pages
                     tongBanRa = (int)command.ExecuteScalar();
                     txtTongBanRa.Text = "TỔNG BÁN RA: " + tongBanRa;
 
+                    //
+
+                    string readString2 = "SELECT TenSanPham, CHITIETPHIEUNHAP.SoLuong AS SoLuongNhap,CHITIETHOADON.SoLuong AS SoLuongBan FROM SANPHAM, HOADON, CHITIETHOADON, PHIEUNHAP, CHITIETPHIEUNHAP WHERE (SANPHAM.MaSanPham = CHITIETHOADON.MaSanPham) AND (SANPHAM.MaSanPham = CHITIETPHIEUNHAP.MaSanPham) AND (CHITIETPHIEUNHAP.MaPhieuNhap = PHIEUNHAP.MaPhieuNhap) AND (HOADON.MaHoaDon = CHITIETHOADON.MaHoaDon) AND (NgayLapHoaDon BETWEEN @TuNgay AND @DenNgay) AND (NgayNhap BETWEEN @TuNgay AND @DenNgay)";
+                    command = new SqlCommand(readString2, connection);
+
+                    command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
+
+                    command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    int countSP = 0;
+                    int soLuongNhap = 0;
+                    int soLuongTon = 0;
+
+                    while (reader.Read())
+                    {
+                        countSP++;
+                        soLuongNhap = (int)reader["SoLuongNhap"];
+                        soLuongTon = soLuongNhap - (int)reader["SoLuongBan"];
+                        thongKeList.Add(new ThongKeSanPham(stt: countSP, tenSP: (string)reader["TenSanPham"], 
+                            soLuongBan: (int)reader["SoLuongBan"], soLuongTon: soLuongTon));
+                    }
+                    sanPhamTable.ItemsSource = thongKeList;
+                    reader.Close();
 
                     //string readString2 = "SELECT COUNT(*) FROM CHITIETBAOCAOSANPHAM";
                     //command = new SqlCommand(readString2, connection);
