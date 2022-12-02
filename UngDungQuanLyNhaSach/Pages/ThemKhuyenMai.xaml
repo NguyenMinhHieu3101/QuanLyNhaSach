@@ -241,13 +241,15 @@
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Số lượng:"/>
                             <TextBox x:Name="soLuong" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="previewTextInput"/>
+                                     PreviewTextInput="previewTextInput"
+                                     TabIndex="0"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Phần trăm:"/>
                             <ComboBox IsEditable="True" x:Name="phanTram" 
-                                     PreviewTextInput="previewTextInput">
+                                     PreviewTextInput="previewTextInput"
+                                      TabIndex="1">
                                 <ComboBoxItem IsSelected="True">5</ComboBoxItem>
                                 <ComboBoxItem>10</ComboBoxItem>
                                 <ComboBoxItem>15</ComboBoxItem>
@@ -261,7 +263,8 @@
                             <Border BorderBrush="Black" 
                                     BorderThickness="1"
                                     CornerRadius="10">
-                                <DatePicker x:Name="ngayBatDau" BorderBrush="Transparent" FontSize="16"/>
+                                <DatePicker x:Name="ngayBatDau" BorderBrush="Transparent" FontSize="16"
+                                            TabIndex="2"/>
                             </Border>
                         </DockPanel>
                         
@@ -270,13 +273,14 @@
                             <Border BorderBrush="Black" 
                                     BorderThickness="1"
                                     CornerRadius="10">  
-                                <DatePicker x:Name="ngayKetThuc" BorderBrush="Transparent" FontSize="16"/>
+                                <DatePicker x:Name="ngayKetThuc" BorderBrush="Transparent" FontSize="16"
+                                            TabIndex="3"/>
                             </Border>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Loại Khách hàng:"/>
-                            <ComboBox x:Name="loaiKhachHang">
+                            <ComboBox x:Name="loaiKhachHang" TabIndex="4">
                                 <ComboBoxItem IsSelected="True">Vãng Lai</ComboBoxItem>
                                 <ComboBoxItem>Bạc</ComboBoxItem>
                                 <ComboBoxItem>Vàng</ComboBoxItem>
@@ -301,6 +305,7 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="delete"
+                        TabIndex="5"
                             Style="{StaticResource DeleteButton}" Click="delete_Click"/>
 
                 <Button Content="Thêm" 
@@ -312,6 +317,7 @@
                             FontWeight="Bold"
                             x:Name="add"
                             Style="{StaticResource FindButton}" 
+                        TabIndex="6"
                             Click="add_Click"/>
 
                 <Button Content="Cập Nhập" 
@@ -322,6 +328,7 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="update"
+                        TabIndex="7"
                             Style="{StaticResource FindButton}" Click="update_Click"/>
 
                 <Button Content="Thoát" 
@@ -332,6 +339,7 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="cancel"
+                        TabIndex="8"
                             Style="{StaticResource CacelButton}" Click="cancel_Click"/>
 
 

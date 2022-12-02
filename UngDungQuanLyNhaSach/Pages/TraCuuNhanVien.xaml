@@ -7,8 +7,7 @@
       mc:Ignorable="d" 
       Background="White"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="DanhSachNhanVien"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+      Title="DanhSachNhanVien">
 
     <Page.Resources>
 
@@ -216,17 +215,18 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Mã Nhân Viên:"/>
-                    <TextBox x:Name="maNV" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="maNV" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="0"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Tên Nhân Viên:"/>
-                    <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="1"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="CCCD:"/>
-                    <TextBox x:Name="cccd" Template="{StaticResource TextBoxBaseControlTemplate}" PreviewTextInput="previewTextInput"/>
+                    <TextBox x:Name="cccd" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                             PreviewTextInput="previewTextInput" TabIndex="2"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
@@ -234,7 +234,7 @@
                     <Border BorderBrush="Black" 
                                     BorderThickness="1"
                                     CornerRadius="10">
-                        <DatePicker x:Name="ngaySinh" BorderBrush="Transparent" FontSize="16"/>
+                        <DatePicker x:Name="ngaySinh" BorderBrush="Transparent" FontSize="16" TabIndex="3"/>
                     </Border>
                 </DockPanel>
 
@@ -244,12 +244,12 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Email:"/>
-                    <TextBox x:Name="email" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="email" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="4"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Chức Vụ:"/>
-                    <ComboBox x:Name="chucVu">
+                    <ComboBox x:Name="chucVu" TabIndex="5">
                         <ComboBoxItem>Admin</ComboBoxItem>
                         <ComboBoxItem>Nhân Viên Kho</ComboBoxItem>
                         <ComboBoxItem>Nhân Viên Bán Hàng</ComboBoxItem>
@@ -261,12 +261,12 @@
                     <TextBlock Text="Lương:"/>
                     <TextBox x:Name="luong" 
                              Template="{StaticResource TextBoxBaseControlTemplate}" 
-                             PreviewTextInput="previewTextInput"/>
+                             PreviewTextInput="previewTextInput" TabIndex="6"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Trạng Thái:"/>
-                    <ComboBox x:Name="trangThai">
+                    <ComboBox x:Name="trangThai" TabIndex="7">
                         <ComboBoxItem>Đã nghỉ việc</ComboBoxItem>
                         <ComboBoxItem>Còn hoạt động</ComboBoxItem>
                         <ComboBoxItem IsSelected="True"></ComboBoxItem>
@@ -283,6 +283,7 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
                     <Button Content="Tìm kiếm" 
+                            TabIndex="8"
                         Height="35" 
                         x:Name="search"
                         Width="90"
@@ -293,6 +294,7 @@
                         Style="{StaticResource FindButton}" Click="search_Click"/>
 
                     <Button Content="Làm lại" 
+                            TabIndex="9"
                         Height="35" 
                         x:Name="reset"
                         Width="90"

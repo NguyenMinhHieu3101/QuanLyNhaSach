@@ -216,12 +216,12 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Mã Khuyến Mãi:"/>
-                    <TextBox x:Name="maKM" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="maKM" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="0"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Số lượng:"/>
-                    <TextBox x:Name="soLuong" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="soLuong" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="1"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
@@ -229,7 +229,7 @@
                     <Border BorderBrush="Black" 
                                     BorderThickness="1"
                                     CornerRadius="10">
-                        <DatePicker x:Name="ngayBatDau" BorderBrush="Transparent" FontSize="16"/>
+                        <DatePicker x:Name="ngayBatDau" BorderBrush="Transparent" FontSize="16" TabIndex="2"/>
                     </Border>
                 </DockPanel>
 
@@ -238,7 +238,7 @@
                     <Border BorderBrush="Black" 
                                     BorderThickness="1"
                                     CornerRadius="10">
-                        <DatePicker x:Name="ngayKetThuc" BorderBrush="Transparent" FontSize="16"/>
+                        <DatePicker x:Name="ngayKetThuc" BorderBrush="Transparent" FontSize="16" TabIndex="3"/>
                     </Border>
                 </DockPanel>
 
@@ -248,12 +248,12 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Phần Trăm Giảm:"/>
-                    <TextBox x:Name="phanTram" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="phanTram" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="4"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Loại Khách Hàng:"/>
-                    <ComboBox x:Name="loaiKhachHang">
+                    <ComboBox x:Name="loaiKhachHang" TabIndex="5">
                         <ComboBoxItem>Vãng Lai</ComboBoxItem>
                         <ComboBoxItem>Bạc</ComboBoxItem>
                         <ComboBoxItem>Vàng</ComboBoxItem>
@@ -264,7 +264,7 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Trạng Thái:"/>
-                    <ComboBox x:Name="trangThai">
+                    <ComboBox x:Name="trangThai" TabIndex="6">
                         <ComboBoxItem>Hết hạn</ComboBoxItem>
                         <ComboBoxItem>Còn hiệu lực</ComboBoxItem>
                         <ComboBoxItem IsSelected="True"></ComboBoxItem>
@@ -282,6 +282,7 @@
 
                     <Button Content="Tìm kiếm" 
                             x:Name="search"
+                            TabIndex="7"
                         Height="35" 
                         Width="90"
                         Margin="20,0"
@@ -292,6 +293,7 @@
 
                     <Button Content="Làm lại" 
                             x:Name="reset"
+                            TabIndex="8"
                         Height="35" 
                         Width="90"
                         Margin="20,0"

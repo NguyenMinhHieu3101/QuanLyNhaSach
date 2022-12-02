@@ -215,12 +215,14 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Mã Khách Hàng:"/>
-                    <TextBox x:Name="maKH" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="maKH" 
+                             Template="{StaticResource TextBoxBaseControlTemplate}"
+                             TabIndex="0"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Loại Khách Hàng:"/>
-                    <ComboBox x:Name="loaiKH">
+                    <ComboBox x:Name="loaiKH" TabIndex="1">
                         <ComboBoxItem IsSelected="True"></ComboBoxItem>
                         <ComboBoxItem>Vãng Lai</ComboBoxItem>
                         <ComboBoxItem>Bạc</ComboBoxItem>
@@ -231,7 +233,7 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Tên khách hàng:"/>
-                    <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                    <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="2"/>
                 </DockPanel>
 
             </StackPanel>
@@ -243,19 +245,20 @@
                     <Border BorderBrush="Black" 
                                     BorderThickness="1"
                                     CornerRadius="10">
-                        <DatePicker x:Name="ngaySinh" BorderBrush="Transparent" FontSize="16"/>
+                        <DatePicker x:Name="ngaySinh" BorderBrush="Transparent" FontSize="16" TabIndex="3"/>
                     </Border>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Số điện thoại:"/>
                     <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                             PreviewTextInput="previewTextInput"/>
+                             PreviewTextInput="previewTextInput"
+                             TabIndex="4"/>
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Trạng Thái:"/>
-                    <ComboBox x:Name="trangThai">
+                    <ComboBox x:Name="trangThai" TabIndex="5">
                         <ComboBoxItem>Hết hạn</ComboBoxItem>
                         <ComboBoxItem>Còn hiệu lực</ComboBoxItem>
                         <ComboBoxItem IsSelected="True"></ComboBoxItem>
@@ -279,10 +282,12 @@
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
+                            TabIndex="6"
                         Style="{StaticResource FindButton}" Click="search_Click"/>
 
                     <Button Content="Làm lại" 
                             x:Name="reset"
+                            TabIndex="7"
                         Height="35" 
                         Width="90"
                         Margin="20,0"

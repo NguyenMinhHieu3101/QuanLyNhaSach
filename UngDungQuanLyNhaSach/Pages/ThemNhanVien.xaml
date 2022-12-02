@@ -250,19 +250,23 @@
                         
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Họ Tên:"/>
-                            <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            <TextBox x:Name="name" 
+                                     Template="{StaticResource TextBoxBaseControlTemplate}"
+                                     TabIndex="0"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="CCCD:"/>
                             <TextBox x:Name="cccd" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="previewTextInput"/>
+                                     PreviewTextInput="previewTextInput"
+                                     TabIndex="1"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="SĐT:"/>
                             <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="previewTextInput"/>
+                                     PreviewTextInput="previewTextInput"
+                                     TabIndex="2"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
@@ -270,23 +274,26 @@
                             <Border BorderBrush="Black" 
                                     BorderThickness="1"
                                     CornerRadius="10">
-                                <DatePicker x:Name="ngaySinh" BorderBrush="Transparent" FontSize="16"/>
+                                <DatePicker x:Name="ngaySinh" BorderBrush="Transparent" FontSize="16"
+                                            TabIndex="3"/>
                             </Border>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Email:"/>
-                            <TextBox x:Name="email" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            <TextBox x:Name="email" Template="{StaticResource TextBoxBaseControlTemplate}"
+                                     TabIndex="4"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Địa Chỉ:"/>
-                            <TextBox x:Name="diaChi" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                            <TextBox x:Name="diaChi" Template="{StaticResource TextBoxBaseControlTemplate}"
+                                     TabIndex="5"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Giới tính:"/>
-                            <ComboBox x:Name="gioiTinh">
+                            <ComboBox x:Name="gioiTinh" TabIndex="6">
                                 <ComboBoxItem IsSelected="True">Nam</ComboBoxItem>
                                 <ComboBoxItem>Nữ</ComboBoxItem>
                             </ComboBox>
@@ -312,7 +319,7 @@
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Chức vụ:"/>
-                            <ComboBox x:Name="chucVu">
+                            <ComboBox x:Name="chucVu" TabIndex="7">
                                 <ComboBoxItem>Admin</ComboBoxItem>
                                 <ComboBoxItem IsSelected="True">Nhân Viên Bán Hàng</ComboBoxItem>
                                 <ComboBoxItem>Nhân Viên Kho</ComboBoxItem>
@@ -322,7 +329,10 @@
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Lương:"/>
-                            <TextBox x:Name="luong" Template="{StaticResource TextBoxBaseControlTemplate}" PreviewTextInput="previewTextInput"/>
+                            <TextBox x:Name="luong" 
+                                     Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                     PreviewTextInput="previewTextInput"
+                                     TabIndex="8"/>
                         </DockPanel>
 
                     </StackPanel>
@@ -342,6 +352,7 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="delete"
+                        TabIndex="9"
                             Style="{StaticResource DeleteButton}" Click="delete_Click"/>
 
                 <Button Content="Thêm" 
@@ -353,6 +364,7 @@
                             FontWeight="Bold"
                             x:Name="add"
                             Style="{StaticResource FindButton}" 
+                        TabIndex="10"
                             Click="add_Click"/>
 
                 <Button Content="Cập Nhập" 
@@ -363,6 +375,7 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="update"
+                        TabIndex="11"
                             Style="{StaticResource FindButton}" Click="update_Click"/>
                 
                 <Button Content="Thoát" 
@@ -373,6 +386,7 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="cancel"
+                        TabIndex="12"
                             Style="{StaticResource CacelButton}" Click="cancel_Click"/>
 
             </WrapPanel>

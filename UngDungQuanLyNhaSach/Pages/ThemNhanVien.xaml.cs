@@ -138,12 +138,12 @@ namespace UngDungQuanLyNhaSach.Pages
         bool checkDataInput()
         {
             double distance;
-            if (cccd.Text.Length == 0 || cccd.Text.Length < 10 || !double.TryParse(cccd.Text, out distance))
+            if (cccd.Text.Length == 0 || cccd.Text.Length < 10 || !double.TryParse(cccd.Text, out distance) || cccd.Text.Length!=9 || cccd.Text.Length != 12)
             {
                 MessageBox.Show("CCCD không hợp lệ");
                 return false;
-            }  
-            if (sdt.Text.Length == 0 || !Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"))
+            }   
+            if (sdt.Text.Length == 0 || !Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length != 10 || sdt.Text.Length != 11)
             {
                 MessageBox.Show("Số điện thoại không hợp lệ");
                 return false;
