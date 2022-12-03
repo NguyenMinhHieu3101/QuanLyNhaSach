@@ -64,7 +64,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        maKH.Text = "KH" + count.ToString();
+                        maKH.Text = "KH" + count.ToString("000");
                     }));
                 }
                 catch { }
@@ -289,7 +289,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                         connection.Open();
 
-                        string deleteString = "Delete From KHACHHANG Where MaKhachHang = @MaKhachHang";
+                        string deleteString = "UPDATE KHACHHANG SET TrangThai = '0' Where MaKhachHang = @MaKhachHang";
                         SqlCommand command = new SqlCommand(deleteString, connection);
                         command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
                         command.Parameters["@MaKhachHang"].Value = khachHangList[khachHangTable.SelectedIndex].maKhachHang;

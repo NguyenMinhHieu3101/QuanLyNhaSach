@@ -113,7 +113,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        maNv.Text = "NV" + count.ToString();
+                        maNv.Text = "NV" + count.ToString("000");
                     }));
                 }
                 catch (Exception e) {
@@ -353,7 +353,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                         connection.Open();
 
-                        string deleteString = "Delete From NHANVIEN Where MaNhanVien = @MaNhanVien";
+                        string deleteString = "UPDATE NHANVIEN SET TrangThai = '0' Where MaNhanVien = @MaNhanVien";
                         SqlCommand command = new SqlCommand(deleteString, connection);
                         command.Parameters.Add("@MaNhanVien", SqlDbType.VarChar);
                         command.Parameters["@MaNhanVien"].Value = nhanVienList[nhanVienTable.SelectedIndex].maNhanVien;

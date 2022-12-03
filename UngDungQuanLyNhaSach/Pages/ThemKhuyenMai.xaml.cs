@@ -94,7 +94,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        maKM.Text = "KM" + count.ToString();
+                        maKM.Text = "KM" + count.ToString("000");
                     }));
                 }
                 catch { }
@@ -291,8 +291,8 @@ namespace UngDungQuanLyNhaSach.Pages
                     {
                         SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                         connection.Open();
-
-                        string deleteString = "Delete From KHUYENMAI Where MaKhuyenMai = @MaKhuyenMai";
+                         
+                        string deleteString = "UPDATE KHUYENMAI SET TrangThai = '0' Where MaKhuyenMai = @MaKhuyenMai";
                         SqlCommand command = new SqlCommand(deleteString, connection);
                         command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
                         command.Parameters["@MaKhuyenMai"].Value = khuyenMaiList[khuyenMaiTable.SelectedIndex].maKhuyenMai;
