@@ -135,15 +135,15 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-        bool checkDataInput()
+        bool checkDataInput(bool check)
         {
             double distance;
-            if (cccd.Text.Length == 0 || cccd.Text.Length < 10 || !double.TryParse(cccd.Text, out distance) || cccd.Text.Length!=9 || cccd.Text.Length != 12)
+            if (cccd.Text.Length == 0 || !double.TryParse(cccd.Text, out distance) || cccd.Text.Length!=9 && cccd.Text.Length != 12)
             {
                 MessageBox.Show("CCCD không hợp lệ");
                 return false;
             }   
-            if (sdt.Text.Length == 0 || !Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length != 10 || sdt.Text.Length != 11)
+            if (sdt.Text.Length == 0 || !Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length != 10 && sdt.Text.Length != 11)
             {
                 MessageBox.Show("Số điện thoại không hợp lệ");
                 return false;
@@ -162,32 +162,35 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 MessageBox.Show("Ngày sinh chưa đủ 18 tuổi");
                 return false;
-            }    
-            foreach (NhanVien nhanVien in nhanVienList)
+            }
+            if (check)
             {
-                if (nhanVien.sdt == sdt.Text || nhanVien.cccd == cccd.Text || nhanVien.email == email.Text)
+                foreach (NhanVien nhanVien in nhanVienList)
                 {
-                    if (nhanVien.sdt == sdt.Text)
+                    if (nhanVien.sdt == sdt.Text || nhanVien.cccd == cccd.Text || nhanVien.email == email.Text)
                     {
-                        MessageBox.Show("Số điện thoại đã có trong hệ thống");
+                        if (nhanVien.sdt == sdt.Text)
+                        {
+                            MessageBox.Show("Số điện thoại đã có trong hệ thống");
+                        }
+                        else if (nhanVien.cccd == cccd.Text)
+                        {
+                            MessageBox.Show("CCCD đã có trong hệ thống");
+                        }
+                        else if (nhanVien.email == email.Text)
+                        {
+                            MessageBox.Show("Email đã có trong hệ thống");
+                        }
+                        return false;
                     }
-                    else if (nhanVien.cccd == cccd.Text)
-                    {
-                        MessageBox.Show("CCCD đã có trong hệ thống");
-                    }
-                    else if (nhanVien.email == email.Text)
-                    {
-                        MessageBox.Show("Email đã có trong hệ thống");
-                    }
-                    return false;
-                }    
-            }    
+                }
+            }
             return true;
         }
 
         private void add_Click(object sender, RoutedEventArgs e)
         {
-            if (checkDataInput())
+            if (checkDataInput(true))
             {
                 try
                 {
@@ -282,7 +285,7 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 MessageBox.Show("Vui lòng chọn một nhân viên để chỉnh sửa");
             }*/
-            if (checkDataInput())
+            if (checkDataInput(false))
             {
                 try
                 {
@@ -418,6 +421,71 @@ namespace UngDungQuanLyNhaSach.Pages
                 update.IsEnabled = false;
                 delete.IsEnabled = false;
             }
-        }    
+        }
+
+        private void name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (name.Text.Length == 0)
+            {
+                name_error.Text = "Vui lòng nhập tên";
+                name_error.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                name_error.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void cccd_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (cccd.Text.Length != 9 && cccd.Text.Length != 12)
+            {
+                cccd_error.Text = cccd.Text.Length == 0 ? "Vui lòng nhập vào CCCD" : "CCCD không hợp lệ";
+                cccd_error.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                cccd_error.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void sdt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length != 10 && sdt.Text.Length != 11)
+            {
+                sdt_error.Text = sdt.Text.Length == 0 ? "Vui lòng nhập vào số điện thoại" : "Số điện thoại không hợp lệ";
+                sdt_error.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                sdt_error.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void email_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!Regex.IsMatch(email.Text, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$"))
+            {
+                email_error.Text = email.Text.Length == 0 ? "Vui lòng nhập vào địa chỉ Email" : "Email không hợp lệ";
+                email_error.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                email_error.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void luong_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (luong.Text.Length == 0 || int.Parse(luong.Text) == 0)
+            {
+                luong_error.Text = "Số lượng không hợp lệ";
+                luong_error.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                luong_error.Visibility = Visibility.Hidden;
+            }
+        }
     }
 }

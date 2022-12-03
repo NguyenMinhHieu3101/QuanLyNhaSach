@@ -247,27 +247,51 @@
                             <TextBlock Text="Mã Nhân viên:"/>
                             <TextBox x:Name="maNv" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False"/>
                         </DockPanel>
-                        
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="Họ Tên:"/>
-                            <TextBox x:Name="name" 
+
+                        <StackPanel>
+
+                            <DockPanel LastChildFill="True">
+                                <TextBlock Text="Họ Tên:"/>
+                                <TextBox x:Name="name" 
                                      Template="{StaticResource TextBoxBaseControlTemplate}"
-                                     TabIndex="0"/>
-                        </DockPanel>
+                                     TabIndex="0" TextChanged="name_TextChanged"/>
+                            </DockPanel>
 
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="CCCD:"/>
-                            <TextBox x:Name="cccd" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="previewTextInput"
-                                     TabIndex="1"/>
-                        </DockPanel>
+                            <TextBlock x:Name="name_error" Foreground="Red" Text="" 
+                                           FontSize="10" Visibility="Hidden" 
+                                           Margin="115,0,0,0" Style="{StaticResource normal}"/>
 
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="SĐT:"/>
-                            <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                        </StackPanel>
+
+                        <StackPanel>
+
+                            <DockPanel LastChildFill="True">
+                                <TextBlock Text="CCCD:"/>
+                                <TextBox x:Name="cccd" Template="{StaticResource TextBoxBaseControlTemplate}" 
                                      PreviewTextInput="previewTextInput"
-                                     TabIndex="2"/>
-                        </DockPanel>
+                                     TabIndex="1" TextChanged="cccd_TextChanged"/>
+                            </DockPanel>
+
+                            <TextBlock x:Name="cccd_error" Foreground="Red" Text="" 
+                                           FontSize="10" Visibility="Hidden" 
+                                           Margin="115,0,0,0" Style="{StaticResource normal}"/>
+
+                        </StackPanel>
+
+                        <StackPanel>
+
+                            <DockPanel LastChildFill="True">
+                                <TextBlock Text="SĐT:"/>
+                                <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                     PreviewTextInput="previewTextInput"
+                                     TabIndex="2" TextChanged="sdt_TextChanged"/>
+                            </DockPanel>
+
+                            <TextBlock x:Name="sdt_error" Foreground="Red" Text="" 
+                                           FontSize="10" Visibility="Hidden" 
+                                           Margin="115,0,0,0" Style="{StaticResource normal}"/>
+
+                        </StackPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Ngày Sinh:"/>
@@ -279,11 +303,19 @@
                             </Border>
                         </DockPanel>
 
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="Email:"/>
-                            <TextBox x:Name="email" Template="{StaticResource TextBoxBaseControlTemplate}"
-                                     TabIndex="4"/>
-                        </DockPanel>
+                        <StackPanel>
+
+                            <DockPanel LastChildFill="True">
+                                <TextBlock Text="Email:"/>
+                                <TextBox x:Name="email" Template="{StaticResource TextBoxBaseControlTemplate}"
+                                     TabIndex="4" TextChanged="email_TextChanged"/>
+                            </DockPanel>
+
+                            <TextBlock x:Name="email_error" Foreground="Red" Text="" 
+                                           FontSize="10" Visibility="Hidden" 
+                                           Margin="115,0,0,0" Style="{StaticResource normal}"/>
+
+                        </StackPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Địa Chỉ:"/>
@@ -327,13 +359,21 @@
                             </ComboBox>
                         </DockPanel>
 
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="Lương:"/>
-                            <TextBox x:Name="luong" 
+                        <StackPanel>
+
+                            <DockPanel LastChildFill="True">
+                                <TextBlock Text="Lương:"/>
+                                <TextBox x:Name="luong" 
                                      Template="{StaticResource TextBoxBaseControlTemplate}" 
                                      PreviewTextInput="previewTextInput"
-                                     TabIndex="8"/>
-                        </DockPanel>
+                                     TabIndex="8" TextChanged="luong_TextChanged"/>
+                            </DockPanel>
+
+                            <TextBlock x:Name="luong_error" Foreground="Red" Text="" 
+                                           FontSize="10" Visibility="Hidden" 
+                                           Margin="115,0,0,0" Style="{StaticResource normal}"/>
+
+                        </StackPanel>
 
                     </StackPanel>
 

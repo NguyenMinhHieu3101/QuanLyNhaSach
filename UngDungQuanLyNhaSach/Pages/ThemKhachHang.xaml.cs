@@ -75,7 +75,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void add_Click(object sender, RoutedEventArgs e)
         {
-            if (checkDataInput())
+            if (checkDataInput(true))
             {
                 try
                 {
@@ -127,21 +127,24 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-        bool checkDataInput()
+        bool checkDataInput(bool check)
         {
-            if (sdt.Text.Length == 0 || !Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length !=10 || sdt.Text.Length != 11)
+            if (sdt.Text.Length == 0 || !Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length !=10 && sdt.Text.Length != 11)
             {
                 MessageBox.Show("Số điện thoại không hợp lệ");
                 return false;
             }
-            foreach (KhachHang khachHang in khachHangList)
+            if (check)
             {
-                if (khachHang.sdt == sdt.Text)
+                foreach (KhachHang khachHang in khachHangList)
                 {
-                    MessageBox.Show("Số điện thoại đã có trong hệ thống");
-                    return false;
-                }    
-            }    
+                    if (khachHang.sdt == sdt.Text)
+                    {
+                        MessageBox.Show("Số điện thoại đã có trong hệ thống");
+                        return false;
+                    }
+                }
+            }
             return true;
         }
 
@@ -215,6 +218,15 @@ namespace UngDungQuanLyNhaSach.Pages
             //    if (i < list.Length - 1) text += " ";
             //}    
             //name.Text = text;
+            if (name.Text.Length==0)
+            {
+                name_error.Text = "Vui lòng nhập vào tên khách hàng";
+                name_error.Visibility = Visibility.Visible;
+            }    
+            else
+            {
+                name_error.Visibility = Visibility.Hidden;
+            }
         }
 
         private void cancel_Click(object sender, RoutedEventArgs e)
@@ -233,14 +245,14 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 MessageBox.Show("Vui lòng chọn một khách hàng để chỉnh sửa");
             }   */
-            if (checkDataInput())
+            if (checkDataInput(false))
             {
                 try
                 {
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                     connection.Open();
 
-                    string updateString = "UPDATE KHACHHANG SET TenKhachHang = @TenKhachHang, DiaChi = @DiaChi, GioiTinh = @GioiTinh, MaLoaiKhachHang = @MaLoaiKhachHang, SDT = @SDT, Email = @Email, TrangThai = @TrangThai " +
+                    string updateString = "UPDATE KHACHHANG SET TenKhachHang = @TenKhachHang, GioiTinh = @GioiTinh, MaLoaiKhachHang = @MaLoaiKhachHang, SDT = @SDT, TrangThai = @TrangThai " +
                         "WHERE MaKhachHang = @MaKhachHang";
                     SqlCommand command = new SqlCommand(updateString, connection);
 
@@ -335,6 +347,19 @@ namespace UngDungQuanLyNhaSach.Pages
             loaiKhachHang.SelectedIndex = khachHangData.maLoaiKhachHang == "Vãng Lai" ? 0 :
             (khachHangData.maLoaiKhachHang == "Bạc" ? 1 : (khachHangData.maLoaiKhachHang == "Vàng" ? 2 : 3));
             sdt.Text = khachHangData.sdt;
+        }
+
+        private void sdt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length != 10 && sdt.Text.Length != 11)
+            {
+                sdt_error.Text = sdt.Text.Length > 0 ? "Số điện thoại không hợp lệ" : "Vui lòng nhập vào số điện thoại";
+                sdt_error.Visibility= Visibility.Visible;
+            }    
+            else
+            {
+                sdt_error.Visibility = Visibility.Hidden;
+            }
         }
     }
 }

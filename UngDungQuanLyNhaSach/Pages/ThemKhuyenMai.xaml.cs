@@ -141,7 +141,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@PhanTram"].Value = int.Parse(phanTram.Text);
 
                     command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
-                    command.Parameters["@TrangThai"].Value = "1";
+                    command.Parameters["@TrangThai"].Value = ngayKetThuc.SelectedDate < DateTime.Now ? "0" : "1";
 
                     command.ExecuteNonQuery();
 
@@ -264,7 +264,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@PhanTram"].Value = int.Parse(phanTram.Text);
 
                     command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
-                    command.Parameters["@TrangThai"].Value = "1";
+                    command.Parameters["@TrangThai"].Value = ngayKetThuc.SelectedDate < DateTime.Now ? "0" : "1";
 
                     command.ExecuteNonQuery();
 
@@ -354,6 +354,36 @@ namespace UngDungQuanLyNhaSach.Pages
                 delete.IsEnabled = false;
                 update.IsEnabled = false;
             }
+        }
+
+        private void soLuong_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (soLuong.Text.Length == 0 || int.Parse(soLuong.Text) == 0)
+            {
+                soLuong_error.Text = "Số lượng không hợp lệ";
+                soLuong_error.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                soLuong_error.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void phanTram_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (int.Parse(phanTram.Text) > 100)
+                {
+                    phanTram_error.Text = "Phần trăm không hợp lệ";
+                    phanTram_error.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    phanTram_error.Visibility = Visibility.Hidden;
+                }
+            }
+            catch { }
         }
     }
 }

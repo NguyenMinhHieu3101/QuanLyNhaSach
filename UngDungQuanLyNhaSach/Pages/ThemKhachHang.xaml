@@ -25,11 +25,7 @@
             <Setter Property="FontSize" Value="16" />
             <Setter Property="FontWeight" Value="Bold" />
         </Style>
-
-        <Style x:Key="normal" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16" />
-        </Style>
-
+        
         <Style TargetType="DockPanel">
             <Setter Property="Margin" Value="0,5"/>
         </Style>
@@ -240,13 +236,22 @@
                                      IsEnabled="False" 
                                      TextAlignment="Center"/>
                         </DockPanel>
-                        
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="Tên khách hàng:"/>
-                            <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     TextChanged="name_TextChanged" 
-                                     TabIndex="0"/>
-                        </DockPanel>
+
+                        <StackPanel>
+                            
+                            <DockPanel LastChildFill="True">
+                                <TextBlock Text="Tên khách hàng:"/>
+                                <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                         TextChanged="name_TextChanged" 
+                                         TabIndex="0"/>
+                            </DockPanel>
+
+                            <TextBlock x:Name="name_error" Foreground="Red" Text="" 
+                                           FontSize="10" Visibility="Hidden" 
+                                           Margin="140,0,0,0" Style="{StaticResource normal}"/>
+
+                        </StackPanel>
+
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Giới tính:"/>
@@ -266,12 +271,20 @@
                             </ComboBox>
                         </DockPanel>
 
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="SĐT:"/>
-                            <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="previewTextInput"
-                                     TabIndex="3"/>
-                        </DockPanel>
+                        <StackPanel>
+
+                            <DockPanel LastChildFill="True">
+                                <TextBlock Text="SĐT:"/>
+                                <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                         PreviewTextInput="previewTextInput"
+                                         TabIndex="3" TextChanged="sdt_TextChanged"/>
+                            </DockPanel>
+
+                            <TextBlock x:Name="sdt_error" Foreground="Red" Text="" 
+                                       FontSize="10" Visibility="Hidden" 
+                                       Margin="140,0,0,0" Style="{StaticResource normal}"/>
+
+                        </StackPanel>
 
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Ngày Sinh:"/>
