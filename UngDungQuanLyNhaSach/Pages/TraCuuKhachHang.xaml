@@ -128,7 +128,7 @@
                                     Margin="3,3,23,3"
                                     FontSize="16"
                                     Focusable="True" 
-                                    Background="#FF3F3F3F"
+                                    Background="Transparent"
                                     Foreground="Green"
                                     Visibility="Hidden"
                                     IsReadOnly="{TemplateBinding IsReadOnly}"/>
@@ -215,15 +215,15 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Mã Khách Hàng:"/>
-                    <TextBox x:Name="maKH" 
+                    <ComboBox x:Name="maKH" TabIndex="0" IsEditable="True"/>
+                    <!--<TextBox x:Name="maKH" 
                              Template="{StaticResource TextBoxBaseControlTemplate}"
-                             TabIndex="0"/>
+                             TabIndex="0"/>-->
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Loại Khách Hàng:"/>
                     <ComboBox x:Name="loaiKH" TabIndex="1">
-                        <ComboBoxItem IsSelected="True"></ComboBoxItem>
                         <ComboBoxItem>Vãng Lai</ComboBoxItem>
                         <ComboBoxItem>Bạc</ComboBoxItem>
                         <ComboBoxItem>Vàng</ComboBoxItem>
@@ -233,7 +233,8 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Tên khách hàng:"/>
-                    <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="2"/>
+                    <ComboBox x:Name="name" TabIndex="2" IsEditable="True"/>
+                    <!--<TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="2"/>-->
                 </DockPanel>
 
             </StackPanel>
@@ -251,9 +252,10 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Số điện thoại:"/>
-                    <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                    <ComboBox x:Name="sdt" TabIndex="4" IsEditable="True"/>
+                    <!--<TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
                              PreviewTextInput="previewTextInput"
-                             TabIndex="4"/>
+                             TabIndex="4"/>-->
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
@@ -261,7 +263,6 @@
                     <ComboBox x:Name="trangThai" TabIndex="5">
                         <ComboBoxItem>Hết hạn</ComboBoxItem>
                         <ComboBoxItem>Còn hiệu lực</ComboBoxItem>
-                        <ComboBoxItem IsSelected="True"></ComboBoxItem>
                     </ComboBox>
                 </DockPanel>
 

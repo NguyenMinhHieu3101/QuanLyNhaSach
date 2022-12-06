@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -27,13 +28,14 @@ namespace UngDungQuanLyNhaSach.Pages
     public partial class TraCuuNhanVien : Page
     {
         List<NhanVien> selectedNhanVien = new List<NhanVien>();
-        List<NhanVien> khuyenMaiList = new List<NhanVien>();
+        List<NhanVien> nhanVienList = new List<NhanVien>();
 
         public TraCuuNhanVien()
         {
             InitializeComponent();
             //ngaySinh.SelectedDate = DateTime.Now;
             loadListStaff();
+            loadFilter();
         }
 
         private void nhanVienTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -60,7 +62,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
             Thread thread = new Thread(new ThreadStart(() =>
             {
-                List<NhanVien> nhanVienList = new List<NhanVien>();
+                nhanVienList = new List<NhanVien>();
 
                 try
                 {
@@ -74,11 +76,10 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (cccdText.Length > 0) readString += " AND CCCD Like '%" + cccdText + "%'";
                     if (emailText.Length > 0) readString += " AND Email Like '%" + emailText + "%'";
                     if (luongText.Length > 0) readString += " AND Luong = " + luongText;
-                    if (index != 2) readString += " AND TrangThai = " + index;
+                    if (index != -1) readString += " AND TrangThai = " + index;
                     if (chucVuText.Length > 0) readString += " AND TenChucVu = N'" + chucVuText + "'";
 
                     SqlCommand command = new SqlCommand(readString, connection);
-
                     SqlDataReader reader = command.ExecuteReader();
 
                     int count = 0;
@@ -110,6 +111,52 @@ namespace UngDungQuanLyNhaSach.Pages
             thread.Start();
         }
 
+        void loadFilter()
+        {
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+                    string readString = "select * from NHANVIEN, CHUCVU WHERE NHANVIEN.MaChucVu = CHUCVU.MaChucVu";
+                    SqlCommand command = new SqlCommand(readString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    List<String> itemsMaNV = new List<String>();
+                    List<String> itemsName = new List<String>();
+                    List<String> itemsCCCD = new List<String>();
+                    List<String> itemsEmail = new List<String>();
+                    List<double> itemsLuong = new List<double>();
+
+                    while (reader.Read())
+                    {
+                        itemsMaNV.Add((String)reader["MaNhanVien"]);
+                        itemsName.Add((String)reader["HoTen"]);
+                        itemsCCCD.Add((String)reader["CCCD"]);
+                        itemsEmail.Add((String)reader["Email"]);
+                        itemsLuong.Add(double.Parse(reader["Luong"].ToString()));
+                    }
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        maNV.ItemsSource = itemsMaNV;
+                        name.ItemsSource = itemsName.Distinct().OrderBy(e => e).ToList();
+                        cccd.ItemsSource = itemsCCCD;
+                        email.ItemsSource = itemsEmail;
+                        luong.ItemsSource = itemsLuong.Distinct().OrderBy(e => e).ToList();
+                    }));
+                    connection.Close();
+
+                }
+                catch (Exception ex) 
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }));
+            thread.IsBackground = true;
+            thread.Start();
+        }    
+
         private void search_Click(object sender, RoutedEventArgs e)
         {
             loadListStaff();
@@ -126,6 +173,7 @@ namespace UngDungQuanLyNhaSach.Pages
             cccd.Text = "";
             name.Text = "";
         }
+
         private static readonly Regex _regex = new Regex("[0-9]+");
         private void previewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -136,7 +184,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             if (resultNhanVienTable.SelectedIndex != -1)
             {
-                selectedNhanVien.Add(khuyenMaiList[resultNhanVienTable.SelectedIndex]);
+                selectedNhanVien.Add(nhanVienList[resultNhanVienTable.SelectedIndex]);
                 List<NhanVien> showSelectedKhachHang = selectedNhanVien.OrderBy(e => e.maNhanVien).ToList();
                 for (int i = 0; i < showSelectedKhachHang.Count; i++)
                 {
@@ -151,7 +199,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             if (resultNhanVienTable.SelectedIndex != -1)
             {
-                selectedNhanVien.Remove(khuyenMaiList[resultNhanVienTable.SelectedIndex]);
+                selectedNhanVien.Remove(nhanVienList[resultNhanVienTable.SelectedIndex]);
                 List<NhanVien> showSelectedKhachHang = selectedNhanVien.OrderBy(e => e.maNhanVien).ToList();
                 for (int i = 0; i < showSelectedKhachHang.Count; i++)
                 {

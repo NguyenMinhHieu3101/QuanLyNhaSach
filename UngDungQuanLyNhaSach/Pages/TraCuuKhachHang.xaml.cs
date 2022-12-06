@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -33,6 +34,7 @@ namespace UngDungQuanLyNhaSach.Pages
             InitializeComponent();
             //ngaySinh.SelectedDate = DateTime.Now;
             loadData();
+            loadFilter();
         }
 
         void loadData()
@@ -59,7 +61,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (tenKHText.Length > 0) readString += " AND TenKhachHang Like N'%" + tenKHText + "%'";
                     if (dateTime != null) readString += " AND NgaySinh = '" + ((dateTime??DateTime.Now).ToString("MM/dd/yyyy")) + "'";
                     if (sdtText.Length > 0) readString += " AND SDT Like '%" + sdtText + "%'";
-                    if (index != 2) readString += " AND TrangThai = '" + index + "'";
+                    if (index != -1) readString += " AND TrangThai = '" + index + "'";
 
                     SqlCommand command = new SqlCommand(readString, connection);
 
@@ -79,6 +81,45 @@ namespace UngDungQuanLyNhaSach.Pages
                         resultKhachHangTable.ItemsSource = khachHangList;
                     }));
                     
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        void loadFilter()
+        {
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+                    string readString = "select * from KHACHHANG, LOAIKHACHHANG WHERE KHACHHANG.MaLoaiKhachHang = LOAIKHACHHANG.MaLoaiKhachHang";
+
+                    SqlCommand command = new SqlCommand(readString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    List<String> itemsMaKH =  new List<String>();
+                    List<String> itemsName =  new List<String>();
+                    List<String> itemsSdt =  new List<String>();
+
+                    while (reader.Read())
+                    {
+                        itemsMaKH.Add((String)reader["MaKhachHang"]);
+                        itemsName.Add((String)reader["TenKhachHang"]);
+                        itemsSdt.Add((String)reader["SDT"]);
+                    }
+                    this.Dispatcher.BeginInvoke(new Action(() => {
+                        maKH.ItemsSource = itemsMaKH;
+                        name.ItemsSource = itemsName.Distinct().ToList();
+                        sdt.ItemsSource = itemsSdt;
+                    }));
+
                     connection.Close();
                 }
                 catch (Exception ex)

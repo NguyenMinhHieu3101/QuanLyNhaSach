@@ -128,7 +128,7 @@
                                     Margin="3,3,23,3"
                                     FontSize="16"
                                     Focusable="True" 
-                                    Background="#FF3F3F3F"
+                                    Background="Transparent"                                     
                                     Foreground="Green"
                                     Visibility="Hidden"
                                     IsReadOnly="{TemplateBinding IsReadOnly}"/>
@@ -216,12 +216,14 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Mã Khuyến Mãi:"/>
-                    <TextBox x:Name="maKM" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="0"/>
+                    <ComboBox x:Name="maKM" TabIndex="0" IsEditable="True" PreviewTextInput="previewTextInput"/>
+                    <!--<TextBox x:Name="maKM" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="0"/>-->
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Số lượng:"/>
-                    <TextBox x:Name="soLuong" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="1"/>
+                    <ComboBox x:Name="soLuong" TabIndex="1" IsEditable="True" PreviewTextInput="previewTextInput"/>
+                    <!--<TextBox x:Name="soLuong" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="1"/>-->
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
@@ -248,7 +250,8 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Phần Trăm Giảm:"/>
-                    <TextBox x:Name="phanTram" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="4"/>
+                    <ComboBox x:Name="phanTram" TabIndex="4" IsEditable="True" PreviewTextInput="previewTextInput"/>
+                    <!--<TextBox x:Name="phanTram" Template="{StaticResource TextBoxBaseControlTemplate}" TabIndex="4"/>-->
                 </DockPanel>
 
                 <DockPanel LastChildFill="True">
@@ -258,7 +261,6 @@
                         <ComboBoxItem>Bạc</ComboBoxItem>
                         <ComboBoxItem>Vàng</ComboBoxItem>
                         <ComboBoxItem>Kim Cương</ComboBoxItem>
-                        <ComboBoxItem IsSelected="True"></ComboBoxItem>
                     </ComboBox>
                 </DockPanel>
 
@@ -267,7 +269,6 @@
                     <ComboBox x:Name="trangThai" TabIndex="6">
                         <ComboBoxItem>Hết hạn</ComboBoxItem>
                         <ComboBoxItem>Còn hiệu lực</ComboBoxItem>
-                        <ComboBoxItem IsSelected="True"></ComboBoxItem>
                     </ComboBox>
                 </DockPanel>
 

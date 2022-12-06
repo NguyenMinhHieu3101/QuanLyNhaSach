@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,6 +36,7 @@ namespace UngDungQuanLyNhaSach.Pages
             //ngayBatDau.SelectedDate= DateTime.Now;
             //ngayKetThuc.SelectedDate= DateTime.Now;
             loadData();
+            loadFilter();
         }
 
         private void resultKhuyenMaiTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -70,7 +74,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (soLuongText.Length > 0) readString += " AND SoLuongKhuyenMai = " + soLuongText;
                     if (phanTramText.Length > 0) readString += " AND PhanTram = " + phanTramText;
                     if (loaiKH.Length > 0) readString += " AND TenLoaiKhachHang = N'" + loaiKH + "'";
-                    if (index != 2) readString += " AND TrangThai = '" + index + "'";
+                    if (index != -1) readString += " AND TrangThai = '" + index + "'";
                     if (start != null) readString += " AND ThoiGianBatDau = '" + ((start ?? DateTime.Now).ToString("MM/dd/yyyy")) + "'";
                     if (finish != null) readString += " AND ThoiGianKetThuc = '" + ((finish ?? DateTime.Now).ToString("MM/dd/yyyy")) + "'";
 
@@ -93,9 +97,6 @@ namespace UngDungQuanLyNhaSach.Pages
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         resultKhuyenMaiTable.ItemsSource = khuyenMaiList;
-                        //DataGridCheckBoxColumn checkBoxColumn = new DataGridCheckBoxColumn();
-                        //checkBoxColumn.Header = "";
-                        //resultKhuyenMaiTable.Columns.Add(checkBoxColumn);
                     }));
                     connection.Close();
                 }
@@ -106,6 +107,51 @@ namespace UngDungQuanLyNhaSach.Pages
             }));
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        void loadFilter()
+        {
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+                    string readString = "select * from KHUYENMAI, LOAIKHACHHANG WHERE KHUYENMAI.MaLoaiKhachHang = LOAIKHACHHANG.MaLoaiKhachHang";
+                    SqlCommand command = new SqlCommand(readString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    List<String> itemsMaKM = new List<String>();
+                    List<int> itemsSoluong = new List<int>();
+                    List<int> itemsPhanTram = new List<int>();
+
+                    while (reader.Read())
+                    {
+                        itemsMaKM.Add((String)reader["MaKhuyenMai"]);
+                        itemsSoluong.Add((int)reader["SoLuongKhuyenMai"]);
+                        itemsPhanTram.Add((int)reader["PhanTram"]);
+                    }
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        maKM.ItemsSource = itemsMaKM;
+                        soLuong.ItemsSource = itemsSoluong.Distinct().OrderBy(e => e).ToList();
+                        phanTram.ItemsSource = itemsPhanTram.Distinct().OrderBy(e => e).ToList();
+                    }));
+                    connection.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("db error");
+                }
+            }));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private static readonly Regex _regex = new Regex("[0-9]+");
+        private void previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !_regex.IsMatch(e.Text);
         }
 
         private void search_Click(object sender, RoutedEventArgs e)
