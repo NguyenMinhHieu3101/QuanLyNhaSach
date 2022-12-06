@@ -31,7 +31,7 @@ namespace UngDungQuanLyNhaSach.Pages
         public TraCuuKhachHang()
         {
             InitializeComponent();
-            ngaySinh.SelectedDate = DateTime.Now;
+            //ngaySinh.SelectedDate = DateTime.Now;
             loadData();
         }
 
@@ -97,6 +97,7 @@ namespace UngDungQuanLyNhaSach.Pages
             if (att != null)
             {
                 e.Column.Header = att.Name;
+                e.Column.IsReadOnly = true;
                 e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
         }
@@ -119,25 +120,39 @@ namespace UngDungQuanLyNhaSach.Pages
             e.Handled = !_regex.IsMatch(e.Text);
         }
 
-        private void resultKhachHangTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void search_Click(object sender, RoutedEventArgs e)
+        {
+            loadData();
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (resultKhachHangTable.SelectedIndex != -1)
             {
-                selectedKhachHang.Remove(khachHangList[resultKhachHangTable.SelectedIndex]);
                 selectedKhachHang.Add(khachHangList[resultKhachHangTable.SelectedIndex]);
-                List < KhachHang> showSelectedKhachHang = selectedKhachHang.OrderBy(e => e.maKhachHang).ToList();
-                for (int i = 0; i < showSelectedKhachHang.Count; i++) 
+                List<KhachHang> showSelectedKhachHang = selectedKhachHang.OrderBy(e => e.maKhachHang).ToList();
+                for (int i = 0; i < showSelectedKhachHang.Count; i++)
                 {
                     showSelectedKhachHang[i].stt = i + 1;
-                }    
+                }
                 chooseKhachHangTable.ItemsSource = new List<KhachHang>();
                 chooseKhachHangTable.ItemsSource = showSelectedKhachHang;
             }
         }
 
-        private void search_Click(object sender, RoutedEventArgs e)
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            loadData();
+            if (resultKhachHangTable.SelectedIndex != -1)
+            {
+                selectedKhachHang.Remove(khachHangList[resultKhachHangTable.SelectedIndex]);
+                List<KhachHang> showSelectedKhachHang = selectedKhachHang.OrderBy(e => e.maKhachHang).ToList();
+                for (int i = 0; i < showSelectedKhachHang.Count; i++)
+                {
+                    showSelectedKhachHang[i].stt = i + 1;
+                }
+                chooseKhachHangTable.ItemsSource = new List<KhachHang>();
+                chooseKhachHangTable.ItemsSource = showSelectedKhachHang;
+            }
         }
     }
 }

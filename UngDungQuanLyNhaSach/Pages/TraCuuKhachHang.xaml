@@ -315,8 +315,22 @@
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="resultKhachHangTable_AutoGeneratingColumn" 
-                      SelectionChanged="resultKhachHangTable_SelectionChanged"/>
+                  AutoGeneratingColumn="resultKhachHangTable_AutoGeneratingColumn">
+
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Checked="CheckBox_Checked" 
+                                          Unchecked="CheckBox_Unchecked" 
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+                
+            </DataGrid>
 
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
 

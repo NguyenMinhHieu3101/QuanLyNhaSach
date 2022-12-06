@@ -436,6 +436,7 @@
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
 
         <DataGrid Grid.Column="2" 
+                  IsReadOnly="True"
                   x:Name="nhanVienTable" Margin="5,10" 
                   Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 

@@ -29,6 +29,7 @@ namespace UngDungQuanLyNhaSach.Pages
     public partial class ThemKhachHang : Page
     {
         List<KhachHang> khachHangList = new List<KhachHang>();
+        int currentSelected = -1;
 
         public ThemKhachHang()
         {
@@ -48,6 +49,13 @@ namespace UngDungQuanLyNhaSach.Pages
             sdt.Text = "";
             ngaySinh.SelectedDate = DateTime.Now;
             updateMaKhachHang();
+            hideError();
+        }
+
+        void hideError()
+        {
+            name_error.Visibility= Visibility.Hidden;
+            sdt_error.Visibility= Visibility.Hidden;
         }
 
         void updateMaKhachHang()
@@ -91,7 +99,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlCommand command = new SqlCommand(insertString, connection);
 
                     command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
-                    command.Parameters["@MaKhachHang"].Value = "KH" + count.ToString();
+                    command.Parameters["@MaKhachHang"].Value = "KH" + count.ToString("000");
 
                     command.Parameters.Add("@TenKhachHang", SqlDbType.NVarChar);
                     command.Parameters["@TenKhachHang"].Value = name.Text;
@@ -176,7 +184,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     }
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        khachHangTable.ItemsSource = khachHangList;
+                        khachHangTable.ItemsSource = khachHangList;    
                     }));
 
                     connection.Close();
@@ -327,6 +335,21 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             if (khachHangTable.SelectedIndex != -1)
             {
+                if (currentSelected != -1)
+                {
+                    DataGridRow curentRow = (DataGridRow)khachHangTable.ItemContainerGenerator.ContainerFromIndex(currentSelected);
+                    Setter normal = new Setter(TextBlock.FontWeightProperty, FontWeights.Normal, null);
+                    Style normalStyle = new Style(curentRow.GetType());
+                    normalStyle.Setters.Add(normal);
+                    curentRow.Style = normalStyle;
+                }
+                DataGridRow row = (DataGridRow)khachHangTable.ItemContainerGenerator.ContainerFromIndex(khachHangTable.SelectedIndex);
+                Setter bold = new Setter(TextBlock.FontWeightProperty, FontWeights.Bold, null);
+                Style newStyle = new Style(row.GetType());
+                newStyle.Setters.Add(bold);
+                row.Style = newStyle;
+                currentSelected = khachHangTable.SelectedIndex;
+
                 update.IsEnabled = true;
                 delete.IsEnabled = true;
                 loadKH();

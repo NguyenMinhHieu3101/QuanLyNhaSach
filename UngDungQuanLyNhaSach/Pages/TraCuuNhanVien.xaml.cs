@@ -26,10 +26,13 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class TraCuuNhanVien : Page
     {
+        List<NhanVien> selectedNhanVien = new List<NhanVien>();
+        List<NhanVien> khuyenMaiList = new List<NhanVien>();
+
         public TraCuuNhanVien()
         {
             InitializeComponent();
-            ngaySinh.SelectedDate = DateTime.Now;
+            //ngaySinh.SelectedDate = DateTime.Now;
             loadListStaff();
         }
 
@@ -127,6 +130,36 @@ namespace UngDungQuanLyNhaSach.Pages
         private void previewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = !_regex.IsMatch(e.Text);
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (resultNhanVienTable.SelectedIndex != -1)
+            {
+                selectedNhanVien.Add(khuyenMaiList[resultNhanVienTable.SelectedIndex]);
+                List<NhanVien> showSelectedKhachHang = selectedNhanVien.OrderBy(e => e.maNhanVien).ToList();
+                for (int i = 0; i < showSelectedKhachHang.Count; i++)
+                {
+                    showSelectedKhachHang[i].stt = i + 1;
+                }
+                chooseNhanVienTable.ItemsSource = new List<KhachHang>();
+                chooseNhanVienTable.ItemsSource = showSelectedKhachHang;
+            }
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (resultNhanVienTable.SelectedIndex != -1)
+            {
+                selectedNhanVien.Remove(khuyenMaiList[resultNhanVienTable.SelectedIndex]);
+                List<NhanVien> showSelectedKhachHang = selectedNhanVien.OrderBy(e => e.maNhanVien).ToList();
+                for (int i = 0; i < showSelectedKhachHang.Count; i++)
+                {
+                    showSelectedKhachHang[i].stt = i + 1;
+                }
+                chooseNhanVienTable.ItemsSource = new List<KhachHang>();
+                chooseNhanVienTable.ItemsSource = showSelectedKhachHang;
+            }
         }
     }
 }

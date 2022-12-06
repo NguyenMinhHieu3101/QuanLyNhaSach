@@ -51,6 +51,13 @@ namespace UngDungQuanLyNhaSach.Pages
             ngayBatDau.SelectedDate = DateTime.Now;
             ngayKetThuc.SelectedDate = DateTime.Now;
             updateMaKhuyenMai();
+            hideError();
+        }
+
+        void hideError()
+        {
+            phanTram_error.Visibility= Visibility.Hidden;
+            soLuong_error.Visibility= Visibility.Hidden;
         }
 
         bool checkDataInput()
@@ -122,7 +129,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlCommand command = new SqlCommand(insertString, connection);
 
                     command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
-                    command.Parameters["@MaKhuyenMai"].Value = "KM" + count.ToString();
+                    command.Parameters["@MaKhuyenMai"].Value = "KM" + count.ToString("000");
 
                     command.Parameters.Add("@ThoiGianBatDau", SqlDbType.SmallDateTime);
                     command.Parameters["@ThoiGianBatDau"].Value = ngayBatDau.SelectedDate;

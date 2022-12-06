@@ -318,16 +318,33 @@
             </Grid.ColumnDefinitions>
 
             <DataGrid Grid.Column="0" 
+                      IsReadOnly="True"
                   x:Name="resultNhanVienTable" Margin="5,10" 
                   Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="nhanVienTable_AutoGeneratingColumn"/>
+                  AutoGeneratingColumn="nhanVienTable_AutoGeneratingColumn">
+
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox Checked="CheckBox_Checked" 
+                                          Unchecked="CheckBox_Unchecked"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
 
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
 
             <DataGrid Grid.Column="2" 
+                      IsReadOnly="True"
                   x:Name="chooseNhanVienTable" Margin="5,10" 
                   Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 

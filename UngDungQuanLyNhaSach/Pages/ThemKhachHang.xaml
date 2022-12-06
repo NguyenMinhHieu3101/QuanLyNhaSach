@@ -357,12 +357,14 @@
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
 
         <DataGrid Grid.Column="2" 
+                  IsReadOnly="True"
                   x:Name="khachHangTable" Margin="5,10" 
                   Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="khachHangTable_AutoGeneratingColumn" SelectionChanged="khachHangTable_SelectionChanged"/>
+                  AutoGeneratingColumn="khachHangTable_AutoGeneratingColumn" 
+                  SelectionChanged="khachHangTable_SelectionChanged"/>
 
     </Grid>
     

@@ -24,14 +24,14 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class TraCuuKhuyenMai : Page
     {
-        List<KhuyenMai> selectedKhachHang = new List<KhuyenMai>();
+        List<KhuyenMai> selectedKhuyenMai = new List<KhuyenMai>();
         List<KhuyenMai> khuyenMaiList = new List<KhuyenMai>();
 
         public TraCuuKhuyenMai()
         {
             InitializeComponent();
-            ngayBatDau.SelectedDate= DateTime.Now;
-            ngayKetThuc.SelectedDate= DateTime.Now;
+            //ngayBatDau.SelectedDate= DateTime.Now;
+            //ngayKetThuc.SelectedDate= DateTime.Now;
             loadData();
         }
 
@@ -128,9 +128,39 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             if (resultKhuyenMaiTable.SelectedIndex != -1)
             {
-                selectedKhachHang.Remove(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex]);
-                selectedKhachHang.Add(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex]);
-                List<KhuyenMai> showSelectedKhachHang = selectedKhachHang.OrderBy(e => e.maKhuyenMai).ToList();
+                selectedKhuyenMai.Remove(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex]);
+                selectedKhuyenMai.Add(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex]);
+                List<KhuyenMai> showSelectedKhachHang = selectedKhuyenMai.OrderBy(e => e.maKhuyenMai).ToList();
+                for (int i = 0; i < showSelectedKhachHang.Count; i++)
+                {
+                    showSelectedKhachHang[i].stt = i + 1;
+                }
+                chooseKhuyenMaiTable.ItemsSource = new List<KhachHang>();
+                chooseKhuyenMaiTable.ItemsSource = showSelectedKhachHang;
+            }
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (resultKhuyenMaiTable.SelectedIndex != -1)
+            {
+                selectedKhuyenMai.Remove(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex]);
+                List<KhuyenMai> showSelectedKhachHang = selectedKhuyenMai.OrderBy(e => e.maKhuyenMai).ToList();
+                for (int i = 0; i < showSelectedKhachHang.Count; i++)
+                {
+                    showSelectedKhachHang[i].stt = i + 1;
+                }
+                chooseKhuyenMaiTable.ItemsSource = new List<KhachHang>();
+                chooseKhuyenMaiTable.ItemsSource = showSelectedKhachHang;
+            }
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            if (resultKhuyenMaiTable.SelectedIndex != -1)
+            {
+                selectedKhuyenMai.Add(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex]);
+                List<KhuyenMai> showSelectedKhachHang = selectedKhuyenMai.OrderBy(e => e.maKhuyenMai).ToList();
                 for (int i = 0; i < showSelectedKhachHang.Count; i++)
                 {
                     showSelectedKhachHang[i].stt = i + 1;

@@ -53,6 +53,16 @@ namespace UngDungQuanLyNhaSach.Pages
             email.Text = "";
             ngaySinh.SelectedDate = DateTime.Now;
             updateMaNhanVien();
+            hideError();
+        }
+
+        void hideError()
+        {
+            cccd_error.Visibility= Visibility.Hidden;
+            email_error.Visibility= Visibility.Hidden;
+            luong_error.Visibility= Visibility.Hidden;
+            name_error.Visibility= Visibility.Hidden;
+            sdt_error.Visibility= Visibility.Hidden;
         }
 
         void loadListStaff()
@@ -206,7 +216,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlCommand command = new SqlCommand(insertString, connection);
 
                     command.Parameters.Add("@MaNhanVien", SqlDbType.VarChar);
-                    command.Parameters["@MaNhanVien"].Value = "NV" + count.ToString();
+                    command.Parameters["@MaNhanVien"].Value = "NV" + count.ToString("000");
 
                     command.Parameters.Add("@MatKhau", SqlDbType.VarChar);
                     command.Parameters["@MatKhau"].Value = "12345678";
