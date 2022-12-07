@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,13 +21,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UngDungQuanLyNhaSach.Model;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Excel;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
     /// <summary>
     /// Interaction logic for DanhSachKhachHang.xaml
     /// </summary>
-    public partial class TraCuuKhachHang : Page
+    public partial class TraCuuKhachHang : Excel.Page
     {
         List<KhachHang> selectedKhachHang = new List<KhachHang>();
         List<KhachHang> khachHangList = new List<KhachHang>();
@@ -34,8 +37,8 @@ namespace UngDungQuanLyNhaSach.Pages
         public TraCuuKhachHang()
         {
             InitializeComponent();
-            //ngaySinh.SelectedDate = DateTime.Now;
             loadData();
+            chooseKhachHangTable.ItemsSource = new List<KhachHang>();
             loadFilter();
         }
 
@@ -79,7 +82,7 @@ namespace UngDungQuanLyNhaSach.Pages
                             gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
                             sdt: (String)reader["SDT"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng"));
                     }
-                    this.Dispatcher.BeginInvoke(new Action(() => {
+                    this.Dispatcher.BeginInvoke(new System.Action(() => {
                         resultKhachHangTable.ItemsSource = khachHangList;
                     }));
                     
@@ -116,7 +119,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         itemsName.Add((String)reader["TenKhachHang"]);
                         itemsSdt.Add((String)reader["SDT"]);
                     }
-                    this.Dispatcher.BeginInvoke(new Action(() => {
+                    this.Dispatcher.BeginInvoke(new System.Action(() => {
                         maKH.ItemsSource = itemsMaKH;
                         name.ItemsSource = itemsName.Distinct().ToList();
                         sdt.ItemsSource = itemsSdt;
@@ -205,7 +208,27 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void export_Click(object sender, RoutedEventArgs e)
         {
-            
+            Excel.Application excel = new Excel.Application();
+            excel.Visible = true;
+            Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
+            Worksheet sheet1 = (Worksheet)workbook.Sheets[1];
+
+            for (int j = 0; j < chooseKhachHangTable.Columns.Count; j++)
+            {
+                Excel.Range myRange = (Excel.Range)sheet1.Cells[1, j + 1];
+                sheet1.Cells[1, j + 1].Font.Bold = true;
+                sheet1.Columns[j + 1].ColumnWidth = 15;
+                myRange.Value2 = chooseKhachHangTable.Columns[j].Header;
+            }
+            for (int i = 0; i < chooseKhachHangTable.Columns.Count; i++)
+            {
+                for (int j = 0; j < chooseKhachHangTable.Items.Count; j++)
+                {
+                    TextBlock b = (TextBlock)chooseKhachHangTable.Columns[i].GetCellContent(chooseKhachHangTable.Items[j]);
+                    Microsoft.Office.Interop.Excel.Range myRange = (Microsoft.Office.Interop.Excel.Range)sheet1.Cells[j + 2, i + 1];
+                    myRange.Value2 = b.Text;
+                }
+            }
         }
 
         private void delete_Click(object sender, RoutedEventArgs e)
@@ -239,5 +262,17 @@ namespace UngDungQuanLyNhaSach.Pages
                 MessageBox.Show("Xóa khách hàng thành công");
             }
         }
+
+        public HeaderFooter LeftHeader => throw new NotImplementedException();
+
+        public HeaderFooter CenterHeader => throw new NotImplementedException();
+
+        public HeaderFooter RightHeader => throw new NotImplementedException();
+
+        public HeaderFooter LeftFooter => throw new NotImplementedException();
+
+        public HeaderFooter CenterFooter => throw new NotImplementedException();
+
+        public HeaderFooter RightFooter => throw new NotImplementedException();
     }
 }

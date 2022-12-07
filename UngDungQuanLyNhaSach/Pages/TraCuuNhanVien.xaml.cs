@@ -19,13 +19,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UngDungQuanLyNhaSach.Model;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Excel;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
     /// <summary>
     /// Interaction logic for DanhSachNhanVien.xaml
     /// </summary>
-    public partial class TraCuuNhanVien : Page
+    public partial class TraCuuNhanVien : Excel.Page
     {
         List<NhanVien> selectedNhanVien = new List<NhanVien>();
         List<NhanVien> nhanVienList = new List<NhanVien>();
@@ -33,9 +35,9 @@ namespace UngDungQuanLyNhaSach.Pages
         public TraCuuNhanVien()
         {
             InitializeComponent();
-            //ngaySinh.SelectedDate = DateTime.Now;
             loadListStaff();
             loadFilter();
+            chooseNhanVienTable.ItemsSource = new List<NhanVien>();
         }
 
         private void nhanVienTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -95,7 +97,7 @@ namespace UngDungQuanLyNhaSach.Pages
                             diaChi: (String)reader["DiaChi"], luong: double.Parse(reader["Luong"].ToString()),
                             trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động"));
                     }
-                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {
                         resultNhanVienTable.ItemsSource = nhanVienList;
                     }));
@@ -137,7 +139,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         itemsEmail.Add((String)reader["Email"]);
                         itemsLuong.Add(double.Parse(reader["Luong"].ToString()));
                     }
-                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {
                         maNV.ItemsSource = itemsMaNV;
                         name.ItemsSource = itemsName.Distinct().OrderBy(e => e).ToList();
@@ -172,6 +174,7 @@ namespace UngDungQuanLyNhaSach.Pages
             ngaySinh.SelectedDate = null;
             cccd.Text = "";
             name.Text = "";
+            chooseNhanVienTable.ItemsSource = new List<NhanVien>();
         }
 
         private static readonly Regex _regex = new Regex("[0-9]+");
@@ -217,7 +220,27 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void export_Click(object sender, RoutedEventArgs e)
         {
+            Excel.Application excel = new Excel.Application();
+            excel.Visible = true; 
+            Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
+            Worksheet sheet1 = (Worksheet)workbook.Sheets[1];
 
+            for (int j = 0; j < chooseNhanVienTable.Columns.Count; j++) 
+            {
+                Excel.Range myRange = (Excel.Range)sheet1.Cells[1, j + 1];
+                sheet1.Cells[1, j + 1].Font.Bold = true; 
+                sheet1.Columns[j + 1].ColumnWidth = 15; 
+                myRange.Value2 = chooseNhanVienTable.Columns[j].Header;
+            }
+            for (int i = 0; i < chooseNhanVienTable.Columns.Count; i++)
+            { 
+                for (int j = 0; j < chooseNhanVienTable.Items.Count; j++)
+                {
+                    TextBlock b = (TextBlock)chooseNhanVienTable.Columns[i].GetCellContent(chooseNhanVienTable.Items[j]);
+                    Microsoft.Office.Interop.Excel.Range myRange = (Microsoft.Office.Interop.Excel.Range)sheet1.Cells[j + 2, i + 1];
+                    myRange.Value2 = b.Text;
+                }
+            }
         }
 
         private void delete_Click(object sender, RoutedEventArgs e)
@@ -252,5 +275,17 @@ namespace UngDungQuanLyNhaSach.Pages
                 MessageBox.Show("Xóa nhân viên thành công");
             }
         }
+
+        public HeaderFooter LeftHeader => throw new NotImplementedException();
+
+        public HeaderFooter CenterHeader => throw new NotImplementedException();
+
+        public HeaderFooter RightHeader => throw new NotImplementedException();
+
+        public HeaderFooter LeftFooter => throw new NotImplementedException();
+
+        public HeaderFooter CenterFooter => throw new NotImplementedException();
+
+        public HeaderFooter RightFooter => throw new NotImplementedException();
     }
 }
