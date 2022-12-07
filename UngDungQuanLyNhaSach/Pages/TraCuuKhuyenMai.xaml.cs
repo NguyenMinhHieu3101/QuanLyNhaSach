@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
@@ -164,10 +165,10 @@ namespace UngDungQuanLyNhaSach.Pages
             maKM.Text = "";
             soLuong.Text = "";
             phanTram.Text = "";
-            ngayKetThuc.SelectedDate = DateTime.Now;
-            ngayBatDau.SelectedDate = DateTime.Now;
-            loaiKhachHang.SelectedIndex = 0;
-            trangThai.SelectedIndex = 0;
+            ngayKetThuc.SelectedDate = null;
+            ngayBatDau.SelectedDate = null;
+            loaiKhachHang.SelectedIndex = -1;
+            trangThai.SelectedIndex = -1;
         }
 
         private void resultKhuyenMaiTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -214,6 +215,48 @@ namespace UngDungQuanLyNhaSach.Pages
                 chooseKhuyenMaiTable.ItemsSource = new List<KhachHang>();
                 chooseKhuyenMaiTable.ItemsSource = showSelectedKhachHang;
             }
+        }
+
+        private void delete_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Bạn thật sự muốn xóa?", "Thông báo!", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                foreach (KhuyenMai khuyenMai in selectedKhuyenMai)
+                {
+                    try
+                    {
+                        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                        connection.Open();
+
+                        string deleteString = "UPDATE KHUYENMAI SET TrangThai = '0' Where MaKhuyenMai = @MaKhuyenMai";
+                        SqlCommand command = new SqlCommand(deleteString, connection);
+                        command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
+                        command.Parameters["@MaKhuyenMai"].Value = khuyenMai.maKhuyenMai;
+
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Xóa không thành công");
+                    }
+                }
+                selectedKhuyenMai = new List<KhuyenMai>();
+                chooseKhuyenMaiTable.ItemsSource = selectedKhuyenMai;
+                loadData();
+                MessageBox.Show("Xóa khuyến mãi thành công");
+            }
+        }
+
+        private void export_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

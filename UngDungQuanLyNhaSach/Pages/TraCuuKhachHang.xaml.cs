@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -75,7 +77,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
                             tenKhachHang: (String)reader["TenKhachHang"], ngaySinh: (DateTime)reader["NgaySinh"],
                             gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
-                            sdt: (String)reader["SDT"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
+                            sdt: (String)reader["SDT"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng"));
                     }
                     this.Dispatcher.BeginInvoke(new Action(() => {
                         resultKhachHangTable.ItemsSource = khachHangList;
@@ -146,11 +148,11 @@ namespace UngDungQuanLyNhaSach.Pages
         private void reset_Click(object sender, RoutedEventArgs e)
         {
             maKH.Text = "";
-            loaiKH.SelectedIndex = 0;
+            loaiKH.SelectedIndex = -1;
             name.Text = "";
             sdt.Text = "";
-            trangThai.SelectedIndex = 0;
-            ngaySinh.SelectedDate = DateTime.Now;
+            trangThai.SelectedIndex = -1;
+            ngaySinh.SelectedDate = null;
             selectedKhachHang = new List<KhachHang>();
             chooseKhachHangTable.ItemsSource = new List<KhachHang>();
         }
@@ -193,6 +195,48 @@ namespace UngDungQuanLyNhaSach.Pages
                 }
                 chooseKhachHangTable.ItemsSource = new List<KhachHang>();
                 chooseKhachHangTable.ItemsSource = showSelectedKhachHang;
+            }
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        private void export_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void delete_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Bạn thật sự muốn xóa?", "Thông báo!", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                foreach (KhachHang khachHang in selectedKhachHang)
+                {
+                    try
+                    {
+                        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                        connection.Open();
+                        string deleteString = "UPDATE KHACHHANG SET TrangThai = '0' Where MaKhachHang = @MaKhachHang";
+                        SqlCommand command = new SqlCommand(deleteString, connection);
+
+                        command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
+                        command.Parameters["@MaKhachHang"].Value = khachHang.maKhachHang;
+                        command.ExecuteNonQuery();
+
+                        connection.Close();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Xóa không thành công");
+                    }
+                }
+                selectedKhachHang = new List<KhachHang>();
+                chooseKhachHangTable.ItemsSource= selectedKhachHang;
+                loadData();
+                MessageBox.Show("Xóa khách hàng thành công");
             }
         }
     }

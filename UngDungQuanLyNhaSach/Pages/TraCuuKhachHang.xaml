@@ -335,13 +335,60 @@
 
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
 
-            <DataGrid Grid.Column="2" 
+            <Grid Grid.Column="2">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <DataGrid Grid.Row="0" 
                   x:Name="chooseKhachHangTable" Margin="5,10" 
                   Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
                   AutoGeneratingColumn="resultKhachHangTable_AutoGeneratingColumn"/>
+
+                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
+
+                    <Button Content="Xóa" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10"
+                            Foreground="White"
+                            Background="#F94973"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="delete"
+                            TabIndex="5"
+                            Style="{StaticResource DeleteButton}" Click="delete_Click"/>
+
+                    <Button Content="Xuất Excel" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10"
+                            Foreground="White"                            
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="export"
+                            TabIndex="7"
+                            Style="{StaticResource FindButton}" Click="export_Click"/>
+
+                    <Button Content="Thoát" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10"
+                            Foreground="Black"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="cancel"
+                            TabIndex="8"
+                            Style="{StaticResource CacelButton}" Click="cancel_Click"/>
+
+                </WrapPanel>
+
+            </Grid>
 
         </Grid>
 

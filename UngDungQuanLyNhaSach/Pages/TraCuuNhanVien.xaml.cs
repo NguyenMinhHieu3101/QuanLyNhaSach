@@ -167,9 +167,9 @@ namespace UngDungQuanLyNhaSach.Pages
             maNV.Text = "";
             luong.Text = "";
             email.Text = "";
-            trangThai.SelectedIndex = 2;
-            chucVu.SelectedIndex = 3;
-            ngaySinh.SelectedDate = DateTime.Now;
+            trangThai.SelectedIndex = -1;
+            chucVu.SelectedIndex = -1;
+            ngaySinh.SelectedDate = null;
             cccd.Text = "";
             name.Text = "";
         }
@@ -207,6 +207,49 @@ namespace UngDungQuanLyNhaSach.Pages
                 }
                 chooseNhanVienTable.ItemsSource = new List<KhachHang>();
                 chooseNhanVienTable.ItemsSource = showSelectedKhachHang;
+            }
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        private void export_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void delete_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Bạn thật sự muốn xóa?", "Thông báo!", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                foreach (NhanVien nhanVien in selectedNhanVien)
+                {
+
+                    try
+                    {
+                        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                        connection.Open();
+
+                        string deleteString = "UPDATE NHANVIEN SET TrangThai = '0' Where MaNhanVien = @MaNhanVien";
+                        SqlCommand command = new SqlCommand(deleteString, connection);
+                        command.Parameters.Add("@MaNhanVien", SqlDbType.VarChar);
+                        command.Parameters["@MaNhanVien"].Value = nhanVien.maNhanVien;
+
+                        command.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Xóa không thành công");
+                    }
+                }
+                selectedNhanVien = new List<NhanVien>();
+                chooseNhanVienTable.ItemsSource = selectedNhanVien;
+                loadListStaff();
+                MessageBox.Show("Xóa nhân viên thành công");
             }
         }
     }
