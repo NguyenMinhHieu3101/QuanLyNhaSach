@@ -61,7 +61,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     tongBanRa = (int)command.ExecuteScalar();
                     txtTongBanRa.Text = "TỔNG BÁN RA: " + tongBanRa;
 
-                    //
+                    //Xử lí bảng thống kê sản phẩm
 
                     string readString2 = "SELECT TenSanPham, CHITIETPHIEUNHAP.SoLuong AS SoLuongNhap,CHITIETHOADON.SoLuong AS SoLuongBan FROM SANPHAM, HOADON, CHITIETHOADON, PHIEUNHAP, CHITIETPHIEUNHAP WHERE (SANPHAM.MaSanPham = CHITIETHOADON.MaSanPham) AND (SANPHAM.MaSanPham = CHITIETPHIEUNHAP.MaSanPham) AND (CHITIETPHIEUNHAP.MaPhieuNhap = PHIEUNHAP.MaPhieuNhap) AND (HOADON.MaHoaDon = CHITIETHOADON.MaHoaDon) AND (NgayLapHoaDon BETWEEN @TuNgay AND @DenNgay) AND (NgayNhap BETWEEN @TuNgay AND @DenNgay)";
                     command = new SqlCommand(readString2, connection);

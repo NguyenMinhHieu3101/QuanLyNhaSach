@@ -16,21 +16,46 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UngDungQuanLyNhaSach.Model;
+using System.IO;
+using System.Collections;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
     /// <summary>
     /// Interaction logic for BaoCaoDoanhThu.xaml
     /// </summary>
-    public partial class BaoCaoDoanhThu : Page
+    public partial class BaoCaoDoanhThu : Page, INotifyPropertyChanged
     {
         List<ChiTra> chiTraList = new List<ChiTra>();
         List<ThuNhap> thuNhapList = new List<ThuNhap>();
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
         public BaoCaoDoanhThu()
         {
             InitializeComponent();
-        }        
+            DataContext = this;
+
+            // Chỗ này test biểu đổ thôi nha
+
+            SeriesCollection = new SeriesCollection()
+            {
+                new ColumnSeries
+                {
+                    Title="2015",
+                    Values = new ChartValues<double> {10, 50, 39, 50}
+                },
+                new ColumnSeries
+                {
+                    Title="2021",
+                    Values = new ChartValues<double> {5, 30, 60, 25}
+                }
+            };
+            Labels = new[] { "Maria", "Susan", "Charles", "Frida" };
+            Formatter = value => value.ToString("N");
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -88,12 +113,12 @@ namespace UngDungQuanLyNhaSach.Pages
                     tongTienNhap = (decimal)command.ExecuteScalar();
                     chiTraList.Add(new ChiTra(1, "Tiền nhập sách", tongTienNhap));
 
-                    string readString3 = "SELECT GiaTri FROM THAMSO WHERE MaThuocTinh = 'TS05'";
+                    string readString3 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Thuế'";
                     command = new SqlCommand(readString3, connection);
                     tienThue = (double)command.ExecuteScalar();
                     chiTraList.Add(new ChiTra(2, "Thuế", (decimal)tienThue));
 
-                    string readString4 = "SELECT GiaTri FROM THAMSO WHERE MaThuocTinh = 'TS06'";
+                    string readString4 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Mặt bằng'";
                     command = new SqlCommand(readString4, connection);
                     tienMatBang = (double)command.ExecuteScalar();
                     chiTraList.Add(new ChiTra(3, "Tiền mặt bằng", (decimal)tienMatBang));
@@ -102,7 +127,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     {
                         string readString5 = "SELECT SUM(Luong) AS TongLuong FROM NHANVIEN";
                         command = new SqlCommand(readString5, connection);
-                        tongLuong= (decimal)command.ExecuteScalar();
+                        tongLuong = (decimal)command.ExecuteScalar();
                         chiTraList.Add(new ChiTra(4, "Lương nhân viên", tongLuong));
                     }
 
@@ -173,5 +198,66 @@ namespace UngDungQuanLyNhaSach.Pages
                 e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            //Button_Click(sender, e);
+            //PdfPTable pdfTable = new PdfPTable(chiTraTable.Columns.Count);
+            //pdfTable.DefaultCell.Padding = 3;
+            //pdfTable.WidthPercentage = 90;
+            //pdfTable.HorizontalAlignment = Element.ALIGN_LEFT;
+            //pdfTable.DefaultCell.BorderWidth = 1;
+
+            //foreach (DataGridColumn column in chiTraTable.Columns)
+            //{
+            //    PdfPCell cell = new PdfPCell(new Phrase(column.Header.ToString()));
+            //    cell.BackgroundColor = new iTextSharp.text.BaseColor(240, 240, 240);
+            //    pdfTable.AddCell(cell);
+            //}
+            //var rows = GetDataGridRowsForButtons(chiTraTable);
+            //foreach (DataGridRow row in rows)
+            //{
+            //    foreach (DataGridCell cell in row.Resources)
+            //    {
+            //        pdfTable.AddCell(cell.Resources.ToString());
+            //    }
+            //}
+
+            //var path = "C:\\Users\\Phuong Quyen\\Downloads\\";
+            //if (!Directory.Exists(path))
+            //{
+            //    Directory.CreateDirectory(path);
+            //}
+            //iTextSharp.text.Paragraph p = new iTextSharp.text.Paragraph("Test");
+            //using (FileStream stream = new FileStream(path + "report.pdf", FileMode.Create))
+            //{
+            //    Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+            //    PdfWriter.GetInstance(pdfDoc, stream);
+            //    pdfDoc.Open();
+
+            //    pdfDoc.Add(p);
+            //    pdfDoc.Add(pdfTable);
+            //    pdfDoc.Close();
+            //}
+
+            try
+            {
+                this.IsEnabled = false;
+                PrintDialog printDialog = new PrintDialog();
+
+                if (printDialog.ShowDialog() == true)
+                {
+                    printDialog.PrintVisual(print, "Báo cáo doanh thu");
+                }
+            }
+            finally
+            {
+                this.IsEnabled = true;
+            }
+        }
+
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> Formatter { get; set; }
     }
 }
