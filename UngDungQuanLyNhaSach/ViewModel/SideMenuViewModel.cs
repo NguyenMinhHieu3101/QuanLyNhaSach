@@ -80,29 +80,36 @@ namespace UngDungQuanLyNhaSach.ViewModel
                         MenuText = "Quản Lý Kho",
                         SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData(){
-                                  SubMenuText = "Thêm Phiếu Nhập Sách",
+                                  //SubMenuText = "Thêm Phiếu Nhập Sách",
+                                  SubMenuText = "Thêm Phiếu Nhập Sản Phẩm",
                                 Page = "ThemPhieuNhapSach"
 
                             },
                             new SubMenuItemsData(){
 
-                                SubMenuText = "Tra Cứu Phiếu Nhập Sách",
+                                //SubMenuText = "Tra Cứu Phiếu Nhập Sách",
+                                SubMenuText = "Tra Cứu Phiếu Nhập Sản Phẩm",
                                 Page = "TraCuuPhieuNhapSach"
                             },
-                        }
-                    },
-
-                    new MenuItemsData(){
-                        PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
-                        MenuText = "Quản Lý Sản Phẩm",
-                        SubMenuList = new List<SubMenuItemsData>{
                             new SubMenuItemsData(){
 
                                 SubMenuText = "Tra Cứu Sản Phẩm",
                                 Page = "TraCuuSanPham"
-                            }
+                            },
                         }
                     },
+
+                    //new MenuItemsData(){
+                    //    PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
+                    //    MenuText = "Quản Lý Sản Phẩm",
+                    //    SubMenuList = new List<SubMenuItemsData>{
+                    //        new SubMenuItemsData(){
+
+                    //            SubMenuText = "Tra Cứu Sản Phẩm",
+                    //            Page = "TraCuuSanPham"
+                    //        }
+                    //    }
+                    //},
 
                     new MenuItemsData(){
                         PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",

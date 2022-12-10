@@ -186,32 +186,78 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
-            <RowDefinition Height="6*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <StackPanel Margin="30,30,10,10">
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Mã phiếu:" FontStyle="Italic"/>
-                <ComboBox x:Name="maPNS" Grid.Column="1" Margin="10,0,0,0">
-                    <ComboBoxItem IsSelected="True">PNS001</ComboBoxItem>
-                    <ComboBoxItem></ComboBoxItem>
+                <ComboBox x:Name="maPNS" Grid.Column="1" Margin="10,0,0,0" TabIndex="0" >
                 </ComboBox>
             </DockPanel>
 
             <DockPanel LastChildFill="True">
-                <TextBlock Text="Ngày lập phiếu:" FontStyle="Italic"/>
-                <ComboBox x:Name="ngayLapPNS" Grid.Column="1" Margin="10,0,0,0">
-                    <ComboBoxItem IsSelected="True"></ComboBoxItem>
-                    <ComboBoxItem></ComboBoxItem>
+                <TextBlock Text="Nhà cung cấp:" FontStyle="Italic"/>
+                <ComboBox x:Name="nhaCungCap" Grid.Column="1" Margin="10,0,0,0"  TabIndex="0" >
                 </ComboBox>
             </DockPanel>
             <DockPanel LastChildFill="True">
-                <TextBlock Text="Tổng lượng sách nhập:" FontStyle="Italic"/>
-                <TextBox x:Name="tongluóngachnhap" Template="{StaticResource TextBoxBaseControlTemplate}" Margin="10,0,0,0"/>
+                <TextBlock Text="Ngày nhập:" FontStyle="Italic"/>
+                <Border BorderBrush="#3fe8ab" 
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                    <DatePicker x:Name="ngayNhap" BorderBrush="Transparent" FontSize="16" TabIndex="3"/>
+                </Border>
+
             </DockPanel>
 
 
         </StackPanel>
 
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+
+                <Button Content="Tìm Kiếm" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10,0"
+                            Foreground="White"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="search"
+                            Style="{StaticResource FindButton}" Click="search_Click" />
+                <!--Click="add_Click"-->
+
+                <!--<Button Content="Làm Lại" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10,0"
+                            Foreground="Black"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="cancel"
+                            Style="{StaticResource CacelButton}"/>-->
+
+            </StackPanel>
+
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+
+
+                <Button Content="Làm Lại" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10,0"
+                            Foreground="Black"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="reset"
+                            Style="{StaticResource CacelButton}" Click="reset_Click"/>
+
+            </StackPanel>
+
+        </StackPanel>
         <StackPanel Grid.Row="2">
             <DockPanel LastChildFill="True">
                 <DataGrid
@@ -220,6 +266,19 @@
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
                                   AutoGeneratingColumn="danhSachPNSTable_AutoGeneratingColumn">
+                    
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox Checked="CheckBox_Checked" 
+                                          Unchecked="CheckBox_Unchecked"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
 
                     <!--<DataGrid.Columns>
                         <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
@@ -241,68 +300,92 @@
 
         <StackPanel Margin="30,30,10,10" Grid.Column="1">
             <DockPanel LastChildFill="True">
-                <TextBlock Text="Giá phiếu" FontStyle="Italic"/>
-                <ComboBox x:Name="giaPNS" Grid.Column="1" Margin="10,0,0,0">
-                    <ComboBoxItem></ComboBoxItem>
-                    <ComboBoxItem></ComboBoxItem>
+                <TextBlock Text="Mã nhân viên" FontStyle="Italic"/>
+                <ComboBox x:Name="maNV"  Margin="10,0,0,0" TabIndex="0" >
                 </ComboBox>
             </DockPanel>
             <DockPanel LastChildFill="True">
-                <TextBlock Text="Người lập phiếu:" FontStyle="Italic"/>
-                <ComboBox x:Name="nguoiLapPNS" Grid.Column="1" Margin="10,0,0,0">
-                    <ComboBoxItem IsSelected="True"></ComboBoxItem>
-                    <ComboBoxItem></ComboBoxItem>
+                <TextBlock Text="Mã kho:" FontStyle="Italic"/>
+                <ComboBox x:Name="maKho" Margin="10,0,0,0" TabIndex="0" >
                 </ComboBox>
+            </DockPanel>
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="Tổng tiền:" FontStyle="Italic"/>
+                <TextBox x:Name="tongTien" Grid.Column="1" Margin="10,0,0,0">
+                </TextBox>
             </DockPanel>
             <DockPanel Margin="25,10,0,0">
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-
-                    <Button Content="Tìm Kiếm" 
-                            Height="35" 
-                            Width="90"
-                            Margin="10,0"
-                            Foreground="White"
-                            FontSize="16"
-                            FontWeight="Bold"
-                            x:Name="add"
-                            Style="{StaticResource FindButton}" />
-                    <!--Click="add_Click"-->
-
-                    <Button Content="Làm Lại" 
-                            Height="35" 
-                            Width="90"
-                            Margin="10,0"
-                            Foreground="Black"
-                            FontSize="16"
-                            FontWeight="Bold"
-                            x:Name="cancel"
-                            Style="{StaticResource CacelButton}"/>
-
-                </StackPanel>
+                
 
             </DockPanel>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="2">
-            <DockPanel>
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="9*"/>
+                <ColumnDefinition Width="389*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <DockPanel Grid.Row="0" Grid.Column="1">
                 <DataGrid
-                                  x:Name="chiTietPNSTable" Margin="30,10,10,10" Style="{DynamicResource DataGridStyle}" 
+                                  x:Name="choosePNSTable" Margin="30,10,10,10" Style="{DynamicResource DataGridStyle}" 
                                   CellStyle="{StaticResource DataGridCellStyle}" 
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
                                   AutoGeneratingColumn="danhSachPNSTable_AutoGeneratingColumn">
 
-                    <DataGrid.Columns>
+                    <!--<DataGrid.Columns>
                         <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                         <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                         <DataGridTextColumn Header="Mã sách" IsReadOnly="True" CanUserResize="True" Width="*"/>
                         <DataGridTextColumn Header="Tên sách" IsReadOnly="True" CanUserResize="True" Width="*"/>
                         <DataGridTextColumn Header="Thể loại" IsReadOnly="True" CanUserResize="True" Width="*"/>
                         <DataGridTextColumn Header="Số lượng tồn" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                    </DataGrid.Columns>
+                    </DataGrid.Columns>-->
                 </DataGrid>
             </DockPanel>
-        </StackPanel>
+            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Margin="25,0,0,0">
+
+                <Button Content="Xóa" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10"
+                            Foreground="White"
+                            Background="#F94973"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="delete"
+                            TabIndex="5"
+                            Style="{StaticResource DeleteButton}"/>
+
+                <Button Content="Xuất Excel" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10"
+                            Foreground="White"                            
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="export"
+                            TabIndex="7"
+                            Style="{StaticResource FindButton}" Click="export_Click" />
+
+                <Button Content="Thoát" 
+                            Height="35" 
+                            Width="90"
+                            Margin="10"
+                            Foreground="Black"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            x:Name="cancel"
+                            TabIndex="8"
+                            Style="{StaticResource CacelButton}" Click="cancel_Click" />
+
+            </WrapPanel>
+        </Grid>
     </Grid>
 
 </Page>
