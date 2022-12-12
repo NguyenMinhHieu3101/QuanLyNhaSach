@@ -98,9 +98,9 @@ namespace UngDungQuanLyNhaSach.Pages
                     }));
                     connection.Close();
                 }
-                catch
+                catch (Exception ex)
                 {
-                    MessageBox.Show("db error");
+                    MessageBox.Show(ex.Message);
                 }   
             }));
             thread.IsBackground = true;

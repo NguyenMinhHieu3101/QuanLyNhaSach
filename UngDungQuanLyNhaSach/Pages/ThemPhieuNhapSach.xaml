@@ -70,7 +70,7 @@
             <RowDefinition Height="6*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel>
+        <!--<StackPanel>
             <TextBlock Text="Thông tin phiếu" 
                    Style="{StaticResource Header1}"/>
             <Grid>
@@ -78,24 +78,19 @@
                     <ColumnDefinition Width="5*"/>
                     <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
+                --><!--<StackPanel Grid.Column="0">
                     <DockPanel LastChildFill="True">
                         <TextBlock Text="Ngày Lập Phiếu:" Width="130"/>
                         <DatePicker x:Name="ngaylapphieu" Width="200" Height="24"/>
                     </DockPanel>
-                </StackPanel>
-                <StackPanel Grid.Column="1">
-                    <DockPanel LastChildFill="True">
-                        <TextBlock Text="Ngày Nhập Sản Phẩm:" Width="180"/>
-                        <DatePicker x:Name="ngaynhapsach" Width="200" Height="24"/>
-                    </DockPanel>
-                </StackPanel>
+                </StackPanel>--><!--
+                
             </Grid>
-        </StackPanel>
+        </StackPanel>-->
         <StackPanel Grid.Row="1">
-            <TextBlock Text="Thông tin sách nhập" 
+            <TextBlock Text="Thông tin phiếu nhập" 
                    Style="{StaticResource Header1}"/>
-            <StackPanel>
+            <!--<StackPanel>
                 <Grid Height="145">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
@@ -162,18 +157,67 @@
                     </StackPanel>
                 </Grid>
 
+            </StackPanel>-->
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Margin="5,5,15,5" Grid.Column="0" Grid.Row="0">
+                        <DockPanel  LastChildFill="True" Width="250">
+                            <TextBlock Text="Mã phiếu nhập:" Width="120"/>
+                            <TextBox x:Name="maPhieuNhap" Template="{StaticResource TextBoxBaseControlTemplate}" Width="100"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,15,5" Grid.Column="1" Grid.Row="0" >
+                        <DockPanel  LastChildFill="True" Width="250">
+                            <TextBlock Text="Mã nhân viên:" Width="120"/>
+                            <TextBox x:Name="maNhanVien" Template="{StaticResource TextBoxBaseControlTemplate}" Width="100"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,15,5" Grid.Column="2" Grid.Row="0" >
+                        <DockPanel  LastChildFill="True" Width="250">
+                            <TextBlock Text="Mã kho:" Width="120"/>
+                            <TextBox x:Name="maKho" Template="{StaticResource TextBoxBaseControlTemplate}" Width="100"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,15,5" Grid.Column="0" Grid.Row="1" >
+                        <DockPanel  LastChildFill="True" Width="250">
+                            <TextBlock Text="Nhà cung cấp:" Width="120"/>
+                            <TextBox x:Name="nhaCungCap" Template="{StaticResource TextBoxBaseControlTemplate}" Width="100"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <!--<StackPanel Margin="5,5,15,5" Grid.Column="1" Grid.Row="1" >
+                        <DockPanel  LastChildFill="True" Width="250">
+                            <TextBlock Text="Ngày nhập:" Width="120"/>
+                            <TextBox x:Name="ngayNhap" Template="{StaticResource TextBoxBaseControlTemplate}" Width="100"/>
+                        </DockPanel>
+                    </StackPanel>-->
+                    <StackPanel Margin="5,5,15,5" Grid.Column="2" Grid.Row="1" >
+                        <DockPanel  LastChildFill="True" Width="250">
+                            <TextBlock Text="Tổng tiền:" Width="120"/>
+                            <TextBox x:Name="tongTien" Template="{StaticResource TextBoxBaseControlTemplate}" Width="100"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.ColumnSpan="3">
+                        <DockPanel LastChildFill="True">
+                            <TextBlock Text="Ngày nhập:" Width="180"/>
+                            <DatePicker x:Name="ngayNhap" Width="200" Height="24"/>
+                        </DockPanel>
+                    </StackPanel>
+
+                </Grid>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="2" Height="60" VerticalAlignment="Top" Margin="-10,10,10,0">
             <DockPanel HorizontalAlignment="Center" LastChildFill="True">
-                <Button x:Name="deleteBtn" Margin="0,0,20,0"
-                        Content="Xóa" 
-                        Height="37" 
-                        Width="128"
-                        Foreground="White"
-                        FontSize="16"
-                        FontWeight="Bold"
-                        Style="{StaticResource DeleteButton}" Click="deleteBtn_Click"/>
                 <Button x:Name="addBtn" Margin="0,0,20,0"
                         Content="Thêm" 
                         Height="37" 
@@ -182,6 +226,7 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}" Click="addBtn_Click" />
+
                 <Button x:Name="updateBtn" Content="Cập nhật" 
                         Margin="0,0,20,0"
                         Height="37" 
@@ -190,6 +235,15 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}" Click="updateBtn_Click"/>
+                <Button x:Name="deleteBtn" Margin="0,0,20,0"
+                        Content="Xóa" 
+                        Height="37" 
+                        Width="128"
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Style="{StaticResource DeleteButton}" Click="deleteBtn_Click"/>
+
                 <Button x:Name="cancelBtn" Content="Thoát" 
                         Margin="0,0,20,0"
                         Height="37" 
@@ -218,7 +272,7 @@
                     <TranslateTransform/>
                 </TransformGroup>
             </StackPanel.RenderTransform>
-            <DockPanel Width="344" Height="50" RenderTransformOrigin="0.5,0.5">
+            <!--<DockPanel Width="344" Height="50" RenderTransformOrigin="0.5,0.5">
                 <DockPanel.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -242,7 +296,7 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource CacelButton}" />
-            </DockPanel>
+            </DockPanel>-->
         </StackPanel>
     </Grid>
 

@@ -27,73 +27,72 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class ThemPhieuNhapSach : Page
     {
-        List<SanPham> sanPhamList = new List<SanPham>();
+        //List<SanPham> sanPhamList = new List<SanPham>();
+        List<PhieuNhapSach> phieuNhapList = new List<PhieuNhapSach>();
         public ThemPhieuNhapSach()
         {
             InitializeComponent();
-            ngaylapphieu.SelectedDate = DateTime.Now;
-            ngaynhapsach.SelectedDate = DateTime.Now;
-            loadListProduct();
+            ngayNhap.SelectedDate = DateTime.Now;
+            loadListPhieuNhap();
             updateBtn.IsEnabled = false;
             deleteBtn.IsEnabled = false;
-            
+
         }
         void resetData()
         {
-            name.Text = "";
-            nxb.Text = "";
-            number.Text = "";
-            cost.Text = "";
-            year.Text = "";
-            author.Text = "";
-            category.Text = "";
+            maNhanVien.Text = "";
+            maPhieuNhap.Text = "";
+            maKho.Text = "";
+            nhaCungCap.Text = "";
+            tongTien.Text = "";
+            ngayNhap.Text = "";
 
         }
-        
-        void loadListProduct()
+
+        void loadListPhieuNhap()
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
-                sanPhamList = new List<SanPham>();
+                phieuNhapList = new List<PhieuNhapSach>();
 
-            //try
-            //{
-            //    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-            //    connection.Open();
-            //    string readString = "select * from SANPHAM";
-            //    SqlCommand command = new SqlCommand(readString, connection);
+                //try
+                //{
+                //    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                //    connection.Open();
+                //    string readString = "select * from SANPHAM";
+                //    SqlCommand command = new SqlCommand(readString, connection);
 
-            //    SqlDataReader reader = command.ExecuteReader();
+                //    SqlDataReader reader = command.ExecuteReader();
 
-            //    int count = 0;
-            //    while (reader.Read())
-            //    {
-            //        count++;
+                //    int count = 0;
+                //    while (reader.Read())
+                //    {
+                //        count++;
 
-            //        sanPhamList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
-            //            tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
-            //            theLoai: (String)reader["TheLoai"],nXB: (String)reader["NXB"], 
-            //            giaNhap: (Decimal)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
-            //            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
-            //    }
-            //    this.Dispatcher.BeginInvoke(new Action(() => {
-            //        phieuNhapSachTable.ItemsSource = sanPhamList;
-            //    }));
-            //    connection.Close();
-            //}
-            //catch (Exception e1)
-            //{
-            //    //MessageBox.Show("db error");
-            //    MessageBox.Show(e1.Message);
+                //        sanPhamList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
+                //            tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
+                //            theLoai: (String)reader["TheLoai"],nXB: (String)reader["NXB"], 
+                //            giaNhap: (Decimal)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
+                //            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
+                //    }
+                //    this.Dispatcher.BeginInvoke(new Action(() => {
+                //        phieuNhapSachTable.ItemsSource = sanPhamList;
+                //    }));
+                //    connection.Close();
+                //}
+                //catch (Exception e1)
+                //{
+                //    //MessageBox.Show("db error");
+                //    MessageBox.Show(e1.Message);
 
-            //}
-            
+                //}
+
                 try
                 {
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
 
                     connection.Open();
-                    string readString = "select * from SANPHAM";
+                    string readString = "select * from PHIEUNHAP";
                     SqlCommand command = new SqlCommand(readString, connection);
 
                     SqlDataReader reader = command.ExecuteReader();
@@ -103,15 +102,15 @@ namespace UngDungQuanLyNhaSach.Pages
                     while (reader.Read())
                     {
                         count++;
-                        sanPhamList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
-                                    tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
-                                    theLoai: (String)reader["TheLoai"], nXB: (String)reader["NXB"],
-                                    giaNhap: (Decimal)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
-                                    trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
+                        phieuNhapList.Add(new PhieuNhapSach(stt: count, maPhieuNhap: (String)reader["MaPhieuNhap"],
+                                    maNhanVien: (String)reader["MaNhanVien"], maKho: (String)reader["MaKho"],
+                                    nhaCungCap: (String)reader["NhaCungCap"],
+                                    ngayNhap: (DateTime)reader["NgayNhap"],
+                                    tongTien: decimal.Parse(reader["TongTien"].ToString())));
 
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            phieuNhapSachTable.ItemsSource = sanPhamList;
+                            phieuNhapSachTable.ItemsSource = phieuNhapList;
                         }));
                     }
                     connection.Close();
@@ -145,108 +144,87 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
-            try 
+            try
             {
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                 connection.Open();
-                string readString = "select Count(*) from SANPHAM";
+                string readString = "select Count(*) from PHIEUNHAP";
                 SqlCommand commandReader = new SqlCommand(readString, connection);
                 Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
 
-                string insertString = "INSERT INTO SANPHAM(MaSanPham, TenSanPham, TacGia, TheLoai, NXB, GiaNhap, NamXB, MaKho, TrangThai)"
-                    + "VALUES(@MaSanPham, @TenSanPham, @TacGia, @TheLoai, @NXB, @GiaNhap, @NamXB, @MaKho, @TrangThai)";
+                string insertString = "INSERT INTO PHIEUNHAP(MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien)"
+                    + "VALUES(@MaPhieuNhap, @MaNhanVien, @MaKho, @NhaCungCap, @NgayNhap, @TongTien)";
                 SqlCommand command = new SqlCommand(insertString, connection);
 
-                command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
-                command.Parameters["@MaSanPham"].Value = "SP" + count.ToString();
+                command.Parameters.Add("@MaPhieuNhap", SqlDbType.VarChar);
+                command.Parameters["@MaPhieuNhap"].Value = "PN" + count.ToString();
 
-                command.Parameters.Add("@TenSanPham", SqlDbType.NVarChar);
-                command.Parameters["@TenSanPham"].Value = name.Text;
+                command.Parameters.Add("@MaNhanVien", SqlDbType.NVarChar);
+                command.Parameters["@MaNhanVien"].Value = maNhanVien.Text;
 
-                command.Parameters.Add("@TacGia", SqlDbType.NVarChar);
-                command.Parameters["@TacGia"].Value = author.Text;
+                command.Parameters.Add("@MaKho", SqlDbType.NVarChar);
+                command.Parameters["@MaKho"].Value = maKho.Text;
 
-                command.Parameters.Add("@TheLoai", SqlDbType.NVarChar);
-                command.Parameters["@TheLoai"].Value = category.Text;
+                command.Parameters.Add("@NhaCungCap", SqlDbType.NVarChar);
+                command.Parameters["@NhaCungCap"].Value = nhaCungCap.Text;
 
-                command.Parameters.Add("@NXB", SqlDbType.NVarChar);
-                command.Parameters["@NXB"].Value = nxb.Text;
+                command.Parameters.Add("@NgayNhap", SqlDbType.SmallDateTime);
+                command.Parameters["@NgayNhap"].Value = ngayNhap.SelectedDate;
 
-                command.Parameters.Add("@GiaNhap", SqlDbType.Money);
-                command.Parameters["@GiaNhap"].Value = cost.Text;
+                command.Parameters.Add("@TongTien", SqlDbType.Money);
+                command.Parameters["@TongTien"].Value = tongTien.Text;
 
-                command.Parameters.Add("@NamXB", SqlDbType.Int);
-                command.Parameters["@NamXB"].Value = year.Text;
-
-                //command.Parameters.Add("@MaKho", SqlDbType.VarChar);
-                //command.Parameters["@MaKho"].Value = "K" + count.ToString();
-                command.Parameters.Add("@MaKho", SqlDbType.VarChar);
-                command.Parameters["@MaKho"].Value = "K03";
-
-                command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
-                command.Parameters["@TrangThai"].Value = "1";
 
                 command.ExecuteNonQuery();
 
                 connection.Close();
-                loadListProduct();
+                loadListPhieuNhap();
                 MessageBox.Show("Thêm thành công");
                 resetData();
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
-                MessageBox.Show("Lỗi òi nè");
+                MessageBox.Show(ex.Message);
             }
         }
-        
+
         private void cancelBtn_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
         }
-        
+
         private void updateBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                 connection.Open();
-                string updateString = "Update SANPHAM Set TenSanPham = @TenSanPham, TacGia = @TacGia, TheLoai = @TheLoai, NXB = @NXB, GiaNhap = @GiaNhap, NamXB = @NamXB, MaKho = @MaKho, TrangThai = @TrangThai "
-                    + "Where MaSanPham = @MaSanPham";
+                string updateString = "Update PHIEUNHAP Set MaNhanVien = @MaNhanVien, MaKho = @MaKho, NhaCungCap = @NhaCungCap, NgayNhap = @NgayNhap, TongTien = @TongTien "
+                    + "Where MaPhieuNhap = @MaPhieuNhap";
                 SqlCommand command = new SqlCommand(updateString, connection);
 
-                command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
-                command.Parameters["@MaSanPham"].Value = sanPhamList[phieuNhapSachTable.SelectedIndex].maSanPham;
+                command.Parameters.Add("@MaPhieuNhap", SqlDbType.VarChar);
+                command.Parameters["@MaPhieuNhap"].Value = phieuNhapList[phieuNhapSachTable.SelectedIndex].maPhieuNhap;
 
-                command.Parameters.Add("@TenSanPham", SqlDbType.NVarChar);
-                command.Parameters["@TenSanPham"].Value = name.Text;
+                command.Parameters.Add("@MaNhanVien", SqlDbType.NVarChar);
+                command.Parameters["@MaNhanVien"].Value = maNhanVien.Text;
 
-                command.Parameters.Add("@TacGia", SqlDbType.NVarChar);
-                command.Parameters["@TacGia"].Value = author.Text;
+                command.Parameters.Add("@MaKho", SqlDbType.NVarChar);
+                command.Parameters["@MaKho"].Value = maKho.Text;
 
-                command.Parameters.Add("@TheLoai", SqlDbType.NVarChar);
-                command.Parameters["@TheLoai"].Value = category.Text;
+                command.Parameters.Add("@NhaCungCap", SqlDbType.NVarChar);
+                command.Parameters["@NhaCungCap"].Value = nhaCungCap.Text;
 
-                command.Parameters.Add("@NXB", SqlDbType.NVarChar);
-                command.Parameters["@NXB"].Value = nxb.Text;
+                command.Parameters.Add("@NgayNhap", SqlDbType.SmallDateTime);
+                command.Parameters["@NgayNhap"].Value = ngayNhap.SelectedDate;
 
-                command.Parameters.Add("@GiaNhap", SqlDbType.Money);
-                command.Parameters["@GiaNhap"].Value = cost.Text;
+                command.Parameters.Add("@TongTien", SqlDbType.Money);
+                command.Parameters["@TongTien"].Value = tongTien.Text;
 
-                command.Parameters.Add("@NamXB", SqlDbType.Int);
-                command.Parameters["@NamXB"].Value = year.Text;
-
-                //command.Parameters.Add("@MaKho", SqlDbType.VarChar);
-                //command.Parameters["@MaKho"].Value = "K" + count.ToString();
-                command.Parameters.Add("@MaKho", SqlDbType.VarChar);
-                command.Parameters["@MaKho"].Value = "K03";
-
-                command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
-                command.Parameters["@TrangThai"].Value = "1";
 
                 command.ExecuteNonQuery();
                 connection.Close();
-                loadListProduct();
+                loadListPhieuNhap();
                 resetData();
                 MessageBox.Show("Cập nhật thành công");
             }
@@ -270,15 +248,15 @@ namespace UngDungQuanLyNhaSach.Pages
                         SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                         connection.Open();
 
-                        string deleteString = "Delete From SANPHAM Where MaSanPham = @MaSanPham";
+                        string deleteString = "Delete From PHIEUNHAP Where MaPhieuNhap = @MaPhieuNhap";
                         SqlCommand command = new SqlCommand(deleteString, connection);
-                        command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
-                        command.Parameters["@MaSanPham"].Value = sanPhamList[phieuNhapSachTable.SelectedIndex].maSanPham;
+                        command.Parameters.Add("@MaPhieuNhap", SqlDbType.VarChar);
+                        command.Parameters["@MaPhieuNhap"].Value = phieuNhapList[phieuNhapSachTable.SelectedIndex].maPhieuNhap;
 
                         command.ExecuteNonQuery();
                         connection.Close();
-                        loadListProduct();
-                        MessageBox.Show("Xóa sản phẩm thành công");
+                        loadListPhieuNhap();
+                        MessageBox.Show("Xóa phiếu nhập thành công");
                     }
                     catch
                     {
@@ -294,7 +272,7 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 updateBtn.IsEnabled = true;
                 deleteBtn.IsEnabled = true;
-                loadProduct();
+                loadPhieuNhap();
             }
             else
             {
@@ -303,18 +281,18 @@ namespace UngDungQuanLyNhaSach.Pages
             }
 
         }
-        void loadProduct()
+        void loadPhieuNhap()
         {
             //try
             //{
-                SanPham sanPham = sanPhamList[phieuNhapSachTable.SelectedIndex];
-                name.Text = sanPham.tenSanPham;
-                nxb.Text = sanPham.nXB;
-                //number.Text = sanPham.soLuong;
-                cost.Text = sanPham.giaNhap.ToString();
-                year.Text = sanPham.namXB.ToString();
-                author.Text = sanPham.tacGia;
-                category.Text = sanPham.theLoai;
+            PhieuNhapSach phieuNhapSach = phieuNhapList[phieuNhapSachTable.SelectedIndex];
+            maPhieuNhap.Text = phieuNhapSach.maPhieuNhap;
+            maNhanVien.Text = phieuNhapSach.maNhanVien;
+            //number.Text = sanPham.soLuong;
+            maKho.Text = phieuNhapSach.maKho;
+            nhaCungCap.Text = phieuNhapSach.nhaCungCap.ToString();
+            ngayNhap.Text = phieuNhapSach.ngayNhap.ToString();
+            tongTien.Text = phieuNhapSach.tongTien.ToString();
             //}
             //catch (Exception ex)
             //{
@@ -328,7 +306,7 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 updateBtn.IsEnabled = true;
                 deleteBtn.IsEnabled = true;
-                loadProduct();
+                loadPhieuNhap();
             }
             else
             {
