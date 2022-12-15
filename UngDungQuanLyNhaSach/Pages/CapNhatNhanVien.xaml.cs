@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -60,7 +61,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         hoTen: (String)reader["HoTen"], maChucVu: (String)reader["MaChucVu"],
                         ngaySinh: (DateTime)reader["NgaySinh"],  //DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
                         cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"], email: (String)reader["Email"],
-                        diaChi: (String)reader["DiaChi"], luong: double.Parse(reader["Luong"].ToString()),
+                        diaChi: (String)reader["DiaChi"], luong: string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(reader["luong"].ToString())),
                         trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động");
 
                     this.Dispatcher.BeginInvoke(new Action(() =>

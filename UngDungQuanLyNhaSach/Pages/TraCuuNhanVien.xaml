@@ -234,11 +234,12 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Ngày Sinh:"/>
-                    <Border BorderBrush="Black" 
+                    <ComboBox x:Name="ngaySinh" TabIndex="3"/>
+                    <!--<Border BorderBrush="Black" 
                                     BorderThickness="1"
-                                    CornerRadius="10">
+                                    CornerRadius="10">                        
                         <DatePicker x:Name="ngaySinh" BorderBrush="Transparent" FontSize="16" TabIndex="3"/>
-                    </Border>
+                    </Border>-->
                 </DockPanel>
 
             </StackPanel>

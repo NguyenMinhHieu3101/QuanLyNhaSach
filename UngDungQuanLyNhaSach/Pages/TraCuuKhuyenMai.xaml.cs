@@ -59,8 +59,8 @@ namespace UngDungQuanLyNhaSach.Pages
             String phanTramText = phanTram.Text;
             String loaiKH = loaiKhachHang.Text;
             int index = trangThai.SelectedIndex;
-            DateTime? start = ngayBatDau.SelectedDate;
-            DateTime? finish = ngayKetThuc.SelectedDate;
+            String start = ngayBatDau.Text;
+            String finish = ngayKetThuc.Text;
 
             Thread thread = new Thread(new ThreadStart(() =>
             {
@@ -77,8 +77,8 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (phanTramText.Length > 0) readString += " AND PhanTram = " + phanTramText;
                     if (loaiKH.Length > 0) readString += " AND TenLoaiKhachHang = N'" + loaiKH + "'";
                     if (index != -1) readString += " AND TrangThai = '" + index + "'";
-                    if (start != null) readString += " AND ThoiGianBatDau = '" + ((start ?? DateTime.Now).ToString("MM/dd/yyyy")) + "'";
-                    if (finish != null) readString += " AND ThoiGianKetThuc = '" + ((finish ?? DateTime.Now).ToString("MM/dd/yyyy")) + "'";
+                    if (start.Length > 0) readString += " AND ThoiGianBatDau = '" + start + "'";
+                    if (finish.Length > 0) readString += " AND ThoiGianKetThuc = '" + finish + "'";
 
                     SqlCommand command = new SqlCommand(readString, connection);
 
@@ -126,18 +126,24 @@ namespace UngDungQuanLyNhaSach.Pages
                     List<String> itemsMaKM = new List<String>();
                     List<int> itemsSoluong = new List<int>();
                     List<int> itemsPhanTram = new List<int>();
+                    List<DateTime> itemsStart = new List<DateTime>();
+                    List<DateTime> itemsFinish = new List<DateTime>();
 
                     while (reader.Read())
                     {
                         itemsMaKM.Add((String)reader["MaKhuyenMai"]);
                         itemsSoluong.Add((int)reader["SoLuongKhuyenMai"]);
                         itemsPhanTram.Add((int)reader["PhanTram"]);
+                        itemsStart.Add((DateTime)reader["ThoiGianBatDau"]);
+                        itemsFinish.Add((DateTime)reader["ThoiGianKetThuc"]);
                     }
                     this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {
                         maKM.ItemsSource = itemsMaKM;
                         soLuong.ItemsSource = itemsSoluong.Distinct().OrderBy(e => e).ToList();
                         phanTram.ItemsSource = itemsPhanTram.Distinct().OrderBy(e => e).ToList();
+                        ngayBatDau.ItemsSource = itemsStart.Distinct().OrderBy(e => e).Select(date => date.ToString("MM/dd/yyyy")).ToList();
+                        ngayKetThuc.ItemsSource = itemsFinish.Distinct().OrderBy(e => e).Select(date => date.ToString("MM/dd/yyyy")).ToList();
                     }));
                     connection.Close();
                 }
@@ -163,14 +169,15 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void reset_Click(object sender, RoutedEventArgs e)
         {
-            maKM.Text = "";
-            soLuong.Text = "";
-            phanTram.Text = "";
-            ngayKetThuc.SelectedDate = null;
-            ngayBatDau.SelectedDate = null;
+            maKM.SelectedIndex = -1;
+            soLuong.SelectedIndex = -1;
+            phanTram.SelectedIndex = -1;
+            ngayKetThuc.SelectedIndex = -1;
+            ngayBatDau.SelectedIndex = -1;
             loaiKhachHang.SelectedIndex = -1;
             trangThai.SelectedIndex = -1;
             chooseKhuyenMaiTable.ItemsSource = new List<KhuyenMai>();
+            loadData();
         }
 
         private void resultKhuyenMaiTable_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -29,6 +30,7 @@ namespace UngDungQuanLyNhaSach.Pages
     public partial class ThemNhanVien : Page
     {
         List<NhanVien> nhanVienList = new List<NhanVien>();
+        List<BaseNhanVien> baseNhanVienList = new List<BaseNhanVien>();
         int currentSelected = -1;
 
         public ThemNhanVien()
@@ -37,6 +39,7 @@ namespace UngDungQuanLyNhaSach.Pages
             ngaySinh.SelectedDate = DateTime.Now;
             loadListStaff();
             updateMaNhanVien();
+            ngaySinh.DisplayDateEnd= DateTime.Now;
             update.IsEnabled = false;
             delete.IsEnabled = false;
         }
@@ -80,6 +83,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlCommand command = new SqlCommand(readString, connection);
 
                     SqlDataReader reader = command.ExecuteReader();
+                    baseNhanVienList = new List<BaseNhanVien>();
 
                     int count = 0;
 
@@ -87,15 +91,18 @@ namespace UngDungQuanLyNhaSach.Pages
                     {
                         count++;
 
-                        nhanVienList.Add(new NhanVien(stt: count, maNhanVien: (String)reader["MaNhanVien"],
+                        NhanVien nhanVien = new NhanVien(stt: count, maNhanVien: (String)reader["MaNhanVien"],
                             hoTen: (String)reader["HoTen"], maChucVu: (String)reader["TenChucVu"],
                             ngaySinh: (DateTime)reader["NgaySinh"],  //DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
                             cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"], email: (String)reader["Email"],
-                            diaChi: (String)reader["DiaChi"], luong: double.Parse(reader["Luong"].ToString()),
-                            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động"));                       
+                            diaChi: (String)reader["DiaChi"], luong: string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(reader["luong"].ToString())),
+                            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động");
+
+                        baseNhanVienList.Add(nhanVien.toBase());
+                        nhanVienList.Add(nhanVien);                       
                     }
                     this.Dispatcher.BeginInvoke(new Action(() => {
-                        nhanVienTable.ItemsSource = nhanVienList;
+                        nhanVienTable.ItemsSource = baseNhanVienList;
                     }));
                     connection.Close();
                 }
@@ -163,7 +170,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 MessageBox.Show("Email không hợp lệ");
                 return false;
             }    
-            if (!double.TryParse(luong.Text, out distance))
+            if (!double.TryParse(Regex.Replace(luong.Text, "[^0-9]", ""), out distance))
             {
                 MessageBox.Show("Lương không hợp lệ");
                 return false;
@@ -247,7 +254,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@DiaChi"].Value = diaChi.Text;
 
                     command.Parameters.Add("@Luong", SqlDbType.Money);
-                    command.Parameters["@Luong"].Value = luong.Text;
+                    command.Parameters["@Luong"].Value = Regex.Replace(luong.Text, "[^0-9]", ""); 
 
                     command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
                     command.Parameters["@TrangThai"].Value = "1";
@@ -314,7 +321,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     command.Parameters.Add("@MaChucVu", SqlDbType.VarChar);
                     command.Parameters["@MaChucVu"].Value = chucVu.SelectedIndex == 0 ? "Admin" :
-                        (chucVu.SelectedIndex == 1 ? "Nhân Viên Bán Hàng" : "Nhân Viên Kho");
+                        (chucVu.SelectedIndex == 1 ? "NVBH" : "NVK");
 
                     command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
                     command.Parameters["@NgaySinh"].Value = ngaySinh.SelectedDate;
@@ -335,7 +342,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@DiaChi"].Value = diaChi.Text;
 
                     command.Parameters.Add("@Luong", SqlDbType.Money);
-                    command.Parameters["@Luong"].Value = luong.Text;
+                    command.Parameters["@Luong"].Value = Regex.Replace(luong.Text, "[^0-9]", "");
 
                     command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
                     command.Parameters["@TrangThai"].Value = "1";
@@ -374,6 +381,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         command.ExecuteNonQuery();
                         connection.Close();
                         loadListStaff();
+                        resetData();
                         MessageBox.Show("Xóa nhân viên thành công");
                     }
                     catch
@@ -399,7 +407,7 @@ namespace UngDungQuanLyNhaSach.Pages
             diaChi.Text = nhanVien.diaChi;
             gioiTinh.SelectedIndex = nhanVien.gioiTinh == "Nam" ? 0 : 1;
             luong.Text = nhanVien.luong.ToString();
-            chucVu.SelectedIndex = nhanVien.maChucVu == "NVBH" ? 1 : (nhanVien.maChucVu == "NVK" ? 2 : 0);
+            chucVu.SelectedIndex = nhanVien.maChucVu == "Nhân viên bán hàng" ? 1 : (nhanVien.maChucVu == "Nhân viên kho" ? 2 : 0);
             maNv.Text = nhanVien.maNhanVien;
         }
 
@@ -487,14 +495,24 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void luong_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (luong.Text.Length == 0 || int.Parse(luong.Text) == 0)
+            string value = Regex.Replace(luong.Text, "[^0-9]", "");
+            decimal ul;
+            if (decimal.TryParse(value, out ul))
             {
-                luong_error.Text = "Số lượng không hợp lệ";
-                luong_error.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                luong_error.Visibility = Visibility.Hidden;
+                if (luong.Text.Length == 0 || ul == 0)
+                {
+                    luong_error.Text = "Số lượng không hợp lệ";
+                    luong_error.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    luong_error.Visibility = Visibility.Hidden;
+                }
+
+                luong.TextChanged -= luong_TextChanged;
+                luong.Text = string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", ul);
+                luong.TextChanged += luong_TextChanged;
+                luong.Select(luong.Text.Length, 0);
             }
         }
     }

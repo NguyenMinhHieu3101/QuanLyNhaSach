@@ -21,6 +21,7 @@ using System.Windows.Shapes;
 using UngDungQuanLyNhaSach.Model;
 using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.Excel;
+using System.Globalization;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -56,7 +57,8 @@ namespace UngDungQuanLyNhaSach.Pages
             String maNVText = maNV.Text;
             String tenNV = name.Text;
             String cccdText = cccd.Text;
-            DateTime? dateTime = ngaySinh.SelectedDate;
+            //DateTime? dateTime = ngaySinh.SelectedDate;
+            String ngaySinhText = ngaySinh.Text;
             String emailText = email.Text;
             String chucVuText = chucVu.Text;
             String luongText = luong.Text;
@@ -74,10 +76,11 @@ namespace UngDungQuanLyNhaSach.Pages
                     string readString = "select * from NHANVIEN, CHUCVU WHERE NHANVIEN.MaChucVu = CHUCVU.MaChucVu";
                     if (maNVText.Length > 0) readString += " AND MaNhanVien Like '%" + maNVText + "%'";
                     if (tenNV.Length > 0) readString += " AND HoTen Like N'%" + tenNV + "%'";
-                    if (dateTime != null) readString += " AND NgaySinh = '" + ((dateTime ?? DateTime.Now).ToString("MM/dd/yyyy")) + "'";
+                    //if (dateTime != null) readString += " AND NgaySinh = '" + ((dateTime ?? DateTime.Now).ToString("MM/dd/yyyy")) + "'";
+                    if (ngaySinhText.Length > 0) readString += " AND NgaySinh = '" + ngaySinhText + "'";
                     if (cccdText.Length > 0) readString += " AND CCCD Like '%" + cccdText + "%'";
                     if (emailText.Length > 0) readString += " AND Email Like '%" + emailText + "%'";
-                    if (luongText.Length > 0) readString += " AND Luong = " + luongText;
+                    if (luongText.Length > 0) readString += " AND Luong = " + Regex.Replace(luongText, "[^0-9]", "");
                     if (index != -1) readString += " AND TrangThai = " + index;
                     if (chucVuText.Length > 0) readString += " AND TenChucVu = N'" + chucVuText + "'";
 
@@ -94,7 +97,7 @@ namespace UngDungQuanLyNhaSach.Pages
                             hoTen: (String)reader["HoTen"], maChucVu: (String)reader["TenChucVu"],
                             ngaySinh: (DateTime)reader["NgaySinh"],  //DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
                             cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"], email: (String)reader["Email"],
-                            diaChi: (String)reader["DiaChi"], luong: double.Parse(reader["Luong"].ToString()),
+                            diaChi: (String)reader["DiaChi"], luong: string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(reader["luong"].ToString())),
                             trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động"));
                     }
                     this.Dispatcher.BeginInvoke(new System.Action(() =>
@@ -130,6 +133,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     List<String> itemsCCCD = new List<String>();
                     List<String> itemsEmail = new List<String>();
                     List<double> itemsLuong = new List<double>();
+                    List<DateTime> itemsNgaySinh = new List<DateTime>();
 
                     while (reader.Read())
                     {
@@ -137,18 +141,19 @@ namespace UngDungQuanLyNhaSach.Pages
                         itemsName.Add((String)reader["HoTen"]);
                         itemsCCCD.Add((String)reader["CCCD"]);
                         itemsEmail.Add((String)reader["Email"]);
-                        itemsLuong.Add(double.Parse(reader["Luong"].ToString()));
+                        itemsNgaySinh.Add((DateTime)reader["NgaySinh"]);
+                        itemsLuong.Add(double.Parse(reader["luong"].ToString()));
                     }
                     this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {
                         maNV.ItemsSource = itemsMaNV;
                         name.ItemsSource = itemsName.Distinct().OrderBy(e => e).ToList();
-                        cccd.ItemsSource = itemsCCCD;
-                        email.ItemsSource = itemsEmail;
-                        luong.ItemsSource = itemsLuong.Distinct().OrderBy(e => e).ToList();
+                        cccd.ItemsSource = itemsCCCD.Distinct().OrderBy(e => e).ToList();
+                        email.ItemsSource = itemsEmail.Distinct().OrderBy(e => e).ToList();
+                        luong.ItemsSource = itemsLuong.Distinct().OrderBy(e => e).Select(luong => string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", luong)).ToList();
+                        ngaySinh.ItemsSource = itemsNgaySinh.Distinct().OrderBy(e => e).Select(date => date.ToString("MM/dd/yyyy")).ToList();
                     }));
                     connection.Close();
-
                 }
                 catch (Exception ex) 
                 {
@@ -166,15 +171,16 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void reset_Click(object sender, RoutedEventArgs e)
         {
-            maNV.Text = "";
-            luong.Text = "";
-            email.Text = "";
+            maNV.SelectedIndex = -1;
+            luong.SelectedIndex = -1;
+            email.SelectedIndex = -1;
             trangThai.SelectedIndex = -1;
             chucVu.SelectedIndex = -1;
-            ngaySinh.SelectedDate = null;
-            cccd.Text = "";
-            name.Text = "";
+            ngaySinh.SelectedIndex = -1;
+            cccd.SelectedIndex = -1;
+            name.SelectedIndex = -1;
             chooseNhanVienTable.ItemsSource = new List<NhanVien>();
+            loadListStaff();
         }
 
         private static readonly Regex _regex = new Regex("[0-9]+");

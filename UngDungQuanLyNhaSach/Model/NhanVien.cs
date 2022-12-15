@@ -38,14 +38,14 @@ namespace UngDungQuanLyNhaSach.Model
         public String diaChi { get; set; }
 
         [ColumnName("Lương")]
-        public double luong { get; set; }
+        public String luong { get; set; }
 
         [ColumnName("Trạng Thái")]
         public String trangThai { get; set; }
 
         public NhanVien(string maNhanVien, string hoTen, string maChucVu, 
             DateTime ngaySinh, string cccd, string gioiTinh, string sdt, string email, 
-            string diaChi, double luong, string trangThai)
+            string diaChi, string luong, string trangThai)
         {
             this.maNhanVien = maNhanVien;
             this.hoTen = hoTen;
@@ -62,7 +62,7 @@ namespace UngDungQuanLyNhaSach.Model
         
         public NhanVien(int stt,string maNhanVien, string hoTen, string maChucVu, 
             DateTime ngaySinh, string cccd, string gioiTinh, string sdt, string email, 
-            string diaChi, double luong, string trangThai)
+            string diaChi, string luong, string trangThai)
         {
             this.stt = stt;
             this.maNhanVien = maNhanVien;
@@ -75,6 +75,39 @@ namespace UngDungQuanLyNhaSach.Model
             this.email = email;
             this.diaChi = diaChi;
             this.luong = luong;
+            this.trangThai = trangThai;
+        }
+
+        public BaseNhanVien toBase()
+        {
+            return new BaseNhanVien(stt, maNhanVien, hoTen, maChucVu, trangThai);
+        }
+        
+    }
+    
+    public class BaseNhanVien
+    {
+        [ColumnName("#")]
+        public int stt { get; set; }
+
+        [ColumnName("Mã Nhân Viên")]
+        public String maNhanVien { get; set; }
+
+        [ColumnName("Họ Tên")]
+        public String hoTen { get; set; }
+
+        [ColumnName("Mã Chức Vụ")]
+        public String maChucVu { get; set; }
+
+        [ColumnName("Trạng Thái")]
+        public String trangThai { get; set; }
+
+        public BaseNhanVien(int stt, string maNhanVien, string hoTen, string maChucVu, string trangThai)
+        {
+            this.stt = stt;
+            this.maNhanVien = maNhanVien;
+            this.hoTen = hoTen;
+            this.maChucVu = maChucVu;
             this.trangThai = trangThai;
         }
     }

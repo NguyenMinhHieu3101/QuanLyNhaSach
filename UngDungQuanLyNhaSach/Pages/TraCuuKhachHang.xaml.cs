@@ -47,7 +47,8 @@ namespace UngDungQuanLyNhaSach.Pages
             String maKHText = maKH.Text;
             String loaiKHText = loaiKH.Text;
             String tenKHText = name.Text;
-            DateTime? dateTime = ngaySinh.SelectedDate;
+            //DateTime? dateTime = ngaySinh.SelectedDate;
+            String ngaySinhText = ngaySinh.Text;
             String sdtText = sdt.Text;
             int index = trangThai.SelectedIndex;
 
@@ -64,7 +65,8 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (maKHText.Length > 0) readString += " AND MaKhachHang Like '%" + maKHText + "%'";
                     if (loaiKHText.Length > 0) readString += " AND TenLoaiKhachHang = N'" + loaiKHText + "'";
                     if (tenKHText.Length > 0) readString += " AND TenKhachHang Like N'%" + tenKHText + "%'";
-                    if (dateTime != null) readString += " AND NgaySinh = '" + ((dateTime??DateTime.Now).ToString("MM/dd/yyyy")) + "'";
+                    //if (dateTime != null) readString += " AND NgaySinh = '" + ((dateTime??DateTime.Now).ToString("MM/dd/yyyy")) + "'";
+                    if (ngaySinhText.Length > 0) readString += " AND NgaySinh = '" + ngaySinhText + "'";
                     if (sdtText.Length > 0) readString += " AND SDT Like '%" + sdtText + "%'";
                     if (index != -1) readString += " AND TrangThai = '" + index + "'";
 
@@ -112,17 +114,20 @@ namespace UngDungQuanLyNhaSach.Pages
                     List<String> itemsMaKH =  new List<String>();
                     List<String> itemsName =  new List<String>();
                     List<String> itemsSdt =  new List<String>();
+                    List<DateTime> itemsNgaySinh =  new List<DateTime>();
 
                     while (reader.Read())
                     {
                         itemsMaKH.Add((String)reader["MaKhachHang"]);
                         itemsName.Add((String)reader["TenKhachHang"]);
                         itemsSdt.Add((String)reader["SDT"]);
+                        itemsNgaySinh.Add((DateTime)reader["NgaySinh"]);
                     }
                     this.Dispatcher.BeginInvoke(new System.Action(() => {
                         maKH.ItemsSource = itemsMaKH;
                         name.ItemsSource = itemsName.Distinct().ToList();
-                        sdt.ItemsSource = itemsSdt;
+                        sdt.ItemsSource = itemsSdt.Distinct().OrderBy(e => e).ToList();
+                        ngaySinh.ItemsSource = itemsNgaySinh.Distinct().OrderBy(e => e).Select(date => date.ToString("MM/dd/yyyy")).ToList();
                     }));
 
                     connection.Close();
@@ -150,14 +155,15 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void reset_Click(object sender, RoutedEventArgs e)
         {
-            maKH.Text = "";
+            maKH.SelectedIndex = -1;
             loaiKH.SelectedIndex = -1;
-            name.Text = "";
-            sdt.Text = "";
+            name.SelectedIndex = -1;
+            sdt.SelectedIndex = -1;
             trangThai.SelectedIndex = -1;
-            ngaySinh.SelectedDate = null;
+            ngaySinh.SelectedIndex= -1;
             selectedKhachHang = new List<KhachHang>();
             chooseKhachHangTable.ItemsSource = new List<KhachHang>();
+            loadData();
         }
 
         private static readonly Regex _regex = new Regex("[0-9]+");

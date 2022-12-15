@@ -317,6 +317,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         command.ExecuteNonQuery();
                         connection.Close();
                         loadData();
+                        reset();
                         MessageBox.Show("Xóa khách hàng thành công");
                     }
                     catch

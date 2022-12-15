@@ -307,6 +307,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         command.ExecuteNonQuery();
                         connection.Close();
                         loadData();
+                        reset();
                         MessageBox.Show("Xóa khuyến mãi thành công");
                     }
                     catch
