@@ -453,20 +453,8 @@ namespace UngDungQuanLyNhaSach.Pages
                 name_error.Visibility = Visibility.Hidden;
             }
 
-            String text = name.Text;
-            var list = text.Split(" ");
-            text = "";
-            for (int i = 0; i < list.Length; i++)
-            {
-                if (list[i].Length > 0)
-                {
-                    text += list[i][0].ToString().ToUpper() + list[i].Substring(1, list[i].Length - 1);
-                }
-                if (i < list.Length - 1) text += " ";
-            }
-
             name.TextChanged -= name_TextChanged;
-            name.Text = text;
+            name.Text = formatText(name.Text);
             name.TextChanged += name_TextChanged;
             name.Select(name.Text.Length, 0);
         }
@@ -532,5 +520,28 @@ namespace UngDungQuanLyNhaSach.Pages
                 luong.Select(luong.Text.Length, 0);
             }
         }
+
+        private void diaChi_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            diaChi.TextChanged -= diaChi_TextChanged;
+            diaChi.Text = formatText(diaChi.Text);
+            diaChi.TextChanged += diaChi_TextChanged;
+            diaChi.Select(diaChi.Text.Length, 0);
+        }
+
+        String formatText(String text)
+        {
+            var list = text.Split(" ");
+            text = "";
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (list[i].Length > 0)
+                {
+                    text += list[i][0].ToString().ToUpper() + list[i].Substring(1, list[i].Length - 1);
+                }
+                if (i < list.Length - 1) text += " ";
+            }
+            return text;
+        }    
     }
 }

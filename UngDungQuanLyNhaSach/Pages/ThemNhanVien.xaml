@@ -320,7 +320,7 @@
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Địa Chỉ:"/>
                             <TextBox x:Name="diaChi" Template="{StaticResource TextBoxBaseControlTemplate}"
-                                     TabIndex="5"/>
+                                     TabIndex="5" TextChanged="diaChi_TextChanged"/>
                         </DockPanel>
 
                         <DockPanel LastChildFill="True">

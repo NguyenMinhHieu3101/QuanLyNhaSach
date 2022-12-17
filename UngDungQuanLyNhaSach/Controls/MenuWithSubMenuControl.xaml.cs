@@ -12,7 +12,6 @@ namespace UngDungQuanLyNhaSach.Controls
         public MenuWithSubMenuControl()
         {
             InitializeComponent();
-
             DataContext = new SideMenuViewModel();
         }
 
