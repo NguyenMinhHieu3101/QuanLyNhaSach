@@ -164,6 +164,8 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void search_Click(object sender, RoutedEventArgs e)
         {
+            chooseKhuyenMaiTable.ItemsSource = new List<KhuyenMai>();
+            selectedKhuyenMai = new List<KhuyenMai>();
             loadData();
         }
 
@@ -177,6 +179,7 @@ namespace UngDungQuanLyNhaSach.Pages
             loaiKhachHang.SelectedIndex = -1;
             trangThai.SelectedIndex = -1;
             chooseKhuyenMaiTable.ItemsSource = new List<KhuyenMai>();
+            selectedKhuyenMai = new List<KhuyenMai>();
             loadData();
         }
 

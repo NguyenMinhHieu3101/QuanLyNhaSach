@@ -36,10 +36,10 @@ namespace UngDungQuanLyNhaSach.Pages
         public ThemNhanVien()
         {
             InitializeComponent();
-            ngaySinh.SelectedDate = DateTime.Now;
+            ngaySinh.SelectedDate = DateTime.Now.AddYears(-18);
             loadListStaff();
             updateMaNhanVien();
-            ngaySinh.DisplayDateEnd= DateTime.Now;
+            ngaySinh.DisplayDateEnd= DateTime.Now.AddYears(-18);
             update.IsEnabled = false;
             delete.IsEnabled = false;
         }

@@ -166,6 +166,8 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void search_Click(object sender, RoutedEventArgs e)
         {
+            chooseNhanVienTable.ItemsSource = new List<NhanVien>();
+            selectedNhanVien = new List<NhanVien>();
             loadListStaff();
         }
 
@@ -180,6 +182,7 @@ namespace UngDungQuanLyNhaSach.Pages
             cccd.SelectedIndex = -1;
             name.SelectedIndex = -1;
             chooseNhanVienTable.ItemsSource = new List<NhanVien>();
+            selectedNhanVien = new List<NhanVien>();
             loadListStaff();
         }
 
@@ -193,6 +196,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             if (resultNhanVienTable.SelectedIndex != -1)
             {
+                //selectedNhanVien.RemoveAll(element => element.maNhanVien == nhanVienList[resultNhanVienTable.SelectedIndex].maNhanVien);
                 selectedNhanVien.Add(nhanVienList[resultNhanVienTable.SelectedIndex]);
                 List<NhanVien> showSelectedKhachHang = selectedNhanVien.OrderBy(e => e.maNhanVien).ToList();
                 for (int i = 0; i < showSelectedKhachHang.Count; i++)

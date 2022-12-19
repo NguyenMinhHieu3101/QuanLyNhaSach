@@ -162,7 +162,7 @@ namespace UngDungQuanLyNhaSach.Pages
             trangThai.SelectedIndex = -1;
             ngaySinh.SelectedIndex= -1;
             selectedKhachHang = new List<KhachHang>();
-            chooseKhachHangTable.ItemsSource = new List<KhachHang>();
+            chooseKhachHangTable.ItemsSource = new List<KhachHang>();            
             loadData();
         }
 
@@ -174,6 +174,8 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void search_Click(object sender, RoutedEventArgs e)
         {
+            selectedKhachHang = new List<KhachHang>();
+            chooseKhachHangTable.ItemsSource = new List<KhachHang>();
             loadData();
         }
 
