@@ -328,11 +328,15 @@
                   AutoGeneratingColumn="resultKhuyenMaiTable_AutoGeneratingColumn">
 
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="" Width="*">
+                    <DataGridTemplateColumn Width="*">
+                        <DataGridTemplateColumn.Header>
+                            <CheckBox x:Name="selectAll" Checked="selectAll_Checked" Unchecked="selectAll_Unchecked"/>
+                        </DataGridTemplateColumn.Header>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox Checked="CheckBox_Checked" 
                                           Unchecked="CheckBox_Unchecked"
+                                          IsChecked="{Binding Path=IsChecked, ElementName=selectAll, Mode=OneWay}"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"/>
                             </DataTemplate>

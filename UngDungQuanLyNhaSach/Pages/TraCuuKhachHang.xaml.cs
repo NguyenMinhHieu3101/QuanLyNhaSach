@@ -22,7 +22,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UngDungQuanLyNhaSach.Model;
 using Excel = Microsoft.Office.Interop.Excel;
-using Microsoft.Office.Interop.Excel;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -183,6 +182,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             if (resultKhachHangTable.SelectedIndex != -1)
             {
+                selectedKhachHang.RemoveAll(element => element.maKhachHang.CompareTo(khachHangList[resultKhachHangTable.SelectedIndex].maKhachHang) == 0);
                 selectedKhachHang.Add(khachHangList[resultKhachHangTable.SelectedIndex]);
                 List<KhachHang> showSelectedKhachHang = selectedKhachHang.OrderBy(e => e.maKhachHang).ToList();
                 for (int i = 0; i < showSelectedKhachHang.Count; i++)
@@ -198,7 +198,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             if (resultKhachHangTable.SelectedIndex != -1)
             {
-                selectedKhachHang.Remove(khachHangList[resultKhachHangTable.SelectedIndex]);
+                selectedKhachHang.RemoveAll(element => element.maKhachHang.CompareTo(khachHangList[resultKhachHangTable.SelectedIndex].maKhachHang) == 0);
                 List<KhachHang> showSelectedKhachHang = selectedKhachHang.OrderBy(e => e.maKhachHang).ToList();
                 for (int i = 0; i < showSelectedKhachHang.Count; i++)
                 {
@@ -271,6 +271,19 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
+        private void selectAll_Checked(object sender, RoutedEventArgs e)
+        {
+            selectedKhachHang = new List<KhachHang>();
+            selectedKhachHang.AddRange(khachHangList);
+            chooseKhachHangTable.ItemsSource = selectedKhachHang;
+        }
+
+        private void selectAll_Unchecked(object sender, RoutedEventArgs e)
+        {
+            selectedKhachHang = new List<KhachHang>();
+            chooseKhachHangTable.ItemsSource = selectedKhachHang;
+        }
+
         public HeaderFooter LeftHeader => throw new NotImplementedException();
 
         public HeaderFooter CenterHeader => throw new NotImplementedException();
@@ -281,6 +294,6 @@ namespace UngDungQuanLyNhaSach.Pages
 
         public HeaderFooter CenterFooter => throw new NotImplementedException();
 
-        public HeaderFooter RightFooter => throw new NotImplementedException();
+        public HeaderFooter RightFooter => throw new NotImplementedException();        
     }
 }

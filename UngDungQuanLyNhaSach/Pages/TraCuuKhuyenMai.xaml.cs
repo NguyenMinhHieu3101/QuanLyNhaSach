@@ -183,34 +183,18 @@ namespace UngDungQuanLyNhaSach.Pages
             loadData();
         }
 
-        private void resultKhuyenMaiTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (resultKhuyenMaiTable.SelectedIndex != -1)
-            {
-                selectedKhuyenMai.Remove(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex]);
-                selectedKhuyenMai.Add(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex]);
-                List<KhuyenMai> showSelectedKhachHang = selectedKhuyenMai.OrderBy(e => e.maKhuyenMai).ToList();
-                for (int i = 0; i < showSelectedKhachHang.Count; i++)
-                {
-                    showSelectedKhachHang[i].stt = i + 1;
-                }
-                chooseKhuyenMaiTable.ItemsSource = new List<KhachHang>();
-                chooseKhuyenMaiTable.ItemsSource = showSelectedKhachHang;
-            }
-        }
-
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
             if (resultKhuyenMaiTable.SelectedIndex != -1)
             {
-                selectedKhuyenMai.Remove(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex]);
-                List<KhuyenMai> showSelectedKhachHang = selectedKhuyenMai.OrderBy(e => e.maKhuyenMai).ToList();
-                for (int i = 0; i < showSelectedKhachHang.Count; i++)
+                selectedKhuyenMai.RemoveAll(element => element.maKhuyenMai.CompareTo(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex].maKhuyenMai) == 0);
+                List<KhuyenMai> showSelectedKhuyenMai = selectedKhuyenMai.OrderBy(e => e.maKhuyenMai).ToList();
+                for (int i = 0; i < showSelectedKhuyenMai.Count; i++)
                 {
-                    showSelectedKhachHang[i].stt = i + 1;
+                    showSelectedKhuyenMai[i].stt = i + 1;
                 }
-                chooseKhuyenMaiTable.ItemsSource = new List<KhachHang>();
-                chooseKhuyenMaiTable.ItemsSource = showSelectedKhachHang;
+                chooseKhuyenMaiTable.ItemsSource = new List<KhuyenMai>();
+                chooseKhuyenMaiTable.ItemsSource = showSelectedKhuyenMai;
             }
         }
 
@@ -218,14 +202,15 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             if (resultKhuyenMaiTable.SelectedIndex != -1)
             {
+                selectedKhuyenMai.RemoveAll(element => element.maKhuyenMai.CompareTo(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex].maKhuyenMai) == 0);
                 selectedKhuyenMai.Add(khuyenMaiList[resultKhuyenMaiTable.SelectedIndex]);
-                List<KhuyenMai> showSelectedKhachHang = selectedKhuyenMai.OrderBy(e => e.maKhuyenMai).ToList();
-                for (int i = 0; i < showSelectedKhachHang.Count; i++)
+                List<KhuyenMai> showSelectedKhuyenMai = selectedKhuyenMai.OrderBy(e => e.maKhuyenMai).ToList();
+                for (int i = 0; i < showSelectedKhuyenMai.Count; i++)
                 {
-                    showSelectedKhachHang[i].stt = i + 1;
+                    showSelectedKhuyenMai[i].stt = i + 1;
                 }
-                chooseKhuyenMaiTable.ItemsSource = new List<KhachHang>();
-                chooseKhuyenMaiTable.ItemsSource = showSelectedKhachHang;
+                chooseKhuyenMaiTable.ItemsSource = new List<KhuyenMai>();
+                chooseKhuyenMaiTable.ItemsSource = showSelectedKhuyenMai;
             }
         }
 
@@ -291,6 +276,19 @@ namespace UngDungQuanLyNhaSach.Pages
             System.Windows.Application.Current.Shutdown();
         }
 
+        private void selectAll_Checked(object sender, RoutedEventArgs e)
+        {
+            selectedKhuyenMai = new List<KhuyenMai>();
+            selectedKhuyenMai.AddRange(khuyenMaiList);
+            chooseKhuyenMaiTable.ItemsSource = selectedKhuyenMai;
+        }
+
+        private void selectAll_Unchecked(object sender, RoutedEventArgs e)
+        {
+            selectedKhuyenMai = new List<KhuyenMai>();
+            chooseKhuyenMaiTable.ItemsSource = selectedKhuyenMai;
+        }
+
         public HeaderFooter LeftHeader => throw new NotImplementedException();
 
         public HeaderFooter CenterHeader => throw new NotImplementedException();
@@ -301,6 +299,6 @@ namespace UngDungQuanLyNhaSach.Pages
 
         public HeaderFooter CenterFooter => throw new NotImplementedException();
 
-        public HeaderFooter RightFooter => throw new NotImplementedException();
+        public HeaderFooter RightFooter => throw new NotImplementedException();        
     }
 }

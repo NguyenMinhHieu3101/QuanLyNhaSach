@@ -22,6 +22,7 @@ using UngDungQuanLyNhaSach.Model;
 using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Interop.Excel;
 using System.Globalization;
+using System.Collections;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -196,7 +197,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             if (resultNhanVienTable.SelectedIndex != -1)
             {
-                //selectedNhanVien.RemoveAll(element => element.maNhanVien == nhanVienList[resultNhanVienTable.SelectedIndex].maNhanVien);
+                selectedNhanVien.RemoveAll(element => element.maNhanVien.CompareTo(nhanVienList[resultNhanVienTable.SelectedIndex].maNhanVien) == 0);
                 selectedNhanVien.Add(nhanVienList[resultNhanVienTable.SelectedIndex]);
                 List<NhanVien> showSelectedKhachHang = selectedNhanVien.OrderBy(e => e.maNhanVien).ToList();
                 for (int i = 0; i < showSelectedKhachHang.Count; i++)
@@ -212,7 +213,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             if (resultNhanVienTable.SelectedIndex != -1)
             {
-                selectedNhanVien.Remove(nhanVienList[resultNhanVienTable.SelectedIndex]);
+                selectedNhanVien.RemoveAll(element => element.maNhanVien.CompareTo(nhanVienList[resultNhanVienTable.SelectedIndex].maNhanVien) == 0);
                 List<NhanVien> showSelectedKhachHang = selectedNhanVien.OrderBy(e => e.maNhanVien).ToList();
                 for (int i = 0; i < showSelectedKhachHang.Count; i++)
                 {
@@ -286,6 +287,21 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
+        private void selectAll_Unchecked(object sender, RoutedEventArgs e)
+        {
+            resultNhanVienTable.ItemsSource = nhanVienList;
+            selectedNhanVien = new List<NhanVien>();
+            chooseNhanVienTable.ItemsSource = selectedNhanVien;
+        }
+
+        private void selectAll_Checked(object sender, RoutedEventArgs e)
+        {
+            resultNhanVienTable.ItemsSource = nhanVienList;
+            selectedNhanVien = new List<NhanVien>();
+            selectedNhanVien.AddRange(nhanVienList);
+            chooseNhanVienTable.ItemsSource = selectedNhanVien;
+        }
+
         public HeaderFooter LeftHeader => throw new NotImplementedException();
 
         public HeaderFooter CenterHeader => throw new NotImplementedException();
@@ -296,6 +312,6 @@ namespace UngDungQuanLyNhaSach.Pages
 
         public HeaderFooter CenterFooter => throw new NotImplementedException();
 
-        public HeaderFooter RightFooter => throw new NotImplementedException();
+        public HeaderFooter RightFooter => throw new NotImplementedException();        
     }
 }
