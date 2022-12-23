@@ -99,18 +99,6 @@ namespace UngDungQuanLyNhaSach.ViewModel
                         }
                     },
 
-                    //new MenuItemsData(){
-                    //    PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
-                    //    MenuText = "Quản Lý Sản Phẩm",
-                    //    SubMenuList = new List<SubMenuItemsData>{
-                    //        new SubMenuItemsData(){
-
-                    //            SubMenuText = "Tra Cứu Sản Phẩm",
-                    //            Page = "TraCuuSanPham"
-                    //        }
-                    //    }
-                    //},
-
                     new MenuItemsData(){
                         PathData = "/UngDungQuanLyNhaSach;component/Images/drop-down-arrow.png",
                         MenuText = "Quản Lý Hóa Đơn",

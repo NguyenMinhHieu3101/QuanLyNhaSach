@@ -9,8 +9,7 @@
         mc:Ignorable="d" Title="BookStore" 
         Height="800" Width="1200" MinHeight="800" MinWidth="1000"
         Closing="Window_Closing" 
-          WindowState="Maximized"
-        
+        WindowState="Maximized"        
         Icon="/UngDungQuanLyNhaSach;component//Images/book-shop.png">
 
     <Window.Resources>
@@ -140,13 +139,6 @@
                            FontSize="16"
                            Foreground="White"
                            Margin="0,0,10,0"/>
-                
-                <!--<Image Source="/UngDungQuanLyNhaSach;component/Images/man.png" 
-                       HorizontalAlignment="Right" 
-                       VerticalAlignment="Center" 
-                       Margin="0,0,20,0"
-                       Height="50"
-                       Width="50"/>-->
 
                 <ComboBox x:Name="info" SelectionChanged="info_SelectionChanged">
                     <ComboBoxItem>Thông tin nhân viên</ComboBoxItem>
@@ -163,12 +155,9 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <control:MenuWithSubMenuControl HasIcon="True" 
-                                            SubMenuPadding="0,0,0,0" 
-                                            Background="#1FAD7A">
-            </control:MenuWithSubMenuControl>
-           
-                <Frame  Grid.Column="1" Grid.Row="1" x:Name="MainWindowFrame"  NavigationUIVisibility="Hidden" Navigated="MainWindowFrame_Navigated"        
+            <control:MenuWithSubMenuControl HasIcon="True" SubMenuPadding="0,0,0,0" Background="#1FAD7A"/>
+
+            <Frame  Grid.Column="1" Grid.Row="1" x:Name="MainWindowFrame"  NavigationUIVisibility="Hidden" Navigated="MainWindowFrame_Navigated"        
                    Width="Auto"
                    Height="Auto"
                    VerticalAlignment="Stretch"

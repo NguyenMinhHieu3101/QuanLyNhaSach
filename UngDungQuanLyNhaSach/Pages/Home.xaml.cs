@@ -48,10 +48,14 @@ namespace UngDungQuanLyNhaSach.Pages
                 dangNhap.Show();
                 this.Close();
             }
-            else
+            else if (info.SelectedIndex == 0)
             {
-
-            }    
+                info.SelectedIndex = -1;
+                ThongTinNhanVien thongTinNhanVien = new ThongTinNhanVien(NhanVienDangDangNhap.MaNhanVien);
+                thongTinNhanVien.Title = NhanVienDangDangNhap.HoTen;
+                thongTinNhanVien.Owner = this;
+                thongTinNhanVien.ShowDialog();
+            }
         }
     }
 }
