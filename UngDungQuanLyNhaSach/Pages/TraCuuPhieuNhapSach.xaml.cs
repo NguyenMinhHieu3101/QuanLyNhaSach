@@ -28,16 +28,16 @@ namespace UngDungQuanLyNhaSach.Pages
     /// Interaction logic for DanhSachPhieuNhapSach.xaml
     /// </summary>
     public partial class TraCuuPhieuNhapSach : Excel.Page
-        
+
     {
-        List <PhieuNhapSach> selectedPNS = new List<PhieuNhapSach>();
-        List <PhieuNhapSach> phieuNhapSachList = new List <PhieuNhapSach>();
+        List<PhieuNhapSach> selectedPNS = new List<PhieuNhapSach>();
+        List<PhieuNhapSach> phieuNhapSachList = new List<PhieuNhapSach>();
         public TraCuuPhieuNhapSach()
         {
             InitializeComponent();
             loadListPhieuNhap();
-            loadData();
             choosePNSTable.ItemsSource = new List<PhieuNhapSach>();
+            loadData();
         }
         private void danhSachPNSTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
@@ -61,19 +61,21 @@ namespace UngDungQuanLyNhaSach.Pages
 
             Thread thread = new Thread(new ThreadStart(() =>
             {
+                phieuNhapSachList = new List<PhieuNhapSach>();
+
                 try
                 {
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
 
                     connection.Open();
-                    string readString = "select * from PHIEUNHAP";
-                    if (maPhieuNhapText.Length > 0) readString += " AND MaPhieuNhap Like '%" + maPhieuNhapText + "%'";
+                    string readString = "select * from PHIEUNHAP, CHITIETPHIEUNHAP WHERE PHIEUNHAP.MaPhieuNhap = CHITIETPHIEUNHAP.MaPhieuNhap";
+                    if (maPhieuNhapText.Length > 0) readString += " AND PHIEUNHAP.MaPhieuNhap Like '%" + maPhieuNhapText + "%'";
                     if (maNhanVienText.Length > 0) readString += " AND MaNhanVien Like '%" + maNhanVienText + "%'";
                     if (maKhoText.Length > 0) readString += " AND MaKho Like '%" + maKhoText + "%'";
-                    if (nhaCungCapText.Length > 0) readString += " AND NhaCungCap Like '%" + nhaCungCapText + "%'";
+                    if (nhaCungCapText.Length > 0) readString += " AND NhaCungCap Like N'%" + nhaCungCapText + "%'";
                     if (dateTime != null) readString += " AND NgayNhap = '" + ((dateTime ?? DateTime.Now).ToString("MM/dd/yyyy")) + "'";
-                    if (tongTienText.Length > 0) readString += " AND TongTien = " + tongTienText;
-                   
+                    if (tongTienText.Length > 0) readString += " AND TongTien = '" + tongTienText + "'";
+
                     SqlCommand command = new SqlCommand(readString, connection);
 
                     SqlDataReader reader = command.ExecuteReader();
@@ -101,14 +103,14 @@ namespace UngDungQuanLyNhaSach.Pages
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-                }   
+                }
             }));
             thread.IsBackground = true;
             thread.Start();
         }
 
 
-            void loadData()
+        void loadData()
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
@@ -170,14 +172,15 @@ namespace UngDungQuanLyNhaSach.Pages
             nhaCungCap.Text = "";
             ngayNhap.SelectedDate = null;
             tongTien.Text = "";
+            selectedPNS = new List<PhieuNhapSach>();
             choosePNSTable.ItemsSource = new List<PhieuNhapSach>();
-
-
+            loadListPhieuNhap();
         }
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (danhSachPNSTable.SelectedIndex != -1)
             {
+                selectedPNS.RemoveAll(element => element.maPhieuNhap.CompareTo(phieuNhapSachList[danhSachPNSTable.SelectedIndex].maPhieuNhap) == 0);
                 selectedPNS.Add(phieuNhapSachList[danhSachPNSTable.SelectedIndex]);
                 List<PhieuNhapSach> showSelectedPNS = selectedPNS.OrderBy(e => e.maPhieuNhap).ToList();
                 for (int i = 0; i < showSelectedPNS.Count; i++)
@@ -229,6 +232,8 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void search_Click(object sender, RoutedEventArgs e)
         {
+            selectedPNS = new List<PhieuNhapSach>();
+            choosePNSTable.ItemsSource = new List<PhieuNhapSach>();
             loadListPhieuNhap();
         }
 
@@ -255,12 +260,57 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 for (int j = 0; j < choosePNSTable.Items.Count; j++)
                 {
-                    TextBlock b = (TextBlock) choosePNSTable.Columns[i].GetCellContent(choosePNSTable.Items[j]);
+                    TextBlock b = (TextBlock)choosePNSTable.Columns[i].GetCellContent(choosePNSTable.Items[j]);
                     Microsoft.Office.Interop.Excel.Range myRange = (Microsoft.Office.Interop.Excel.Range)sheet1.Cells[j + 2, i + 1];
                     myRange.Value2 = b.Text;
                 }
             }
         }
+
+        private void delete_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show("Bạn thật sự muốn xóa?", "Thông báo!", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                foreach (PhieuNhapSach phieuNhap in selectedPNS)
+                {
+                    try
+                    {
+                        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                        connection.Open();
+                        string deleteString = "DELETE FROM PHIEUNHAP Where MaPhieuNhap = @MaPhieuNhap";
+                        SqlCommand command = new SqlCommand(deleteString, connection);
+
+                        command.Parameters.Add("@MaPhieuNhap", SqlDbType.VarChar);
+                        command.Parameters["@MaPhieuNhap"].Value = phieuNhap.maPhieuNhap;
+                        command.ExecuteNonQuery();
+
+                        connection.Close();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Xóa không thành công");
+                        //MessageBox.Show(exception.Message);
+                    }
+                }
+                selectedPNS = new List<PhieuNhapSach>();
+                choosePNSTable.ItemsSource = selectedPNS;
+                loadData();
+                MessageBox.Show("Xóa thành công!");
+            }
+        }
+
+        private void selectAll_Checked(object sender, RoutedEventArgs e)
+        {
+            selectedPNS = new List<PhieuNhapSach>();
+            selectedPNS.AddRange(phieuNhapSachList);
+            choosePNSTable.ItemsSource = selectedPNS;
+        }
+
+        private void selectAll_Unchecked(object sender, RoutedEventArgs e)
+        {
+            selectedPNS = new List<PhieuNhapSach>();
+            choosePNSTable.ItemsSource = selectedPNS;
+        }
     }
-    
 }

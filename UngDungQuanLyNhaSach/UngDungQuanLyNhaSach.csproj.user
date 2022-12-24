@@ -16,6 +16,9 @@
     <Compile Update="Pages\BaoCaoKho.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\BaoCaoPdf.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\BaoCaoSanPham.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -94,6 +97,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\BaoCaoKho.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\BaoCaoPdf.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\BaoCaoSanPham.xaml">

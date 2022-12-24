@@ -26,35 +26,35 @@ namespace UngDungQuanLyNhaSach.Pages
     /// <summary>
     /// Interaction logic for BaoCaoDoanhThu.xaml
     /// </summary>
-    public partial class BaoCaoDoanhThu : Page, INotifyPropertyChanged
+    public partial class BaoCaoDoanhThu : Page
     {
         List<ChiTra> chiTraList = new List<ChiTra>();
         List<ThuNhap> thuNhapList = new List<ThuNhap>();
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event EventHandler<CustomEventArgs> RaiseCustomEvent;
 
         public BaoCaoDoanhThu()
         {
             InitializeComponent();
+            //loadChart();
             DataContext = this;
+            
+        }
 
-            // Chỗ này test biểu đổ thôi nha
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> Formatter { get; set; }
 
-            SeriesCollection = new SeriesCollection()
-            {
-                new ColumnSeries
-                {
-                    Title="2015",
-                    Values = new ChartValues<double> {10, 50, 39, 50}
-                },
-                new ColumnSeries
-                {
-                    Title="2021",
-                    Values = new ChartValues<double> {5, 30, 60, 25}
-                }
-            };
-            Labels = new[] { "Maria", "Susan", "Charles", "Frida" };
-            Formatter = value => value.ToString("N");
+        protected virtual void OnRaiseCustomEvent(CustomEventArgs e)
+        {
+            EventHandler<CustomEventArgs> raiseEvent = RaiseCustomEvent;
+            raiseEvent.Invoke(this, e);
+        }
+
+        public class CustomEventArgs : EventArgs
+        {
+            public CustomEventArgs(string message) => Message = message;
+            public string Message { get; set; }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -240,6 +240,10 @@ namespace UngDungQuanLyNhaSach.Pages
             //    pdfDoc.Close();
             //}
 
+            OnRaiseCustomEvent(new CustomEventArgs("Event triggered!"));
+
+            BaoCaoPdf baoCaoPdf = new BaoCaoPdf();
+
             try
             {
                 this.IsEnabled = false;
@@ -247,7 +251,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                 if (printDialog.ShowDialog() == true)
                 {
-                    printDialog.PrintVisual(print, "Báo cáo doanh thu");
+                    printDialog.PrintVisual(baoCaoPdf, "Báo cáo doanh thu");
                 }
             }
             finally
@@ -256,8 +260,72 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-        public SeriesCollection SeriesCollection { get; set; }
-        public string[] Labels { get; set; }
-        public Func<double, string> Formatter { get; set; }
+        void loadChart()
+        {
+            int thangHienTai = DateTime.Now.Month;
+            decimal[] tongThu = new decimal[5];
+            decimal[] tongChi = new decimal[5];
+
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                SqlCommand command;
+                
+                    string readString1 = "SELECT SUM(TongTienHoaDon) AS TongThu FROM HOADON WHERE MONTH(NgayLapHoaDon) = @Thang";
+                    command = new SqlCommand(readString1, connection);
+
+                    command.Parameters.Add("@Thang", SqlDbType.Int);
+                    command.Parameters["@Thang"].Value = thangHienTai;
+
+                    tongThu[0] = (decimal)command.ExecuteScalar();
+                
+                //for (int i = 0; i < 5; i++)
+                //{
+                //    string readString1 = "SELECT SUM(TongTienHoaDon) AS TongThu FROM HOADON WHERE MONTH(NgayLapHoaDon) = @Thang";
+                //    command = new SqlCommand(readString1, connection);
+
+                //    command.Parameters.Add("@Thang", SqlDbType.Int);
+                //    command.Parameters["@Thang"].Value = thangHienTai - i;
+
+                //    tongThu[i] = (decimal)command.ExecuteScalar();
+                //}
+
+                //for (int i = 0; i < 5; i++)
+                //{
+
+                //    string readString2 = "SELECT SUM(TongTien) AS TongChi FROM PHIEUNHAP WHERE MONTH(NgayLapHoaDon) = @Thang";
+                //    command = new SqlCommand(readString2, connection);
+
+                //    command.Parameters.Add("@Thang", SqlDbType.Int);
+                //    command.Parameters["@Thang"].Value = thangHienTai - i;
+
+                //    tongChi[i] = (decimal)command.ExecuteScalar();
+                //}
+
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
+            SeriesCollection = new SeriesCollection()
+                {
+                    new ColumnSeries
+                    {
+                        Title = "Thu nhập",
+                        Values = new ChartValues<double> {(double)tongThu[0], (double)tongThu[1], (double)tongThu[2], (double)tongThu[3], (double)tongThu[4]}
+                    },
+                    new ColumnSeries
+                    {
+                        Title = "Chi trả",
+                        Values = new ChartValues<double> {5, 30, 60, 25}
+                    }
+                };
+
+            Labels = new[] { "Maria", "Susan", "Charles", "Frida" };
+            Formatter = value => value.ToString("N");
+        }
     }
 }

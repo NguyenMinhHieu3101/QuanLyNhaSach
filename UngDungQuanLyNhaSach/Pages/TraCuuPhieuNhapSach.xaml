@@ -185,24 +185,24 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
-        <StackPanel Margin="30,30,10,10">
+        <StackPanel Margin="10, 10, 50, 10">
             <DockPanel LastChildFill="True">
-                <TextBlock Text="Mã phiếu:" FontStyle="Italic"/>
-                <ComboBox x:Name="maPNS" Grid.Column="1" Margin="10,0,0,0" TabIndex="0" >
+                <TextBlock Text="Mã phiếu:"/>
+                <ComboBox x:Name="maPNS" Grid.Column="1" TabIndex="0">
                 </ComboBox>
             </DockPanel>
 
             <DockPanel LastChildFill="True">
-                <TextBlock Text="Nhà cung cấp:" FontStyle="Italic"/>
-                <ComboBox x:Name="nhaCungCap" Grid.Column="1" Margin="10,0,0,0"  TabIndex="0" >
+                <TextBlock Text="Nhà cung cấp:"/>
+                <ComboBox x:Name="nhaCungCap" Grid.Column="1" TabIndex="0" >
                 </ComboBox>
             </DockPanel>
             <DockPanel LastChildFill="True">
-                <TextBlock Text="Ngày nhập:" FontStyle="Italic"/>
+                <TextBlock Text="Ngày nhập:"/>
                 <Border BorderBrush="#3fe8ab" 
                                     BorderThickness="1"
                                     CornerRadius="10">
@@ -261,18 +261,22 @@
         <StackPanel Grid.Row="2">
             <DockPanel LastChildFill="True">
                 <DataGrid
-                                  x:Name="danhSachPNSTable" Margin="5,10" Style="{DynamicResource DataGridStyle}" 
+                                  x:Name="danhSachPNSTable" Margin="10, 0" Style="{DynamicResource DataGridStyle}" 
                                   CellStyle="{StaticResource DataGridCellStyle}" 
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
                                   AutoGeneratingColumn="danhSachPNSTable_AutoGeneratingColumn">
                     
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="" Width="*">
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.Header>
+                                <CheckBox x:Name="selectAll" Checked="selectAll_Checked" Unchecked="selectAll_Unchecked"/>
+                            </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <CheckBox Checked="CheckBox_Checked" 
                                           Unchecked="CheckBox_Unchecked"
+                                          IsChecked="{Binding Path=IsChecked, ElementName=selectAll, Mode=OneWay}"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"/>
                                 </DataTemplate>
@@ -298,20 +302,22 @@
             </DockPanel>
         </StackPanel>
 
-        <StackPanel Margin="30,30,10,10" Grid.Column="1">
+        <StackPanel Margin="20,10, 10, 10" Grid.Column="1">
             <DockPanel LastChildFill="True">
-                <TextBlock Text="Mã nhân viên" FontStyle="Italic"/>
-                <ComboBox x:Name="maNV"  Margin="10,0,0,0" TabIndex="0" >
+                <TextBlock Text="Mã nhân viên"/>
+                <ComboBox x:Name="maNV"  TabIndex="0" >
                 </ComboBox>
             </DockPanel>
             <DockPanel LastChildFill="True">
-                <TextBlock Text="Mã kho:" FontStyle="Italic"/>
-                <ComboBox x:Name="maKho" Margin="10,0,0,0" TabIndex="0" >
+                <TextBlock Text="Mã kho:"/>
+                <ComboBox x:Name="maKho" TabIndex="0" >
                 </ComboBox>
             </DockPanel>
             <DockPanel LastChildFill="True">
-                <TextBlock Text="Tổng tiền:" FontStyle="Italic"/>
-                <TextBox x:Name="tongTien" Grid.Column="1" Margin="10,0,0,0">
+                <TextBlock Text="Tổng tiền:"/>
+                <TextBox x:Name="tongTien" 
+                         Grid.Column="1" 
+                         Template="{StaticResource TextBoxBaseControlTemplate}">
                 </TextBox>
             </DockPanel>
             <DockPanel Margin="25,10,0,0">
@@ -320,6 +326,7 @@
 
             </DockPanel>
         </StackPanel>
+        
         <Grid Grid.Column="1" Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="9*"/>
@@ -330,9 +337,10 @@
                 <RowDefinition/>
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
+
             <DockPanel Grid.Row="0" Grid.Column="1">
                 <DataGrid
-                                  x:Name="choosePNSTable" Margin="30,10,10,10" Style="{DynamicResource DataGridStyle}" 
+                                  x:Name="choosePNSTable" Margin="10, 0" Style="{DynamicResource DataGridStyle}" 
                                   CellStyle="{StaticResource DataGridCellStyle}" 
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
@@ -348,7 +356,7 @@
                     </DataGrid.Columns>-->
                 </DataGrid>
             </DockPanel>
-            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Margin="25,0,0,0">
+            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Margin="25,0,0,0">
 
                 <Button Content="Xóa" 
                             Height="35" 
@@ -360,7 +368,7 @@
                             FontWeight="Bold"
                             x:Name="delete"
                             TabIndex="5"
-                            Style="{StaticResource DeleteButton}"/>
+                            Style="{StaticResource DeleteButton}" Click="delete_Click"/>
 
                 <Button Content="Xuất Excel" 
                             Height="35" 
