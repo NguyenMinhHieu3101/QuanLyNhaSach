@@ -32,22 +32,19 @@ namespace UngDungQuanLyNhaSach.Pages
             loadListProduct();
             //updateBtn.IsEnabled = false;
             //deleteBtn.IsEnabled = false;
-
-        }
-        void resetData()
-        {
-            name.Text = "";
-            nxb.Text = "";
-            number.Text = "";
-            cost.Text = "";
-            year.Text = "";
-            author.Text = "";
-            category.Text = "";
+            loadFilter();
 
         }
 
         void loadListProduct()
         {
+            String tenSP = name.Text;
+            String theLoai = category.Text;
+            String donGia = cost.Text;
+            String NXB = nxb.Text;
+            String namXB = year.Text;
+            String tacGia = author.Text;
+            String soLuong = number.Text;
             Thread thread = new Thread(new ThreadStart(() =>
             {
                 sanPhamList = new List<SanPham>();
@@ -209,23 +206,84 @@ namespace UngDungQuanLyNhaSach.Pages
         //    }
         //}
 
-        void loadProduct()
+        void loadFilter()
         {
-            //try
-            //{
-            SanPham sanPham = sanPhamList[sanPhamTable.SelectedIndex];
-            name.Text = sanPham.tenSanPham;
-            nxb.Text = sanPham.nXB;
-            //number.Text = sanPham.soLuong;
-            cost.Text = sanPham.giaNhap.ToString();
-            year.Text = sanPham.namXB.ToString();
-            author.Text = sanPham.tacGia;
-            category.Text = sanPham.theLoai;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
+            ////try
+            ////{
+            //SanPham sanPham = sanPhamList[sanPhamTable.SelectedIndex];
+            //name.Text = sanPham.tenSanPham;
+            //nxb.Text = sanPham.nXB;
+            ////number.Text = sanPham.soLuong;
+            //cost.Text = sanPham.giaNhap.ToString();
+            //year.Text = sanPham.namXB.ToString();
+            //author.Text = sanPham.tacGia;
+            //category.Text = sanPham.theLoai;
+            ////}
+            ////catch (Exception ex)
+            ////{
+            ////    MessageBox.Show(ex.Message);
+            ////}
+            
+            String tenSP = name.Text;
+            String theLoai = category.Text;
+            String donGia = cost.Text;
+            String NXB = nxb.Text;
+            String namXB = year.Text;
+            String tacGia = author.Text;
+            String soLuong = number.Text;
+
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                sanPhamList = new List<SanPham>();
+
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+
+                    connection.Open();
+                    string readString = "select * from SANPHAM, CHITIETBAOCAOSANPHAM WHERE SANPHAM.MaSanPham = CHITIETBAOCAOSANPHAM.MaSanPham";
+                    if (tenSP.Length > 0) readString += " AND TenSanPham Like N'%" + tenSP + "%'";
+                    if (theLoai.Length > 0) readString += " AND TheLoai Like N'%" + theLoai + "%'";
+                    if (donGia.Length > 0) readString += " AND GiaNhap = '" + donGia + "'";
+                    if (NXB.Length > 0) readString += " AND NXB Like N'%" + NXB + "%'";
+                    if (namXB != null) readString += " AND NamXB = '" + namXB + "'";
+                    if (tacGia.Length > 0) readString += " AND TacGia Like N'%" + tacGia + "%'";
+                    //if (soLuong.Length > 0) readString += " AND TongTien = '" + tongTienText + "'";
+
+                    SqlCommand command = new SqlCommand(readString, connection);
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    int count = 0;
+
+                    while (reader.Read())
+                    {
+                        count++;
+                        sanPhamList.Add(new SanPham(stt: count,
+                            maSanPham: (String)reader["MaSanPham"],
+                            tenSanPham: (String)reader["TenSanPham"],
+                            tacGia: (String)reader["TacGia"],
+                            theLoai: (String)reader["TheLoai"],
+                            nXB: (String)reader["NXB"],
+                            giaNhap: (decimal)reader["GiaNhap"],
+                            namXB: (Int32)reader["namXB"],
+                            maKho: (String)reader["MaKho"],
+                            trangThai: (string)reader["TrangThai"]
+                            ));
+                    }
+                    this.Dispatcher.BeginInvoke(new System.Action(() =>
+                    {
+                        sanPhamTable.ItemsSource = sanPhamList;
+                    }));
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }));
+            thread.IsBackground = true;
+            thread.Start();
         }
         private void sanPhamTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
@@ -236,6 +294,30 @@ namespace UngDungQuanLyNhaSach.Pages
                 e.Column.Header = att.Name;
                 e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
+        }
+
+        private void searchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            sanPhamList = new List<SanPham>();
+            sanPhamTable.ItemsSource = sanPhamList;
+        }
+
+        private void resetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            name.Text = "";
+            category.Text = "";
+            cost.Text = "";
+            nxb.Text = "";
+            year.Text = "";
+            author.Text = "";
+            number.Text = "";
+            sanPhamTable.ItemsSource = new List<SanPham>();
+            loadListProduct();
+        }
+
+        private void cancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

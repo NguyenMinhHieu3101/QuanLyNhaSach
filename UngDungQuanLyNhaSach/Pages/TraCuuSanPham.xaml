@@ -9,7 +9,7 @@
       d:DesignWidth="800" d:DesignHeight="850"
       Title="DanhSachSanPhamHienCo" >
 
-    <Page.Resources>
+    <!--<Page.Resources>
 
         <Style x:Key="notCalledBorder" TargetType="{x:Type Border}">
             <Setter Property="BorderThickness" Value="1" />
@@ -57,25 +57,218 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
+    </Page.Resources>-->
+
+    <Page.Resources>
+        <Style x:Key="Header1" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Width" Value="135"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="DockPanel">
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="5,5"/>
+        </Style>
+
+        <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border Background="{TemplateBinding Background}" 
+                    x:Name="Bd" BorderBrush="Black"
+                    BorderThickness="{TemplateBinding BorderThickness}" 
+                    CornerRadius="10">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+
+                <Border
+                  x:Name="Border" 
+                  Grid.ColumnSpan="2"
+                  CornerRadius="10"
+                  Background="White"
+                  BorderBrush="Black"
+                  BorderThickness="1" />
+
+                <Border 
+                  Grid.Column="0"
+                  CornerRadius="10,0,0,10" 
+                  Background="White" 
+                  BorderBrush="Black"
+                  BorderThickness="1,1,1,1" />
+
+                <Path 
+                  x:Name="Arrow"
+                  Grid.Column="1"     
+                  Fill="Black"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"/>
+
+            </Grid>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+            <Border x:Name="PART_ContentHost" 
+                    Focusable="False" 
+                    Background="{TemplateBinding Background}" />
+        </ControlTemplate>
+
+        <Style x:Key="{x:Type ComboBox}" TargetType="{x:Type ComboBox}">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="MinHeight" Value="35"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="{x:Type ComboBox}">
+
+                        <Grid>
+
+                            <ToggleButton Name="ToggleButton" 
+                                        Template="{StaticResource ComboBoxToggleButton}" 
+                                        Grid.Column="2" 
+                                        Focusable="false"
+                                        IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                                        ClickMode="Press"/>
+
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                              Margin="3,3,23,3"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center" />
+
+                            <TextBox x:Name="PART_EditableTextBox"
+                                    Style="{x:Null}" 
+                                    Template="{StaticResource ComboBoxTextBox}" 
+                                    HorizontalAlignment="Left" 
+                                    VerticalAlignment="Center" 
+                                    Margin="3,3,23,3"
+                                    FontSize="16"
+                                    Focusable="True" 
+                                    Background="Transparent"
+                                    Foreground="Green"
+                                    Visibility="Hidden"
+                                    IsReadOnly="{TemplateBinding IsReadOnly}"/>
+
+                            <Popup Name="Popup"
+                                Placement="Bottom"
+                                IsOpen="{TemplateBinding IsDropDownOpen}"
+                                AllowsTransparency="True" 
+                                Focusable="False"
+                                PopupAnimation="Slide">
+
+                                <Grid Name="DropDown"
+                                      SnapsToDevicePixels="True"                
+                                      MinWidth="{TemplateBinding ActualWidth}"
+                                      MaxHeight="{TemplateBinding MaxDropDownHeight}">
+
+                                    <Border x:Name="DropDownBorder"
+                                            Background="#FDD5D5"
+                                            BorderThickness="1"
+                                            BorderBrush="#FDD5D5"/>
+
+                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" 
+                                                    KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+
+                                </Grid>
+
+                            </Popup>
+
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="HasItems" Value="false">
+                                <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="#888888"/>
+                            </Trigger>
+
+                            <Trigger Property="IsGrouping" Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </Trigger>
+
+                            <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                                <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="5"/>
+                                <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEditable"  Value="true">
+                                <Setter Property="IsTabStop" Value="false"/>
+                                <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                                <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
     </Page.Resources>
 
-    <Grid Margin="20, 0,5,0">
+    <Grid Margin="10, 0,10,0">
         <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>-->
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.25*"/>
+            <RowDefinition Height="2.75*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="6*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="7.25*"/>
+            <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
         
         <StackPanel Grid.Row="1">
             <TextBlock Text="Thông tin sách cần tra cứu" 
                    Style="{StaticResource Header1}"/>
             <StackPanel>
-                <Grid Height="145">
+                <Grid Height="160">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="3*"/>
@@ -86,46 +279,46 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Margin="5,5,15,5" Grid.Column="0" Grid.Row="0">
+                    <StackPanel Margin="5,5,10,5" Grid.Column="0" Grid.Row="0">
                         <DockPanel  LastChildFill="True" Width="250">
                             <TextBlock Text="Tên sách:" Width="80"/>
-                            <TextBox x:Name="name" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                            <ComboBox x:Name="name" Width="150"/>
                         </DockPanel>
                     </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Column="1" Grid.Row="0" >
+                    <StackPanel Margin="5,5,10,5" Grid.Column="1" Grid.Row="0" >
                         <DockPanel  LastChildFill="True" Width="250">
                             <TextBlock Text="Thể loại:" Width="80"/>
-                            <TextBox x:Name="category" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                            <ComboBox x:Name="category" Width="150"/>
                         </DockPanel>
                     </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Column="2" Grid.Row="0">
+                    <StackPanel Margin="5,5,10,5" Grid.Column="2" Grid.Row="0">
                         <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
                             <TextBlock Text="Đơn giá:" Width="80"/>
-                            <TextBox x:Name="cost" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                            <ComboBox x:Name="cost" Width="150"/>
                         </DockPanel>
                     </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Column="0" Grid.Row="1" >
+                    <StackPanel Margin="5,5,10,5" Grid.Column="0" Grid.Row="1" >
                         <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
                             <TextBlock Text="NXB:" Width="80"/>
-                            <TextBox x:Name="nxb" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                            <ComboBox x:Name="nxb" Width="150"/>
                         </DockPanel>
                     </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Column="1" Grid.Row="1" >
+                    <StackPanel Margin="5,5,10,5" Grid.Column="1" Grid.Row="1" >
                         <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
                             <TextBlock Text="Năm XB:" Width="80"/>
-                            <TextBox x:Name="year" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                            <ComboBox x:Name="year" Width="150"/>
                         </DockPanel>
                     </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Column="2" Grid.Row="1" >
+                    <StackPanel Margin="5,5,10,5" Grid.Column="2" Grid.Row="1" >
                         <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
                             <TextBlock Text="Tác giả:" Width="80"/>
-                            <TextBox x:Name="author" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                            <ComboBox x:Name="author" Width="150"/>
                         </DockPanel>
                     </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Column="0" Grid.Row="2" >
+                    <StackPanel Margin="5,5,10,5" Grid.Column="0" Grid.Row="2" >
                         <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
                             <TextBlock Text="Số lượng:" Width="80"/>
-                            <TextBox x:Name="number" Template="{StaticResource TextBoxBaseControlTemplate}" Width="150"/>
+                            <ComboBox x:Name="number" Width="150"/>
                         </DockPanel>
                     </StackPanel>
                     
@@ -143,7 +336,8 @@
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource AddButton}" />
+                        Style="{StaticResource AddButton}" 
+                        Click="searchBtn_Click"/>
                 <Button x:Name="resetBtn" Content="Làm lại" 
                         Margin="0,0,20,0"
                         Height="37" 
@@ -151,7 +345,8 @@
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource AddButton}" />
+                        Style="{StaticResource AddButton}" 
+                        Click="resetBtn_Click"/>
                 <Button x:Name="cancelBtn" Content="Thoát" 
                         Margin="0,0,20,0"
                         Height="37" 
@@ -159,7 +354,8 @@
                         Foreground="Black"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource CacelButton}"/>
+                        Style="{StaticResource CacelButton}"
+                        Click="cancelBtn_Click"/>
             </DockPanel>
         </StackPanel>
         <StackPanel Grid.Row="3" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
