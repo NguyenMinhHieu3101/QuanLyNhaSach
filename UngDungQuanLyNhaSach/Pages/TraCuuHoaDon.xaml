@@ -193,8 +193,6 @@
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Mã hóa đơn:" FontStyle="Italic"/>
                 <ComboBox x:Name="maHD" Grid.Column="1" Margin="10,0,0,0">
-                    <ComboBoxItem IsSelected="True">HD001</ComboBoxItem>
-                    <ComboBoxItem></ComboBoxItem>
                 </ComboBox>
             </DockPanel>
             
