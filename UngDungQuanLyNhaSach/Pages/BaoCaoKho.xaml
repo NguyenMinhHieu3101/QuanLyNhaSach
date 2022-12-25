@@ -126,7 +126,7 @@
                                   CellStyle="{StaticResource DataGridCellStyle}" 
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
-                                  AutoGeneratingColumn="sachNhapTable_AutoGeneratingColumn">
+                                  AutoGeneratingColumn="sachNhapTable_AutoGeneratingColumn" IsReadOnly="True">
                             <!--<DataGrid.Columns>
                                 <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                                 <DataGridTextColumn Header="Nhập Kho" IsReadOnly="True" CanUserResize="True" Width="*"/>
@@ -141,7 +141,7 @@
                                   CellStyle="{StaticResource DataGridCellStyle}" 
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
-                                  AutoGeneratingColumn="sachDaBanTable_AutoGeneratingColumn">
+                                  AutoGeneratingColumn="sachDaBanTable_AutoGeneratingColumn" IsReadOnly="True">
                             <!--<DataGrid.Columns>
                                 <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                                 <DataGridTextColumn Header="Xuất Kho" IsReadOnly="True" CanUserResize="True" Width="*"/>

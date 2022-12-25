@@ -68,8 +68,8 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
 
                     connection.Open();
-                    string readString = "select * from PHIEUNHAP, CHITIETPHIEUNHAP WHERE PHIEUNHAP.MaPhieuNhap = CHITIETPHIEUNHAP.MaPhieuNhap";
-                    if (maPhieuNhapText.Length > 0) readString += " AND PHIEUNHAP.MaPhieuNhap Like '%" + maPhieuNhapText + "%'";
+                    string readString = "select * from PHIEUNHAP WHERE MaPhieuNhap IS NOT NULL";
+                    if (maPhieuNhapText.Length > 0) readString += " AND MaPhieuNhap Like '%" + maPhieuNhapText + "%'";
                     if (maNhanVienText.Length > 0) readString += " AND MaNhanVien Like '%" + maNhanVienText + "%'";
                     if (maKhoText.Length > 0) readString += " AND MaKho Like '%" + maKhoText + "%'";
                     if (nhaCungCapText.Length > 0) readString += " AND NhaCungCap Like N'%" + nhaCungCapText + "%'";
@@ -210,13 +210,13 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void chiTietPNSTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            //var desc = e.PropertyDescriptor as PropertyDescriptor;
-            //var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
-            //if (att != null)
-            //{
-            //    e.Column.Header = att.Name;
-            //    e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
-            //}
+            var desc = e.PropertyDescriptor as PropertyDescriptor;
+            var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
+            if (att != null)
+            {
+                e.Column.Header = att.Name;
+                e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+            }
         }
         public HeaderFooter LeftHeader => throw new NotImplementedException();
 
@@ -287,10 +287,10 @@ namespace UngDungQuanLyNhaSach.Pages
 
                         connection.Close();
                     }
-                    catch
+                    catch (Exception exception)
                     {
-                        MessageBox.Show("Xóa không thành công");
-                        //MessageBox.Show(exception.Message);
+                        //MessageBox.Show("Xóa không thành công");
+                        MessageBox.Show(exception.Message);
                     }
                 }
                 selectedPNS = new List<PhieuNhapSach>();

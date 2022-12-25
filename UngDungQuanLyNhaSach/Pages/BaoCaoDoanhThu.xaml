@@ -128,7 +128,7 @@
                                   CellStyle="{StaticResource DataGridCellStyle}" 
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
-                                  AutoGeneratingColumn="chiTraTable_AutoGeneratingColumn">
+                                  AutoGeneratingColumn="chiTraTable_AutoGeneratingColumn" IsReadOnly="True">
                             </DataGrid>
 
                             <DataGrid x:Name="thuNhapTable" 
@@ -138,7 +138,7 @@
                                   CellStyle="{StaticResource DataGridCellStyle}" 
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
-                                  AutoGeneratingColumn="thuNhapTable_AutoGeneratingColumn">
+                                  AutoGeneratingColumn="thuNhapTable_AutoGeneratingColumn" IsReadOnly="True">
                             </DataGrid>
                         </DockPanel>
 

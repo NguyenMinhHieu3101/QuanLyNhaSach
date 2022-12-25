@@ -125,7 +125,7 @@
                               ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}"
                               VerticalScrollBarVisibility="Auto"
                               RowStyle="{StaticResource DataGridRowStyle}" 
-                              AutoGeneratingColumn="sanPhamTable_AutoGeneratingColumn">
+                              AutoGeneratingColumn="sanPhamTable_AutoGeneratingColumn" IsReadOnly="True">
                         <!--<DataGrid.Columns>
                             <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                             <DataGridTextColumn Header="Tên Sản Phẩm" IsReadOnly="True" CanUserResize="True" Width="3*"/>
