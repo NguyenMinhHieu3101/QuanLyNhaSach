@@ -16,19 +16,25 @@ namespace UngDungQuanLyNhaSach.Model
 
         [ColumnName("Tên Sản Phẩm")]
         public String tenSanPham { get; set; }
+
         [ColumnName("Tác Giả")]
         public String tacGia { get; set; }
+
         [ColumnName("Thể Loại")]
         public String theLoai { get; set; }
+
         [ColumnName("NXB")]
         public String nXB { get; set; }
 
         [ColumnName("Giá Nhập")]
         public Decimal giaNhap { get; set; }
+
         [ColumnName("Năm XB")]
         public Int32 namXB { get; set; }
+
         [ColumnName("Mã Kho")]
         public String maKho{ get; set; }
+
         [ColumnName("Trạng Thái")]
         public String trangThai { get; set; }
 

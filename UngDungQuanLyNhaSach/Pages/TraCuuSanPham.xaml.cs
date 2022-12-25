@@ -29,25 +29,17 @@ namespace UngDungQuanLyNhaSach.Pages
         public TraCuuSanPham()
         {
             InitializeComponent();
-            loadListProduct();
+            loadData();
             //updateBtn.IsEnabled = false;
             //deleteBtn.IsEnabled = false;
             loadFilter();
-
         }
 
-        void loadListProduct()
+        void loadFilter()
         {
-            String tenSP = name.Text;
-            String theLoai = category.Text;
-            String donGia = cost.Text;
-            String NXB = nxb.Text;
-            String namXB = year.Text;
-            String tacGia = author.Text;
-            String soLuong = number.Text;
             Thread thread = new Thread(new ThreadStart(() =>
             {
-                sanPhamList = new List<SanPham>();
+                //sanPhamList = new List<SanPham>();
 
                 //try
                 //{
@@ -84,27 +76,42 @@ namespace UngDungQuanLyNhaSach.Pages
                 try
                 {
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-
                     connection.Open();
                     string readString = "select * from SANPHAM";
+
                     SqlCommand command = new SqlCommand(readString, connection);
-
                     SqlDataReader reader = command.ExecuteReader();
+                    //List<String> itemsMaSP = new List<String>();
+                    List<String> itemsTenSP = new List<String>();
+                    List<String> itemsTheLoai = new List<String>();
+                    List<String> itemsTacGia = new List<String>();
+                    List<decimal> itemsDonGia = new List<decimal>();
+                    List<String> itemsNXB = new List<String>();
+                    List<int> itemsNamXB = new List<int>();
 
-                    int count = 0;
 
                     while (reader.Read())
                     {
-                        count++;
-                        sanPhamList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
-                                    tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
-                                    theLoai: (String)reader["TheLoai"], nXB: (String)reader["NXB"],
-                                    giaNhap: (Decimal)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
-                                    trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
+                        //sanPhamList.Add(new SanPham(maSanPham: (String)reader["MaSanPham"],
+                        //            tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
+                        //            theLoai: (String)reader["TheLoai"], nXB: (String)reader["NXB"],
+                        //            giaNhap: (Decimal)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
+                        //            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
+                        itemsTenSP.Add((String)reader["TenSanPham"]);
+                        itemsTheLoai.Add((String)reader["TheLoai"]);
+                        itemsTacGia.Add((String)reader["TacGia"]);
+                        itemsDonGia.Add((decimal)reader["GiaNhap"]);
+                        itemsNXB.Add((String)reader["NXB"]);
+                        itemsNamXB.Add((int)reader["NamXB"]);
 
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            sanPhamTable.ItemsSource = sanPhamList;
+                            name.ItemsSource = itemsTenSP;
+                            category.ItemsSource = itemsTheLoai;
+                            author.ItemsSource = itemsTacGia;
+                            cost.ItemsSource = itemsDonGia;
+                            nxb.ItemsSource = itemsNXB;
+                            year.ItemsSource = itemsNamXB;
                         }));
                     }
                     connection.Close();
@@ -206,7 +213,7 @@ namespace UngDungQuanLyNhaSach.Pages
         //    }
         //}
 
-        void loadFilter()
+        void loadData()
         {
             ////try
             ////{
@@ -230,7 +237,7 @@ namespace UngDungQuanLyNhaSach.Pages
             String NXB = nxb.Text;
             String namXB = year.Text;
             String tacGia = author.Text;
-            String soLuong = number.Text;
+            int index = status.SelectedIndex;
 
             Thread thread = new Thread(new ThreadStart(() =>
             {
@@ -241,13 +248,14 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
 
                     connection.Open();
-                    string readString = "select * from SANPHAM, CHITIETBAOCAOSANPHAM WHERE SANPHAM.MaSanPham = CHITIETBAOCAOSANPHAM.MaSanPham";
+                    string readString = "select * from SANPHAM WHERE MaSanPham IS NOT NULL";
                     if (tenSP.Length > 0) readString += " AND TenSanPham Like N'%" + tenSP + "%'";
                     if (theLoai.Length > 0) readString += " AND TheLoai Like N'%" + theLoai + "%'";
                     if (donGia.Length > 0) readString += " AND GiaNhap = '" + donGia + "'";
                     if (NXB.Length > 0) readString += " AND NXB Like N'%" + NXB + "%'";
-                    if (namXB != null) readString += " AND NamXB = '" + namXB + "'";
+                    if (namXB.Length > 0) readString += " AND NamXB = '" + namXB + "'";
                     if (tacGia.Length > 0) readString += " AND TacGia Like N'%" + tacGia + "%'";
+                    if (index != -1) readString += " AND TrangThai = '" + index + "'";
                     //if (soLuong.Length > 0) readString += " AND TongTien = '" + tongTienText + "'";
 
                     SqlCommand command = new SqlCommand(readString, connection);
@@ -266,15 +274,15 @@ namespace UngDungQuanLyNhaSach.Pages
                             theLoai: (String)reader["TheLoai"],
                             nXB: (String)reader["NXB"],
                             giaNhap: (decimal)reader["GiaNhap"],
-                            namXB: (Int32)reader["namXB"],
+                            namXB: (Int32)reader["NamXB"],
                             maKho: (String)reader["MaKho"],
-                            trangThai: (string)reader["TrangThai"]
-                            ));
+                            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng")); 
                     }
                     this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {
                         sanPhamTable.ItemsSource = sanPhamList;
                     }));
+
                     connection.Close();
                 }
                 catch (Exception ex)
@@ -300,19 +308,22 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             sanPhamList = new List<SanPham>();
             sanPhamTable.ItemsSource = sanPhamList;
+            loadData();
         }
 
         private void resetBtn_Click(object sender, RoutedEventArgs e)
         {
-            name.Text = "";
-            category.Text = "";
-            cost.Text = "";
-            nxb.Text = "";
-            year.Text = "";
-            author.Text = "";
-            number.Text = "";
+            name.SelectedIndex = -1;
+            category.SelectedIndex = -1;
+            cost.SelectedIndex = -1;
+            nxb.SelectedIndex = -1;
+            year.SelectedIndex = -1;
+            author.SelectedIndex = -1;
+            status.SelectedIndex = -1;
+            //number.Text = "";
             sanPhamTable.ItemsSource = new List<SanPham>();
-            loadListProduct();
+            //loadListProduct();
+            loadData();
         }
 
         private void cancelBtn_Click(object sender, RoutedEventArgs e)

@@ -281,19 +281,19 @@
                     </Grid.RowDefinitions>
                     <StackPanel Margin="5,5,10,5" Grid.Column="0" Grid.Row="0">
                         <DockPanel  LastChildFill="True" Width="250">
-                            <TextBlock Text="Tên sách:" Width="80"/>
+                            <TextBlock Text="Tên Sách:" Width="80"/>
                             <ComboBox x:Name="name" Width="150"/>
                         </DockPanel>
                     </StackPanel>
                     <StackPanel Margin="5,5,10,5" Grid.Column="1" Grid.Row="0" >
                         <DockPanel  LastChildFill="True" Width="250">
-                            <TextBlock Text="Thể loại:" Width="80"/>
+                            <TextBlock Text="Thể Loại:" Width="80"/>
                             <ComboBox x:Name="category" Width="150"/>
                         </DockPanel>
                     </StackPanel>
                     <StackPanel Margin="5,5,10,5" Grid.Column="2" Grid.Row="0">
                         <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
-                            <TextBlock Text="Đơn giá:" Width="80"/>
+                            <TextBlock Text="Đơn Giá:" Width="80"/>
                             <ComboBox x:Name="cost" Width="150"/>
                         </DockPanel>
                     </StackPanel>
@@ -311,14 +311,17 @@
                     </StackPanel>
                     <StackPanel Margin="5,5,10,5" Grid.Column="2" Grid.Row="1" >
                         <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
-                            <TextBlock Text="Tác giả:" Width="80"/>
+                            <TextBlock Text="Tác Giả:" Width="80"/>
                             <ComboBox x:Name="author" Width="150"/>
                         </DockPanel>
                     </StackPanel>
                     <StackPanel Margin="5,5,10,5" Grid.Column="0" Grid.Row="2" >
                         <DockPanel Grid.Column="3" Grid.Row="1" LastChildFill="True" Width="250">
-                            <TextBlock Text="Số lượng:" Width="80"/>
-                            <ComboBox x:Name="number" Width="150"/>
+                            <TextBlock Text="Trạng Thái:" Width="80"/>
+                            <ComboBox x:Name="status" Width="150">
+                                <ComboBoxItem>Hết hàng</ComboBoxItem>
+                                <ComboBoxItem>Còn hàng</ComboBoxItem>
+                            </ComboBox>
                         </DockPanel>
                     </StackPanel>
                     
@@ -326,7 +329,7 @@
 
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="2" Height="60" VerticalAlignment="Top" Margin="-10,10,10,0">
+        <StackPanel Grid.Row="2" Height="60" VerticalAlignment="Top">
             <DockPanel HorizontalAlignment="Center" LastChildFill="True">
                 
                 <Button x:Name="searchBtn" Margin="0,0,20,0"
@@ -364,8 +367,7 @@
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
                   VerticalScrollBarVisibility="Auto"
-                  AutoGeneratingColumn="sanPhamTable_AutoGeneratingColumn" Background="{x:Null}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="True" Height="400" >
-            </DataGrid>
+                  AutoGeneratingColumn="sanPhamTable_AutoGeneratingColumn" Background="{x:Null}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="True" Height="400" IsReadOnly="True" />
         </StackPanel>
         <StackPanel Grid.Row="4"  HorizontalAlignment="Left" Margin="329,0,0,14" Width="366"  VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Height="52">
             <StackPanel.RenderTransform>
