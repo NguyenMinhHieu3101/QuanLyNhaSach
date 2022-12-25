@@ -21,94 +21,92 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Windows.Markup;
 using System.Reflection;
+using System.Globalization;
+using Microsoft.Office.Interop.Excel;
 
-namespace UngDungQuanLyNhaSach.Pages
+namespace UngDungQuanLyNhaSach.Pages    
 {
     /// <summary>
     /// Interaction logic for ThemHoaDon.xaml
     /// </summary
 
-    public partial class ThemHoaDon : Page
+    public partial class ThemHoaDon : Microsoft.Office.Interop.Excel.Page
     {
         List<HoaDon> hoaDonList = new List<HoaDon>();
         List<ChiTietHoaDon> chiTietHDList = new List<ChiTietHoaDon>();
-        //List<KhachHang> khachHangList = new List<KhachHang>();
-        //List<NhanVien> nhanVienList = new List<NhanVien>();
+
         public ThemHoaDon()
         {
             InitializeComponent();
             ngayHoaDon.SelectedDate = DateTime.Now;
-            //themSP_btn.IsEnabled = true;
-            //luuHD_btn.IsEnabled = false;
-            //xuatHD_btn.IsEnabled = false;
-            //cancel_btn.IsEnabled = false;
-            //maHoaDon_txt.IsReadOnly = true;
-            //tenNhanVien_txt.IsReadOnly = true;
-            //tenKhachHang_txt.IsReadOnly = true;
-            //tenSanPham_txt.IsReadOnly = true;
-            //donGia_txt.IsReadOnly = true;
-            //thanhTien_txt.IsReadOnly = true;
-            //phaiThanhToan_txt.IsReadOnly = true;
-            //khuyenMai.Text = "0";
-            //phaiThanhToan_txt.Text = "0";
-            loadListHD();
-            //Functions.FillCombo("SELECT MaKhach, TenKhach FROM tblKhach", cboMaKhach, "MaKhach", "MaKhach");
-            //cboMaKhach.SelectedIndex = -1;
-            //Functions.FillCombo("SELECT MaNhanVien, TenNhanVien FROM tblNhanVien", cboMaNhanVien, "MaNhanVien", "TenKhach");
-            //cboMaNhanVien.SelectedIndex = -1;
-            //Functions.FillCombo("SELECT MaHang, TenHang FROM tblHang", cboMaHang, "MaHang", "MaHang");
-            //cboMaHang.SelectedIndex = -1;
+            loadData();
+            hoaDonTable.ItemsSource = chiTietHDList;
         }
-       
-        void loadListHD()
+
+        void loadData()
         {
-            String maSanPhamText = maSanPham.Text;
-            String tenSanPhamText = tenSanPham_txt.Text;
-            String donGiaText = donGia_txt.Text;
-            String soLuongText = soLuong_txt.Text;
-            String khuyenMaiText = khuyenMai.Text;
-            String thanhTienText = thanhTien_txt.Text;
-
-
-            //Thread thread = new Thread(new ThreadStart(() =>
-            //{
-                //List<SanPham> sanPhamList = new List<SanPham>();
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
                 try
                 {
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                     connection.Open();
-                    String readString = "SELECT * FROM SANPHAM WHERE SANPHAM.MaSanPham = N'" + maSanPham.Text + "'";
-
-                    //if (maSanPhamText.Length > 0) readString += " AND MaSanPham = N'" + maSanPhamText + "'";
-                    //if (tenSanPhamText.Length > 0) readString += " AND TenSanPham Like N'%" + tenSanPhamText + "%'";
-
+                    string readString = "select * from NHANVIEN";
                     SqlCommand command = new SqlCommand(readString, connection);
                     SqlDataReader reader = command.ExecuteReader();
 
-                    int count = 0;
+                    List<String> itemsMaNV = new List<String>();
 
                     while (reader.Read())
                     {
-                        count++;
-                        chiTietHDList.Add(new ChiTietHoaDon(stt: count, maHoaDon: (String)reader["MaHoaDon"],  maSanPham: (String)reader["MaSanPham"],
-                            soLuong: (Int32)reader["SoLuong"],
-                            donGia: (Decimal)reader["DonGia"], giamGia: (float)reader["GiamGia"],
-                            thanhTien: (decimal)reader["ThanhTien"]));
+                        itemsMaNV.Add((String)reader["MaNhanVien"]);
                     }
-                    hoaDonTable.ItemsSource = chiTietHDList;
-                //this.Dispatcher.BeginInvoke(new System.Action(() => {
-                //        hoaDonTable.ItemsSource = chiTietHDList;
-                //    }));
+                    this.Dispatcher.BeginInvoke(new System.Action(() =>
+                    {
+                        maNhanVien_cbo.ItemsSource = itemsMaNV;
+                    }));
 
+                    reader.Close();
+                    readString = "select * from KHACHHANG";
+                    command = new SqlCommand(readString, connection);
+                    reader = command.ExecuteReader();
+
+                    List<String> itemsMaKH = new List<String>();
+
+                    while (reader.Read())
+                    {
+                        itemsMaKH.Add((String)reader["MaKhachHang"]);
+                    }
+                    this.Dispatcher.BeginInvoke(new System.Action(() =>
+                    {
+                        maKhachHang_cbo.ItemsSource = itemsMaKH;
+                    }));
+                    
+                    reader.Close();
+                    readString = "select * from SANPHAM";
+                    command = new SqlCommand(readString, connection);
+                    reader = command.ExecuteReader();
+
+                    List<String> itemsMaSP = new List<String>();
+
+                    while (reader.Read())
+                    {
+                        itemsMaSP.Add((String)reader["MaSanPham"]);
+                    }
+                    this.Dispatcher.BeginInvoke(new System.Action(() =>
+                    {
+                        maSanPham_cbo.ItemsSource = itemsMaSP;
+                    }));
                     connection.Close();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-            //thread.IsBackground = true;
-            //thread.Start();
-        }    
+            }));
+            thread.IsBackground = true;
+            thread.Start();
+        }   
 
 
         private void hoaDonTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -124,7 +122,97 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void themSP_btn_Click(object sender, RoutedEventArgs e)
         {
-            loadListHD();
+            int soLuong = int.Parse(soLuong_txt.Text);
+            decimal donGia = decimal.Parse(donGia_txt.Text);
+            chiTietHDList.Add(new ChiTietHoaDon(chiTietHDList.Count + 1, maSanPham_cbo.Text, soLuong, donGia, donGia * soLuong));
+            hoaDonTable.ItemsSource = new List<ChiTietHoaDon>();
+            hoaDonTable.ItemsSource = chiTietHDList;
+        }
+
+        public HeaderFooter LeftHeader => throw new NotImplementedException();
+
+        public HeaderFooter CenterHeader => throw new NotImplementedException();
+
+        public HeaderFooter RightHeader => throw new NotImplementedException();
+
+        public HeaderFooter LeftFooter => throw new NotImplementedException();
+
+        public HeaderFooter CenterFooter => throw new NotImplementedException();
+
+        public HeaderFooter RightFooter => throw new NotImplementedException();
+
+        private void maNhanVien_cbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                string readString = "select * from NHANVIEN WHERE MaNhanVien = '" + maNhanVien_cbo.Items[maNhanVien_cbo.SelectedIndex] +"'";
+                SqlCommand command = new SqlCommand(readString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                tenNhanVien_txt.Text = (String)reader["HoTen"];
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void maSanPham_cbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                string readString = "select * from SANPHAM WHERE MaSanPham = '" + maSanPham_cbo.Items[maSanPham_cbo.SelectedIndex] + "'";
+                SqlCommand command = new SqlCommand(readString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                tenSanPham_txt.Text = (String)reader["TenSanPham"];
+                donGia_txt.Text = reader["GiaNhap"].ToString();
+                if (soLuong_txt.Text.Length > 0)
+                {
+                    int soLuong = int.Parse(soLuong_txt.Text);
+                    decimal donGia = decimal.Parse(donGia_txt.Text);
+                    thanhTien_txt.Text = (soLuong * donGia).ToString();
+                }
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void maKhachHang_cbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                string readString = "select * from KHACHHANG WHERE MaKhachHang = '" + maKhachHang_cbo.Items[maKhachHang_cbo.SelectedIndex] + "'";
+                SqlCommand command = new SqlCommand(readString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                tenKhachHang_txt.Text = (String)reader["TenKhachHang"];
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void soLuong_txt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (soLuong_txt.Text.Length > 0)
+            {
+                int soLuong = int.Parse(soLuong_txt.Text);
+                decimal donGia = decimal.Parse(donGia_txt.Text);
+                thanhTien_txt.Text = (soLuong * donGia).ToString();
+            }
         }
     }
 }

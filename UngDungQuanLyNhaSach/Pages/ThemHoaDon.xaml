@@ -250,23 +250,23 @@
                 </DockPanel>
                 <DockPanel HorizontalAlignment="Center">
                     <TextBlock Text="Mã Nhân Viên:" Width="200" FontWeight="Bold"/>
-                    <ComboBox x:Name="maNhanVien_cbo" Width="180" HorizontalAlignment="Right"/>
+                    <ComboBox x:Name="maNhanVien_cbo" Width="180" HorizontalAlignment="Right" SelectionChanged="maNhanVien_cbo_SelectionChanged"/>
                 </DockPanel>
 
                 <DockPanel HorizontalAlignment="Center">
                     <TextBlock Text="Tên Nhân Viên:" FontWeight="Bold" Width="200"/>
-                    <TextBox x:Name="tenNhanVien_txt" Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right"/>
+                    <TextBox x:Name="tenNhanVien_txt" IsEnabled="False" Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right"/>
                 </DockPanel>
             </StackPanel>
             <StackPanel Grid.Row="0" Grid.Column="1">
 
                 <DockPanel HorizontalAlignment="Center">
                     <TextBlock Text="Mã Khách Hàng:" FontWeight="Bold" Width="200"/>
-                    <ComboBox x:Name="maKhachHang_cbo" Width="180" HorizontalAlignment="Right"/>
+                    <ComboBox x:Name="maKhachHang_cbo" Width="180" HorizontalAlignment="Right" SelectionChanged="maKhachHang_cbo_SelectionChanged"/>
                 </DockPanel>
                 <DockPanel LastChildFill="True" HorizontalAlignment="Center">
                     <TextBlock Text="Tên Khách Hàng:"  FontWeight="Bold" Width="200"/>
-                    <TextBox x:Name="tenKhachHang_txt" Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right"/>
+                    <TextBox x:Name="tenKhachHang_txt" IsEnabled="False" Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right"/>
 
                 </DockPanel>
                 <!--<DockPanel HorizontalAlignment="Center">
@@ -284,11 +284,11 @@
 
                 <DockPanel HorizontalAlignment="Center">
                     <TextBlock Text="Mã Sản Phẩm:" FontWeight="Bold" Width="200"/>
-                    <TextBox x:Name="maSanPham" Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right"/>
+                    <ComboBox x:Name="maSanPham_cbo" Width="180" HorizontalAlignment="Right" SelectionChanged="maSanPham_cbo_SelectionChanged"/>
                 </DockPanel>
                 <DockPanel HorizontalAlignment="Center">
                     <TextBlock Text="Tên Sản Phẩm:" Width="200" FontWeight="Bold"/>
-                    <TextBox x:Name="tenSanPham_txt" Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right"/>
+                    <TextBox x:Name="tenSanPham_txt" IsEnabled="False" Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right"/>
                 </DockPanel>
 
                 <DockPanel HorizontalAlignment="Center">
@@ -300,7 +300,7 @@
 
                 <DockPanel LastChildFill="True" HorizontalAlignment="Center">
                     <TextBlock Text="Số Lượng:"  FontWeight="Bold" Width="200"/>
-                    <TextBox x:Name="soLuong_txt" Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right"/>
+                    <TextBox x:Name="soLuong_txt" Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right" TextChanged="soLuong_txt_TextChanged"/>
 
                 </DockPanel>
                 <DockPanel HorizontalAlignment="Center">
