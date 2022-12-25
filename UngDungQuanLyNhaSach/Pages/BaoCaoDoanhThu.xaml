@@ -177,7 +177,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <DockPanel LastChildFill="True" 
+            <!--<DockPanel LastChildFill="True" 
                                    Width="220"
                        Margin="0, 10, 0, 0">
                 <TextBlock Text="Tháng Bắt Đầu:" 
@@ -205,9 +205,9 @@
                     <DatePicker x:Name="dPickerThangKT" 
                                 BorderBrush="Transparent"/>
                 </Border>
-            </DockPanel>
+            </DockPanel>-->
 
-            <DockPanel Margin="0, 15">
+            <!--<DockPanel Margin="0, 15">
                 <Button Content="Xem biểu đồ" 
                                 Height="35" 
                                 Width="120"
@@ -217,11 +217,29 @@
                                 FontWeight="Bold"
                                 Style="{StaticResource AddButton}"
                                 Click="Button_Click" RenderTransformOrigin="0.527,-8.981"/>
-            </DockPanel>
+            </DockPanel>-->
 
-            <lvc:CartesianChart Height="234" Series="{Binding SeriesCollection}" LegendLocation="Left">
+            <TextBlock Style="{StaticResource Header1}"
+                               Margin="0, 15, 0, 0"
+                               TextAlignment="Center">
+                        BIỂU ĐỒ THỐNG KÊ
+            </TextBlock>
+
+            <TextBlock         Style="{StaticResource Header1}"
+                                Margin="0, 0, 0, 15"
+                               TextAlignment="Center">
+                       5 THÁNG GẦN NHẤT
+            </TextBlock>
+
+            <lvc:CartesianChart Height="234" Series="{Binding SeriesCollection}" LegendLocation="Left" Margin="5">
                 <lvc:CartesianChart.AxisX>
-                    <lvc:Axis Title="" Labels="{Binding Labels}"/>
+                    <lvc:AxesCollection>
+                        <lvc:Axis Labels="{Binding Labels}">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Step="1" />
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:AxesCollection>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="" LabelFormatter="{Binding Formatter}"/>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -30,7 +32,13 @@ namespace UngDungQuanLyNhaSach.Pages
         public BaoCaoKho()
         {
             InitializeComponent();
-        }     
+            DataContext = this;
+            loadChart();
+        }
+
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> Formatter { get; set; }
 
         private void sachNhapTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
@@ -154,7 +162,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@MaNVBC"].Value = NhanVienDangDangNhap.MaNhanVien;
 
                     command.Parameters.Add("@MaKho", SqlDbType.VarChar);
-                    command.Parameters["@MaKho"].Value = "K01";
+                    command.Parameters["@MaKho"].Value = "K001";
 
                     command.ExecuteNonQuery();
                 }
@@ -165,6 +173,77 @@ namespace UngDungQuanLyNhaSach.Pages
                 MessageBox.Show(exception.Message);
                 //MessageBox.Show("Vui lòng chọn khoảng thời gian hợp lí!");
             }
+        }
+
+        void loadChart()
+        {
+            int thangHienTai = 5;
+            //int thangHienTai = DateTime.Now.Month;
+            int[] tongNhap = new int[5];
+            int[] tongXuat = new int[5];
+            String[] label = new String[5];
+
+            for (int i = 0; i < 5; i++)
+            {
+                label[i] = "Tháng " + (thangHienTai - i).ToString();
+            }
+
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                SqlCommand command;
+
+                for (int i = 0; i < 5; i++)
+                {
+                    string readString1 = "SELECT SUM(SoLuong) AS TongXuat FROM CHITIETHOADON, HOADON WHERE (CHITIETHOADON.MaHoaDon = HOADON.MaHoaDon) AND (MONTH(NgayLapHoaDon) = @Thang)";
+                    command = new SqlCommand(readString1, connection);
+
+                    command.Parameters.Add("@Thang", SqlDbType.Int);
+                    command.Parameters["@Thang"].Value = thangHienTai - i;
+
+                    if (command.ExecuteScalar() == DBNull.Value)
+                        tongXuat[i] = 0;
+                    else
+                        tongXuat[i] = (int)command.ExecuteScalar();
+                }
+
+                for (int i = 0; i < 5; i++)
+                {
+
+                    string readString2 = "SELECT SUM(SoLuong) AS TongNhap FROM CHITIETPHIEUNHAP, PHIEUNHAP  WHERE (CHITIETPHIEUNHAP.MaPhieuNhap = PHIEUNHAP.MaPhieuNhap) AND (MONTH(NgayNhap) = @Thang)";
+                    command = new SqlCommand(readString2, connection);
+
+                    command.Parameters.Add("@Thang", SqlDbType.Int);
+                    command.Parameters["@Thang"].Value = thangHienTai - i;
+
+                    if (command.ExecuteScalar() == DBNull.Value)
+                        tongNhap[i] = 0;
+                    else
+                        tongNhap[i] = (int)command.ExecuteScalar();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
+            SeriesCollection = new SeriesCollection()
+                {
+                    new ColumnSeries
+                    {
+                        Title = "Nhập",
+                        Values = new ChartValues<int> {(int)tongNhap[4], (int)tongNhap[3], (int)tongNhap[2], (int)tongNhap[1], (int)tongNhap[0]}
+                    },
+                    new ColumnSeries
+                    {
+                        Title = "Xuất",
+                        Values = new ChartValues<int> { (int)tongXuat[4], (int)tongXuat[3], (int)tongXuat[2], (int)tongXuat[1], (int)tongXuat[0] }
+                    }
+                };
+
+            Labels = new[] { label[4], label[3], label[2], label[1], label[0] };
+            Formatter = value => value.ToString("N");
         }
     }
 }

@@ -25,15 +25,15 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             InitializeComponent();     
             BaoCaoDoanhThu baoCaoDoanhThu = new BaoCaoDoanhThu();
-            baoCaoDoanhThu.RaiseCustomEvent += BaoCaoDoanhThu_RaiseCustomEvent;
+            //baoCaoDoanhThu.RaiseCustomEvent += BaoCaoDoanhThu_RaiseCustomEvent;
         }
 
-        private void BaoCaoDoanhThu_RaiseCustomEvent(object? sender, BaoCaoDoanhThu.CustomEventArgs e)
-        {
-            //throw new NotImplementedException();
-            Date.Text = DateTime.Now.ToString();
-            Author.Text = NhanVienDangDangNhap.HoTen;
+        //private void BaoCaoDoanhThu_RaiseCustomEvent(object? sender, BaoCaoDoanhThu.CustomEventArgs e)
+        //{
+        //    //throw new NotImplementedException();
+        //    Date.Text = DateTime.Now.ToString();
+        //    Author.Text = NhanVienDangDangNhap.HoTen;
 
-        }
+        //}
     }
 }

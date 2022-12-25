@@ -31,31 +31,31 @@ namespace UngDungQuanLyNhaSach.Pages
         List<ChiTra> chiTraList = new List<ChiTra>();
         List<ThuNhap> thuNhapList = new List<ThuNhap>();
 
-        public event EventHandler<CustomEventArgs> RaiseCustomEvent;
+        //public event EventHandler<CustomEventArgs> RaiseCustomEvent;
 
         public BaoCaoDoanhThu()
         {
             InitializeComponent();
-            //loadChart();
+            loadChart();
             DataContext = this;
-            
+
         }
 
         public SeriesCollection SeriesCollection { get; set; }
         public string[] Labels { get; set; }
         public Func<double, string> Formatter { get; set; }
 
-        protected virtual void OnRaiseCustomEvent(CustomEventArgs e)
-        {
-            EventHandler<CustomEventArgs> raiseEvent = RaiseCustomEvent;
-            raiseEvent.Invoke(this, e);
-        }
+        //protected virtual void OnRaiseCustomEvent(CustomEventArgs e)
+        //{
+        //    EventHandler<CustomEventArgs> raiseEvent = RaiseCustomEvent;
+        //    raiseEvent.Invoke(this, e);
+        //}
 
-        public class CustomEventArgs : EventArgs
-        {
-            public CustomEventArgs(string message) => Message = message;
-            public string Message { get; set; }
-        }
+        //public class CustomEventArgs : EventArgs
+        //{
+        //    public CustomEventArgs(string message) => Message = message;
+        //    public string Message { get; set; }
+        //}
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -202,6 +202,7 @@ namespace UngDungQuanLyNhaSach.Pages
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             //Button_Click(sender, e);
+
             //PdfPTable pdfTable = new PdfPTable(chiTraTable.Columns.Count);
             //pdfTable.DefaultCell.Padding = 3;
             //pdfTable.WidthPercentage = 90;
@@ -215,6 +216,7 @@ namespace UngDungQuanLyNhaSach.Pages
             //    pdfTable.AddCell(cell);
             //}
             //var rows = GetDataGridRowsForButtons(chiTraTable);
+
             //foreach (DataGridRow row in rows)
             //{
             //    foreach (DataGridCell cell in row.Resources)
@@ -240,7 +242,7 @@ namespace UngDungQuanLyNhaSach.Pages
             //    pdfDoc.Close();
             //}
 
-            OnRaiseCustomEvent(new CustomEventArgs("Event triggered!"));
+            //OnRaiseCustomEvent(new CustomEventArgs("Event triggered!"));
 
             BaoCaoPdf baoCaoPdf = new BaoCaoPdf();
 
@@ -262,48 +264,51 @@ namespace UngDungQuanLyNhaSach.Pages
 
         void loadChart()
         {
+            //int thangHienTai = 5;
             int thangHienTai = DateTime.Now.Month;
             decimal[] tongThu = new decimal[5];
             decimal[] tongChi = new decimal[5];
+            String[] label = new String[5];
+
+            for (int i = 0; i < 5; i++)
+            {
+                label[i] = "Tháng " + (thangHienTai - i).ToString();
+            }
 
             try
             {
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                 connection.Open();
                 SqlCommand command;
-                
+
+                for (int i = 0; i < 5; i++)
+                {
                     string readString1 = "SELECT SUM(TongTienHoaDon) AS TongThu FROM HOADON WHERE MONTH(NgayLapHoaDon) = @Thang";
                     command = new SqlCommand(readString1, connection);
 
                     command.Parameters.Add("@Thang", SqlDbType.Int);
-                    command.Parameters["@Thang"].Value = thangHienTai;
+                    command.Parameters["@Thang"].Value = thangHienTai - i;
 
-                    tongThu[0] = (decimal)command.ExecuteScalar();
-                
-                //for (int i = 0; i < 5; i++)
-                //{
-                //    string readString1 = "SELECT SUM(TongTienHoaDon) AS TongThu FROM HOADON WHERE MONTH(NgayLapHoaDon) = @Thang";
-                //    command = new SqlCommand(readString1, connection);
+                    if (command.ExecuteScalar() == DBNull.Value)
+                        tongThu[i] = 0;
+                    else
+                        tongThu[i] = (decimal)command.ExecuteScalar();
+                }
 
-                //    command.Parameters.Add("@Thang", SqlDbType.Int);
-                //    command.Parameters["@Thang"].Value = thangHienTai - i;
+                for (int i = 0; i < 5; i++)
+                {
 
-                //    tongThu[i] = (decimal)command.ExecuteScalar();
-                //}
+                    string readString2 = "SELECT SUM(TongTien) AS TongChi FROM PHIEUNHAP WHERE MONTH(NgayNhap) = @Thang";
+                    command = new SqlCommand(readString2, connection);
 
-                //for (int i = 0; i < 5; i++)
-                //{
+                    command.Parameters.Add("@Thang", SqlDbType.Int);
+                    command.Parameters["@Thang"].Value = thangHienTai - i;
 
-                //    string readString2 = "SELECT SUM(TongTien) AS TongChi FROM PHIEUNHAP WHERE MONTH(NgayLapHoaDon) = @Thang";
-                //    command = new SqlCommand(readString2, connection);
-
-                //    command.Parameters.Add("@Thang", SqlDbType.Int);
-                //    command.Parameters["@Thang"].Value = thangHienTai - i;
-
-                //    tongChi[i] = (decimal)command.ExecuteScalar();
-                //}
-
-
+                    if (command.ExecuteScalar() == DBNull.Value)
+                        tongChi[i] = 0;
+                    else
+                        tongChi[i] = (decimal)command.ExecuteScalar();
+                }
             }
             catch (Exception e)
             {
@@ -315,16 +320,16 @@ namespace UngDungQuanLyNhaSach.Pages
                     new ColumnSeries
                     {
                         Title = "Thu nhập",
-                        Values = new ChartValues<double> {(double)tongThu[0], (double)tongThu[1], (double)tongThu[2], (double)tongThu[3], (double)tongThu[4]}
+                        Values = new ChartValues<double> {(double)tongThu[4], (double)tongThu[3], (double)tongThu[2], (double)tongThu[1], (double)tongThu[0]}
                     },
                     new ColumnSeries
                     {
                         Title = "Chi trả",
-                        Values = new ChartValues<double> {5, 30, 60, 25}
+                        Values = new ChartValues<double> { (double)tongChi[4], (double)tongChi[3], (double)tongChi[2], (double)tongChi[1], (double)tongChi[0] }
                     }
                 };
 
-            Labels = new[] { "Maria", "Susan", "Charles", "Frida" };
+            Labels = new[] { label[4], label[3], label[2], label[1], label[0] };
             Formatter = value => value.ToString("N");
         }
     }
