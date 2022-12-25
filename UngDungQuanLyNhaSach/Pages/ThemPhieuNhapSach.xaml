@@ -64,12 +64,16 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>-->
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="6*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="189*"/>
+            <RowDefinition Height="54*"/>
+            <RowDefinition Height="182*"/>
+            <RowDefinition Height="364*"/>
+            <RowDefinition Height="61*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <!--<StackPanel>
             <TextBlock Text="Thông tin phiếu" 
                    Style="{StaticResource Header1}"/>
@@ -78,19 +82,22 @@
                     <ColumnDefinition Width="5*"/>
                     <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
-                --><!--<StackPanel Grid.Column="0">
+                -->
+        <!--<StackPanel Grid.Column="0">
                     <DockPanel LastChildFill="True">
                         <TextBlock Text="Ngày Lập Phiếu:" Width="130"/>
                         <DatePicker x:Name="ngaylapphieu" Width="200" Height="24"/>
                     </DockPanel>
-                </StackPanel>--><!--
+                </StackPanel>-->
+        <!--
                 
             </Grid>
         </StackPanel>-->
-        <StackPanel Grid.Row="1">
-            <TextBlock Text="Thông tin phiếu nhập" 
+
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+            <TextBlock Text="Thông tin sách nhập" 
                    Style="{StaticResource Header1}"/>
-            <!--<StackPanel>
+            <StackPanel>
                 <Grid Height="145">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
@@ -157,7 +164,15 @@
                     </StackPanel>
                 </Grid>
 
-            </StackPanel>-->
+            </StackPanel>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+            <TextBlock Text="Thông tin phiếu nhập" 
+                   Style="{StaticResource Header1}"/>
+
+
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -170,25 +185,31 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Margin="5,5,15,5" Grid.Column="0" Grid.Row="0">
+                    <StackPanel Grid.Row="0" Grid.ColumnSpan="3">
+                        <DockPanel LastChildFill="True">
+                            <TextBlock Text="Ngày nhập:" Width="142"/>
+                            <DatePicker x:Name="ngayNhap" Width="200" Height="24"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,15,5" Grid.Column="0" Grid.Row="1">
                         <DockPanel  LastChildFill="True" Width="250">
                             <TextBlock Text="Mã phiếu nhập:" Width="120"/>
                             <TextBox x:Name="maPhieuNhap" Template="{StaticResource TextBoxBaseControlTemplate}" Width="100"/>
                         </DockPanel>
                     </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Column="1" Grid.Row="0" >
+                    <StackPanel Margin="5,5,15,5" Grid.Column="1" Grid.Row="1" >
                         <DockPanel  LastChildFill="True" Width="250">
                             <TextBlock Text="Mã nhân viên:" Width="120"/>
                             <TextBox x:Name="maNhanVien" Template="{StaticResource TextBoxBaseControlTemplate}" Width="100"/>
                         </DockPanel>
                     </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Column="2" Grid.Row="0" >
+                    <StackPanel Margin="5,5,15,5" Grid.Column="2" Grid.Row="1" >
                         <DockPanel  LastChildFill="True" Width="250">
                             <TextBlock Text="Mã kho:" Width="120"/>
                             <TextBox x:Name="maKho" Template="{StaticResource TextBoxBaseControlTemplate}" Width="100"/>
                         </DockPanel>
                     </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Column="0" Grid.Row="1" >
+                    <StackPanel Margin="5,5,15,5" Grid.Column="0" Grid.Row="2" >
                         <DockPanel  LastChildFill="True" Width="250">
                             <TextBlock Text="Nhà cung cấp:" Width="120"/>
                             <TextBox x:Name="nhaCungCap" Template="{StaticResource TextBoxBaseControlTemplate}" Width="100"/>
@@ -200,28 +221,36 @@
                             <TextBox x:Name="ngayNhap" Template="{StaticResource TextBoxBaseControlTemplate}" Width="100"/>
                         </DockPanel>
                     </StackPanel>-->
-                    <StackPanel Margin="5,5,15,5" Grid.Column="2" Grid.Row="1" >
+                    <StackPanel Margin="5,5,15,5" Grid.Column="2" Grid.Row="2" >
                         <DockPanel  LastChildFill="True" Width="250">
                             <TextBlock Text="Tổng tiền:" Width="120"/>
                             <TextBox x:Name="tongTien" Template="{StaticResource TextBoxBaseControlTemplate}" Width="100"/>
-                        </DockPanel>
-                    </StackPanel>
-                    <StackPanel Grid.Row="2" Grid.ColumnSpan="3">
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="Ngày nhập:" Width="180"/>
-                            <DatePicker x:Name="ngayNhap" Width="200" Height="24"/>
                         </DockPanel>
                     </StackPanel>
 
                 </Grid>
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="2" Height="60" VerticalAlignment="Top" Margin="-10,10,10,0">
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Height="60" VerticalAlignment="Top" Margin="-10,10,10,0" Grid.RowSpan="2">
             <DockPanel HorizontalAlignment="Center" LastChildFill="True">
-                <Button x:Name="addBtn" Margin="0,0,20,0"
-                        Content="Thêm" 
+                <Button x:Name="addBookBtn" Margin="0,0,20,0"
+                        Content="Thêm Sách" 
                         Height="37" 
                         Width="128"
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Style="{StaticResource AddButton}" Click="addBookBtn_Click" />
+
+            </DockPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Height="60" VerticalAlignment="Top" Margin="-10,10,10,0">
+            <DockPanel HorizontalAlignment="Center" LastChildFill="True">
+                <Button x:Name="addBtn" Margin="0,0,20,0"
+                        Content="Thêm Phiếu Nhập Sách" 
+                        Height="37" 
+                        Width="190"
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
@@ -254,16 +283,25 @@
                         Style="{StaticResource CacelButton}" Click="cancelBtn_Click"/>
             </DockPanel>
         </StackPanel>
-        <StackPanel Grid.Row="3" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <StackPanel Grid.Row="3" Grid.Column="0" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Margin="0,0,387,0">
+            <DataGrid x:Name="chitietphieuNhapSachTable" Margin="5,10" Style="{DynamicResource DataGridStyle}"
+                  CellStyle="{StaticResource DataGridCellStyle}" 
+                  ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
+                  RowStyle="{StaticResource DataGridRowStyle}" 
+                  VerticalScrollBarVisibility="Auto"
+                  AutoGeneratingColumn="chitietphieuNhapSachTable_AutoGeneratingColumn" Background="{x:Null}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="True" Height="346">
+            </DataGrid>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <DataGrid x:Name="phieuNhapSachTable" Margin="5,10" Style="{DynamicResource DataGridStyle}"
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
                   VerticalScrollBarVisibility="Auto"
-                  AutoGeneratingColumn="phieuNhapSachTable_AutoGeneratingColumn" Background="{x:Null}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="True" Height="400" SelectionChanged="phieuNhapSachTable_SelectionChanged">
+                  AutoGeneratingColumn="phieuNhapSachTable_AutoGeneratingColumn" Background="{x:Null}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="True" Height="341" SelectionChanged="phieuNhapSachTable_SelectionChanged">
             </DataGrid>
         </StackPanel>
-        <StackPanel Grid.Row="4"  HorizontalAlignment="Left" Margin="329,0,0,14" Width="366"  VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Height="52">
+        <StackPanel Grid.Row="3"  HorizontalAlignment="Left" Margin="329,0,0,14" Width="366"  VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Height="52" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <StackPanel.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleY="1"/>

@@ -27,13 +27,14 @@ namespace UngDungQuanLyNhaSach.Pages
     /// </summary>
     public partial class ThemPhieuNhapSach : Page
     {
-        //List<SanPham> sanPhamList = new List<SanPham>();
         List<PhieuNhapSach> phieuNhapList = new List<PhieuNhapSach>();
+        List<ChiTietPhieuNhapSach> chiTietPhieuNhapSachList = new List<ChiTietPhieuNhapSach>();
         public ThemPhieuNhapSach()
         {
             InitializeComponent();
             ngayNhap.SelectedDate = DateTime.Now;
             loadListPhieuNhap();
+            loadListChiTietPhieuNhap();
             updateBtn.IsEnabled = false;
             deleteBtn.IsEnabled = false;
 
@@ -48,44 +49,56 @@ namespace UngDungQuanLyNhaSach.Pages
             ngayNhap.Text = "";
 
         }
+        void loadListChiTietPhieuNhap()
+        {
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                chiTietPhieuNhapSachList = new List<ChiTietPhieuNhapSach>();
+
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+                    string readString = "select * from SACH";
+                    SqlCommand command = new SqlCommand(readString, connection);
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    int count = 0;
+                    while (reader.Read())
+                    {
+                        count++;
+
+                        chiTietPhieuNhapSachList.Add(new ChiTietPhieuNhapSach(stt: count, maSanPham: (String)reader["MaSanPham"],
+                            tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
+                            theLoai: (String)reader["TheLoai"], nXB: (String)reader["NXB"],
+                            giaNhap: (Decimal)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"]));
+                            //trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
+                    }
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        chitietphieuNhapSachTable.ItemsSource = chiTietPhieuNhapSachList;
+                    }));
+                    connection.Close();
+                }
+                catch (Exception e1)
+                {
+                    //MessageBox.Show("db error");
+                    MessageBox.Show(e1.Message);
+
+                }
+            }));
+
+            thread.IsBackground = true;
+            thread.Start();
+
+        }
 
         void loadListPhieuNhap()
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
                 phieuNhapList = new List<PhieuNhapSach>();
-
-                //try
-                //{
-                //    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-                //    connection.Open();
-                //    string readString = "select * from SANPHAM";
-                //    SqlCommand command = new SqlCommand(readString, connection);
-
-                //    SqlDataReader reader = command.ExecuteReader();
-
-                //    int count = 0;
-                //    while (reader.Read())
-                //    {
-                //        count++;
-
-                //        sanPhamList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
-                //            tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
-                //            theLoai: (String)reader["TheLoai"],nXB: (String)reader["NXB"], 
-                //            giaNhap: (Decimal)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
-                //            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
-                //    }
-                //    this.Dispatcher.BeginInvoke(new Action(() => {
-                //        phieuNhapSachTable.ItemsSource = sanPhamList;
-                //    }));
-                //    connection.Close();
-                //}
-                //catch (Exception e1)
-                //{
-                //    //MessageBox.Show("db error");
-                //    MessageBox.Show(e1.Message);
-
-                //}
 
                 try
                 {
@@ -141,6 +154,56 @@ namespace UngDungQuanLyNhaSach.Pages
         {
 
         }
+        private void addBookBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                string readString = "select Count(*) from SANPHAM";
+                SqlCommand commandReader = new SqlCommand(readString, connection);
+                Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+
+                string insertString = "INSERT INTO SACH(MaSanPham, TenSanPham, TacGia, TheLoai, NXB, GiaNhap, NamXB, MaKho)"
+                    + "VALUES(@MaSanPham, @TenSanPham, @TacGia, @TheLoai, @NXB, @GiaNhap, @NamXB, @MaKho)";
+                SqlCommand command = new SqlCommand(insertString, connection);
+
+                command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
+                command.Parameters["@MaSanPham"].Value = "SP" + count.ToString("000");
+
+                command.Parameters.Add("@TenSanPham", SqlDbType.NVarChar);
+                command.Parameters["@TenSanPham"].Value = name.Text;
+
+                command.Parameters.Add("@TacGia", SqlDbType.NVarChar);
+                command.Parameters["@TacGia"].Value = author.Text;
+
+                command.Parameters.Add("@TheLoai", SqlDbType.NVarChar);
+                command.Parameters["@TheLoai"].Value = category.Text;
+
+                command.Parameters.Add("@NXB", SqlDbType.NVarChar);
+                command.Parameters["@NXB"].Value = nxb.Text;
+
+                command.Parameters.Add("@GiaNhap", SqlDbType.Money);
+                command.Parameters["@GiaNhap"].Value = cost.Text;
+
+                command.Parameters.Add("@NamXB", SqlDbType.Int);
+                command.Parameters["@NamXB"].Value = int.Parse(year.Text);
+
+                command.Parameters.Add("@MaKho", SqlDbType.NVarChar);
+                command.Parameters["@MaKho"].Value = "K001";
+
+                command.ExecuteNonQuery();
+
+                connection.Close();
+                loadListChiTietPhieuNhap();
+                MessageBox.Show("Thêm thành công");
+                resetData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -163,7 +226,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 command.Parameters["@MaNhanVien"].Value = maNhanVien.Text;
 
                 command.Parameters.Add("@MaKho", SqlDbType.NVarChar);
-                command.Parameters["@MaKho"].Value = maKho.Text;
+                command.Parameters["@MaKho"].Value = "K001";
 
                 command.Parameters.Add("@NhaCungCap", SqlDbType.NVarChar);
                 command.Parameters["@NhaCungCap"].Value = nhaCungCap.Text;
@@ -312,6 +375,18 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 updateBtn.IsEnabled = false;
                 deleteBtn.IsEnabled = false;
+            }
+        }
+
+
+        private void chitietphieuNhapSachTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            var desc = e.PropertyDescriptor as PropertyDescriptor;
+            var att = desc.Attributes[typeof(ColumnNameAttribute)] as ColumnNameAttribute;
+            if (att != null)
+            {
+                e.Column.Header = att.Name;
+                e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
         }
     }

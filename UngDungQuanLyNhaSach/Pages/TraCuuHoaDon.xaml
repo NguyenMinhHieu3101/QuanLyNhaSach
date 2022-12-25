@@ -250,7 +250,7 @@
                             Foreground="White"
                             FontSize="16"
                             FontWeight="Bold"
-                            x:Name="add"
+                            x:Name="search_btn"
                             Style="{StaticResource FindButton}" />
                     <!--Click="add_Click"/>-->
 
@@ -261,7 +261,7 @@
                             Foreground="Black"
                             FontSize="16"
                             FontWeight="Bold"
-                            x:Name="cancel"
+                            x:Name="reset_btn"
                             Style="{StaticResource CacelButton}"/>
 
                 </StackPanel>
