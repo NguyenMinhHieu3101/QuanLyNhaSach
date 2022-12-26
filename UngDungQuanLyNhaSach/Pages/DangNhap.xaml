@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
         WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        
         mc:Ignorable="d"
         
-        Title="DangNhap"   Height="400" Width="900" MinHeight="600" MinWidth="900">
+        Title="DangNhap"   Height="400" Width="900" MinHeight="600" MinWidth="900" WindowStyle="None">
     <Window.Resources>
         <Style x:Key="Header1" TargetType="TextBlock">
             <Setter Property="FontSize" Value="40" />
@@ -37,21 +39,21 @@
 
         <ControlTemplate x:Key="TextBoxBaseControlTemplate" TargetType="{x:Type TextBoxBase}">
             <Border Background="{TemplateBinding Background}" 
-                x:Name="Bd" BorderBrush="#F03B44"
-                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                x:Name="Bd" BorderBrush="White"
+                BorderThickness="{TemplateBinding BorderThickness}">
                 <ScrollViewer x:Name="PART_ContentHost"/>
             </Border>
 
             <ControlTemplate.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
                     <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                 </Trigger>
                 <Trigger Property="Width" Value="Auto">
                     <Setter Property="MinWidth" Value="100"/>
                 </Trigger>
                 <Trigger Property="Height" Value="Auto">
-                    <Setter Property="MinHeight" Value="20"/>
+                    <Setter Property="MinHeight" Value="25"/>
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -61,7 +63,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border CornerRadius="10" Background="#F03B44" BorderBrush="Black" BorderThickness="1,1,1,1" >
+                        <Border Background="#F03B44" BorderBrush="Black">
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                     </ControlTemplate>
@@ -69,22 +71,25 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
+    <Border Background="White" CornerRadius="15" BorderThickness="1"
+            Opacity="0.95">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!--<Grid.RowDefinitions>
             <RowDefinition Height="5*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Image Grid.RowSpan="4"  Grid.Column="0" Source="/UngDungQuanLyNhaSach;component/Images/Lock.jpg" Stretch="Fill"></Image>
-        <TextBlock Grid.Column="1" Grid.Row="0" Text="ĐĂNG NHẬP"
+        </Grid.RowDefinitions>-->
+            <Image Grid.RowSpan="4"  Grid.Column="0" Source="/UngDungQuanLyNhaSach;component/Images/login (1).png" Width="350"></Image>
+            <!--<TextBlock Grid.Column="1" Grid.Row="0" Text="ĐĂNG NHẬP"
                        Foreground="#F03B44"
-                       Style="{StaticResource Header1}"></TextBlock>
-        <StackPanel Grid.Column="1" Grid.Row="1" Margin="30">
+                       Style="{StaticResource Header1}"></TextBlock>-->
+            <!--<StackPanel Grid.Column="1" Grid.Row="1" Margin="30">
           
             <DockPanel Grid.Column="1">
                 <TextBlock Text="TÊN ĐĂNG NHẬP:"/>
@@ -94,8 +99,8 @@
                 <TextBlock Text="MẬT KHẨU:"/>
                 <TextBox Name="txtMatKhau" Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
-        </StackPanel>
-        <StackPanel Grid.Row="2" 
+        </StackPanel>-->
+            <!--<StackPanel Grid.Row="2" 
                     Grid.Column="1" 
                     Orientation="Horizontal"
                     HorizontalAlignment="Center">
@@ -123,13 +128,148 @@
                 FontWeight="Bold"
                 Style="{StaticResource CacelButton}"
                 Click="Cancel_Button"></Button>
-        </StackPanel>
-        <WrapPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center">
+        </StackPanel>-->
+            <!--<WrapPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center">
             <TextBlock Width="120">Quên mật khẩu?</TextBlock>
             <TextBlock MouseDown="Forget_Password_TextBlock" Foreground="#F03B44">Nhấn vào đây</TextBlock>
-        </WrapPanel>
+        </WrapPanel>-->
+            <Grid Grid.Column="1">
+                <Rectangle Width="370" Height="410" VerticalAlignment="Top" Margin="34,81,34,0" RadiusY="10" RadiusX="10">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#6eba6e" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                    <Rectangle.Effect>
 
-    </Grid>
-  
-    
+                        <DropShadowEffect BlurRadius="15" Direction="0" RenderingBias="Quality" ShadowDepth="1" Color="#FFBBBBBB"/>
+                    </Rectangle.Effect>
+                </Rectangle>
+                <Grid VerticalAlignment="Bottom" Margin="35,100" Height="400">
+                    <Label Content="ĐĂNG NHẬP" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20,40,20,20" Foreground="White" FontSize="25" FontWeight="Medium"
+      FontFamily="Montserrat"/>
+                    <StackPanel VerticalAlignment="Center" Margin="20,20,20,0">
+                        <DockPanel Grid.Column="1" Margin="10">
+                            <TextBox 
+                                x:Name="txtEmail"
+                                
+                             FontSize="18"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"                            
+                             Foreground="White"
+                             CaretBrush="LightGray"
+                             BorderBrush="White"
+                             BorderThickness="0,0,0,2"
+                             Height="35"
+                             VerticalContentAlignment="Center"
+                             Margin="0,5,0,0"
+                             Padding="20,0,0,0" 
+                                Template="{StaticResource TextBoxBaseControlTemplate}">
+                                <TextBox.Background>
+                                    <ImageBrush  ImageSource="/UngDungQuanLyNhaSach;component/Images/user (2).png"
+                                        Stretch="None"
+                                        AlignmentX="Left" />
+                                </TextBox.Background>
+                                
+                            </TextBox>
+                        </DockPanel>
+                        <DockPanel Grid.Column="1" Margin="10">
+                            <TextBox x:Name="txtMatKhau"
+                             FontSize="18"
+                             FontWeight="Medium"
+                             FontFamily="Montserrat"                            
+                             Foreground="White"
+                             CaretBrush="LightGray"
+                             BorderBrush="White"
+                             BorderThickness="0,0,0,2"
+                             Height="35"
+                             VerticalContentAlignment="Center"
+                             Margin="0,5,0,0"
+                             Padding="20,0,0,0">
+                                <TextBox.Background>
+                                    <ImageBrush  ImageSource="/UngDungQuanLyNhaSach;component/Images/key.png"
+                                        Stretch="None"
+                                        AlignmentX="Left" />
+                                </TextBox.Background>
+                            </TextBox>
+                        </DockPanel>
+                        <DockPanel>
+                            <Button                          
+                            BorderThickness="0"
+                            Content="ĐĂNG NHẬP"
+                            Foreground="#6eba6e"
+                            FontSize="15"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"                           
+                            Margin="10,50,0,0"
+                            Click="Sign_In_Button">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="White"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#28AEED"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Width="150" Height="50"
+                                        CornerRadius="20"
+                                        Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Button                          
+                            BorderThickness="0"
+                            Content="HỦY"
+                            Foreground="White"
+                            FontSize="15"
+                            FontFamily="Montserrat"
+                            Cursor="Hand"                           
+                            Margin="20,50,0,0"
+                            Click="Cancel_Button">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background" Value="#e73b4e"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#28AEED"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Width="150" Height="50"
+                                        CornerRadius="20"
+                                        Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </DockPanel>
+
+
+                        <!--<DockPanel Grid.Column="1">
+                            <TextBlock Text="MẬT KHẨU:"/>
+                            <TextBox Name="txtMatKhau" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                        </DockPanel>-->
+                    </StackPanel>
+                </Grid>
+                <WrapPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30" Cursor="Hand">
+                    <TextBlock Width="120">Quên mật khẩu?</TextBlock>
+                    <TextBlock MouseDown="Forget_Password_TextBlock" Foreground="#F03B44">Nhấn vào đây</TextBlock>
+                </WrapPanel>
+            </Grid>
+        </Grid>
+    </Border>
+
+
 </Window>
