@@ -27,6 +27,9 @@ namespace UngDungQuanLyNhaSach.Pages
     {
         String data;
         List<NhanVien> nhanVienList = new List<NhanVien>();
+        List<DonViHanhChinh> provinces = new List<DonViHanhChinh>();
+        List<DonViHanhChinh> districts = new List<DonViHanhChinh>();
+        List<DonViHanhChinh> wards = new List<DonViHanhChinh>();
 
         public ThongTinNhanVien(string data)
         {
@@ -89,7 +92,9 @@ namespace UngDungQuanLyNhaSach.Pages
             gioiTinh.IsEnabled = edit;
             luong.IsEnabled = edit;
             chucVu.IsEnabled = edit;
-            edit = !edit;
+            tinh.IsEnabled = edit;
+            huyen.IsEnabled = edit;
+            phuong.IsEnabled = edit;
         }
 
         private void cancel_Click(object sender, RoutedEventArgs e)
@@ -129,7 +134,12 @@ namespace UngDungQuanLyNhaSach.Pages
                         cccd.Text = nhanVien.cccd;
                         sdt.Text = nhanVien.sdt;
                         email.Text = nhanVien.email;
-                        diaChi.Text = nhanVien.diaChi;
+                        List<String> donVi = new List<String>();
+                        donVi.AddRange(nhanVien.diaChi.Split(','));
+                        diaChi.Text = donVi[0].Trim();
+                        phuong.Text = donVi[1].Trim();
+                        huyen.Text = donVi[2].Trim();
+                        tinh.Text = donVi[3].Trim();
                         gioiTinh.SelectedIndex = nhanVien.gioiTinh == "Nam" ? 0 : 1;
                         luong.Text = nhanVien.luong.ToString();
                         chucVu.SelectedIndex = nhanVien.maChucVu == "NVBH" ? 1 : (nhanVien.maChucVu == "NVK" ? 2 : 0);
@@ -172,6 +182,31 @@ namespace UngDungQuanLyNhaSach.Pages
             if (DateTime.Now.AddYears(-18) < ngaySinh.SelectedDate)
             {
                 MessageBox.Show("Ngày sinh chưa đủ 18 tuổi");
+                return false;
+            }
+            if (tinh.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vui lòng chọn Tỉnh/Thành Phố");
+                return false;
+            }
+            if (huyen.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vui lòng chọn Quận/Huyện");
+                return false;
+            }
+            if (phuong.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vui lòng chọn Xã/Phường");
+                return false;
+            }
+            if (diaChi.Text.Length == 0)
+            {
+                MessageBox.Show("Vui lòng nhập vào địa chỉ");
+                return false;
+            }
+            if (name.Text.Length == 0)
+            {
+                MessageBox.Show("Vui lòng nhập vào tên");
                 return false;
             }
             foreach (NhanVien nhanVien in nhanVienList)
@@ -236,7 +271,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@SDT"].Value = sdt.Text;
 
                     command.Parameters.Add("@DiaChi", SqlDbType.NVarChar);
-                    command.Parameters["@DiaChi"].Value = diaChi.Text;
+                    command.Parameters["@DiaChi"].Value = diaChi.Text + ", " + phuong.Text + ", " + huyen.Text + ", " + tinh.Text;
 
                     command.Parameters.Add("@Luong", SqlDbType.Money);
                     command.Parameters["@Luong"].Value = Regex.Replace(luong.Text, "[^0-9]", "");
@@ -268,6 +303,7 @@ namespace UngDungQuanLyNhaSach.Pages
         private void edit_Click(object sender, RoutedEventArgs e)
         {
             isEdit(true);
+            loadTinh();
         }
 
         private void name_TextChanged(object sender, TextChangedEventArgs e)
@@ -371,6 +407,131 @@ namespace UngDungQuanLyNhaSach.Pages
                 if (i < list.Length - 1) text += " ";
             }
             return text;
+        }
+
+        void loadTinh()
+        {
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+
+                    connection.Open();
+                    string readString = "select * from provinces";
+                    SqlCommand command = new SqlCommand(readString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    List<DonViHanhChinh> temp = new List<DonViHanhChinh>();
+
+                    while (reader.Read())
+                    {
+                        temp.Add(new DonViHanhChinh((String)reader["code"], (String)reader["name"]));
+                    }
+                    this.Dispatcher.BeginInvoke(new Action(() => {
+                        provinces.AddRange(temp.OrderBy(e => e.name).ToList());
+                        tinh.ItemsSource = provinces.Select(e => e.name).ToList();
+                        huyen.ItemsSource = new List<String>();
+                        phuong.ItemsSource = new List<String>();
+                    }));
+                    connection.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("db error");
+                }
+            }));
+
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        void loadHuyen()
+        {
+            if (tinh.SelectedIndex != -1)
+            {
+                String code = provinces[tinh.SelectedIndex].code;
+                Thread thread = new Thread(new ThreadStart(() =>
+                {
+                    try
+                    {
+                        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                        connection.Open();
+                        string readString = "select * from districts WHERE province_code = N'" + code + "'";
+                        SqlCommand command = new SqlCommand(readString, connection);
+                        SqlDataReader reader = command.ExecuteReader();
+                        List<DonViHanhChinh> temp = new List<DonViHanhChinh>();
+
+                        while (reader.Read())
+                        {
+                            temp.Add(new DonViHanhChinh((String)reader["code"], (String)reader["full_name"]));
+                        }
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            districts.Clear();
+                            districts.AddRange(temp.OrderBy(e => e.name).ToList());
+                            huyen.ItemsSource = districts.Select(e => e.name).ToList();
+                            phuong.ItemsSource = new List<String>();
+                        }));
+                        connection.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }));
+
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+
+        void loadPhuong()
+        {
+            if (huyen.SelectedIndex != -1)
+            {
+                String code = districts[huyen.SelectedIndex].code;
+                Thread thread = new Thread(new ThreadStart(() =>
+                {
+                    try
+                    {
+                        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                        connection.Open();
+                        string readString = "select * from wards WHERE district_code = N'" + code + "'";
+                        SqlCommand command = new SqlCommand(readString, connection);
+                        SqlDataReader reader = command.ExecuteReader();
+                        List<DonViHanhChinh> temp = new List<DonViHanhChinh>();
+
+                        while (reader.Read())
+                        {
+                            temp.Add(new DonViHanhChinh((String)reader["code"], (String)reader["full_name"]));
+                        }
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            wards.Clear();
+                            wards.AddRange(temp.OrderBy(e => e.name).ToList());
+                            phuong.ItemsSource = wards.Select(e => e.name).ToList();
+                        }));
+                        connection.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }));
+
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+
+        private void huyen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            loadPhuong();
+        }
+
+        private void tinh_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            loadHuyen();
         }
     }
 }

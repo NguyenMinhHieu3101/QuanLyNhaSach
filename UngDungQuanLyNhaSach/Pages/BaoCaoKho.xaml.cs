@@ -94,7 +94,11 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
                     command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
 
-                    tongXuat = (int)command.ExecuteScalar();
+                    if (command.ExecuteScalar() == DBNull.Value)
+                        tongXuat = 0;
+                    else
+                        tongXuat = (int)command.ExecuteScalar();
+
                     txtTongXuat.Text = "TỔNG XUẤT: " + tongXuat;
 
                     xuatList.Add(new XuatKho(1, "Bán sách", tongXuat));
@@ -110,8 +114,11 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
                     command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
+                    if (command.ExecuteScalar() == DBNull.Value)
+                        tongNhap = 0;
+                    else
+                        tongNhap = (int)command.ExecuteScalar();
 
-                    tongNhap = (int)command.ExecuteScalar();
                     txtTongNhap.Text = "TỔNG NHẬP: " + tongNhap;
 
                     int chenhLech = tongNhap - tongXuat;
@@ -211,7 +218,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 for (int i = 0; i < 5; i++)
                 {
 
-                    string readString2 = "SELECT SUM(SoLuong) AS TongNhap FROM CHITIETPHIEUNHAP, PHIEUNHAP  WHERE (CHITIETPHIEUNHAP.MaPhieuNhap = PHIEUNHAP.MaPhieuNhap) AND (MONTH(NgayNhap) = @Thang)";
+                    string readString2 = "SELECT SUM(SoLuong) AS TongNhap FROM CHITIETPHIEUNHAP, PHIEUNHAP  WHERE (CHITIETPHIEUNHAP.MaPhieuNhap = PHIEUNHAP.MaPhieuNhap) AND (MONTH(CHITIETPHIEUNHAP.NgayNhap) = @Thang)";
                     command = new SqlCommand(readString2, connection);
 
                     command.Parameters.Add("@Thang", SqlDbType.Int);
@@ -244,6 +251,11 @@ namespace UngDungQuanLyNhaSach.Pages
 
             Labels = new[] { label[4], label[3], label[2], label[1], label[0] };
             Formatter = value => value.ToString("N");
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

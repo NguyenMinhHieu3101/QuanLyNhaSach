@@ -83,7 +83,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void add_Click(object sender, RoutedEventArgs e)
         {
-            if (checkDataInput(true))
+            if (checkDataInput())
             {
                 try
                 {
@@ -135,24 +135,27 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-        bool checkDataInput(bool check)
+        bool checkDataInput()
         {
-            if (sdt.Text.Length == 0 || !Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length !=10 && sdt.Text.Length != 11)
+            if (sdt.Text.Length == 0 || !Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length != 10 && sdt.Text.Length != 11)
             {
                 MessageBox.Show("Số điện thoại không hợp lệ");
                 return false;
             }
-            if (check)
+            if (name.Text.Length == 0)
             {
-                foreach (KhachHang khachHang in khachHangList)
+                MessageBox.Show("Vui lòng nhập vào tên");
+                return false;
+            }
+            foreach (KhachHang khachHang in khachHangList)
+            {
+                if (khachHang.maKhachHang != maKH.Text && khachHang.sdt == sdt.Text)
                 {
-                    if (khachHang.sdt == sdt.Text)
-                    {
-                        MessageBox.Show("Số điện thoại đã có trong hệ thống");
-                        return false;
-                    }
+                    MessageBox.Show("Số điện thoại đã có trong hệ thống");
+                    return false;
                 }
             }
+
             return true;
         }
 
@@ -261,7 +264,7 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 MessageBox.Show("Vui lòng chọn một khách hàng để chỉnh sửa");
             }   */
-            if (checkDataInput(false))
+            if (checkDataInput())
             {
                 try
                 {

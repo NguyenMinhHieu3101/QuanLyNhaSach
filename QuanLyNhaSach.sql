@@ -12987,4 +12987,3 @@ INSERT INTO wards (code,name,name_en,full_name,full_name_en,code_name,district_c
 	 ('32244',N'Rạch Gốc',N'Rach Goc',N'Thị trấn Rạch Gốc',N'Rach Goc Township',N'rach_goc',N'973',9),
 	 ('32245',N'Tân Ân',N'Tan An',N'Xã Tân Ân',N'Tan An Commune',N'tan_an',N'973',10),
 	 ('32248',N'Đất Mũi',N'Dat Mui',N'Xã Đất Mũi',N'Dat Mui Commune',N'dat_mui',N'973',10);
-1

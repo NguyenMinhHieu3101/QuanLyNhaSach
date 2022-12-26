@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -28,7 +30,13 @@ namespace UngDungQuanLyNhaSach.Pages
         public BaoCaoSanPham()
         {
             InitializeComponent();
+            DataContext = this;
+            loadChart();
         }
+
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> Formatter { get; set; }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -129,6 +137,56 @@ namespace UngDungQuanLyNhaSach.Pages
         {
 
         }
+
+        void loadChart()
+        {
+            int thangHienTai = 5;
+            //int thangHienTai = DateTime.Now.Month;
+            int[] tongBanRa = new int[5];
+            String[] label = new String[5];
+
+            for (int i = 0; i < 5; i++)
+            {
+                label[i] = "Tháng " + (thangHienTai - i).ToString();
+            }
+
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                SqlCommand command;
+
+                for (int i = 0; i < 5; i++)
+                {
+                    string readString1 = "SELECT SUM(SoLuong) AS TongBanRa FROM CHITIETHOADON, HOADON WHERE(CHITIETHOADON.MaHoaDon = HOADON.MaHoaDon) AND(MONTH(NgayLapHoaDon) = @Thang)";
+                    command = new SqlCommand(readString1, connection);
+
+                    command.Parameters.Add("@Thang", SqlDbType.Int);
+                    command.Parameters["@Thang"].Value = thangHienTai - i;
+
+                    if (command.ExecuteScalar() == DBNull.Value)
+                        tongBanRa[i] = 0;
+                    else
+                        tongBanRa[i] = (int)command.ExecuteScalar();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
+            SeriesCollection = new SeriesCollection()
+                {
+                    new ColumnSeries
+                    {
+                        Title = "Tổng bán ra",
+                        Values = new ChartValues<int> {(int)tongBanRa[4], (int)tongBanRa[3], (int)tongBanRa[2], (int)tongBanRa[1], (int)tongBanRa[0]}
+                    },
+                };
+
+            Labels = new[] { label[4], label[3], label[2], label[1], label[0] };
+            Formatter = value => value.ToString("N");
+        } 
 
         private void sanPhamTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
