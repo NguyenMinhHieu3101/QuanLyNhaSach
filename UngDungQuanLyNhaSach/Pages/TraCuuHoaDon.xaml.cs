@@ -280,6 +280,7 @@ namespace UngDungQuanLyNhaSach.Pages
             excel.Visible = true;
             Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
             Worksheet sheet1 = (Worksheet)workbook.Sheets[1];
+            excel.ActiveWindow.DisplayGridlines = false;
 
             for (int j = 0; j < selectedHDTable.Columns.Count; j++)
             {

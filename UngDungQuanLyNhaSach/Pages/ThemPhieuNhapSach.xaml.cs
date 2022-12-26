@@ -164,7 +164,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 SqlCommand commandReader = new SqlCommand(readString, connection);
                 Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
 
-                string insertString = "INSERT INTO SACH(MaSanPham, TenSanPham, TacGia, TheLoai, NXB, GiaNhap, NamXB, MaKho)"
+                string insertString = "INSERT INTO PHIEUNHAP(MaSanPham, TenSanPham, TacGia, TheLoai, NXB, GiaNhap, NamXB, MaKho)"
                     + "VALUES(@MaSanPham, @TenSanPham, @TacGia, @TheLoai, @NXB, @GiaNhap, @NamXB, @MaKho)";
                 SqlCommand command = new SqlCommand(insertString, connection);
 

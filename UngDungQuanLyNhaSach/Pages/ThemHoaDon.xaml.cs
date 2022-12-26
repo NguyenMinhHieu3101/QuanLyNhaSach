@@ -23,6 +23,11 @@ using System.Windows.Markup;
 using System.Reflection;
 using System.Globalization;
 using Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Win32;
+using System.IO;
+using System.Reflection.Metadata;
+using System.Reflection.PortableExecutable;
 
 namespace UngDungQuanLyNhaSach.Pages    
 {
@@ -38,6 +43,7 @@ namespace UngDungQuanLyNhaSach.Pages
         public ThemHoaDon()
         {
             InitializeComponent();
+            updateMaHoaDon();
             ngayHoaDon.SelectedDate = DateTime.Now;
             loadData();
             hoaDonTable.ItemsSource = chiTietHDList;
@@ -97,7 +103,28 @@ namespace UngDungQuanLyNhaSach.Pages
                     {
                         maSanPham_cbo.ItemsSource = itemsMaSP;
                     }));
+
+
+                    reader.Close();
+                    readString = "select * from KHUYENMAI";
+                    command = new SqlCommand(readString, connection);
+                    reader = command.ExecuteReader();
+
+                    List<Int32> itemsKhuyenMai = new List<Int32>();
+
+                    while (reader.Read())
+                    {
+                        itemsKhuyenMai.Add((Int32)reader["PhanTram"]);
+                    }
+                    this.Dispatcher.BeginInvoke(new System.Action(() =>
+                    {
+                        khuyenMai_cbo.ItemsSource = itemsKhuyenMai;
+                    }));
+
+
                     connection.Close();
+
+
                 }
                 catch (Exception ex)
                 {
@@ -106,8 +133,35 @@ namespace UngDungQuanLyNhaSach.Pages
             }));
             thread.IsBackground = true;
             thread.Start();
-        }   
+        }
+        void updateMaHoaDon()
+        {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
 
+                    string readString = "select Count(*) from HOADON";
+                    SqlCommand commandReader = new SqlCommand(readString, connection);
+                    Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+                        maHoaDon_txt.Text = "HD" + count.ToString("000");
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.ToString());
+                }
+        }
+        void resetData()
+        {
+            updateMaHoaDon();
+            maSanPham_cbo.SelectedIndex = -1;
+            khuyenMai_cbo.SelectedIndex = -1;
+            tenSanPham_txt.Text = "";
+            soLuong_txt.Text = "";
+            thanhTien_txt.Text = "";
+            donGia_txt.Text = "";
+
+        }    
 
         private void hoaDonTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
@@ -127,6 +181,55 @@ namespace UngDungQuanLyNhaSach.Pages
             chiTietHDList.Add(new ChiTietHoaDon(chiTietHDList.Count + 1, maSanPham_cbo.Text, soLuong, donGia, donGia * soLuong));
             hoaDonTable.ItemsSource = new List<ChiTietHoaDon>();
             hoaDonTable.ItemsSource = chiTietHDList;
+            for (int i = 0; i < chiTietHDList.Count; i++)
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+
+                    string readString = "select Count(*) from HOADON, CHITIETHOADON WHERE HOADON.MaHoaDon = CHITIETHOADON.MaHoaDon";
+                    SqlCommand commandReader = new SqlCommand(readString, connection);
+
+                    string insertString = "INSERT INTO CHITIETHOADON (MaSanPham, SoLuong, DonGia, GiamGia, ThanhTien) " +
+                        "VALUES (@MaHoaDon, @MaSanPham, @SoLuong, @DonGia, @GiamGia, @ThanhTien)";
+                    SqlCommand command = new SqlCommand(insertString, connection);
+
+
+                    command.Parameters.Add("@MaHoaDon", SqlDbType.VarChar);
+                    command.Parameters["@MaHoaDon"].Value = maHoaDon_txt.Text;
+                    //command.Parameters["@MaHoaDon"].Value = "HD011";
+
+                    command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
+                    command.Parameters["@MaSanPham"].Value = maSanPham_cbo.Text;
+                    //command.Parameters["@MaNhanVien"].Value = "NV006";
+
+                    command.Parameters.Add("@SoLuong", SqlDbType.Int);
+                    command.Parameters["@SoLuong"].Value = int.Parse(soLuong_txt.Text);
+                    //command.Parameters["@MaKhachHang"].Value = "KH001";
+
+                    command.Parameters.Add("@DonGia", SqlDbType.Decimal);
+                    command.Parameters["@DonGia"].Value = decimal.Parse(donGia_txt.Text);
+
+                    command.Parameters.Add("@GiamGia", SqlDbType.Float);
+                    command.Parameters["@GiamGia"].Value = "30";
+
+                    command.Parameters.Add("@ThanhTien", SqlDbType.Decimal);
+                    command.Parameters["@ThanhTien"].Value = "30000";
+                    //command.Parameters["@TongTienHoaDon"].Value = Convert.ToDecimal(thanhTien_txt.Text);
+                    command.ExecuteNonQuery();
+
+                    connection.Close();
+                    loadData();
+                    MessageBox.Show("Thêm thành công");
+                }
+                catch (Exception e1)
+                {
+                    MessageBox.Show(e1.Message);
+                }
+            }    
+            
+            //resetData();
         }
 
         public HeaderFooter LeftHeader => throw new NotImplementedException();
@@ -204,6 +307,10 @@ namespace UngDungQuanLyNhaSach.Pages
                 MessageBox.Show(ex.Message);
             }
         }
+        void cost ()
+        {
+            //tongTien_txt.Text = 
+        }    
 
         private void soLuong_txt_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -212,6 +319,93 @@ namespace UngDungQuanLyNhaSach.Pages
                 int soLuong = int.Parse(soLuong_txt.Text);
                 decimal donGia = decimal.Parse(donGia_txt.Text);
                 thanhTien_txt.Text = (soLuong * donGia).ToString();
+            }
+        }
+
+        private void luuHD_btn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                
+                string readString = "select Count(*) from HOADON, CHITIETHOADON WHERE HOADON.MaHoaDon = CHITIETHOADON.MaHoaDon"; ;
+                SqlCommand commandReader = new SqlCommand(readString, connection);
+                //Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+
+                for (int i = 0; i<chiTietHDList.Count; i++)
+                {
+                    string insertString = "INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) " +
+                    "VALUES (@MaHoaDon, @MaNhanVien, @MaKhachHang, @MaKhuyenMai, @NgayLapHoaDon, @TongTienHoaDon)";
+                    SqlCommand command = new SqlCommand(insertString, connection);
+
+                    command.Parameters.Add("@MaHoaDon", SqlDbType.VarChar);
+                    command.Parameters["@MaHoaDon"].Value = maHoaDon_txt.Text;
+                    //command.Parameters["@MaHoaDon"].Value = "HD011";
+
+                    command.Parameters.Add("@MaNhanVien", SqlDbType.VarChar);
+                    command.Parameters["@MaNhanVien"].Value = maNhanVien_cbo.Text;
+                    //command.Parameters["@MaNhanVien"].Value = "NV006";
+
+                    command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
+                    //command.Parameters["@MaKhachHang"].Value = maKhachHang_cbo.Text;
+                    command.Parameters["@MaKhachHang"].Value = "KH001";
+
+                    command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
+                    command.Parameters["@MaKhuyenMai"].Value = "KM006";
+
+                    command.Parameters.Add("@NgayLapHoaDon", SqlDbType.SmallDateTime);
+                    command.Parameters["@NgayLapHoaDon"].Value = ngayHoaDon.SelectedDate;
+
+                    command.Parameters.Add("@TongTienHoaDon", SqlDbType.Decimal);
+                    command.Parameters["@TongTienHoaDon"].Value = "30000";
+                    command.Parameters["@TongTienHoaDon"].Value = Convert.ToDecimal(thanhTien_txt.Text);
+
+
+                    command.ExecuteNonQuery();
+
+                    connection.Close();
+                    loadData();
+                    MessageBox.Show("Thêm thành công");
+                }    
+                
+
+
+
+            }
+            catch (Exception e1)
+            {
+                MessageBox.Show(e1.Message);
+            }
+        }
+
+        private void xuatHD_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Excel.Application excel = new Excel.Application();
+            excel.Visible = true;
+            Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
+            Worksheet sheet1 = (Worksheet)workbook.Sheets[1];
+            excel.ActiveWindow.DisplayGridlines = false;
+            //sheet1.Cells[1, 1].Text = "HÓA ĐƠN";
+            sheet1.Columns["A1"].CellStyle = workbook.Styles.Add("PageHeaderStyle");
+            sheet1.Columns["A1:F1"].Merge();
+
+
+            for (int j = 0; j < hoaDonTable.Columns.Count; j++)
+            {
+                Excel.Range myRange = (Excel.Range)sheet1.Cells[2, j + 2];
+                sheet1.Cells[2, j + 2].Font.Bold = true;
+                sheet1.Columns[j + 2].ColumnWidth = 15;
+                myRange.Value2 = hoaDonTable.Columns[j].Header;
+            }
+            for (int i = 0; i < hoaDonTable.Columns.Count; i++)
+            {
+                for (int j = 0; j < hoaDonTable.Items.Count; j++)
+                {
+                    TextBlock b = (TextBlock)hoaDonTable.Columns[i].GetCellContent(hoaDonTable.Items[j]);
+                    Microsoft.Office.Interop.Excel.Range myRange = (Microsoft.Office.Interop.Excel.Range)sheet1.Cells[j + 3, i + 2];
+                    myRange.Value2 = b.Text;
+                }
             }
         }
     }

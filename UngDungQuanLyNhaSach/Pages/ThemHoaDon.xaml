@@ -305,7 +305,7 @@
                 </DockPanel>
                 <DockPanel HorizontalAlignment="Center">
                     <TextBlock Text="Khuyến Mãi (%):" FontWeight="Bold" Width="200"/>
-                    <TextBox x:Name="khuyenMai" Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right"/>
+                    <ComboBox x:Name="khuyenMai_cbo" Width="180" HorizontalAlignment="Right"/>
                 </DockPanel>
                 <DockPanel HorizontalAlignment="Center" >
                     <TextBlock Text="Thành Tiền:" Width="200" FontWeight="Bold"/>
@@ -320,7 +320,7 @@
                   AutoGeneratingColumn="hoaDonTable_AutoGeneratingColumn" Height="288" Background="{x:Null}">
 
 
-                    <!--<DataGrid.Columns>
+                        <!--<DataGrid.Columns>
                         <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                         <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                         <DataGridTextColumn Header="Tên sách" IsReadOnly="True" CanUserResize="True" Width="*"/>
@@ -329,7 +329,6 @@
                         <DataGridTextColumn Header="Ghi chú" IsReadOnly="True" CanUserResize="True" Width="*"/>
                         <DataGridTextColumn Header="Thành tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
                     </DataGrid.Columns>-->
-
 
                 </DataGrid>
             </StackPanel>
@@ -374,14 +373,14 @@
                         Foreground="White"
                         FontSize="18"
                         FontWeight="Bold"
-                        Style="{StaticResource AddButton}"/>
+                        Style="{StaticResource AddButton}" Click="luuHD_btn_Click"/>
                 <Button x:Name="xuatHD_btn" Margin="0,0,20,0" Content="Xuất Hóa Đơn" 
                         Height="37" 
                         Width="150"
                         Foreground="White"
                         FontSize="18"
                         FontWeight="Bold"
-                        Style="{StaticResource OutButton}"/>
+                        Style="{StaticResource OutButton}" Click="xuatHD_btn_Click"/>
                 <Button x:Name="cancel_btn" Margin="20,0,20,0" Content="Hủy" 
                         Height="37" 
                         Width="150"
