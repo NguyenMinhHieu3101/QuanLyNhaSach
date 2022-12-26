@@ -18,7 +18,7 @@
 
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="16" />
-            <Setter Property="Width" Value="110"/>
+            <Setter Property="Width" Value="120"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
@@ -89,20 +89,7 @@
                   Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"/>
 
             </Grid>
-            <!--<ControlTemplate.Triggers>
-            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#808080" />
-            </Trigger>
-            <Trigger Property="ToggleButton.IsChecked" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
-                <Setter TargetName="Border" Property="BorderBrush" Value="#AAAAAA" />
-                <Setter Property="Foreground" Value="#888888"/>
-                <Setter TargetName="Arrow" Property="Fill" Value="#888888" />
-            </Trigger>
-        </ControlTemplate.Triggers>-->
+            
         </ControlTemplate>
 
         <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
@@ -152,7 +139,7 @@
                                     Margin="3,3,23,3"
                                     FontSize="16"
                                     Focusable="True" 
-                                    Background="#FF3F3F3F"
+                                    Background="Transparent"
                                     Foreground="Green"
                                     Visibility="Hidden"
                                     IsReadOnly="{TemplateBinding IsReadOnly}"/>
@@ -229,161 +216,186 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Margin="10">
+        <ScrollViewer>
             
-            <Border CornerRadius="6" 
+            <StackPanel Margin="10">
+
+                <Border CornerRadius="6" 
                     BorderBrush="Gray" 
                     BorderThickness="1" 
                     Margin="0,5">
 
-                <StackPanel Margin="10">
+                    <StackPanel Margin="10">
 
-                    <TextBlock Text="Thông tin cá nhân" 
+                        <TextBlock Text="Thông tin cá nhân" 
                            Style="{StaticResource Header1}"/>
 
-                    <StackPanel Margin="30,10,10,10">
-
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="Mã Nhân viên:"/>
-                            <TextBox x:Name="maNv" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False"/>
-                        </DockPanel>
-
-                        <StackPanel>
+                        <StackPanel Margin="30,10,10,10">
 
                             <DockPanel LastChildFill="True">
-                                <TextBlock Text="Họ Tên:"/>
-                                <TextBox x:Name="name" 
+                                <TextBlock Text="Mã Nhân viên:"/>
+                                <TextBox x:Name="maNv" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False"/>
+                            </DockPanel>
+
+                            <StackPanel>
+
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock Text="Họ Tên:"/>
+                                    <TextBox x:Name="name" 
                                      Template="{StaticResource TextBoxBaseControlTemplate}"
                                      TabIndex="0" TextChanged="name_TextChanged"/>
-                            </DockPanel>
+                                </DockPanel>
 
-                            <TextBlock x:Name="name_error" Foreground="Red" Text="" 
+                                <TextBlock x:Name="name_error" Foreground="Red" Text="" 
                                            FontSize="10" Visibility="Hidden" 
                                            Margin="115,0,0,0" Style="{StaticResource normal}"/>
 
-                        </StackPanel>
+                            </StackPanel>
 
-                        <StackPanel>
+                            <StackPanel>
 
-                            <DockPanel LastChildFill="True">
-                                <TextBlock Text="CCCD:"/>
-                                <TextBox x:Name="cccd" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock Text="CCCD:"/>
+                                    <TextBox x:Name="cccd" Template="{StaticResource TextBoxBaseControlTemplate}" 
                                      PreviewTextInput="previewTextInput"
                                      TabIndex="1" TextChanged="cccd_TextChanged"/>
-                            </DockPanel>
+                                </DockPanel>
 
-                            <TextBlock x:Name="cccd_error" Foreground="Red" Text="" 
+                                <TextBlock x:Name="cccd_error" Foreground="Red" Text="" 
                                            FontSize="10" Visibility="Hidden" 
                                            Margin="115,0,0,0" Style="{StaticResource normal}"/>
 
-                        </StackPanel>
+                            </StackPanel>
 
-                        <StackPanel>
+                            <StackPanel>
 
-                            <DockPanel LastChildFill="True">
-                                <TextBlock Text="SĐT:"/>
-                                <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock Text="SĐT:"/>
+                                    <TextBox x:Name="sdt" Template="{StaticResource TextBoxBaseControlTemplate}" 
                                      PreviewTextInput="previewTextInput"
                                      TabIndex="2" TextChanged="sdt_TextChanged"/>
-                            </DockPanel>
+                                </DockPanel>
 
-                            <TextBlock x:Name="sdt_error" Foreground="Red" Text="" 
+                                <TextBlock x:Name="sdt_error" Foreground="Red" Text="" 
                                            FontSize="10" Visibility="Hidden" 
                                            Margin="115,0,0,0" Style="{StaticResource normal}"/>
 
-                        </StackPanel>
-
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="Ngày Sinh:"/>
-                            <Border BorderBrush="Black" 
-                                    BorderThickness="1"
-                                    CornerRadius="10">
-                                <DatePicker x:Name="ngaySinh" BorderBrush="Transparent" FontSize="16"
-                                            TabIndex="3"/>
-                            </Border>
-                        </DockPanel>
-
-                        <StackPanel>
+                            </StackPanel>
 
                             <DockPanel LastChildFill="True">
-                                <TextBlock Text="Email:"/>
-                                <TextBox x:Name="email" Template="{StaticResource TextBoxBaseControlTemplate}"
-                                     TabIndex="4" TextChanged="email_TextChanged"/>
+                                <TextBlock Text="Ngày Sinh:"/>
+                                <Border BorderBrush="Black" 
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                    <DatePicker x:Name="ngaySinh" BorderBrush="Transparent" FontSize="16"
+                                            TabIndex="3"/>
+                                </Border>
                             </DockPanel>
 
-                            <TextBlock x:Name="email_error" Foreground="Red" Text="" 
+                            <StackPanel>
+
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock Text="Email:"/>
+                                    <TextBox x:Name="email" Template="{StaticResource TextBoxBaseControlTemplate}"
+                                     TabIndex="4" TextChanged="email_TextChanged"/>
+                                </DockPanel>
+
+                                <TextBlock x:Name="email_error" Foreground="Red" Text="" 
                                            FontSize="10" Visibility="Hidden" 
                                            Margin="115,0,0,0" Style="{StaticResource normal}"/>
 
+                            </StackPanel>
+
+                            <DockPanel LastChildFill="True">
+                                <TextBlock Text="Tỉnh/Thành Phố:"/>
+                                <ComboBox x:Name="tinh" IsEditable="True" TabIndex="6" SelectionChanged="tinh_SelectionChanged"/>
+                            </DockPanel>
+
+                            <DockPanel LastChildFill="True">
+                                <TextBlock Text="Quận/Huyện:"/>
+                                <ComboBox x:Name="huyen" IsEditable="True" TabIndex="7" SelectionChanged="huyen_SelectionChanged"/>
+                            </DockPanel>
+
+                            <DockPanel LastChildFill="True">
+                                <TextBlock Text="Xã/Phường:"/>
+                                <ComboBox x:Name="phuong" IsEditable="True" TabIndex="8"/>
+                            </DockPanel>
+
+                            <StackPanel>
+                                
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock Text="Địa Chỉ:"/>
+                                    <TextBox x:Name="diaChi" Template="{StaticResource TextBoxBaseControlTemplate}"
+                                     TabIndex="9" TextChanged="diaChi_TextChanged"/>
+                                </DockPanel>
+
+                                <TextBlock x:Name="diaChi_error" Foreground="Red" Text="" 
+                                           FontSize="10" Visibility="Hidden" 
+                                           Margin="115,0,0,0" Style="{StaticResource normal}"/>
+
+                            </StackPanel>                            
+
+                            <DockPanel LastChildFill="True">
+                                <TextBlock Text="Giới tính:"/>
+                                <ComboBox x:Name="gioiTinh" TabIndex="10">
+                                    <ComboBoxItem IsSelected="True">Nam</ComboBoxItem>
+                                    <ComboBoxItem>Nữ</ComboBoxItem>
+                                </ComboBox>
+                            </DockPanel>
+
                         </StackPanel>
-
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="Địa Chỉ:"/>
-                            <TextBox x:Name="diaChi" Template="{StaticResource TextBoxBaseControlTemplate}"
-                                     TabIndex="5" TextChanged="diaChi_TextChanged"/>
-                        </DockPanel>
-
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="Giới tính:"/>
-                            <ComboBox x:Name="gioiTinh" TabIndex="6">
-                                <ComboBoxItem IsSelected="True">Nam</ComboBoxItem>
-                                <ComboBoxItem>Nữ</ComboBoxItem>
-                            </ComboBox>
-                        </DockPanel>
 
                     </StackPanel>
 
-                </StackPanel>
+                </Border>
 
-            </Border>
-
-            <Border CornerRadius="6" 
+                <Border CornerRadius="6" 
                     BorderBrush="Gray" 
                     BorderThickness="1" 
                     Margin="0,5">
 
-                <StackPanel Margin="10">
+                    <StackPanel Margin="10">
 
-                    <TextBlock Text="Thông tin nhân viên" 
+                        <TextBlock Text="Thông tin nhân viên" 
                        Style="{StaticResource Header1}"/>
 
-                    <StackPanel Margin="30,10,10,10">
-
-                        <DockPanel LastChildFill="True">
-                            <TextBlock Text="Chức vụ:"/>
-                            <ComboBox x:Name="chucVu" TabIndex="7">
-                                <ComboBoxItem>Admin</ComboBoxItem>
-                                <ComboBoxItem IsSelected="True">Nhân Viên Bán Hàng</ComboBoxItem>
-                                <ComboBoxItem>Nhân Viên Kho</ComboBoxItem>
-                                <ComboBoxItem>Nhân Viên Kế Toán</ComboBoxItem>
-                            </ComboBox>
-                        </DockPanel>
-
-                        <StackPanel>
+                        <StackPanel Margin="30,10,10,10">
 
                             <DockPanel LastChildFill="True">
-                                <TextBlock Text="Lương:"/>
-                                <TextBox x:Name="luong" 
-                                     Template="{StaticResource TextBoxBaseControlTemplate}" 
-                                     PreviewTextInput="previewTextInput"
-                                     TabIndex="8" TextChanged="luong_TextChanged"/>
+                                <TextBlock Text="Chức vụ:"/>
+                                <ComboBox x:Name="chucVu" TabIndex="11">
+                                    <ComboBoxItem>Admin</ComboBoxItem>
+                                    <ComboBoxItem IsSelected="True">Nhân Viên Bán Hàng</ComboBoxItem>
+                                    <ComboBoxItem>Nhân Viên Kho</ComboBoxItem>
+                                    <ComboBoxItem>Nhân Viên Kế Toán</ComboBoxItem>
+                                </ComboBox>
                             </DockPanel>
 
-                            <TextBlock x:Name="luong_error" Foreground="Red" Text="" 
+                            <StackPanel>
+
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock Text="Lương:"/>
+                                    <TextBox x:Name="luong" 
+                                     Template="{StaticResource TextBoxBaseControlTemplate}" 
+                                     PreviewTextInput="previewTextInput"
+                                     TabIndex="12" TextChanged="luong_TextChanged"/>
+                                </DockPanel>
+
+                                <TextBlock x:Name="luong_error" Foreground="Red" Text="" 
                                            FontSize="10" Visibility="Hidden" 
                                            Margin="115,0,0,0" Style="{StaticResource normal}"/>
+
+                            </StackPanel>
 
                         </StackPanel>
 
                     </StackPanel>
 
-                </StackPanel>
+                </Border>
 
-            </Border>
+                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-            <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
-
-                <Button Content="Xóa" 
+                    <Button Content="Xóa" 
                             Height="35" 
                             Width="90"
                             Margin="10"
@@ -392,10 +404,10 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="delete"
-                        TabIndex="9"
+                        TabIndex="13"
                             Style="{StaticResource DeleteButton}" Click="delete_Click"/>
 
-                <Button Content="Thêm" 
+                    <Button Content="Thêm" 
                             Height="35" 
                             Width="90"
                             Margin="10"
@@ -404,21 +416,21 @@
                             FontWeight="Bold"
                             x:Name="add"
                             Style="{StaticResource FindButton}" 
-                        TabIndex="10"
+                        TabIndex="14"
                             Click="add_Click"/>
 
-                <Button Content="Cập Nhập" 
+                    <Button Content="Cập Nhập" 
                             Height="35" 
                             Width="90"
-                            Margin="10"
+                            Margin="15"
                             Foreground="White"                            
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="update"
                         TabIndex="11"
                             Style="{StaticResource FindButton}" Click="update_Click"/>
-                
-                <Button Content="Thoát" 
+
+                    <Button Content="Thoát" 
                             Height="35" 
                             Width="90"
                             Margin="10"
@@ -426,12 +438,14 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="cancel"
-                        TabIndex="12"
+                        TabIndex="16"
                             Style="{StaticResource CacelButton}" Click="cancel_Click"/>
 
-            </WrapPanel>
+                </WrapPanel>
 
-        </StackPanel>
+            </StackPanel>
+            
+        </ScrollViewer>
 
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"/>
 
