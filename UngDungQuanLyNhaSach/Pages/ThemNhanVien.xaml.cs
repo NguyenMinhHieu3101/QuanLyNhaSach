@@ -34,6 +34,7 @@ namespace UngDungQuanLyNhaSach.Pages
         List<DonViHanhChinh> provinces = new List<DonViHanhChinh>();
         List<DonViHanhChinh> districts = new List<DonViHanhChinh>();
         List<DonViHanhChinh> wards = new List<DonViHanhChinh>();
+        String huyenText = "";
         int currentSelected = -1;
 
         public ThemNhanVien()
@@ -182,6 +183,10 @@ namespace UngDungQuanLyNhaSach.Pages
                             districts.AddRange(temp.OrderBy(e => e.name).ToList());
                             huyen.ItemsSource = districts.Select(e => e.name).ToList();
                             phuong.ItemsSource = new List<String>();
+                            if (tinh.SelectedIndex != -1)
+                            {
+                                huyen.Text = huyenText;
+                            }
                         }));
                         connection.Close();
                     }
@@ -481,7 +486,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@SDT"].Value = sdt.Text;
 
                     command.Parameters.Add("@DiaChi", SqlDbType.NVarChar);
-                    command.Parameters["@DiaChi"].Value = diaChi.Text;
+                    command.Parameters["@DiaChi"].Value = diaChi.Text + ", " + phuong.Text + ", " + huyen.Text + ", " + tinh.Text;
 
                     command.Parameters.Add("@Luong", SqlDbType.Money);
                     command.Parameters["@Luong"].Value = Regex.Replace(luong.Text, "[^0-9]", "");
@@ -550,7 +555,7 @@ namespace UngDungQuanLyNhaSach.Pages
             donVi.AddRange(nhanVien.diaChi.Split(','));            
             diaChi.Text = donVi[0].Trim();
             phuong.Text = donVi[1].Trim();
-            huyen.Text = donVi[2].Trim();
+            huyenText = donVi[2].Trim();
             tinh.Text = donVi[3].Trim();
             gioiTinh.SelectedIndex = nhanVien.gioiTinh == "Nam" ? 0 : 1;
             luong.Text = nhanVien.luong.ToString();

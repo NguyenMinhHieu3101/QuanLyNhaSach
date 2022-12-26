@@ -18,7 +18,7 @@
 
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="16" />
-            <Setter Property="Width" Value="110"/>
+            <Setter Property="Width" Value="120"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
@@ -139,7 +139,7 @@
                                     Margin="3,3,23,3"
                                     FontSize="16"
                                     Focusable="True" 
-                                    Background="#FF3F3F3F"
+                                    Background="Transparent"
                                     Foreground="Green"
                                     Visibility="Hidden"
                                     IsReadOnly="{TemplateBinding IsReadOnly}"/>
@@ -209,7 +209,9 @@
         
     </Window.Resources>
 
-    <StackPanel Margin="30,30">
+    <ScrollViewer>        
+    
+        <StackPanel Margin="30,30">
 
         <Border CornerRadius="6" 
                     BorderBrush="Gray" 
@@ -298,10 +300,33 @@
                     </StackPanel>
 
                     <DockPanel LastChildFill="True">
-                        <TextBlock Text="Địa Chỉ:"/>
-                        <TextBox x:Name="diaChi" Template="{StaticResource TextBoxBaseControlTemplate}"
-                                     TabIndex="5" TextChanged="diaChi_TextChanged"/>
+                        <TextBlock Text="Tỉnh/Thành Phố:"/>
+                        <ComboBox x:Name="tinh" IsEditable="True" TabIndex="6" SelectionChanged="tinh_SelectionChanged"/>
                     </DockPanel>
+
+                    <DockPanel LastChildFill="True">
+                        <TextBlock Text="Quận/Huyện:"/>
+                        <ComboBox x:Name="huyen" IsEditable="True" TabIndex="7" SelectionChanged="huyen_SelectionChanged"/>
+                    </DockPanel>
+
+                    <DockPanel LastChildFill="True">
+                        <TextBlock Text="Xã/Phường:"/>
+                        <ComboBox x:Name="phuong" IsEditable="True" TabIndex="8"/>
+                    </DockPanel>
+
+                    <StackPanel>
+
+                        <DockPanel LastChildFill="True">
+                            <TextBlock Text="Địa Chỉ:"/>
+                            <TextBox x:Name="diaChi" Template="{StaticResource TextBoxBaseControlTemplate}"
+                                     TabIndex="9" TextChanged="diaChi_TextChanged"/>
+                        </DockPanel>
+
+                        <TextBlock x:Name="diaChi_error" Foreground="Red" Text="" 
+                                           FontSize="10" Visibility="Hidden" 
+                                           Margin="115,0,0,0" Style="{StaticResource normal}"/>
+
+                    </StackPanel>
 
                     <DockPanel LastChildFill="True">
                         <TextBlock Text="Giới tính:"/>
@@ -401,4 +426,6 @@
         </DockPanel>
 
     </StackPanel>
+    
+    </ScrollViewer>
 </Window>
