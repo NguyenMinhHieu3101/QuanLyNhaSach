@@ -93,7 +93,11 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
                     command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
 
-                    tongThu = (decimal)command.ExecuteScalar();
+                    if (command.ExecuteScalar() == DBNull.Value)
+                        tongThu = 0;
+                    else
+                        tongThu = (decimal)command.ExecuteScalar();
+
                     txtTongThu.Text = "TỔNG THU: " + tongThu;
 
                     thuNhapList.Add(new ThuNhap(1, "Bán sách", tongThu));
@@ -110,7 +114,11 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
                     command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
 
-                    tongTienNhap = (decimal)command.ExecuteScalar();
+                    if (command.ExecuteScalar() == DBNull.Value)
+                        tongTienNhap = 0;
+                    else
+                        tongTienNhap = (decimal)command.ExecuteScalar();
+
                     chiTraList.Add(new ChiTra(1, "Tiền nhập sách", tongTienNhap));
 
                     string readString3 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Thuế'";
@@ -308,6 +316,18 @@ namespace UngDungQuanLyNhaSach.Pages
                         tongChi[i] = 0;
                     else
                         tongChi[i] = (decimal)command.ExecuteScalar();
+
+                    //string readString3 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Thuế'";
+                    //command = new SqlCommand(readString3, connection);
+                    //tongChi[i] += (decimal)command.ExecuteScalar();
+
+                    //string readString4 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Mặt bằng'";
+                    //command = new SqlCommand(readString4, connection);
+                    //tongChi[i] += (decimal)command.ExecuteScalar();
+
+                    string readString5 = "SELECT SUM(Luong) AS TongLuong FROM NHANVIEN";
+                    command = new SqlCommand(readString5, connection);
+                    tongChi[i] += (decimal)command.ExecuteScalar();
                 }
             }
             catch (Exception e)

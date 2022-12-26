@@ -174,7 +174,7 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}"
-                        Click="Button_Click" RenderTransformOrigin="0.527,-8.981"/>
+                        Click="Button_Click_1"/>
                     </DockPanel>
                 </StackPanel>
             </Border>
