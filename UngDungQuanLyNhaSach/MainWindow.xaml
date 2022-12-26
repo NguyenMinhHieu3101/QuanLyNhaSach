@@ -5,52 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UngDungQuanLyNhaSach"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
-        Title="BookStore" Height="450" Width="800" Icon="/Images/book-shop.png">
+        WindowStartupLocation="CenterScreen" Height="450" Width="800" Icon="/Images/book-shop.png" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Background="#03304F">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="180"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="250"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid Background="#5EC4B6">
-                <TextBlock Text="DOFLAMINGO"
+        <Grid Background="#5EC4B6">
+            <TextBlock Text="NHÀ SÁCH DOFLAMINGO"
                            Foreground="#03304F"
                            FontSize="18"
+                           Margin="-220, 0,0,0"
                            TextAlignment="Center"
                            HorizontalAlignment="Center"
                            VerticalAlignment="center"
                            FontWeight="Bold">
-                    
-                </TextBlock>
-            </Grid>
-      
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <TextBlock Text="Giới thiệu" Foreground="white" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Text="Liên hệ" Foreground="white" Margin="20,10,20,10" VerticalAlignment="Center" ></TextBlock>
-                <Button Content="Đăng nhập" 
-                        Height="35" 
-                        Width="90"
-                        Margin="10,0,20,0"
-                        Foreground="Black"
-                        FontSize="12"
-                        FontWeight="Bold"
-                        Style="{StaticResource CacelButton}"
-                        Click="Button_SignIn_Click"
-                       
-                        />
-            </StackPanel>
+            </TextBlock>
         </Grid>
-       
-        <!--<Image Grid.Row="1" Source="/UngDungQuanLyNhaSach;component/Images/background.png" Stretch="Fill"></Image>-->
-        <Image Grid.Row="1" Source="/UngDungQuanLyNhaSach;component/Images/BookStore.png" Stretch="Fill"></Image>
-       
+        
+        <Image Grid.Row="1" Source="/UngDungQuanLyNhaSach;component/Images/background2.png" Stretch="Fill"/>
+        <Button Content="Đăng Nhập"
+                MaxHeight="61"
+                MaxWidth="120"
+                Margin="551,185,116,149"
+                Foreground="#1d234f"
+                FontSize="13"
+                FontWeight="Bold"
+                Cursor="Hand"
+                Style="{StaticResource CacelButton}"
+                Click="Button_SignIn_Click" Grid.Row="1"/>
     </Grid>
-
 
 </Window>
