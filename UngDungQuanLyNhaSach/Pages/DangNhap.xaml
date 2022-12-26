@@ -166,7 +166,7 @@
                              Padding="20,0,0,0" 
                                 Template="{StaticResource TextBoxBaseControlTemplate}">
                                 <TextBox.Background>
-                                    <ImageBrush  ImageSource="/UngDungQuanLyNhaSach;component/Images/user (2).png"
+                                    <ImageBrush  ImageSource="/UngDungQuanLyNhaSach;component/Images/login.png"
                                         Stretch="None"
                                         AlignmentX="Left" />
                                 </TextBox.Background>

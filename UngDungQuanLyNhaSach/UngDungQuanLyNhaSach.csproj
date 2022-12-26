@@ -19,6 +19,7 @@
     <None Remove="Images\key.png" />
     <None Remove="Images\Lock.jpg" />
     <None Remove="Images\login %281%29.png" />
+    <None Remove="Images\login.png" />
     <None Remove="Images\man.png" />
     <None Remove="Images\password.png" />
     <None Remove="Images\user.png" />
@@ -73,6 +74,9 @@
     </Resource>
     <Resource Include="Images\man.png" />
     <Resource Include="Images\password.png" />
+    <Resource Include="Images\login.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\user.png" />
   </ItemGroup>
 
