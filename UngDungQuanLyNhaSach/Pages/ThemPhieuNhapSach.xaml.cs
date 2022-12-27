@@ -36,7 +36,6 @@ namespace UngDungQuanLyNhaSach.Pages
             loadListPhieuNhap();
             loadListChiTietPhieuNhap();
             updateBtn.IsEnabled = false;
-            deleteBtn.IsEnabled = false;
 
         }
         void resetData()
@@ -251,11 +250,6 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-        private void cancelBtn_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Application.Current.Shutdown();
-        }
-
         private void updateBtn_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -297,50 +291,18 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-
-
-        private void deleteBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (phieuNhapSachTable.SelectedIndex != -1)
-            {
-                var result = MessageBox.Show("Bạn thật sự muốn xóa?", "Thông báo!", MessageBoxButton.OKCancel);
-                if (result == MessageBoxResult.OK)
-                {
-                    try
-                    {
-                        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-                        connection.Open();
-
-                        string deleteString = "Delete From PHIEUNHAP Where MaPhieuNhap = @MaPhieuNhap";
-                        SqlCommand command = new SqlCommand(deleteString, connection);
-                        command.Parameters.Add("@MaPhieuNhap", SqlDbType.VarChar);
-                        command.Parameters["@MaPhieuNhap"].Value = phieuNhapList[phieuNhapSachTable.SelectedIndex].maPhieuNhap;
-
-                        command.ExecuteNonQuery();
-                        connection.Close();
-                        loadListPhieuNhap();
-                        MessageBox.Show("Xóa phiếu nhập thành công");
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Xóa không thành công");
-                    }
-                }
-            }
-        }
-
         private void phieuNhapSachTable_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (phieuNhapSachTable.SelectedIndex != -1)
             {
                 updateBtn.IsEnabled = true;
-                deleteBtn.IsEnabled = true;
+
                 loadPhieuNhap();
             }
             else
             {
                 updateBtn.IsEnabled = false;
-                deleteBtn.IsEnabled = false;
+    
             }
 
         }
@@ -368,13 +330,13 @@ namespace UngDungQuanLyNhaSach.Pages
             if (phieuNhapSachTable.SelectedIndex != -1)
             {
                 updateBtn.IsEnabled = true;
-                deleteBtn.IsEnabled = true;
+
                 loadPhieuNhap();
             }
             else
             {
                 updateBtn.IsEnabled = false;
-                deleteBtn.IsEnabled = false;
+    
             }
         }
 

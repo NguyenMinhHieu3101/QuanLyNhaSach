@@ -98,6 +98,7 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 e.Column.Header = att.Name;
                 e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+               
             }
         }
     

@@ -78,10 +78,6 @@
                    Style="{StaticResource Header1}"></TextBlock>
 
 
-        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Grid.Column="3" Grid.Row="3" >
-           
-            <Button Content="Hủy" Width="100" Height="30" Margin="30,0,30,0" Style="{StaticResource CacelButton}"></Button>
-        </StackPanel>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="5">
             <DockPanel LastChildFill="True">
 
@@ -94,10 +90,10 @@
                                   ScrollViewer.CanContentScroll="True"
                                   AutoGeneratingColumn="danhSachKhachHangTable_AutoGeneratingColumn">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn DisplayIndex="0">
+                        <DataGridTemplateColumn DisplayIndex="4">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Name="ButtonChangeKhachHang" Width="30"  Style="{StaticResource SaveButton}" Click="Update_KH_Button">Sửa</Button>
+                                    <Button Name="ButtonChangeKhachHang" Width="70" Margin="40 0 40 0"  Style="{StaticResource SaveButton}" Click="Update_KH_Button">Sửa</Button>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -120,10 +116,10 @@
                                   ScrollViewer.CanContentScroll="True"
                                   AutoGeneratingColumn="danhSachThamSoTable_AutoGeneratingColumn">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn DisplayIndex="0">
+                        <DataGridTemplateColumn DisplayIndex="4">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Name="ButtonChange" Width="30"  Style="{StaticResource SaveButton}" Click="Update_Button">Sửa</Button>
+                                    <Button Name="ButtonChange" Width="70" Margin="40 0 40 0"  Style="{StaticResource SaveButton}" Click="Update_Button">Sửa</Button>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

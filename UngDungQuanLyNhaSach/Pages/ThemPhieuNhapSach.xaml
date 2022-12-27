@@ -248,9 +248,9 @@
         <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Height="60" VerticalAlignment="Top" Margin="-10,10,10,0">
             <DockPanel HorizontalAlignment="Center" LastChildFill="True">
                 <Button x:Name="addBtn" Margin="0,0,20,0"
-                        Content="Thêm Phiếu Nhập Sách" 
+                        Content="Thêm" 
                         Height="37" 
-                        Width="190"
+                        Width="128"
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
@@ -264,23 +264,9 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}" Click="updateBtn_Click"/>
-                <Button x:Name="deleteBtn" Margin="0,0,20,0"
-                        Content="Xóa" 
-                        Height="37" 
-                        Width="128"
-                        Foreground="White"
-                        FontSize="16"
-                        FontWeight="Bold"
-                        Style="{StaticResource DeleteButton}" Click="deleteBtn_Click"/>
+   
 
-                <Button x:Name="cancelBtn" Content="Thoát" 
-                        Margin="0,0,20,0"
-                        Height="37" 
-                        Width="128"
-                        Foreground="Black"
-                        FontSize="16"
-                        FontWeight="Bold"
-                        Style="{StaticResource CacelButton}" Click="cancelBtn_Click"/>
+       
             </DockPanel>
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.Column="0" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Margin="0,0,387,0">
