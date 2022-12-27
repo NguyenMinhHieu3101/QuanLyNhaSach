@@ -123,6 +123,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
                             phieuNhapSachTable.ItemsSource = phieuNhapList;
+                           GoiYSachTable.ItemsSource = phieuNhapList;
                         }));
                     }
                     connection.Close();
@@ -154,55 +155,55 @@ namespace UngDungQuanLyNhaSach.Pages
 
         }
         private void addBookBtn_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-                connection.Open();
-                string readString = "select Count(*) from SANPHAM";
-                SqlCommand commandReader = new SqlCommand(readString, connection);
-                Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+        { }
+        //    try
+        //    {
+        //        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+        //        connection.Open();
+        //        string readString = "select Count(*) from SANPHAM";
+        //        SqlCommand commandReader = new SqlCommand(readString, connection);
+        //        Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
 
-                string insertString = "INSERT INTO PHIEUNHAP(MaSanPham, TenSanPham, TacGia, TheLoai, NXB, GiaNhap, NamXB, MaKho)"
-                    + "VALUES(@MaSanPham, @TenSanPham, @TacGia, @TheLoai, @NXB, @GiaNhap, @NamXB, @MaKho)";
-                SqlCommand command = new SqlCommand(insertString, connection);
+        //        string insertString = "INSERT INTO PHIEUNHAP(MaSanPham, TenSanPham, TacGia, TheLoai, NXB, GiaNhap, NamXB, MaKho)"
+        //            + "VALUES(@MaSanPham, @TenSanPham, @TacGia, @TheLoai, @NXB, @GiaNhap, @NamXB, @MaKho)";
+        //        SqlCommand command = new SqlCommand(insertString, connection);
 
-                command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
-                command.Parameters["@MaSanPham"].Value = "SP" + count.ToString("000");
+        //        command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
+        //        command.Parameters["@MaSanPham"].Value = "SP" + count.ToString("000");
 
-                command.Parameters.Add("@TenSanPham", SqlDbType.NVarChar);
-                command.Parameters["@TenSanPham"].Value = name.Text;
+        //        command.Parameters.Add("@TenSanPham", SqlDbType.NVarChar);
+        //        command.Parameters["@TenSanPham"].Value = name.Text;
 
-                command.Parameters.Add("@TacGia", SqlDbType.NVarChar);
-                command.Parameters["@TacGia"].Value = author.Text;
+        //        command.Parameters.Add("@TacGia", SqlDbType.NVarChar);
+        //        command.Parameters["@TacGia"].Value = author.Text;
 
-                command.Parameters.Add("@TheLoai", SqlDbType.NVarChar);
-                command.Parameters["@TheLoai"].Value = category.Text;
+        //        command.Parameters.Add("@TheLoai", SqlDbType.NVarChar);
+        //        command.Parameters["@TheLoai"].Value = category.Text;
 
-                command.Parameters.Add("@NXB", SqlDbType.NVarChar);
-                command.Parameters["@NXB"].Value = nxb.Text;
+        //        command.Parameters.Add("@NXB", SqlDbType.NVarChar);
+        //        command.Parameters["@NXB"].Value = nxb.Text;
 
-                command.Parameters.Add("@GiaNhap", SqlDbType.Money);
-                command.Parameters["@GiaNhap"].Value = cost.Text;
+        //        command.Parameters.Add("@GiaNhap", SqlDbType.Money);
+        //        command.Parameters["@GiaNhap"].Value = cost.Text;
 
-                command.Parameters.Add("@NamXB", SqlDbType.Int);
-                command.Parameters["@NamXB"].Value = int.Parse(year.Text);
+        //        command.Parameters.Add("@NamXB", SqlDbType.Int);
+        //        command.Parameters["@NamXB"].Value = int.Parse(year.Text);
 
-                command.Parameters.Add("@MaKho", SqlDbType.NVarChar);
-                command.Parameters["@MaKho"].Value = "K001";
+        //        command.Parameters.Add("@MaKho", SqlDbType.NVarChar);
+        //        command.Parameters["@MaKho"].Value = "K001";
 
-                command.ExecuteNonQuery();
+        //        command.ExecuteNonQuery();
 
-                connection.Close();
-                loadListChiTietPhieuNhap();
-                MessageBox.Show("Thêm thành công");
-                resetData();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+        //        connection.Close();
+        //        loadListChiTietPhieuNhap();
+        //        MessageBox.Show("Thêm thành công");
+        //        resetData();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //}
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
