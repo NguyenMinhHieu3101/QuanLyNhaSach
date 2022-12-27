@@ -34,15 +34,15 @@ namespace UngDungQuanLyNhaSach.Pages
     {
         List<HoaDon> hoaDonList = new List<HoaDon>();
         List<HoaDon> selectedHoaDon = new List<HoaDon>();
+
         public TraCuuHoaDon()
         {
             InitializeComponent();
             loadListHD();
             loadFilter();
             selectedHDTable.ItemsSource = new List<HoaDon>();
-            ngayLapHD.SelectedDate = DateTime.Now;
         }
-       
+
         void loadListHD()
         {
             String maHDText = maHD.Text;
@@ -51,18 +51,17 @@ namespace UngDungQuanLyNhaSach.Pages
             String nguoiLapHDText = nguoiLapHD.Text;
             String tongTienText = tongTien.Text;
 
-            //Thread thread = new Thread(new ThreadStart(() =>
-            //{
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
                 hoaDonList = new List<HoaDon>();
                 try
                 {
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-
                     connection.Open();
 
                     string readString = "SELECT * FROM HOADON, CHITIETHOADON WHERE HOADON.MaHoaDon = CHITIETHOADON.MaHoaDon";
 
-                    if (maHDText.Length > 0) readString += " AND MaHoaDon Like '%" + maHDText + "%'";
+                    if (maHDText.Length > 0) readString += " AND HOADON.MaHoaDon Like '%" + maHDText + "%'";
                     if (maKHText.Length > 0) readString += " AND MaKhachHang Like '%" + maKHText + "%'";
                     if (ngayLapHDText.Length > 0) readString += " AND NgayLapHoaDon = '" + ngayLapHDText + "'";
                     if (nguoiLapHDText.Length > 0) readString += " AND MaNhanVien Like '%" + nguoiLapHDText + "%'";
@@ -84,71 +83,119 @@ namespace UngDungQuanLyNhaSach.Pages
                             maKhuyenMai: (String)reader["MaKhuyenMai"],
                             tongTienHD: (decimal)reader["TongTienHoaDon"]
                             ));
-                        danhSachHDTable.ItemsSource = hoaDonList;
                     }
-                    //this.Dispatcher.BeginInvoke(new System.Action(() =>
-                    //{
+                    this.Dispatcher.BeginInvoke(new System.Action(() =>
+                    {
                         danhSachHDTable.ItemsSource = hoaDonList;
-                    //}));
+                    }));
                     connection.Close();
                 }
                 catch (Exception e)
                 {
                     MessageBox.Show(e.Message);
                 }
-            //}));
+            }));
 
-            //thread.IsBackground = true;
-            //thread.Start();
-
+            thread.IsBackground = true;
+            thread.Start();
         }
+
         void loadFilter()
         {
-            //Thread thread = new Thread(new ThreadStart(() =>
-            //{
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+
+                    connection.Open();
+
+                    string readString = "SELECT * FROM HOADON";
+                    SqlCommand command = new SqlCommand(readString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    List<String> itemsMaHD = new List<String>();
+                    List<String> itemsMaKH = new List<String>();
+                    List<String> itemsMaNV = new List<String>();
+                    List<DateTime> itemsNgayLapHD = new List<DateTime>();
+                    List<Decimal> itemsTongTien = new List<Decimal>();
+
+                    while (reader.Read())
+                    {
+                        itemsMaHD.Add((String)reader["MaHoaDon"]);
+                        itemsMaKH.Add(getNameKHFromCode((String)reader["MaKhachHang"]));
+                        itemsMaNV.Add(getNameNVFromCode((String)reader["MaNhanVien"]));
+                        itemsNgayLapHD.Add((DateTime)reader["NgayLapHoaDon"]);
+                        itemsTongTien.Add((Decimal)reader["TongTienHoaDon"]);
+                    }
+                    this.Dispatcher.BeginInvoke(new System.Action(() =>
+                    {
+                        maHD.ItemsSource = itemsMaHD;
+                        maKH.ItemsSource = itemsMaKH.Distinct().OrderBy(e => e).ToList();
+                        tongTien.ItemsSource = itemsTongTien.Distinct().OrderBy(e => e).Select(e => toMoney(e)).ToList();
+                        nguoiLapHD.ItemsSource = itemsMaNV.Distinct().OrderBy(e => e).ToList();
+                        ngayLapHD.ItemsSource = itemsNgayLapHD.Distinct().OrderBy(e => e).Select(date => date.ToString("MM/dd/yyyy")).ToList();
+                    }));
+                    connection.Close();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                }
+            }));
+
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        String toMoney(Decimal money)
+        {
+            String strMoney = money.ToString().Replace(".0000", "");
+            return string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(strMoney));
+        }    
+
+        String getNameNVFromCode(String code)
+        {
             try
             {
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-
                 connection.Open();
-
-                string readString = "SELECT * FROM HOADON, CHITIETHOADON WHERE HOADON.MaHoaDon = CHITIETHOADON.MaHoaDon";
+                string readString = "SELECT * FROM NHANVIEN WHERE MaNhanVien = '" + code + "'";
                 SqlCommand command = new SqlCommand(readString, connection);
                 SqlDataReader reader = command.ExecuteReader();
-
-                List<String> itemsMaHD = new List<String>();
-                List<String> itemsMaKH = new List<String>();
-                List<String> itemsMaNV = new List<String>();
-                List<DateTime> itemsNgayLapHD = new List<DateTime>();
-                List<Decimal> itemsTongTien = new List<Decimal>();
-
-
-
-                while (reader.Read())
-                {
-                    itemsMaHD.Add((String)reader["MaHoaDon"]);
-                    itemsMaKH.Add((String)reader["MaKhachHang"]);
-                    itemsMaNV.Add((String)reader["MaNhanVien"]);
-                    itemsNgayLapHD.Add((DateTime)reader["NgayLapHoaDon"]);
-                    itemsTongTien.Add((Decimal)reader["TongTienHoaDon"]);
-                }
-                //this.Dispatcher.BeginInvoke(new System.Action(() =>
-                //{
-                maHD.ItemsSource = itemsMaHD;
-                maKH.ItemsSource = itemsMaKH;
-                nguoiLapHD.ItemsSource = itemsMaNV;
-                //}));
+                reader.Read();
+                String name = (String)reader["HoTen"];
                 connection.Close();
+                return name;
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
+                return "";
             }
-            //}));
-
-            //thread.IsBackground = true;
-            //thread.Start();
         }
+        
+        String getNameKHFromCode(String code)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                string readString = "SELECT * FROM KHACHHANG WHERE MaKhachHang = '" + code + "'";
+                SqlCommand command = new SqlCommand(readString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                String name = (String)reader["TenKhachHang"];
+                connection.Close();
+                return name;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return "";
+            }
+        }
+
         private void danhSachHDTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             var desc = e.PropertyDescriptor as PropertyDescriptor;
@@ -184,13 +231,12 @@ namespace UngDungQuanLyNhaSach.Pages
             maKH.SelectedIndex = -1;
             nguoiLapHD.SelectedIndex = -1;
             tongTien.Text = "";
-            ngayLapHD.SelectedDate = DateTime.Now;
             selectedHDTable.ItemsSource = new List<HoaDon>();
             selectedHoaDon = new List<HoaDon>();
             
             loadListHD();
-
         }
+
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (danhSachHDTable.SelectedIndex != -1)
@@ -206,6 +252,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 selectedHDTable.ItemsSource = showSelectedHoaDon;
             }
         }
+
         private void CheckBox_UnChecked(object sender, RoutedEventArgs e)
         {
             if (danhSachHDTable.SelectedIndex != -1)
@@ -220,6 +267,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 selectedHDTable.ItemsSource = showSelectedHoaDon;
             }
         }
+
         private void selectAll_Unchecked(object sender, RoutedEventArgs e)
         {
             danhSachHDTable.ItemsSource = hoaDonList;

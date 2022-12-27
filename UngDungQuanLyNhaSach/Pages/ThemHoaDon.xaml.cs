@@ -210,14 +210,34 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
+        bool checkInput()
+        {
+            if (maNhanVien_cbo.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vui lòng chọn nhân viên");
+                return false;
+            }
+            if (maKhachHang_cbo.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vui lòng chọn khách hàng");
+                return false;
+            }
+            return true;
+        }
+
         private void themSP_btn_Click(object sender, RoutedEventArgs e)
         {
             if (soLuong_txt.Text.Length > 0)
             {
                 int soLuong = int.Parse(soLuong_txt.Text);
+                if (soLuong == 0)
+                {
+                    MessageBox.Show("Số lượng không hợp lệ");
+                    return;
+                }
                 string value = Regex.Replace(donGia_txt.Text, "[^0-9]", "");
-                decimal donGia;
-                if (decimal.TryParse(value, out donGia))
+                double donGia;
+                if (double.TryParse(value, out donGia))
                 {
                     bool check = true;
                     for (int i = 0; i < chiTietHDList.Count; i++)
@@ -237,7 +257,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     hoaDonTable.ItemsSource = new List<ChiTietHoaDon>();
                     hoaDonTable.ItemsSource = chiTietHDList;
                     resetAddProduct();
-                    decimal sum = 0;
+                    double sum = 0;
                     foreach (ChiTietHoaDon chiTiet in chiTietHDList)
                     {
                         sum += chiTiet.getThanhTien();
@@ -300,12 +320,16 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
                     tenSanPham_txt.Text = (String)reader["TenSanPham"];
-                    donGia_txt.Text = reader["GiaNhap"].ToString();
+                    donGia_txt.Text = reader["GiaNhap"].ToString().Replace(".0000", "");
                     if (soLuong_txt.Text.Length > 0)
                     {
                         int soLuong = int.Parse(soLuong_txt.Text);
-                        decimal donGia = decimal.Parse(donGia_txt.Text);
-                        thanhTien_txt.Text = (soLuong * donGia).ToString();
+                        string value = Regex.Replace(donGia_txt.Text, "[^0-9]", "");
+                        double donGia;
+                        if (double.TryParse(value, out donGia))
+                        {
+                            thanhTien_txt.Text = (soLuong * donGia).ToString();
+                        }
                     }
                     connection.Close();
                 }
@@ -344,8 +368,8 @@ namespace UngDungQuanLyNhaSach.Pages
             int soLuong;
             if (int.TryParse(soLuong_txt.Text, out soLuong)) {
                 string value = Regex.Replace(donGia_txt.Text, "[^0-9]", "");
-                decimal donGia;
-                if (decimal.TryParse(value, out donGia))
+                double donGia;
+                if (double.TryParse(value, out donGia))
                 {
                     soLuong = int.Parse(soLuong_txt.Text);
                     thanhTien_txt.Text = (soLuong * donGia).ToString();
@@ -359,47 +383,50 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void luuHD_btn_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (checkInput())
             {
-                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-                connection.Open();
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
 
-                string readString = "select Count(*) from HOADON";
-                SqlCommand commandReader = new SqlCommand(readString, connection);
-                Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+                    string readString = "select Count(*) from HOADON";
+                    SqlCommand commandReader = new SqlCommand(readString, connection);
+                    Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
 
-                string insertString = "INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) " +
-                    "VALUES (@MaHoaDon, @MaNhanVien, @MaKhachHang, @MaKhuyenMai, @NgayLapHoaDon, @TongTienHoaDon)";
-                SqlCommand command = new SqlCommand(insertString, connection);
+                    string insertString = "INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) " +
+                        "VALUES (@MaHoaDon, @MaNhanVien, @MaKhachHang, @MaKhuyenMai, @NgayLapHoaDon, @TongTienHoaDon)";
+                    SqlCommand command = new SqlCommand(insertString, connection);
 
-                command.Parameters.Add("@MaHoaDon", SqlDbType.VarChar);
-                command.Parameters["@MaHoaDon"].Value = "HD" + count.ToString("000");
+                    command.Parameters.Add("@MaHoaDon", SqlDbType.VarChar);
+                    command.Parameters["@MaHoaDon"].Value = "HD" + count.ToString("000");
 
-                command.Parameters.Add("@MaNhanVien", SqlDbType.VarChar);
-                command.Parameters["@MaNhanVien"].Value = maNhanVien_cbo.Text;
+                    command.Parameters.Add("@MaNhanVien", SqlDbType.VarChar);
+                    command.Parameters["@MaNhanVien"].Value = maNhanVien_cbo.Text;
 
-                command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
-                command.Parameters["@MaKhachHang"].Value = maKhachHang_cbo.Text;
+                    command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
+                    command.Parameters["@MaKhachHang"].Value = maKhachHang_cbo.Text;
 
-                command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
-                command.Parameters["@MaKhuyenMai"].Value = khuyenMai_cbo.Text;
+                    command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
+                    command.Parameters["@MaKhuyenMai"].Value = khuyenMai_cbo.Text;
 
-                command.Parameters.Add("@NgayLapHoaDon", SqlDbType.SmallDateTime);
-                command.Parameters["@NgayLapHoaDon"].Value = ngayHoaDon.SelectedDate;
+                    command.Parameters.Add("@NgayLapHoaDon", SqlDbType.SmallDateTime);
+                    command.Parameters["@NgayLapHoaDon"].Value = ngayHoaDon.SelectedDate;
 
-                command.Parameters.Add("@TongTienHoaDon", SqlDbType.Money);
-                command.Parameters["@TongTienHoaDon"].Value = Regex.Replace(tongTien_txt.Text, "[^0-9]", "");
+                    command.Parameters.Add("@TongTienHoaDon", SqlDbType.Money);
+                    command.Parameters["@TongTienHoaDon"].Value = Regex.Replace(tongTien_txt.Text, "[^0-9]", "");
 
-                command.ExecuteNonQuery();
-                connection.Close();
+                    command.ExecuteNonQuery();
+                    connection.Close();
 
-                addChiTietHD("HD" + count.ToString("000"));
-                MessageBox.Show("Thêm thành công");
-                resetData();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                    addChiTietHD("HD" + count.ToString("000"));
+                    MessageBox.Show("Thêm thành công");
+                    resetData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 
@@ -473,8 +500,8 @@ namespace UngDungQuanLyNhaSach.Pages
         private void tongTien_txt_TextChanged(object sender, TextChangedEventArgs e)
         {
             string value = Regex.Replace(tongTien_txt.Text, "[^0-9]", "");
-            decimal ul;
-            if (decimal.TryParse(value, out ul))
+            double ul;
+            if (double.TryParse(value, out ul))
             {
                 tongTien_txt.TextChanged -= tongTien_txt_TextChanged;
                 tongTien_txt.Text = string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", ul);
@@ -486,8 +513,8 @@ namespace UngDungQuanLyNhaSach.Pages
         private void giamGia_txt_TextChanged(object sender, TextChangedEventArgs e)
         {
             string value = Regex.Replace(giamGia_txt.Text, "[^0-9]", "");
-            decimal ul;
-            if (decimal.TryParse(value, out ul))
+            double ul;
+            if (double.TryParse(value, out ul))
             {
                 giamGia_txt.TextChanged -= giamGia_txt_TextChanged;
                 giamGia_txt.Text = string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", ul);
@@ -499,8 +526,8 @@ namespace UngDungQuanLyNhaSach.Pages
         private void phaiThanhToan_txt_TextChanged(object sender, TextChangedEventArgs e)
         {
             string value = Regex.Replace(phaiThanhToan_txt.Text, "[^0-9]", "");
-            decimal ul;
-            if (decimal.TryParse(value, out ul))
+            double ul;
+            if (double.TryParse(value, out ul))
             {
                 phaiThanhToan_txt.TextChanged -= phaiThanhToan_txt_TextChanged;
                 phaiThanhToan_txt.Text = string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", ul);
@@ -512,8 +539,8 @@ namespace UngDungQuanLyNhaSach.Pages
         private void donGia_txt_TextChanged(object sender, TextChangedEventArgs e)
         {
             string value = Regex.Replace(donGia_txt.Text, "[^0-9]", "");
-            decimal ul;
-            if (decimal.TryParse(value, out ul))
+            double ul;
+            if (double.TryParse(value, out ul))
             {
                 donGia_txt.TextChanged -= donGia_txt_TextChanged;
                 donGia_txt.Text = string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", ul);
@@ -525,8 +552,8 @@ namespace UngDungQuanLyNhaSach.Pages
         private void thanhTien_txt_TextChanged(object sender, TextChangedEventArgs e)
         {
             string value = Regex.Replace(thanhTien_txt.Text, "[^0-9]", "");
-            decimal ul;
-            if (decimal.TryParse(value, out ul))
+            double ul;
+            if (double.TryParse(value, out ul))
             {
                 thanhTien_txt.TextChanged -= donGia_txt_TextChanged;
                 thanhTien_txt.Text = string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", ul);
@@ -535,7 +562,7 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-        private void khuyenMai_cbo_SelectionChanged(object sender, SelectionChangedEventArgs e)            
+        private void khuyenMai_cbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (khuyenMai_cbo.SelectedIndex != -1)
             {
@@ -557,6 +584,11 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
+        private void cancel_btn_Click(object sender, RoutedEventArgs e)
+        {
+            resetData();
+        }
+
         public HeaderFooter LeftHeader => throw new NotImplementedException();
 
         public HeaderFooter CenterHeader => throw new NotImplementedException();
@@ -567,11 +599,6 @@ namespace UngDungQuanLyNhaSach.Pages
 
         public HeaderFooter CenterFooter => throw new NotImplementedException();
 
-        public HeaderFooter RightFooter => throw new NotImplementedException();
-
-        private void cancel_btn_Click(object sender, RoutedEventArgs e)
-        {
-            resetData();
-        }
+        public HeaderFooter RightFooter => throw new NotImplementedException();        
     }
 }

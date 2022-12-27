@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,44 +15,91 @@ namespace UngDungQuanLyNhaSach.Model
         [ColumnName("Mã Hóa Đơn")]
         public String maHoaDon { get; set; }
 
-        [ColumnName("Mã Nhân Viên")]
-        public String maNhanVien { get; set; }
-        [ColumnName("Mã Khách Hàng")]
-        public String maKhachHang { get; set; }
-        [ColumnName("Mã Khuyến Mãi")]
-        public String maKhuyenMai { get; set; }
+        [ColumnName("Tên Nhân Viên")]
+        public String maNhanVien
+        {
+            get
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+                    string readString = "select * from NHANVIEN WHERE MaNhanVien = '" + _maNhanVien + "'";
+                    SqlCommand command = new SqlCommand(readString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    string name = (String)reader["HoTen"];
+                    connection.Close();
+                    return name;
+                }
+                catch
+                {
+                    return _maNhanVien;
+                }
+            }
+        }
+        private String _maNhanVien { get; set; }
+
+        [ColumnName("Tên Khách Hàng")]
+        public String maKhachHang
+        {
+            get
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+                    string readString = "select * from KHACHHANG WHERE MaKhachHang = '" + _maKhachHang + "'";
+                    SqlCommand command = new SqlCommand(readString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    string name = (String)reader["TenKhachHang"];
+                    connection.Close();
+                    return name;
+                }
+                catch
+                {
+                    return _maKhachHang;
+                }
+            }
+        }
+        private String _maKhachHang { get; set; }
+
         [ColumnName("Ngày Lập Hóa Đơn")]
         public DateTime ngayLapHD { get; set; }
 
         [ColumnName("Tổng Tiền Hóa Đơn")]
         public Decimal tongTienHD { get; set; }
-        
-        //[ColumnName("Người lập hóa đơn")]
-        //public String nguoiLapHD { get; set; }
 
         public HoaDon(string maHoaDon, string maNhanVien,
-            string maKhachHang, string maKhuyenMai, DateTime ngayLapHD, decimal tongTienHD)
+            string maKhachHang, DateTime ngayLapHD, decimal tongTienHD)
         {
             this.maHoaDon = maHoaDon;
-            this.maNhanVien = maNhanVien;
-            this.maKhachHang = maKhachHang;
-            this.maKhuyenMai = maKhuyenMai;
+            this._maNhanVien = maNhanVien;
+            this._maKhachHang = maKhachHang;
             this.ngayLapHD = ngayLapHD;
             this.tongTienHD = tongTienHD;
-            //this.nguoiLapHD = nguoiLapHD;
         }
+
         public HoaDon(int stt,string maHoaDon, string maNhanVien,
             string maKhachHang, string maKhuyenMai, DateTime ngayLapHD, decimal tongTienHD)
         {
             this.stt = stt;
             this.maHoaDon = maHoaDon;
-            this.maNhanVien = maNhanVien;
-            this.maKhachHang = maKhachHang;
-            this.maKhuyenMai = maKhuyenMai;
+            this._maNhanVien = maNhanVien;
+            this._maKhachHang = maKhachHang;
             this.ngayLapHD = ngayLapHD;
             this.tongTienHD = tongTienHD;
-            //this.nguoiLapHD = nguoiLapHD;
         }
-    }
-    
+
+        public String getMaNhanVien()
+        {
+            return _maNhanVien;
+        }
+        
+        public String getMaKhachHang()
+        {
+            return _maKhachHang;
+        }
+    }    
 }
