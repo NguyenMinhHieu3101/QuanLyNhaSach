@@ -8,13 +8,13 @@
       Background="White"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TraCuuHoaDon"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+      xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
 
     <Page.Resources>
 
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="16" />
-            <Setter Property="Width" Value="135"/>
+            <Setter Property="Width" Value="140"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
@@ -109,7 +109,7 @@
                                     Margin="3,3,23,3"
                                     FontSize="16"
                                     Focusable="True" 
-                                    Background="#FF3F3F3F"
+                                    Background="Transparent"
                                     Foreground="Green"
                                     Visibility="Hidden"
                                     IsReadOnly="{TemplateBinding IsReadOnly}"/>
@@ -184,28 +184,28 @@
             <ColumnDefinition Width="6*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
         <StackPanel Margin="30,30,10,10">
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Mã hóa đơn:" FontStyle="Italic"/>
-                <ComboBox x:Name="maHD" Grid.Column="1" Margin="10,0,0,0" IsEditable="true">
-                </ComboBox>
+                <ComboBox x:Name="maHD" IsEditable="true"/>
             </DockPanel>
             
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Ngày lập hóa đơn:" FontStyle="Italic"/>
-                <DatePicker x:Name="ngayLapHD" Grid.Column="1" Margin="10,0,0,0">
-                </DatePicker>
-            </DockPanel>
-            <DockPanel LastChildFill="True">
-                <TextBlock Text="Tổng tiền:" FontStyle="Italic"/>
-                <TextBox x:Name="tongTien" Template="{StaticResource TextBoxBaseControlTemplate}" Margin="10,0,0,0"/>
+                <ComboBox x:Name="ngayLapHD" IsEditable="true"/>
             </DockPanel>
             
+            <DockPanel LastChildFill="True">
+                <TextBlock Text="Tổng tiền:" FontStyle="Italic"/>
+                <ComboBox x:Name="tongTien" IsEditable="true"/>
+            </DockPanel>           
             
         </StackPanel>
 
@@ -240,17 +240,15 @@
 
         <StackPanel Margin="30,30,10,10" Grid.Column="1">
             <DockPanel LastChildFill="True">
-                <TextBlock Text="Mã khách hàng:" FontStyle="Italic"/>
-                <ComboBox x:Name="maKH" Grid.Column="1" Margin="10,0,0,0"  IsEditable="true">
-                </ComboBox>
+                <TextBlock Text="Tên khách hàng:" FontStyle="Italic"/>
+                <ComboBox x:Name="maKH" Grid.Column="1" IsEditable="true"/>
             </DockPanel>
+            
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Người lập hóa đơn:" FontStyle="Italic"/>
-                <ComboBox x:Name="nguoiLapHD" Grid.Column="1" Margin="10,0,0,0"  IsEditable="true">
-                    <ComboBoxItem IsSelected="True"></ComboBoxItem>
-                    <ComboBoxItem></ComboBoxItem>
-                </ComboBox>
+                <ComboBox x:Name="nguoiLapHD" Grid.Column="1" IsEditable="true"/>
             </DockPanel>
+            
             <DockPanel Margin="25,10,0,0">
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -263,8 +261,8 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="search_btn"
-                            Style="{StaticResource FindButton}" Click="search_btn_Click" />
-                    <!--Click="add_Click"/>-->
+                            Style="{StaticResource FindButton}" 
+                            Click="search_btn_Click" />
 
                     <Button Content="Làm Lại" 
                             Height="35" 
@@ -274,12 +272,14 @@
                             FontSize="16"
                             FontWeight="Bold"
                             x:Name="reset_btn"
-                            Style="{StaticResource CacelButton}" Click="reset_btn_Click"/>
+                            Style="{StaticResource CacelButton}" 
+                            Click="reset_btn_Click"/>
 
                 </StackPanel>
 
             </DockPanel>
         </StackPanel>
+        
         <Grid Grid.Column="1" Grid.Row="1">
             <StackPanel>
                 <DockPanel>

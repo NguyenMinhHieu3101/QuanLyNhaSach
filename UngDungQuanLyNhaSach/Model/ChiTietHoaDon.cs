@@ -48,7 +48,7 @@ namespace UngDungQuanLyNhaSach.Model
                 return string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", _donGia);
             }
         }
-        private Decimal _donGia { get; set; }
+        private double _donGia { get; set; }
 
         [ColumnName("Thành Tiền")]
         public String thanhTien
@@ -58,10 +58,10 @@ namespace UngDungQuanLyNhaSach.Model
                 return string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", _thanhTien);
             }
         }
-        private Decimal _thanhTien { get; set; }
+        private double _thanhTien { get; set; }
 
 
-        public ChiTietHoaDon(string maSanPham, int soLuong, decimal donGia, decimal thanhTien)
+        public ChiTietHoaDon(string maSanPham, int soLuong, double donGia, double thanhTien)
         {
             this._maSanPham = maSanPham;
             this.soLuong = soLuong;
@@ -70,7 +70,7 @@ namespace UngDungQuanLyNhaSach.Model
 
         }
 
-        public ChiTietHoaDon(int stt, string maSanPham, int soLuong, decimal donGia, decimal thanhTien)
+        public ChiTietHoaDon(int stt, string maSanPham, int soLuong, double donGia, double thanhTien)
         {
             this.stt = stt;
             this._maSanPham = maSanPham;
@@ -84,17 +84,17 @@ namespace UngDungQuanLyNhaSach.Model
             return _maSanPham;
         }
         
-        public Decimal getDonGia()
+        public double getDonGia()
         {
             return _donGia;
         }
         
-        public Decimal getThanhTien()
+        public double getThanhTien()
         {
             return _thanhTien;
         }
 
-        public void setThanhTien(Decimal value)
+        public void setThanhTien(double value)
         {
             this._thanhTien = value;
         }
