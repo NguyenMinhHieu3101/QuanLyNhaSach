@@ -246,16 +246,16 @@
                 <Border BorderBrush="Black" 
                                     BorderThickness="1"
                                     CornerRadius="10">
-                    <DatePicker x:Name="ngayHoaDon" BorderBrush="Transparent" FontSize="16"/>
+                    <DatePicker x:Name="ngayHoaDon" BorderBrush="Transparent" FontSize="16" IsEnabled="False"/>
                 </Border>
             </DockPanel>
             <DockPanel>
                 <TextBlock Text="Mã Hóa Đơn:" FontWeight="Bold"/>
-                <TextBox x:Name="maHoaDon_txt" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox x:Name="maHoaDon_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False"/>
             </DockPanel>
             <DockPanel>
                 <TextBlock Text="Mã Nhân Viên:" FontWeight="Bold"/>
-                <ComboBox x:Name="maNhanVien_cbo" SelectionChanged="maNhanVien_cbo_SelectionChanged"/>
+                <ComboBox x:Name="maNhanVien_cbo" SelectionChanged="maNhanVien_cbo_SelectionChanged" IsEditable="True"/>
             </DockPanel>
 
             <DockPanel>
@@ -268,7 +268,7 @@
 
             <DockPanel>
                 <TextBlock Text="Mã Khách Hàng:" FontWeight="Bold"/>
-                <ComboBox x:Name="maKhachHang_cbo" SelectionChanged="maKhachHang_cbo_SelectionChanged"/>
+                <ComboBox x:Name="maKhachHang_cbo" SelectionChanged="maKhachHang_cbo_SelectionChanged" IsEditable="True"/>
             </DockPanel>
             
             <DockPanel LastChildFill="True">
@@ -277,8 +277,13 @@
             </DockPanel>
             
             <DockPanel>
-                <TextBlock Text="Khuyến Mãi (%):" FontWeight="Bold" />
-                <ComboBox x:Name="khuyenMai_cbo"/>
+                <TextBlock Text="Mã Khuyến Mãi:" FontWeight="Bold"/>
+                <ComboBox x:Name="khuyenMai_cbo" IsEditable="True" SelectionChanged="khuyenMai_cbo_SelectionChanged"/>
+            </DockPanel>
+            
+            <DockPanel>
+                <TextBlock Text="Khuyến Mãi (%):" FontWeight="Bold"/>
+                <TextBox x:Name="khuyenMai_txt" IsEnabled="False" Template="{StaticResource TextBoxBaseControlTemplate}"/>
             </DockPanel>
             <!--<DockPanel HorizontalAlignment="Center">
                     <TextBlock Text="Mã Hóa Đơn:" FontWeight="Bold" Width="200"/>
@@ -295,7 +300,7 @@
 
             <DockPanel>
                 <TextBlock Text="Mã Sản Phẩm:" FontWeight="Bold"/>
-                <ComboBox x:Name="maSanPham_cbo" SelectionChanged="maSanPham_cbo_SelectionChanged"/>
+                <ComboBox x:Name="maSanPham_cbo" SelectionChanged="maSanPham_cbo_SelectionChanged" IsEditable="True"/>
             </DockPanel>
             <DockPanel>
                 <TextBlock Text="Tên Sản Phẩm:" FontWeight="Bold"/>
@@ -304,20 +309,22 @@
 
             <DockPanel>
                 <TextBlock Text="Đơn Giá:" FontWeight="Bold"/>
-                <TextBox x:Name="donGia_txt" Template="{StaticResource TextBoxBaseControlTemplate}"/>
+                <TextBox x:Name="donGia_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False" TextChanged="donGia_txt_TextChanged"/>
             </DockPanel>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1" Margin="10">
 
             <DockPanel LastChildFill="True">
                 <TextBlock Text="Số Lượng:"  FontWeight="Bold"/>
-                <TextBox x:Name="soLuong_txt" Template="{StaticResource TextBoxBaseControlTemplate}" TextChanged="soLuong_txt_TextChanged"/>
-
+                <TextBox x:Name="soLuong_txt" 
+                         Template="{StaticResource TextBoxBaseControlTemplate}" 
+                         TextChanged="soLuong_txt_TextChanged" 
+                         PreviewTextInput="previewTextInput"/>
             </DockPanel>
             
             <DockPanel>
                 <TextBlock Text="Thành Tiền:" FontWeight="Bold"/>
-                <TextBox x:Name="thanhTien_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False"/>
+                <TextBox x:Name="thanhTien_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False" TextChanged="thanhTien_txt_TextChanged"/>
             </DockPanel>
 
             <Button x:Name="themSP_btn" Margin="0,10,0,0" Content="Thêm Sản Phẩm" 
@@ -357,20 +364,19 @@
 
                 <DockPanel LastChildFill="True">
                     <TextBlock Text="Tổng tiền:" FontWeight="Bold" FontSize="16" />
-                <TextBox x:Name="tongTien_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False"/>
-
+                    <TextBox x:Name="tongTien_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False" TextChanged="tongTien_txt_TextChanged" />
                 </DockPanel>
+            
                 <DockPanel Grid.Row="1">
                     <TextBlock Text="Giảm giá:" FontWeight="Bold" FontSize="16"/>
-                <TextBox x:Name="giamGia_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False"/>
-
+                    <TextBox x:Name="giamGia_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False" TextChanged="giamGia_txt_TextChanged"/>
                 </DockPanel>  
 
         </StackPanel>
         <StackPanel Grid.Row="5" Grid.Column="1" Margin="10">
             <DockPanel >
                 <TextBlock Text="Phải thanh toán:" FontWeight="Bold" FontSize="16"/>
-                <TextBox x:Name="phaiThanhToan_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False"/>
+                <TextBox x:Name="phaiThanhToan_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False" TextChanged="phaiThanhToan_txt_TextChanged"/>
             </DockPanel>
         </StackPanel>        
         
@@ -383,6 +389,7 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}" Click="luuHD_btn_Click"/>
+            
             <Button x:Name="xuatHD_btn" Margin="0,0,20,0" Content="Xuất Hóa Đơn" 
                         Height="30" 
                         Width="150"
@@ -390,13 +397,14 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource OutButton}" Click="xuatHD_btn_Click"/>
+            
             <Button x:Name="cancel_btn" Margin="0,0,20,0" Content="Hủy" 
                         Height="30" 
                         Width="150"
                         Foreground="Red"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource CacelButton}"/>
+                        Style="{StaticResource CacelButton}" Click="cancel_btn_Click"/>
         </StackPanel>
     </Grid>
 </Page>

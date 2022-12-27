@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,17 +41,32 @@ namespace UngDungQuanLyNhaSach.Model
         [ColumnName("Số Lượng")]
         public Int32 soLuong { get; set; }
         [ColumnName("Đơn Giá")]
-        public Decimal donGia { get; set; }
+        public String donGia
+        {
+            get
+            {
+                return string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", _donGia);
+            }
+        }
+        private Decimal _donGia { get; set; }
+
         [ColumnName("Thành Tiền")]
-        public Decimal thanhTien { get; set; }
+        public String thanhTien
+        {
+            get
+            {
+                return string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", _thanhTien);
+            }
+        }
+        private Decimal _thanhTien { get; set; }
 
 
         public ChiTietHoaDon(string maSanPham, int soLuong, decimal donGia, decimal thanhTien)
         {
             this._maSanPham = maSanPham;
             this.soLuong = soLuong;
-            this.donGia = donGia;
-            this.thanhTien = thanhTien; 
+            this._donGia = donGia;
+            this._thanhTien = thanhTien; 
 
         }
 
@@ -59,13 +75,23 @@ namespace UngDungQuanLyNhaSach.Model
             this.stt = stt;
             this._maSanPham = maSanPham;
             this.soLuong = soLuong;
-            this.donGia = donGia;
-            this.thanhTien = thanhTien;
+            this._donGia = donGia;
+            this._thanhTien = thanhTien;
         }
 
         public String getMaSanPham()
         {
             return _maSanPham;
+        }
+        
+        public Decimal getDonGia()
+        {
+            return _donGia;
+        }
+        
+        public Decimal getThanhTien()
+        {
+            return _thanhTien;
         }
     }
 
