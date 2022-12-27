@@ -53,10 +53,9 @@ namespace UngDungQuanLyNhaSach.Pages
                 {
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                     connection.Open();
-                    string readString = "select * from NHANVIEN";
+                    string readString = "select * from NHANVIEN WHERE NHANVIEN.TrangThai = 1";
                     SqlCommand command = new SqlCommand(readString, connection);
                     SqlDataReader reader = command.ExecuteReader();
-
                     List<String> itemsMaNV = new List<String>();
 
                     while (reader.Read())
@@ -72,7 +71,6 @@ namespace UngDungQuanLyNhaSach.Pages
                     readString = "select * from KHACHHANG WHERE KHACHHANG.TrangThai = 1";
                     command = new SqlCommand(readString, connection);
                     reader = command.ExecuteReader();
-
                     List<String> itemsMaKH = new List<String>();
 
                     while (reader.Read())
@@ -99,22 +97,6 @@ namespace UngDungQuanLyNhaSach.Pages
                     {
                         maSanPham_cbo.ItemsSource = itemsMaSP;
                     }));
-                    /*
-                    reader.Close();
-                    readString = "select * from KHUYENMAI";
-                    command = new SqlCommand(readString, connection);
-                    reader = command.ExecuteReader();
-
-                    List<String> itemsKhuyenMai = new List<String>();
-                    while (reader.Read())
-                    {
-                        itemsKhuyenMai.Add((String)reader["MaKhuyenMai"]);
-                    }
-                    this.Dispatcher.BeginInvoke(new System.Action(() =>
-                    {
-                        khuyenMai_cbo.ItemsSource = itemsKhuyenMai;
-                    }));
-                    */
                     connection.Close();
                 }
                 catch (Exception ex)
@@ -166,20 +148,20 @@ namespace UngDungQuanLyNhaSach.Pages
 
         void updateMaHoaDon()
         {
-                try
-                {
-                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-                    connection.Open();
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
 
-                    string readString = "select Count(*) from HOADON";
-                    SqlCommand commandReader = new SqlCommand(readString, connection);
-                    Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
-                        maHoaDon_txt.Text = "HD" + count.ToString("000");
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.ToString());
-                }
+                string readString = "select Count(*) from HOADON";
+                SqlCommand commandReader = new SqlCommand(readString, connection);
+                Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+                maHoaDon_txt.Text = "HD" + count.ToString("000");
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
         }
 
         void resetData()
@@ -349,7 +331,79 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void luuHD_btn_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
 
+                string readString = "select Count(*) from HOADON";
+                SqlCommand commandReader = new SqlCommand(readString, connection);
+                Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+
+                string insertString = "INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) " +
+                    "VALUES (@MaHoaDon, @MaNhanVien, @MaKhachHang, @MaKhuyenMai, @NgayLapHoaDon, @TongTienHoaDon)";
+                SqlCommand command = new SqlCommand(insertString, connection);
+
+                command.Parameters.Add("@MaHoaDon", SqlDbType.VarChar);
+                command.Parameters["@MaHoaDon"].Value = "HD" + count.ToString("000");
+
+                command.Parameters.Add("@MaNhanVien", SqlDbType.VarChar);
+                command.Parameters["@MaNhanVien"].Value = maNhanVien_cbo.Text;
+
+                command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
+                command.Parameters["@MaKhachHang"].Value = maKhachHang_cbo.Text;
+
+                command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
+                command.Parameters["@MaKhuyenMai"].Value = khuyenMai_cbo.Text.Length > 0 ? khuyenMai_cbo.Text : "KM001";
+
+                command.Parameters.Add("@NgayLapHoaDon", SqlDbType.SmallDateTime);
+                command.Parameters["@NgayLapHoaDon"].Value = ngayHoaDon.SelectedDate;
+
+                command.Parameters.Add("@TongTienHoaDon", SqlDbType.Money);
+                command.Parameters["@TongTienHoaDon"].Value = Regex.Replace(tongTien_txt.Text, "[^0-9]", "");
+
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                addChiTietHD("HD" + count.ToString("000"));
+                MessageBox.Show("Thêm thành công");
+                resetData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        void addChiTietHD(String maHD)
+        {
+            foreach (ChiTietHoaDon chiTiet in chiTietHDList)
+            {
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+
+                    string insertString = "INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES (@MaHoaDon, @MaSanPham, @SoLuong)";
+                    SqlCommand command = new SqlCommand(insertString, connection);
+
+                    command.Parameters.Add("@MaHoaDon", SqlDbType.VarChar);
+                    command.Parameters["@MaHoaDon"].Value = maHD;
+
+                    command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
+                    command.Parameters["@MaSanPham"].Value = chiTiet.getMaSanPham();
+
+                    command.Parameters.Add("@SoLuong", SqlDbType.VarChar);
+                    command.Parameters["@SoLuong"].Value = chiTiet.soLuong;
+
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
 
         private void xuatHD_btn_Click(object sender, RoutedEventArgs e)
