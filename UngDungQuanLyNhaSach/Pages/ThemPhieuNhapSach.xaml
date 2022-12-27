@@ -78,8 +78,8 @@
             <TextBlock Text="Thông tin sách nhập"  Style="{StaticResource Header1}"></TextBlock>
             <TextBlock Text="Gợi ý 5 đầu sách bán chạy tháng trước" Style="{StaticResource normal}" Margin="5 10 15 30"></TextBlock>
         </StackPanel>
-       
-        <StackPanel Grid.Row="1" Grid.Column="0" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <DataGrid x:Name="GoiYSachTable" Margin="5,10" Style="{DynamicResource DataGridStyle}"
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 

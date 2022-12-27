@@ -178,7 +178,7 @@ namespace UngDungQuanLyNhaSach.Pages
             catch (Exception exception)
             {
                 MessageBox.Show(exception.Message);
-                //MessageBox.Show("Vui lòng chọn khoảng thời gian hợp lí!");
+                //MessageBox.Show("Khoảng thời gian không hợp lệ!");
             }
         }
 
