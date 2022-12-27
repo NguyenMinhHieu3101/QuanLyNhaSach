@@ -29,6 +29,7 @@ namespace UngDungQuanLyNhaSach.Pages
     {
         List<PhieuNhapSach> phieuNhapList = new List<PhieuNhapSach>();
         List<ChiTietPhieuNhapSach> chiTietPhieuNhapSachList = new List<ChiTietPhieuNhapSach>();
+        List<SanPham> topSPList = new List<SanPham>();
         public ThemPhieuNhapSach()
         {
             InitializeComponent();
@@ -36,7 +37,7 @@ namespace UngDungQuanLyNhaSach.Pages
             loadListPhieuNhap();
             loadListChiTietPhieuNhap();
             updateBtn.IsEnabled = false;
-
+            loadGoiYList();
         }
         void resetData()
         {
@@ -123,7 +124,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
                             phieuNhapSachTable.ItemsSource = phieuNhapList;
-                           GoiYSachTable.ItemsSource = phieuNhapList;
+                           //GoiYSachTable.ItemsSource = phieuNhapList;
                         }));
                     }
                     connection.Close();
@@ -351,6 +352,56 @@ namespace UngDungQuanLyNhaSach.Pages
                 e.Column.Header = att.Name;
                 e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
             }
+        }
+
+        void loadGoiYList()
+        {
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                topSPList = new List<SanPham>();
+
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+
+                    connection.Open();
+                    string readString = "SELECT TOP(5) SANPHAM.MaSanPham, TenSanPham, TacGia, TheLoai, NXB, NamXB, MaKho, TrangThai, GiaNhap FROM HOADON, CHITIETHOADON, SANPHAM WHERE (HOADON.MaHoaDon = CHITIETHOADON.MaHoaDon) AND (SANPHAM.MaSanPham = CHITIETHOADON.MaSanPham) AND (MONTH(NgayLapHoaDon) = @Thang) GROUP BY SANPHAM.MaSanPham, TenSanPham, TacGia, TheLoai, NXB, NamXB, MaKho, TrangThai, GiaNhap ORDER BY COUNT(SoLuong) DESC";
+                    SqlCommand command = new SqlCommand(readString, connection);
+                    command.Parameters.Add("@Thang", SqlDbType.Int);
+                    //command.Parameters["@Thang"].Value = DateTime.Now.Month - 1;
+
+                    //Dùng tạm sách bán chạy tháng 1, đợi thêm dữ liệu trong SQL
+                    command.Parameters["@Thang"].Value = 1;
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    int count = 0;
+
+                    while (reader.Read())
+                    {
+                        count++;
+                        topSPList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
+                                    tenSanPham: (String)reader["TenSanPham"], theLoai: (String)reader["TheLoai"], 
+                                    tacGia: (String)reader["TacGia"], nXB: (String)reader["NXB"], giaNhap: (Decimal)reader["GiaNhap"],
+                                    namXB: (int)reader["NamXB"], maKho: (String)reader["MaKho"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng"));
+
+                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            GoiYSachTable.ItemsSource = topSPList;
+                        }));
+                    }
+                    connection.Close();
+                }
+                catch (Exception e1)
+                {
+                    //MessageBox.Show("db error");
+                    MessageBox.Show(e1.Message);
+
+                }
+            }));
+
+            thread.IsBackground = true;
+            thread.Start();      
         }
     }
 }
