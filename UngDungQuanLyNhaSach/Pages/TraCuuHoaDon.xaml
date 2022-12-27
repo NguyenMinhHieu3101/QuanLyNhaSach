@@ -181,14 +181,14 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="6*"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="6*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         
         <StackPanel Margin="30,30,10,10">
@@ -284,7 +284,7 @@
             <StackPanel>
                 <DockPanel>
                     <DataGrid
-                                  x:Name="selectedHDTable" Margin="30,10,10,10" Style="{DynamicResource DataGridStyle}" 
+                                  x:Name="selectedHDTable" Margin="10,10,10,10" Style="{DynamicResource DataGridStyle}" 
                                   CellStyle="{StaticResource DataGridCellStyle}" 
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
@@ -294,12 +294,13 @@
                 </DockPanel>
             </StackPanel>
         </Grid>
-        <StackPanel Grid.Row="2" Grid.Column="2">
-            <DockPanel Margin="25,10,0,0">
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="2" Grid.Column="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
 
-                    <Button Content="Xóa" 
+            <Button Content="Xóa" 
                             Height="35" 
                             Width="90"
                             Margin="10,0"
@@ -308,9 +309,8 @@
                             FontWeight="Bold"
                             x:Name="delete_btn"
                             Style="{StaticResource DeleteButton}" Click="delete_btn_Click"/>
-                    <!--Click="add_Click"/>-->
 
-                    <Button Content="Xuất" 
+            <Button Content="Xuất" 
                             Height="35" 
                             Width="90"
                             Margin="10,0"
@@ -320,7 +320,7 @@
                             x:Name="export_btn"
                             Style="{StaticResource AddButton}" Click="export_btn_Click"/>
 
-                    <Button Content="Thoát" 
+            <Button Content="Thoát" 
                             Height="35" 
                             Width="90"
                             Margin="10,0"
@@ -329,9 +329,6 @@
                             FontWeight="Bold"
                             x:Name="exit_btn"
                             Style="{StaticResource CacelButton}" Click="exit_btn_Click"/>
-                </StackPanel>
-
-            </DockPanel>
         </StackPanel>
 
     </Grid>

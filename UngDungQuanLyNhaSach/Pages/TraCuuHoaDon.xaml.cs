@@ -22,7 +22,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
-using Microsoft.Office.Interop.Excel;
 using UngDungQuanLyNhaSach.Model;
 
 namespace UngDungQuanLyNhaSach.Pages
@@ -238,7 +237,7 @@ namespace UngDungQuanLyNhaSach.Pages
         }
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
+        {         
             if (danhSachHDTable.SelectedIndex != -1)
             {
                 selectedHoaDon.RemoveAll(element => element.maHoaDon.CompareTo(hoaDonList[danhSachHDTable.SelectedIndex].maHoaDon) == 0);
@@ -257,7 +256,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             if (danhSachHDTable.SelectedIndex != -1)
             {
-                selectedHoaDon.RemoveAll(element => element.maHoaDon.CompareTo(hoaDonList[danhSachHDTable.SelectedIndex].maNhanVien) == 0);
+                selectedHoaDon.RemoveAll(element => element.maHoaDon.CompareTo(hoaDonList[danhSachHDTable.SelectedIndex].maHoaDon) == 0);
                 List<HoaDon> showSelectedHoaDon = selectedHoaDon.OrderBy(e => e.maHoaDon).ToList();
                 for (int i = 0; i < showSelectedHoaDon.Count; i++)
                 {
@@ -272,7 +271,6 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             danhSachHDTable.ItemsSource = hoaDonList;
             selectedHoaDon = new List<HoaDon>();
-            selectedHoaDon.AddRange(hoaDonList);
             selectedHDTable.ItemsSource = selectedHoaDon;
         }
 

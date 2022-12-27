@@ -204,7 +204,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 {
                     showSelectedKhachHang[i].stt = i + 1;
                 }
-                chooseNhanVienTable.ItemsSource = new List<KhachHang>();
+                chooseNhanVienTable.ItemsSource = new List<NhanVien>();
                 chooseNhanVienTable.ItemsSource = showSelectedKhachHang;
             }
         }
@@ -219,7 +219,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 {
                     showSelectedKhachHang[i].stt = i + 1;
                 }
-                chooseNhanVienTable.ItemsSource = new List<KhachHang>();
+                chooseNhanVienTable.ItemsSource = new List<NhanVien>();
                 chooseNhanVienTable.ItemsSource = showSelectedKhachHang;
             }
         }
