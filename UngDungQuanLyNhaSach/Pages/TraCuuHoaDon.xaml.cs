@@ -59,13 +59,13 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                     connection.Open();
 
-                    string readString = "SELECT * FROM HOADON, CHITIETHOADON WHERE HOADON.MaHoaDon = CHITIETHOADON.MaHoaDon";
+                    string readString = "select * from HOADON, NHANVIEN, KHACHHANG where HOADON.MaNhanVien = NHANVIEN.MaNhanVien and HOADON.MaKhachHang = KHACHHANG.MaKhachHang";
 
                     if (maHDText.Length > 0) readString += " AND HOADON.MaHoaDon Like '%" + maHDText + "%'";
-                    if (maKHText.Length > 0) readString += " AND MaKhachHang Like '%" + maKHText + "%'";
+                    if (maKHText.Length > 0) readString += " AND KHACHHANG.TenKhachHang Like N'%" + maKHText + "%'";
                     if (ngayLapHDText.Length > 0) readString += " AND NgayLapHoaDon = '" + ngayLapHDText + "'";
-                    if (nguoiLapHDText.Length > 0) readString += " AND MaNhanVien Like '%" + nguoiLapHDText + "%'";
-                    if (tongTienText.Length > 0) readString += " AND TongTienHoaDon Like '%" + tongTienText + "%'";
+                    if (nguoiLapHDText.Length > 0) readString += " AND NHANVIEN.HoTen Like N'%" + nguoiLapHDText + "%'";
+                    if (tongTienText.Length > 0) readString += " AND TongTienHoaDon = " + Regex.Replace(tongTienText, "[^0-9]", "");
 
                     SqlCommand command = new SqlCommand(readString, connection);
                     SqlDataReader reader = command.ExecuteReader();

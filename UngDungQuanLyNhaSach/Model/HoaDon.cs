@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,7 +70,15 @@ namespace UngDungQuanLyNhaSach.Model
         public DateTime ngayLapHD { get; set; }
 
         [ColumnName("Tổng Tiền Hóa Đơn")]
-        public Decimal tongTienHD { get; set; }
+        public String tongTienHD
+        {
+            get
+            {
+                String strMoney = _tongTienHD.ToString().Replace(".0000", "");
+                return string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(strMoney));
+            }   
+        }
+        private Decimal _tongTienHD { get; set; }
 
         public HoaDon(string maHoaDon, string maNhanVien,
             string maKhachHang, DateTime ngayLapHD, decimal tongTienHD)
@@ -78,7 +87,7 @@ namespace UngDungQuanLyNhaSach.Model
             this._maNhanVien = maNhanVien;
             this._maKhachHang = maKhachHang;
             this.ngayLapHD = ngayLapHD;
-            this.tongTienHD = tongTienHD;
+            this._tongTienHD = tongTienHD;
         }
 
         public HoaDon(int stt,string maHoaDon, string maNhanVien,
@@ -89,7 +98,7 @@ namespace UngDungQuanLyNhaSach.Model
             this._maNhanVien = maNhanVien;
             this._maKhachHang = maKhachHang;
             this.ngayLapHD = ngayLapHD;
-            this.tongTienHD = tongTienHD;
+            this._tongTienHD = tongTienHD;
         }
 
         public String getMaNhanVien()
@@ -100,6 +109,11 @@ namespace UngDungQuanLyNhaSach.Model
         public String getMaKhachHang()
         {
             return _maKhachHang;
+        }
+
+        public decimal getTongTienHD()
+        {
+            return _tongTienHD;
         }
     }    
 }
