@@ -43,6 +43,9 @@ namespace UngDungQuanLyNhaSach.Pages
             ngayHoaDon.SelectedDate = DateTime.Now;
             loadData();
             hoaDonTable.ItemsSource = chiTietHDList;
+            tongTien_txt.Text = "0";
+            giamGia_txt.Text = "0";
+            phaiThanhToan_txt.Text = "0";
         }
 
         void loadData()
@@ -53,7 +56,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 {
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                     connection.Open();
-                    string readString = "select * from NHANVIEN WHERE NHANVIEN.TrangThai = 1";
+                    string readString = "select * from NHANVIEN WHERE TrangThai = 1 AND MaChucVu = 'NVBH'";
                     SqlCommand command = new SqlCommand(readString, connection);
                     SqlDataReader reader = command.ExecuteReader();
                     List<String> itemsMaNV = new List<String>();
@@ -173,7 +176,18 @@ namespace UngDungQuanLyNhaSach.Pages
             soLuong_txt.Text = "";
             thanhTien_txt.Text = "";
             donGia_txt.Text = "";
-
+            maNhanVien_cbo.SelectedIndex = -1;
+            tenNhanVien_txt.Text = "";
+            maKhachHang_cbo.SelectedIndex= -1;
+            tenKhachHang_txt.Text = "";
+            khuyenMai_cbo.SelectedIndex = -1;
+            khuyenMai_cbo.ItemsSource = new List<string>();
+            khuyenMai_txt.Text = "";
+            tongTien_txt.Text = "0";
+            giamGia_txt.Text = "0";
+            phaiThanhToan_txt.Text = "0";
+            chiTietHDList = new List<ChiTietHoaDon>();
+            hoaDonTable.ItemsSource= new List<ChiTietHoaDon>();
         }    
 
         void resetAddProduct()
@@ -205,7 +219,21 @@ namespace UngDungQuanLyNhaSach.Pages
                 decimal donGia;
                 if (decimal.TryParse(value, out donGia))
                 {
-                    chiTietHDList.Add(new ChiTietHoaDon(chiTietHDList.Count + 1, maSanPham_cbo.Text, soLuong, donGia, donGia * soLuong));
+                    bool check = true;
+                    for (int i = 0; i < chiTietHDList.Count; i++)
+                    {
+                        if (chiTietHDList[i].getMaSanPham().CompareTo(maSanPham_cbo.Text) == 0)
+                        {
+                            chiTietHDList[i].soLuong += soLuong;
+                            chiTietHDList[i].setThanhTien(chiTietHDList[i].soLuong * chiTietHDList[i].getDonGia());
+                            check = false;
+                            break;
+                        }
+                    }
+                    if (check)
+                    {
+                        chiTietHDList.Add(new ChiTietHoaDon(chiTietHDList.Count + 1, maSanPham_cbo.Text, soLuong, donGia, donGia * soLuong));
+                    }
                     hoaDonTable.ItemsSource = new List<ChiTietHoaDon>();
                     hoaDonTable.ItemsSource = chiTietHDList;
                     resetAddProduct();
@@ -354,7 +382,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 command.Parameters["@MaKhachHang"].Value = maKhachHang_cbo.Text;
 
                 command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
-                command.Parameters["@MaKhuyenMai"].Value = khuyenMai_cbo.Text.Length > 0 ? khuyenMai_cbo.Text : "KM001";
+                command.Parameters["@MaKhuyenMai"].Value = khuyenMai_cbo.Text;
 
                 command.Parameters.Add("@NgayLapHoaDon", SqlDbType.SmallDateTime);
                 command.Parameters["@NgayLapHoaDon"].Value = ngayHoaDon.SelectedDate;

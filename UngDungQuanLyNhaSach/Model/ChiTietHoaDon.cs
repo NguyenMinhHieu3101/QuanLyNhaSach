@@ -93,6 +93,11 @@ namespace UngDungQuanLyNhaSach.Model
         {
             return _thanhTien;
         }
+
+        public void setThanhTien(Decimal value)
+        {
+            this._thanhTien = value;
+        }
     }
 
 }
