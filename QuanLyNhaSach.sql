@@ -55,7 +55,6 @@ CREATE TABLE CHITIETHOADON
 	MaSanPham VARCHAR(20) NOT NULL,
 	SoLuong INT,
 	DonGia Money,
-	GiamGia Float,
 	ThanhTien Money
 )
 

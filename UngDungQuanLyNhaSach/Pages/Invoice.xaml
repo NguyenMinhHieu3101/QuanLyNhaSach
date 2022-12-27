@@ -1,15 +1,14 @@
-﻿<Page x:Class="UngDungQuanLyNhaSach.Pages.ThemHoaDon"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
-      mc:Ignorable="d" 
-      Background="White"
-      d:DesignHeight="850" d:DesignWidth="800"
-      Title="ThemHoaDon">
+﻿<Window x:Class="UngDungQuanLyNhaSach.Pages.Invoice"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Invoice" Height="800" Width="800">
 
-    <Page.Resources>
+    <Window.Resources>
 
         <Style x:Key="notCalledBorder" TargetType="{x:Type Border}">
             <Setter Property="BorderThickness" Value="1" />
@@ -18,12 +17,12 @@
 
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="16" />
-            <Setter Property="Width" Value="130"/>
+            <Setter Property="Width" Value="170"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
         <Style x:Key="Header1" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontSize" Value="40" />
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
@@ -219,193 +218,101 @@
 
         </Style>
 
-    </Page.Resources>
+    </Window.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="3.3*"/>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="2.6*"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="5"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="50"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
-        </Grid.ColumnDefinitions>
-        <!--<StackPanel Margin="5" Grid.ColumnSpan="2">
-                <TextBlock Text="Hóa Đơn"
-                   Style="{StaticResource Header1}"/>
-            </StackPanel>-->
-        <StackPanel Grid.Row="0" Margin="10">
+    <ScrollViewer>
 
-            <DockPanel LastChildFill="True" >
-                <TextBlock Text="Ngày Hóa Đơn:" FontWeight="Bold"/>
-                <Border BorderBrush="Black" 
-                                    BorderThickness="1"
-                                    CornerRadius="10">
-                    <DatePicker x:Name="ngayHoaDon" BorderBrush="Transparent" FontSize="16" IsEnabled="False"/>
-                </Border>
-            </DockPanel>
-            <DockPanel>
-                <TextBlock Text="Mã Hóa Đơn:" FontWeight="Bold"/>
-                <TextBox x:Name="maHoaDon_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False"/>
-            </DockPanel>
-            <DockPanel>
-                <TextBlock Text="Mã Nhân Viên:" FontWeight="Bold"/>
-                <ComboBox x:Name="maNhanVien_cbo" SelectionChanged="maNhanVien_cbo_SelectionChanged" IsEditable="True"/>
-            </DockPanel>
-
-            <DockPanel>
-                <TextBlock Text="Tên Nhân Viên:" FontWeight="Bold"/>
-                <TextBox x:Name="tenNhanVien_txt" IsEnabled="False" Template="{StaticResource TextBoxBaseControlTemplate}"/>
-            </DockPanel>           
+        <StackPanel>
             
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10">
+            <StackPanel Margin="20" x:Name="doc">
 
-            <DockPanel>
-                <TextBlock Text="Mã Khách Hàng:" FontWeight="Bold"/>
-                <ComboBox x:Name="maKhachHang_cbo" SelectionChanged="maKhachHang_cbo_SelectionChanged" IsEditable="True"/>
-            </DockPanel>
-            
-            <DockPanel LastChildFill="True">
-                <TextBlock Text="Tên Khách Hàng:"  FontWeight="Bold"/>
-                <TextBox x:Name="tenKhachHang_txt" IsEnabled="False" Template="{StaticResource TextBoxBaseControlTemplate}"/>
-            </DockPanel>
-            
-            <DockPanel>
-                <TextBlock Text="Mã Khuyến Mãi:" FontWeight="Bold"/>
-                <ComboBox x:Name="khuyenMai_cbo" IsEditable="True" SelectionChanged="khuyenMai_cbo_SelectionChanged"/>
-            </DockPanel>
-            
-            <DockPanel>
-                <TextBlock Text="Khuyến Mãi (%):" FontWeight="Bold"/>
-                <TextBox x:Name="khuyenMai_txt" IsEnabled="False" Template="{StaticResource TextBoxBaseControlTemplate}"/>
-            </DockPanel>
-            <!--<DockPanel HorizontalAlignment="Center">
-                    <TextBlock Text="Mã Hóa Đơn:" FontWeight="Bold" Width="200"/>
-                    <TextBox x:Name="maHoaDon" Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" HorizontalAlignment="Right"/>
-                </DockPanel>
-                <DockPanel HorizontalAlignment="Center">
-                    <TextBlock Text="Mã Nhân Viên:" Width="200" FontWeight="Bold"/>
-                    <TextBox x:Name="nvLapHoaDon" Template="{StaticResource TextBoxBaseControlTemplate}" Width="180" DockPanel.Dock="Left" HorizontalAlignment="Right"/>
-                </DockPanel>-->
+                <TextBlock Text="Hóa đơn" Style="{StaticResource Header1}"/>
 
-        </StackPanel>
-        <Separator Grid.Row="1" Grid.ColumnSpan="2"/>
-        <StackPanel Grid.Row="2" Grid.Column="0" Margin="10">
+                <Grid Margin="0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
-            <DockPanel>
-                <TextBlock Text="Mã Sản Phẩm:" FontWeight="Bold"/>
-                <ComboBox x:Name="maSanPham_cbo" SelectionChanged="maSanPham_cbo_SelectionChanged" IsEditable="True"/>
-            </DockPanel>
-            <DockPanel>
-                <TextBlock Text="Tên Sản Phẩm:" FontWeight="Bold"/>
-                <TextBox x:Name="tenSanPham_txt" IsEnabled="False" Template="{StaticResource TextBoxBaseControlTemplate}"/>
-            </DockPanel>
+                    <StackPanel HorizontalAlignment="Left">
+                        <TextBlock HorizontalAlignment="Left" x:Name="date" Text="Ngày:" Margin="0,0,0,20"/>
 
-            <DockPanel>
-                <TextBlock Text="Đơn Giá:" FontWeight="Bold"/>
-                <TextBox x:Name="donGia_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False" TextChanged="donGia_txt_TextChanged"/>
-            </DockPanel>
-        </StackPanel>
-        <StackPanel Grid.Row="2" Grid.Column="1" Margin="10">
+                        <DockPanel>
+                            <TextBlock Text="Khách Hàng:" FontWeight="Bold"/>
+                            <TextBlock x:Name="khachHang" Text="Trần Ngọc Tiến"/>
+                        </DockPanel>
 
-            <DockPanel LastChildFill="True">
-                <TextBlock Text="Số Lượng:"  FontWeight="Bold"/>
-                <TextBox x:Name="soLuong_txt" 
-                         Template="{StaticResource TextBoxBaseControlTemplate}" 
-                         TextChanged="soLuong_txt_TextChanged" 
-                         PreviewTextInput="previewTextInput"/>
-            </DockPanel>
-            
-            <DockPanel>
-                <TextBlock Text="Thành Tiền:" FontWeight="Bold"/>
-                <TextBox x:Name="thanhTien_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False" TextChanged="thanhTien_txt_TextChanged"/>
-            </DockPanel>
+                        <DockPanel>
+                            <TextBlock Text="Số điện thoại:" FontWeight="Bold"/>
+                            <TextBlock x:Name="sdt" Text="Trần Ngọc Tiến"/>
+                        </DockPanel>
+                    </StackPanel>
 
-            <Button x:Name="themSP_btn" Margin="0,10,0,0" Content="Thêm Sản Phẩm" 
-                        Height="30" 
-                        Width="150"
-                        Foreground="White"
-                        FontSize="16"
-                        FontWeight="Bold"
-                        Style="{StaticResource OutButton}" Click="themSP_btn_Click"/>
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Left">
+                        <TextBlock HorizontalAlignment="Left" x:Name="maHD" Text="Mã Hóa Đơn:" Margin="0,0,0,20"/>
 
-        </StackPanel>
+                        <DockPanel>
+                            <TextBlock Text="Tên Nhà Sách:" FontWeight="Bold"/>
+                            <TextBlock x:Name="name" Text="Trần Ngọc Tiến"/>
+                        </DockPanel>
 
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="3" Margin="0,0,0,10">
-            <DataGrid x:Name="hoaDonTable" Margin="5,10" Style="{DynamicResource DataGridStyle}" 
+                        <DockPanel>
+                            <TextBlock Text="Nhân Viên Bán Hàng:" FontWeight="Bold"/>
+                            <TextBlock x:Name="nhanVien" Text="Trần Ngọc Tiến"/>
+                        </DockPanel>
+                    </StackPanel>
+                </Grid>
+
+                <DataGrid x:Name="hoaDonTable" Margin="5,10" 
+                  Style="{DynamicResource DataGridStyle}" 
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="hoaDonTable_AutoGeneratingColumn" Height="288" Background="{x:Null}">
+                  AutoGeneratingColumn="hoaDonTable_AutoGeneratingColumn" Height="288" Background="{x:Null}"/>
 
+                <StackPanel HorizontalAlignment="Right" Margin="0,10">
 
-                <!--<DataGrid.Columns>
-                        <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                        <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                        <DataGridTextColumn Header="Tên sách" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Đơn giá" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Số lượng" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Ghi chú" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Thành tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                    </DataGrid.Columns>-->
+                    <DockPanel>
+                        <TextBlock Text="Tổng Tiền:" FontWeight="Bold"/>
+                        <TextBlock x:Name="tongTien" Text="Trần Ngọc Tiến"/>
+                    </DockPanel>
 
-            </DataGrid>
-        </StackPanel>
+                    <DockPanel>
+                        <TextBlock Text="Giảm Giá:" FontWeight="Bold"/>
+                        <TextBlock x:Name="giamGia" Text="Trần Ngọc Tiến"/>
+                    </DockPanel>
 
-        <Separator Grid.Row="4" Grid.ColumnSpan="2"/>
+                    <DockPanel>
+                        <TextBlock Text="Phải Thanh Toán:" FontWeight="Bold"/>
+                        <TextBlock x:Name="thanhToan" Text="Trần Ngọc Tiến"/>
+                    </DockPanel>
 
-        <StackPanel Grid.Row="5" Grid.Column="0" Orientation="Vertical" Margin="10">
+                </StackPanel>                
 
-                <DockPanel LastChildFill="True">
-                    <TextBlock Text="Tổng tiền:" FontWeight="Bold" FontSize="16" />
-                    <TextBox x:Name="tongTien_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False" TextChanged="tongTien_txt_TextChanged" />
-                </DockPanel>
-            
-                <DockPanel Grid.Row="1">
-                    <TextBlock Text="Giảm giá:" FontWeight="Bold" FontSize="16"/>
-                    <TextBox x:Name="giamGia_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False" TextChanged="giamGia_txt_TextChanged"/>
-                </DockPanel>  
+            </StackPanel>
 
-        </StackPanel>
-        <StackPanel Grid.Row="5" Grid.Column="1" Margin="10">
-            <DockPanel >
-                <TextBlock Text="Phải thanh toán:" FontWeight="Bold" FontSize="16"/>
-                <TextBox x:Name="phaiThanhToan_txt" Template="{StaticResource TextBoxBaseControlTemplate}" IsEnabled="False" TextChanged="phaiThanhToan_txt_TextChanged"/>
-            </DockPanel>
-        </StackPanel>        
-        
-        <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center"  Height="50" VerticalAlignment="Center" >
-            
-            <Button x:Name="luuHD_btn" Margin="0,0,20,0" Content="Lưu Hóa Đơn" 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20">
+
+                <Button x:Name="print_btn" Margin="0,0,20,0" Content="In Hóa Đơn" 
                         Height="30" 
                         Width="150"
                         Foreground="White"
                         FontSize="16"
                         FontWeight="Bold"
-                        Style="{StaticResource AddButton}" Click="luuHD_btn_Click"/>
-            
-            <Button x:Name="xuatHD_btn" Margin="0,0,20,0" Content="Xuất Hóa Đơn" 
-                        Height="30" 
-                        Width="150"
-                        Foreground="White"
-                        FontSize="16"
-                        FontWeight="Bold"
-                        Style="{StaticResource OutButton}" Click="xuatHD_btn_Click"/>
-            
-            <Button x:Name="cancel_btn" Margin="0,0,20,0" Content="Hủy" 
+                        Style="{StaticResource AddButton}" Click="print_Click"/>
+
+                <Button x:Name="cancel_btn" Margin="0,0,20,0" Content="Hủy" 
                         Height="30" 
                         Width="150"
                         Foreground="Red"
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource CacelButton}" Click="cancel_btn_Click"/>
-        </StackPanel>
-    </Grid>
-    
-</Page>
+
+            </StackPanel>
+
+        </StackPanel>        
+        
+    </ScrollViewer>  
+
+</Window>

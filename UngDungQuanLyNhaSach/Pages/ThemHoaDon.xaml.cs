@@ -22,8 +22,6 @@ using System.Xml.Linq;
 using System.Windows.Markup;
 using System.Reflection;
 using System.Globalization;
-using Microsoft.Office.Interop.Excel;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace UngDungQuanLyNhaSach.Pages    
 {
@@ -31,7 +29,7 @@ namespace UngDungQuanLyNhaSach.Pages
     /// Interaction logic for ThemHoaDon.xaml
     /// </summary
 
-    public partial class ThemHoaDon : Microsoft.Office.Interop.Excel.Page
+    public partial class ThemHoaDon : Page
     {
         List<HoaDon> hoaDonList = new List<HoaDon>();
         List<ChiTietHoaDon> chiTietHDList = new List<ChiTietHoaDon>();
@@ -236,8 +234,8 @@ namespace UngDungQuanLyNhaSach.Pages
                     return;
                 }
                 string value = Regex.Replace(donGia_txt.Text, "[^0-9]", "");
-                double donGia;
-                if (double.TryParse(value, out donGia))
+                decimal donGia;
+                if (decimal.TryParse(value, out donGia))
                 {
                     bool check = true;
                     for (int i = 0; i < chiTietHDList.Count; i++)
@@ -257,7 +255,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     hoaDonTable.ItemsSource = new List<ChiTietHoaDon>();
                     hoaDonTable.ItemsSource = chiTietHDList;
                     resetAddProduct();
-                    double sum = 0;
+                    decimal sum = 0;
                     foreach (ChiTietHoaDon chiTiet in chiTietHDList)
                     {
                         sum += chiTiet.getThanhTien();
@@ -383,6 +381,11 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void luuHD_btn_Click(object sender, RoutedEventArgs e)
         {
+            addHD();
+        }
+
+        void addHD()
+        {
             if (checkInput())
             {
                 try
@@ -439,7 +442,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                     connection.Open();
 
-                    string insertString = "INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES (@MaHoaDon, @MaSanPham, @SoLuong)";
+                    string insertString = "INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong, DonGia, ThanhTien) VALUES (@MaHoaDon, @MaSanPham, @SoLuong, @DonGia, @ThanhTien)";
                     SqlCommand command = new SqlCommand(insertString, connection);
 
                     command.Parameters.Add("@MaHoaDon", SqlDbType.VarChar);
@@ -450,6 +453,12 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     command.Parameters.Add("@SoLuong", SqlDbType.VarChar);
                     command.Parameters["@SoLuong"].Value = chiTiet.soLuong;
+                    
+                    command.Parameters.Add("@DonGia", SqlDbType.Money);
+                    command.Parameters["@DonGia"].Value = chiTiet.getDonGia();
+                    
+                    command.Parameters.Add("@ThanhTien", SqlDbType.Money);
+                    command.Parameters["@ThanhTien"].Value = chiTiet.getThanhTien();
 
                     command.ExecuteNonQuery();
                     connection.Close();
@@ -463,32 +472,10 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void xuatHD_btn_Click(object sender, RoutedEventArgs e)
         {
-            Excel.Application excel = new Excel.Application();
-            excel.Visible = true;
-            Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
-            Worksheet sheet1 = (Worksheet)workbook.Sheets[1];
-            excel.ActiveWindow.DisplayGridlines = false;
-            //sheet1.Cells[1, 1].Text = "HÓA ĐƠN";
-            sheet1.Columns["A1"].CellStyle = workbook.Styles.Add("PageHeaderStyle");
-            sheet1.Columns["A1:F1"].Merge();
-
-
-            for (int j = 0; j < hoaDonTable.Columns.Count; j++)
-            {
-                Excel.Range myRange = (Excel.Range)sheet1.Cells[2, j + 2];
-                sheet1.Cells[2, j + 2].Font.Bold = true;
-                sheet1.Columns[j + 2].ColumnWidth = 15;
-                myRange.Value2 = hoaDonTable.Columns[j].Header;
-            }
-            for (int i = 0; i < hoaDonTable.Columns.Count; i++)
-            {
-                for (int j = 0; j < hoaDonTable.Items.Count; j++)
-                {
-                    TextBlock b = (TextBlock)hoaDonTable.Columns[i].GetCellContent(hoaDonTable.Items[j]);
-                    Microsoft.Office.Interop.Excel.Range myRange = (Microsoft.Office.Interop.Excel.Range)sheet1.Cells[j + 3, i + 2];
-                    myRange.Value2 = b.Text;
-                }
-            }
+            string maHD = maHoaDon_txt.Text;
+            addHD();
+            Invoice invoice = new Invoice(maHD);            
+            invoice.Show();
         }
 
         private static readonly Regex _regex = new Regex("[0-9]+");
@@ -587,18 +574,6 @@ namespace UngDungQuanLyNhaSach.Pages
         private void cancel_btn_Click(object sender, RoutedEventArgs e)
         {
             resetData();
-        }
-
-        public HeaderFooter LeftHeader => throw new NotImplementedException();
-
-        public HeaderFooter CenterHeader => throw new NotImplementedException();
-
-        public HeaderFooter RightHeader => throw new NotImplementedException();
-
-        public HeaderFooter LeftFooter => throw new NotImplementedException();
-
-        public HeaderFooter CenterFooter => throw new NotImplementedException();
-
-        public HeaderFooter RightFooter => throw new NotImplementedException();        
+        }      
     }
 }

@@ -48,7 +48,7 @@ namespace UngDungQuanLyNhaSach.Model
                 return string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", _donGia);
             }
         }
-        private double _donGia { get; set; }
+        private Decimal _donGia { get; set; }
 
         [ColumnName("Thành Tiền")]
         public String thanhTien
@@ -58,25 +58,24 @@ namespace UngDungQuanLyNhaSach.Model
                 return string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", _thanhTien);
             }
         }
-        private double _thanhTien { get; set; }
+        private Decimal _thanhTien { get; set; }
 
 
-        public ChiTietHoaDon(string maSanPham, int soLuong, double donGia, double thanhTien)
+        public ChiTietHoaDon(string maSanPham, int soLuong, Decimal donGia, Decimal thanhTien)
         {
-            this._maSanPham = maSanPham;
+            _maSanPham = maSanPham;
             this.soLuong = soLuong;
-            this._donGia = donGia;
-            this._thanhTien = thanhTien; 
-
+            _donGia = donGia;
+            _thanhTien = thanhTien; 
         }
 
-        public ChiTietHoaDon(int stt, string maSanPham, int soLuong, double donGia, double thanhTien)
+        public ChiTietHoaDon(int stt, string maSanPham, int soLuong, Decimal donGia, Decimal thanhTien)
         {
             this.stt = stt;
-            this._maSanPham = maSanPham;
+            _maSanPham = maSanPham;
             this.soLuong = soLuong;
-            this._donGia = donGia;
-            this._thanhTien = thanhTien;
+            _donGia = donGia;
+            _thanhTien = thanhTien;
         }
 
         public String getMaSanPham()
@@ -84,17 +83,17 @@ namespace UngDungQuanLyNhaSach.Model
             return _maSanPham;
         }
         
-        public double getDonGia()
+        public Decimal getDonGia()
         {
             return _donGia;
         }
         
-        public double getThanhTien()
+        public Decimal getThanhTien()
         {
             return _thanhTien;
         }
 
-        public void setThanhTien(double value)
+        public void setThanhTien(Decimal value)
         {
             this._thanhTien = value;
         }

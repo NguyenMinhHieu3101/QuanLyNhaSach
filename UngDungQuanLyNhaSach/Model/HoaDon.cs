@@ -80,6 +80,8 @@ namespace UngDungQuanLyNhaSach.Model
         }
         private Decimal _tongTienHD { get; set; }
 
+        String maKhuyenMai;
+
         public HoaDon(string maHoaDon, string maNhanVien,
             string maKhachHang, DateTime ngayLapHD, decimal tongTienHD)
         {
@@ -99,6 +101,7 @@ namespace UngDungQuanLyNhaSach.Model
             this._maKhachHang = maKhachHang;
             this.ngayLapHD = ngayLapHD;
             this._tongTienHD = tongTienHD;
+            this.maKhuyenMai = maKhuyenMai;
         }
 
         public String getMaNhanVien()
@@ -114,6 +117,46 @@ namespace UngDungQuanLyNhaSach.Model
         public decimal getTongTienHD()
         {
             return _tongTienHD;
+        }
+
+        public String getSDT()
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                string readString = "select * from KHACHHANG WHERE MaKhachHang = '" + _maKhachHang + "'";
+                SqlCommand command = new SqlCommand(readString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                string name = (String)reader["SDT"];
+                connection.Close();
+                return name;
+            }
+            catch
+            {
+                return _maKhachHang;
+            }
+        }
+
+        public int getKhuyenMai()
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                string readString = "select * from KHUYENMAI WHERE MaKhuyenMai = '" + maKhuyenMai + "'";
+                SqlCommand command = new SqlCommand(readString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                int name = (int)reader["PhanTram"];
+                connection.Close();
+                return name;
+            }
+            catch
+            {
+                return 0;
+            }
         }
     }    
 }

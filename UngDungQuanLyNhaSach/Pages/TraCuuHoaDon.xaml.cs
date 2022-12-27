@@ -14,14 +14,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Excel = Microsoft.Office.Interop.Excel;
 using UngDungQuanLyNhaSach.Model;
 
 namespace UngDungQuanLyNhaSach.Pages
@@ -29,7 +21,7 @@ namespace UngDungQuanLyNhaSach.Pages
     /// <summary>
     /// Interaction logic for DanhSachPhieuNhapSach.xaml
     /// </summary>
-    public partial class TraCuuHoaDon : Excel.Page
+    public partial class TraCuuHoaDon : System.Windows.Controls.Page
     {
         List<HoaDon> hoaDonList = new List<HoaDon>();
         List<HoaDon> selectedHoaDon = new List<HoaDon>();
@@ -276,43 +268,9 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void selectAll_Checked(object sender, RoutedEventArgs e)
         {
-            //danhSachHDTable.ItemsSource = hoaDonList;
             selectedHoaDon = new List<HoaDon>();
             selectedHoaDon.AddRange(hoaDonList);
             selectedHDTable.ItemsSource = selectedHoaDon;
-        }
-
-        private void delete_btn_Click(object sender, RoutedEventArgs e)
-        {
-            //var result = MessageBox.Show("Bạn thật sự muốn xóa?", "Thông báo!", MessageBoxButton.OKCancel);
-            //if (result == MessageBoxResult.OK)
-            //{
-            //    foreach (HoaDon hoaDon in selectedHoaDon)
-            //    {
-
-            //        try
-            //        {
-            //            SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-            //            connection.Open();
-
-            //            string deleteString = "UPDATE HOADON SET ";
-            //            SqlCommand command = new SqlCommand(deleteString, connection);
-            //            command.Parameters.Add("@MaHoaDon", SqlDbType.VarChar);
-            //            command.Parameters["@MaHoaDon"].Value = hoaDon.maHoaDon;
-
-            //            command.ExecuteNonQuery();
-            //            connection.Close();
-            //        }
-            //        catch
-            //        {
-            //            MessageBox.Show("Xóa không thành công");
-            //        }
-            //    }
-            //    selectedHoaDon = new List<HoaDon>();
-            //    selectedHDTable.ItemsSource = selectedHoaDon;
-            //    loadListHD();
-            //    MessageBox.Show("Xóa hóa đơn thành công");
-            //}
         }
 
         private void exit_btn_Click(object sender, RoutedEventArgs e)
@@ -322,40 +280,12 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void export_btn_Click(object sender, RoutedEventArgs e)
         {
-            Excel.Application excel = new Excel.Application();
-            excel.Visible = true;
-            Workbook workbook = excel.Workbooks.Add(System.Reflection.Missing.Value);
-            Worksheet sheet1 = (Worksheet)workbook.Sheets[1];
-            excel.ActiveWindow.DisplayGridlines = false;
-
-            for (int j = 0; j < selectedHDTable.Columns.Count; j++)
+            foreach (HoaDon hoaDon in selectedHoaDon)
             {
-                Excel.Range myRange = (Excel.Range)sheet1.Cells[1, j + 1];
-                sheet1.Cells[1, j + 1].Font.Bold = true;
-                sheet1.Columns[j + 1].ColumnWidth = 15;
-                myRange.Value2 = selectedHDTable.Columns[j].Header;
-            }
-            for (int i = 0; i < selectedHDTable.Columns.Count; i++)
-            {
-                for (int j = 0; j < selectedHDTable.Items.Count; j++)
-                {
-                    TextBlock b = (TextBlock)selectedHDTable.Columns[i].GetCellContent(selectedHDTable.Items[j]);
-                    Microsoft.Office.Interop.Excel.Range myRange = (Microsoft.Office.Interop.Excel.Range)sheet1.Cells[j + 2, i + 1];
-                    myRange.Value2 = b.Text;
-                }
+                Invoice invoice = new Invoice(hoaDon.maHoaDon);
+                invoice.Show();
             }
         }
-        public HeaderFooter LeftHeader => throw new NotImplementedException();
-
-        public HeaderFooter CenterHeader => throw new NotImplementedException();
-
-        public HeaderFooter RightHeader => throw new NotImplementedException();
-
-        public HeaderFooter LeftFooter => throw new NotImplementedException();
-
-        public HeaderFooter CenterFooter => throw new NotImplementedException();
-
-        public HeaderFooter RightFooter => throw new NotImplementedException();
     }
 }
 
