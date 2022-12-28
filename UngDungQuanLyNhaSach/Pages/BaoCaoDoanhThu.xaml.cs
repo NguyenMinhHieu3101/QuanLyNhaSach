@@ -39,6 +39,7 @@ namespace UngDungQuanLyNhaSach.Pages
             InitializeComponent();
             loadChart();
             DataContext = this;
+            thongKe.Visibility = Visibility.Collapsed;
         }
 
         public SeriesCollection SeriesCollection { get; set; }
@@ -163,6 +164,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
+                thongKe.Visibility = Visibility.Visible;
             }
             catch
             {

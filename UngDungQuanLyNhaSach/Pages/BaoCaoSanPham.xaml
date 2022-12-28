@@ -69,7 +69,7 @@
                             <TextBlock Text="Từ Ngày:" 
                                        Width="70" 
                                        VerticalAlignment="Center"/>
-                            
+
                             <Border BorderBrush="Black" 
                                     BorderThickness="1"
                                     CornerRadius="10">
@@ -104,20 +104,20 @@
                                 Style="{StaticResource AddButton}"
                                 Click="Button_Click" RenderTransformOrigin="0.527,-8.981"/>
                     </DockPanel>
-
-                    <TextBlock Style="{StaticResource Header1}"
+                    <StackPanel x:Name="thongKe">
+                        <TextBlock Style="{StaticResource Header1}"
                                Margin="0, 5, 0, 0"
                                TextAlignment="Center">
                         BẢNG THỐNG KÊ SẢN PHẨM
-                    </TextBlock>
+                        </TextBlock>
 
-                    <TextBlock x:Name="txtThoiGian"
+                        <TextBlock x:Name="txtThoiGian"
                                Style="{StaticResource Header1}"
                                TextAlignment="Center">
                         TỪ ... ĐẾN ...
-                    </TextBlock>
+                        </TextBlock>
 
-                    <DataGrid x:Name="sanPhamTable" 
+                        <DataGrid x:Name="sanPhamTable" 
                               Height="300"
                               Margin="10"
                               Style="{DynamicResource DataGridStyle}" 
@@ -126,23 +126,23 @@
                               VerticalScrollBarVisibility="Auto"
                               RowStyle="{StaticResource DataGridRowStyle}" 
                               AutoGeneratingColumn="sanPhamTable_AutoGeneratingColumn" IsReadOnly="True">
-                        <!--<DataGrid.Columns>
+                            <!--<DataGrid.Columns>
                             <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
                             <DataGridTextColumn Header="Tên Sản Phẩm" IsReadOnly="True" CanUserResize="True" Width="3*"/>
                             <DataGridTextColumn Header="Số Lượng Bán" IsReadOnly="True" CanUserResize="True" Width="2*"/>
                             <DataGridTextColumn Header="Số Lượng Tồn" IsReadOnly="True" CanUserResize="True" Width="2*"/>
                         </DataGrid.Columns>-->
-                    </DataGrid>
+                        </DataGrid>
 
-                    <StackPanel Margin="10, 0, 0, 0"
+                        <StackPanel Margin="10, 0, 0, 0"
                                 HorizontalAlignment="Left">
-                        <TextBlock x:Name="txtTongBanRa" Text="TỔNG BÁN RA:"
+                            <TextBlock x:Name="txtTongBanRa" Text="TỔNG BÁN RA:"
                                    Style="{StaticResource Title}"
                                    Width="325"/>
-                    </StackPanel>
+                        </StackPanel>
 
-                    <DockPanel HorizontalAlignment="Right">
-                        <Button Content="Xuất PDF" 
+                        <DockPanel HorizontalAlignment="Right">
+                            <Button Content="Xuất PDF" 
                         Height="35" 
                         Width="140"
                         Margin="10,0"
@@ -151,7 +151,8 @@
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}"
                         Click="Button_Click_1" RenderTransformOrigin="0.527,-8.981"/>
-                    </DockPanel>
+                        </DockPanel>
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </StackPanel>

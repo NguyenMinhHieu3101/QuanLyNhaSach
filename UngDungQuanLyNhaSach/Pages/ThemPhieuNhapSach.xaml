@@ -411,7 +411,14 @@
                         FontSize="16"
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}" Click="importBtn_Click"/>
-
+                <Button x:Name="qrBtn" Content="QR Code" 
+                        Margin="0,0,20,0"
+                        Height="37" 
+                        Width="128"
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Style="{StaticResource AddButton}" Click="qrBtn_Click"/>
 
             </DockPanel>
         </StackPanel>

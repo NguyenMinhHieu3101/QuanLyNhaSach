@@ -105,33 +105,34 @@
                                 Style="{StaticResource AddButton}"
                                 Click="Button_Click" RenderTransformOrigin="0.527,-8.981"/>
                     </DockPanel>
-                    <StackPanel>
-                        <TextBlock Style="{StaticResource Header1}"
+                    <StackPanel  x:Name="thongKe">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource Header1}"
                                Margin="0, 5, 0, 0"
                                TextAlignment="Center">
                         BẢNG THỐNG KÊ DOANH THU
-                        </TextBlock>
+                            </TextBlock>
 
-                        <TextBlock x:Name="txtThoiGian" 
+                            <TextBlock x:Name="txtThoiGian" 
                                Style="{StaticResource Header1}"
                                TextAlignment="Center">
                         TỪ ... ĐẾN ...
-                        </TextBlock>
+                            </TextBlock>
 
-                        <DockPanel Height="225" 
+                            <DockPanel Height="225" 
                                LastChildFill="True" 
                                Margin="0, 10, 0, 20" 
                                HorizontalAlignment="Center">
-                            <DataGrid x:Name="chiTraTable" 
+                                <DataGrid x:Name="chiTraTable" 
                                   Width="350" 
                                   Style="{DynamicResource DataGridStyle}" 
                                   CellStyle="{StaticResource DataGridCellStyle}" 
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
                                   AutoGeneratingColumn="chiTraTable_AutoGeneratingColumn" IsReadOnly="True">
-                            </DataGrid>
+                                </DataGrid>
 
-                            <DataGrid x:Name="thuNhapTable" 
+                                <DataGrid x:Name="thuNhapTable" 
                                   Width="350" 
                                   Margin="15, 0, 0, 0" 
                                   Style="{DynamicResource DataGridStyle}" 
@@ -139,30 +140,30 @@
                                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                                   RowStyle="{StaticResource DataGridRowStyle}" 
                                   AutoGeneratingColumn="thuNhapTable_AutoGeneratingColumn" IsReadOnly="True">
-                            </DataGrid>
-                        </DockPanel>
+                                </DataGrid>
+                            </DockPanel>
 
-                        <StackPanel Margin="20, 0, 0, 0"
+                            <StackPanel Margin="20, 0, 0, 0"
                                 HorizontalAlignment="Left">
-                            <TextBlock x:Name="txtTongThu"
+                                <TextBlock x:Name="txtTongThu"
                                    Text="TỔNG THU:"
                                    Style="{StaticResource Title}"
                                    Width="400"/>
 
-                            <TextBlock x:Name="txtTongChi"
+                                <TextBlock x:Name="txtTongChi"
                                    Text="TỔNG CHI:"
                                    Style="{StaticResource Title}"
                                    Width="400"/>
 
-                            <TextBlock x:Name="txtLoiNhuan"
+                                <TextBlock x:Name="txtLoiNhuan"
                                    Text="LỢI NHUẬN:"
                                    Style="{StaticResource Title}"
                                    Width="400"/>
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
 
-                    <DockPanel HorizontalAlignment="Right">
-                        <Button Content="Xuất PDF" 
+                        <DockPanel HorizontalAlignment="Right">
+                            <Button Content="Xuất PDF" 
                         Height="35" 
                         Width="140"
                         Margin="10,0"
@@ -171,7 +172,8 @@
                         FontWeight="Bold"
                         Style="{StaticResource AddButton}"
                         Click="Button_Click_1" RenderTransformOrigin="0.527,-8.981"/>
-                    </DockPanel>
+                        </DockPanel>
+                    </StackPanel>
                 </StackPanel>
             </Border>
         </StackPanel>

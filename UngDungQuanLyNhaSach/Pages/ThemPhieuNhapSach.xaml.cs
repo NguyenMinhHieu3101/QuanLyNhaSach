@@ -844,5 +844,10 @@ namespace UngDungQuanLyNhaSach.Pages
             }
 
         }
+
+        private void qrBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
