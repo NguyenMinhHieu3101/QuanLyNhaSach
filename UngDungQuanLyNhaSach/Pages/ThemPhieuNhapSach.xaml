@@ -210,11 +210,10 @@
     <Grid Margin="20, 0,5,0">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="185*"/>
-            <RowDefinition Height="58*"/>
-            <RowDefinition Height="160*"/>
-            <RowDefinition Height="220*"/>
-            <RowDefinition Height="44*"/>
+            <RowDefinition Height="210*"/>
+            <RowDefinition Height="60*"/>
+            <RowDefinition Height="170*"/>
+            <RowDefinition Height="200*"/>
             <RowDefinition Height="185*"/>
             <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
@@ -237,11 +236,12 @@
                   AutoGeneratingColumn="phieuNhapSachTable_AutoGeneratingColumn" Background="{x:Null}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="True" Height="132">
             </DataGrid>
         </StackPanel>
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" >
 
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
@@ -249,57 +249,70 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
 
 
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0">
+                    <StackPanel  Margin="5,5,15,5" Grid.Row="0" Grid.Column="0">
                         <DockPanel LastChildFill="True">
-                            <TextBlock Text="Mã sách:" Width="142"/>
-                            <ComboBox x:Name="maSach" Width="200" IsEditable="true"/>
+                            <TextBlock Text="Mã sách:" Width="120"/>
+                            <ComboBox x:Name="maSach" IsEditable="true"/>
                         </DockPanel>
                     </StackPanel>
                     <StackPanel Margin="5,5,15,5" Grid.Column="1" Grid.Row="0">
-                        <DockPanel  LastChildFill="True" Width="350">
+                        <DockPanel  LastChildFill="True" >
                             <TextBlock Text="Tên sách:" Width="120"/>
-                            <ComboBox x:Name="tenSach" IsEditable="True" Width="200"/>
+                            <ComboBox x:Name="tenSach" IsEditable="True"/>
                         </DockPanel>
                     </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Row="1" Grid.Column="0" >
-                        <DockPanel  LastChildFill="True" Width="350">
+                    <StackPanel Margin="5,5,15,5" Grid.Row="0" Grid.Column="2" >
+                        <DockPanel  LastChildFill="True" >
                             <TextBlock Text="Tác giả:" Width="120"/>
-                            <ComboBox x:Name="tacGia" Width="200" IsEditable="True"/>
+                            <ComboBox x:Name="tacGia"  IsEditable="True"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Margin="5,5,15,5" Grid.Row="1" Grid.Column="0"  >
+                        <DockPanel  LastChildFill="True" >
+                            <TextBlock Text="Thể loại:" Width="120"/>
+                            <ComboBox x:Name="theLoai" IsEditable="True"/>
                         </DockPanel>
                     </StackPanel>
                     <StackPanel Margin="5,5,15,5" Grid.Row="1" Grid.Column="1"  >
-                        <DockPanel  LastChildFill="True" Width="350">
-                            <TextBlock Text="Thể loại:" Width="120"/>
-                            <ComboBox x:Name="theLoai" Width="200" IsEditable="True"/>
-                        </DockPanel>
-                    </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Row="2" Grid.Column="0"  >
-                        <DockPanel  LastChildFill="True" Width="350">
+                        <DockPanel  LastChildFill="True">
                             <TextBlock Text="Nhà xuất bản:" Width="120"/>
-                            <ComboBox x:Name="nhaXB" Width="200"/>
+                            <ComboBox x:Name="nhaXB" />
                         </DockPanel>
                     </StackPanel>
 
-                    <StackPanel Margin="5,5,15,5"  Grid.Row="2" Grid.Column="1" >
-                        <DockPanel  LastChildFill="True" Width="350">
+                    <StackPanel Margin="5,5,15,5"  Grid.Row="1" Grid.Column="2" >
+                        <DockPanel  LastChildFill="True" >
                             <TextBlock Text="Năm xuất bản:" Width="120"/>
-                            <ComboBox x:Name="namXB" Width="200" IsEditable="True"/>
+                            <ComboBox x:Name="namXB" IsEditable="True"/>
                         </DockPanel>
                     </StackPanel>
                     <StackPanel Margin="5,5,15,5"  Grid.Row="3" Grid.Column="0" >
-                        <DockPanel  LastChildFill="True" Width="350">
+                        <DockPanel  LastChildFill="True">
                             <TextBlock Text="Đơn giá:" Width="120"/>
-                            <ComboBox x:Name="donGia" Width="200" IsEditable="True"/>
+                            <ComboBox x:Name="donGia" IsEditable="True"/>
                         </DockPanel>
                     </StackPanel>
                     <StackPanel Margin="5,5,15,5"  Grid.Row="3" Grid.Column="1" >
-                        <DockPanel  LastChildFill="True" Width="350">
+                        <DockPanel  LastChildFill="True" >
                             <TextBlock Text="Số lượng nhập:" Width="120"/>
-                            <ComboBox x:Name="soLuongNhap" Width="200" IsEditable="True"/>
+                            <ComboBox x:Name="soLuongNhap" IsEditable="True"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="2" Height="60" VerticalAlignment="Center">
+                        <DockPanel HorizontalAlignment="Center" LastChildFill="True">
+                            <Button x:Name="addBookBtn" 
+                        Content="Thêm Sách" 
+                        Height="37" 
+                        Width="128"
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Bold"
+                                    Margin="20,5,0,0"
+                        Style="{StaticResource AddButton}" Click="addBookBtn_Click" />
+
                         </DockPanel>
                     </StackPanel>
 
@@ -366,24 +379,12 @@
                             <TextBox x:Name="tongTien" Template="{StaticResource TextBoxBaseControlTemplate}" Width="200" IsEnabled="false"/>
                         </DockPanel>
                     </StackPanel>
-
+                    
                 </Grid>
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="4" Grid.Column="21" Height="60" VerticalAlignment="Top" Grid.RowSpan="2">
-            <DockPanel HorizontalAlignment="Center" LastChildFill="True">
-                <Button x:Name="addBookBtn" 
-                        Content="Thêm Sách" 
-                        Height="37" 
-                        Width="128"
-                        Foreground="White"
-                        FontSize="16"
-                        FontWeight="Bold"
-                        Style="{StaticResource AddButton}" Click="addBookBtn_Click" />
-
-            </DockPanel>
-        </StackPanel>
+        
         <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Height="60" VerticalAlignment="Top" >
             <DockPanel HorizontalAlignment="Center" LastChildFill="True">
                 <Button x:Name="addBtn" Margin="0,0,20,0"
@@ -422,7 +423,7 @@
 
             </DockPanel>
         </StackPanel>
-        <StackPanel Grid.Row="5" Grid.Column="0" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <StackPanel Grid.Row="4" Grid.Column="0" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <DataGrid x:Name="chitietphieuNhapSachTable" Margin="5,10" Style="{DynamicResource DataGridStyle}"
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
@@ -431,7 +432,7 @@
                   AutoGeneratingColumn="chitietphieuNhapSachTable_AutoGeneratingColumn" Background="{x:Null}" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="True" Height="153">
             </DataGrid>
         </StackPanel>
-        <StackPanel Grid.Row="5" Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <StackPanel Grid.Row="4" Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <DataGrid x:Name="phieuNhapSachTable" Margin="5,10" Style="{DynamicResource DataGridStyle}"
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
