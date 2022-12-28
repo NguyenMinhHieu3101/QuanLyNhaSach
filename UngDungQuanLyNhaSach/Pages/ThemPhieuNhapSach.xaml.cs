@@ -45,12 +45,14 @@ namespace UngDungQuanLyNhaSach.Pages
         List<PhieuNhapSach> phieuNhapList = new List<PhieuNhapSach>();
         List<ChiTietPhieuNhapSach> chiTietPhieuNhapSachList = new List<ChiTietPhieuNhapSach>();
         List<SanPham> sanPhamTrongPhieuNhap = new List<SanPham>();
+        List<SanPham> sanPhamList = new List<SanPham>();
         List<SanPham> topSPList = new List<SanPham>();
         public ThemPhieuNhapSach()
         {
             InitializeComponent();
             ngayNhap.SelectedDate = DateTime.Now;
             loadListPhieuNhap();
+            loadFilter();
             ngayNhap.SelectedDate = DateTime.Today;
             ngayNhap.IsEnabled = false;
            // loadListChiTietPhieuNhap();
@@ -159,6 +161,102 @@ namespace UngDungQuanLyNhaSach.Pages
                         {
                             phieuNhapSachTable.ItemsSource = phieuNhapList;
                          
+                        }));
+                    }
+                    connection.Close();
+                }
+                catch (Exception e1)
+                {
+                    //MessageBox.Show("db error");
+                    MessageBox.Show(e1.Message);
+
+                }
+            }));
+
+            thread.IsBackground = true;
+            thread.Start();
+
+        }
+        void loadFilter()
+        {
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                //sanPhamList = new List<SanPham>();
+
+                //try
+                //{
+                //    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                //    connection.Open();
+                //    string readString = "select * from SANPHAM";
+                //    SqlCommand command = new SqlCommand(readString, connection);
+
+                //    SqlDataReader reader = command.ExecuteReader();
+
+                //    int count = 0;
+                //    while (reader.Read())
+                //    {
+                //        count++;
+
+                //        sanPhamList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
+                //            tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
+                //            theLoai: (String)reader["TheLoai"],nXB: (String)reader["NXB"], 
+                //            giaNhap: (double)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
+                //            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
+                //    }
+                //    this.Dispatcher.BeginInvoke(new Action(() => {
+                //        phieuNhapSachTable.ItemsSource = sanPhamList;
+                //    }));
+                //    connection.Close();
+                //}
+                //catch (Exception e1)
+                //{
+                //    //MessageBox.Show("db error");
+                //    MessageBox.Show(e1.Message);
+
+                //}
+
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+                    string readString = "select * from SANPHAM";
+
+                    SqlCommand command = new SqlCommand(readString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    List<String> itemsMaSP = new List<String>();
+                    List<String> itemsTenSP = new List<String>();
+                    List<String> itemsTheLoai = new List<String>();
+                    List<String> itemsTacGia = new List<String>();
+                    List<double> itemsDonGia = new List<double>();
+                    List<String> itemsNXB = new List<String>();
+                    List<int> itemsNamXB = new List<int>();
+
+
+                    while (reader.Read())
+                    {
+                        //sanPhamList.Add(new SanPham(maSanPham: (String)reader["MaSanPham"],
+                        //            tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
+                        //            theLoai: (String)reader["TheLoai"], nXB: (String)reader["NXB"],
+                        //            giaNhap: (double)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
+                        //            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
+                        itemsMaSP.Add((String)reader["MaSanPham"]);
+                        itemsTenSP.Add((String)reader["TenSanPham"]);
+                        itemsTheLoai.Add((String)reader["TheLoai"]);
+                        itemsTacGia.Add((String)reader["TacGia"]);
+                        itemsDonGia.Add((double)reader["GiaNhap"]);
+                        itemsNXB.Add((String)reader["NXB"]);
+                        itemsNamXB.Add((int)reader["NamXB"]);
+
+                        this.Dispatcher.BeginInvoke(new System.Action(() =>
+                        {
+
+                            maSach.ItemsSource = itemsMaSP;
+                            tenSach.ItemsSource = itemsTenSP;
+                            theLoai.ItemsSource = itemsTheLoai;
+                            tacGia.ItemsSource = itemsTacGia;
+                            donGia.ItemsSource = itemsDonGia;
+                            nhaXB.ItemsSource = itemsNXB;
+                            namXB.ItemsSource = itemsNamXB;
                         }));
                     }
                     connection.Close();
