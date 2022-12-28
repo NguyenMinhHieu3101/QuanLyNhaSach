@@ -106,7 +106,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     //Xử lí số liệu sách nhập
 
-                    string readString2 = "SELECT SUM(SoLuong) AS TongNhap FROM CHITIETPHIEUNHAP, PHIEUNHAP  WHERE (CHITIETPHIEUNHAP.MaPhieuNhap = PHIEUNHAP.MaPhieuNhap) AND (NgayNhap BETWEEN @TuNgay AND @DenNgay)";
+                    string readString2 = "SELECT SUM(SoLuong) AS TongNhap FROM CHITIETPHIEUNHAP, PHIEUNHAP  WHERE (CHITIETPHIEUNHAP.MaPhieuNhap = PHIEUNHAP.MaPhieuNhap) AND (PHIEUNHAP.NgayNhap BETWEEN @TuNgay AND @DenNgay)";
                     command = new SqlCommand(readString2, connection);
 
                     command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
@@ -125,7 +125,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     txtChenhLech.Text = "CHÊNH LỆCH: " + chenhLech;
 
 
-                    string readString3 = "SELECT CHITIETPHIEUNHAP.MaPhieuNhap, SUM(SoLuong) AS TongSoNhap FROM PHIEUNHAP, CHITIETPHIEUNHAP WHERE (PHIEUNHAP.MaPhieuNhap = CHITIETPHIEUNHAP.MaPhieuNhap) AND (NgayNhap BETWEEN @TuNgay AND @DenNgay) GROUP BY CHITIETPHIEUNHAP.MaPhieuNhap";
+                    string readString3 = "SELECT CHITIETPHIEUNHAP.MaPhieuNhap, SUM(SoLuong) AS TongSoNhap FROM PHIEUNHAP, CHITIETPHIEUNHAP WHERE (PHIEUNHAP.MaPhieuNhap = CHITIETPHIEUNHAP.MaPhieuNhap) AND (PHIEUNHAP.NgayNhap BETWEEN @TuNgay AND @DenNgay) GROUP BY CHITIETPHIEUNHAP.MaPhieuNhap";
                     command = new SqlCommand(readString3, connection);
 
                     command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
@@ -175,10 +175,10 @@ namespace UngDungQuanLyNhaSach.Pages
                 }
                 connection.Close();
             }
-            catch
+            catch (Exception exception)
             {
-                //MessageBox.Show(exception.Message);
-                MessageBox.Show("Khoảng thời gian không hợp lệ!");
+                MessageBox.Show(exception.Message);
+                //MessageBox.Show("Khoảng thời gian không hợp lệ!");
             }
         }
 
@@ -255,7 +255,8 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            KhoPdf khoPdf = new KhoPdf();
+            khoPdf.Show();
         }
     }
 }

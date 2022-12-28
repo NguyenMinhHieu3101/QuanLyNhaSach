@@ -101,32 +101,32 @@ namespace UngDungQuanLyNhaSach.Pages
                     sanPhamTable.ItemsSource = thongKeList;
                     reader.Close();
 
-                    //string readString2 = "SELECT COUNT(*) FROM CHITIETBAOCAOSANPHAM";
-                    //command = new SqlCommand(readString2, connection);
-                    //Int32 count = (Int32)command.ExecuteScalar() + 1;
+                    string readString3 = "SELECT COUNT(*) FROM CHITIETBAOCAOSANPHAM";
+                    command = new SqlCommand(readString3, connection);
+                    Int32 count = (Int32)command.ExecuteScalar() + 1;
 
-                    //string insertString = "INSERT INTO CHITIETBAOCAOSANPHAM (MaChiTietBaoCao, MaSanPham, MaNVBC, TuNgay, DenNgay, SoLuongDaBan) VALUES (@MaChiTietBaoCao, @MaSanPham, @MaNVBC, @TuNgay, @DenNgay, @SoLuongDaBan)";
-                    //command = new SqlCommand(insertString, connection);
+                    string insertString = "INSERT INTO CHITIETBAOCAOSANPHAM (MaChiTietBaoCao, MaSanPham, MaNVBC, TuNgay, DenNgay, SoLuongDaBan) VALUES (@MaChiTietBaoCao, @MaSanPham, @MaNVBC, @TuNgay, @DenNgay, @SoLuongDaBan)";
+                    command = new SqlCommand(insertString, connection);
 
-                    //command.Parameters.Add("@MaChiTietBaoCao", SqlDbType.VarChar);
-                    //command.Parameters["@MaChiTietBaoCao"].Value = "BCSP" + count.ToString();
+                    command.Parameters.Add("@MaChiTietBaoCao", SqlDbType.VarChar);
+                    command.Parameters["@MaChiTietBaoCao"].Value = "BCSP" + count.ToString();
 
-                    //command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
-                    //command.Parameters["@MaSanPham"].Value = "???";
+                    command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
+                    command.Parameters["@MaSanPham"].Value = "SP001";
 
-                    //command.Parameters.Add("@MaNVBC", SqlDbType.VarChar);
-                    //command.Parameters["@MaNVBC"].Value = NhanVienDangDangNhap.MaNhanVien; 
+                    command.Parameters.Add("@MaNVBC", SqlDbType.VarChar);
+                    command.Parameters["@MaNVBC"].Value = NhanVienDangDangNhap.MaNhanVien;
 
-                    //command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
-                    //command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
+                    command.Parameters.Add("@TuNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@TuNgay"].Value = dPickerTuNgay.SelectedDate;
 
-                    //command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
-                    //command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
+                    command.Parameters.Add("@DenNgay", SqlDbType.SmallDateTime);
+                    command.Parameters["@DenNgay"].Value = dPickerDenNgay.SelectedDate;
 
-                    //command.Parameters.Add("@SoLuongDaBan", SqlDbType.Int);
-                    //command.Parameters["@SoLuongDaBan"].Value = "???";
+                    command.Parameters.Add("@SoLuongDaBan", SqlDbType.Int);
+                    command.Parameters["@SoLuongDaBan"].Value = "0";
 
-                    //command.ExecuteNonQuery();
+                    command.ExecuteNonQuery();
                 }
                 connection.Close();
             }
@@ -139,7 +139,8 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
+            SanPhamPdf sanPhamPdf = new SanPhamPdf();
+            sanPhamPdf.Show();
         }
 
         void loadChart()

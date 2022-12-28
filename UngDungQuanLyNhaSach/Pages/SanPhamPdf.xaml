@@ -1,12 +1,11 @@
-﻿<Window x:Class="UngDungQuanLyNhaSach.Pages.DoanhThuPdf"
+﻿<Window x:Class="UngDungQuanLyNhaSach.Pages.SanPhamPdf"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
         mc:Ignorable="d"
-        Title="DoanhThuPdf" Height="820" Width="800" WindowStartupLocation="CenterScreen">
-
+        Title="SanPhamPdf" Height="800" Width="800" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="Header" TargetType="TextBlock">
             <Setter Property="FontSize" Value="28" />
@@ -64,7 +63,7 @@
                 </TextBlock>
 
                 <TextBlock Style="{StaticResource Header1}">
-                BÁO CÁO DOANH THU
+                BÁO CÁO THỐNG KÊ SẢN PHẨM
                 </TextBlock>
 
                 <TextBlock x:Name="from_to"
@@ -85,43 +84,22 @@
                 Người lập báo cáo:
                 </TextBlock>
 
-                <DataGrid x:Name="chiTraTable"
+                <DataGrid x:Name="sanPhamTable"
                       Margin="75, 15"
-                      Height="175"
+                      Height="400"
                       Style="{DynamicResource DataGridStyle}" 
                       CellStyle="{StaticResource DataGridCellStyle}" 
                       ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                       RowStyle="{StaticResource DataGridRowStyle}" 
                       IsReadOnly="True"
-                      AutoGeneratingColumn="chiTraTable_AutoGeneratingColumn">
+                      AutoGeneratingColumn="sanPhamTable_AutoGeneratingColumn">
                 </DataGrid>
 
-                <DataGrid x:Name="thuNhapTable" 
-                      Margin="75, 15"
-                      Height="175"
-                      Style="{DynamicResource DataGridStyle}" 
-                      CellStyle="{StaticResource DataGridCellStyle}" 
-                      ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
-                      RowStyle="{StaticResource DataGridRowStyle}" 
-                      IsReadOnly="True"
-                      AutoGeneratingColumn="thuNhapTable_AutoGeneratingColumn">
-                </DataGrid>
-
-                <TextBlock x:Name="txtTongThu"
-                                   Text="TỔNG THU:"
+                <TextBlock x:Name="txtTongBanRa"
+                                   Text="TỔNG BÁN RA:"
                                    Style="{StaticResource Title}"
-                                   Width="400"/>
-
-                <TextBlock x:Name="txtTongChi"
-                                   Text="TỔNG CHI:"
-                                   Style="{StaticResource Title}"
-                                   Width="400"/>
-
-                <TextBlock x:Name="txtLoiNhuan"
-                       Margin="0, 0, 0, 10"
-                                   Text="LỢI NHUẬN:"
-                                   Style="{StaticResource Title}"
-                                   Width="400"/>
+                                   Width="400"
+                           Margin="0, 0, 0, 10"/>
 
             </StackPanel>
 

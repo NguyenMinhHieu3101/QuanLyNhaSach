@@ -87,14 +87,14 @@ namespace UngDungQuanLyNhaSach.Pages
                 from_to.Text = "TỪ NGÀY " + reader["TuNgay"] + " ĐẾN NGÀY " + reader["DenNgay"];
                 txtTongChi.Text = "TỔNG CHI: " + string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(reader["ChiPhi"].ToString()));
                 txtTongThu.Text = "TỔNG THU: " + string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(reader["DoanhThu"].ToString()));
-                txtLoiNhuan.Text = "LỢI NHUẬN: " + string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(((decimal)reader["DoanhThu"] - (decimal)reader["ChiPhi"]).ToString()));
+                txtLoiNhuan.Text = "LỢI NHUẬN: " + string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(((double)reader["DoanhThu"] - (double)reader["ChiPhi"]).ToString()));
 
                 thuNhapList.Add(new ThuNhap(1, "Bán sách", string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(reader["DoanhThu"].ToString()))));
                 thuNhapTable.ItemsSource = thuNhapList;
 
-                decimal tongTienNhap;
-                decimal tongLuong;
-                decimal tongChi = (decimal)reader["ChiPhi"];
+                double tongTienNhap;
+                double tongLuong;
+                double tongChi = (double)reader["ChiPhi"];
 
                 string tuNgay = reader["TuNgay"].ToString();
                 string denNgay = reader["DenNgay"].ToString();
@@ -113,7 +113,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 if (command.ExecuteScalar() == DBNull.Value)
                     tongTienNhap = 0;
                 else
-                    tongTienNhap = (decimal)command.ExecuteScalar();
+                    tongTienNhap = (double)command.ExecuteScalar();
 
                 chiTraList.Add(new ChiTra(1, "Tiền nhập sách", string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(tongTienNhap.ToString()))));
 
@@ -121,7 +121,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 {
                     string readString4 = "SELECT SUM(Luong) AS TongLuong FROM NHANVIEN";
                     command = new SqlCommand(readString4, connection);
-                    tongLuong = (decimal)command.ExecuteScalar();
+                    tongLuong = (double)command.ExecuteScalar();
                     chiTraList.Add(new ChiTra(2, "Lương nhân viên", string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(tongLuong.ToString()))));
                 }
 
