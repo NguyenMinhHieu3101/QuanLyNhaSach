@@ -4,6 +4,10 @@ using System.Data;
 using UngDungQuanLyNhaSach.Model;
 using System.Windows.Controls;
 using System;
+using System.Security.Cryptography;
+using Microsoft.Office.Interop.Excel;
+using Window = System.Windows.Window;
+using DataTable = System.Data.DataTable;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -30,13 +34,13 @@ namespace UngDungQuanLyNhaSach.Pages
             //home.Show();
             //this.Hide();
 
-            if (txtEmail.Text == "" || txtMatKhau.Text == "")
+            if (txtEmail.Text == "" || txtMatKhau.Password == "")
             {
                 MessageBox.Show("Vui lòng nhập Email và mật khẩu");
             }
             else
 
-            if (getID(txtEmail.Text, txtMatKhau.Text))
+            if (getID(txtEmail.Text, txtMatKhau.Password))
             {
                 NhanVienDangDangNhap.MaChucVu = Current_User[3].ToString();
                 NhanVienDangDangNhap.HoTen = Current_User[2].ToString();
@@ -59,7 +63,22 @@ namespace UngDungQuanLyNhaSach.Pages
             mainWindow.Show();
             this.Hide();
         }
-       
+        //public string GetMD5(string pass)
+        //{
+        //    string str_md5 = "";
+        //    byte[] mang = System.Text.Encoding.UTF8.GetBytes(pass);
+
+        //    MD5CryptoServiceProvider my_md5 = new MD5CryptoServiceProvider();
+        //    mang = my_md5.ComputeHash(mang);
+
+        //    foreach (byte b in mang)
+        //    {
+        //        str_md5 += b.ToString("X2");
+        //    }
+
+        //    return str_md5;
+        //}
+
         private Boolean getID(string username, string pass)
         {
             SqlConnection con = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
