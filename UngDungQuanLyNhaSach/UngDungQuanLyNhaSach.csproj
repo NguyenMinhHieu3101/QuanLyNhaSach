@@ -12,6 +12,7 @@
     <None Remove="Images\background2.png" />
     <None Remove="Images\book-shop.png" />
     <None Remove="Images\BookStore.png" />
+    <None Remove="Images\close.png" />
     <None Remove="Images\drop-down-arrow.png" />
     <None Remove="Images\email.png" />
     <None Remove="Images\forgetpass.png" />
@@ -55,6 +56,9 @@
     </Resource>
     <Resource Include="Images\book-shop.png" />
     <Resource Include="Images\BookStore.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\close.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\drop-down-arrow.png">

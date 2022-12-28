@@ -221,10 +221,10 @@ namespace UngDungQuanLyNhaSach.Pages
             maHD.SelectedIndex = -1;
             maKH.SelectedIndex = -1;
             nguoiLapHD.SelectedIndex = -1;
-            tongTien.Text = "";
+            ngayLapHD.SelectedIndex = -1;
+            tongTien.SelectedIndex = -1;
             selectedHDTable.ItemsSource = new List<HoaDon>();
-            selectedHoaDon = new List<HoaDon>();
-            
+            selectedHoaDon = new List<HoaDon>();            
             loadListHD();
         }
 

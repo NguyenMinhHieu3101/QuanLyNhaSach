@@ -35,6 +35,8 @@ namespace UngDungQuanLyNhaSach
         {
             DangNhap dangnhap = new DangNhap();
             dangnhap.Show();
+            //TabWindow tabWindow = new TabWindow();
+            //tabWindow.Show();
             this.Hide();
         }
 

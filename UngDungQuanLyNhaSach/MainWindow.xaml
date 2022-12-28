@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UngDungQuanLyNhaSach"
         mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen" Height="450" Width="800" Icon="/Images/book-shop.png" ResizeMode="NoResize">
+        WindowStartupLocation="CenterScreen" Height="450" Width="800" 
+        Icon="/Images/book-shop.png" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"></RowDefinition>

@@ -37,6 +37,9 @@
     <Compile Update="Pages\Invoice.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\ItemThemHoaDon.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\ThayDoiQuyDinhChiTiet.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -121,6 +124,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Invoice.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ItemThemHoaDon.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\ThayDoiQuyDinhChiTiet.xaml">
