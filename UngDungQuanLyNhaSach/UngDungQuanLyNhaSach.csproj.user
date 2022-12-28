@@ -40,6 +40,12 @@
     <Compile Update="Pages\ItemThemHoaDon.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\KhoPdf.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\SanPhamPdf.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\ThayDoiQuyDinhChiTiet.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -127,6 +133,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\ItemThemHoaDon.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\KhoPdf.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\SanPhamPdf.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\ThayDoiQuyDinhChiTiet.xaml">

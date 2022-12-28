@@ -52,10 +52,10 @@ namespace UngDungQuanLyNhaSach.Pages
                 chiTraList = new List<ChiTra>();
                 thuNhapList = new List<ThuNhap>();
 
-                decimal tongThu = 0;
-                decimal tongChi = 0;
-                decimal tongLuong = 0;
-                decimal tongTienNhap = 0;
+                double tongThu = 0;
+                double tongChi = 0;
+                double tongLuong = 0;
+                double tongTienNhap = 0;
 
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                 connection.Open();
@@ -82,7 +82,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (command.ExecuteScalar() == DBNull.Value)
                         tongThu = 0;
                     else
-                        tongThu = (decimal)command.ExecuteScalar();
+                        tongThu = (double)command.ExecuteScalar();
 
                     txtTongThu.Text = "TỔNG THU: " + string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(tongThu.ToString()));
 
@@ -103,25 +103,25 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (command.ExecuteScalar() == DBNull.Value)
                         tongTienNhap = 0;
                     else
-                        tongTienNhap = (decimal)command.ExecuteScalar();
+                        tongTienNhap = (double)command.ExecuteScalar();
 
                     chiTraList.Add(new ChiTra(1, "Tiền nhập sách", string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(tongChi.ToString()))));
 
                     //string readString3 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Thuế'";
                     //command = new SqlCommand(readString3, connection);
                     //tienThue = (double)command.ExecuteScalar();
-                    //chiTraList.Add(new ChiTra(2, "Thuế", (decimal)tienThue));
+                    //chiTraList.Add(new ChiTra(2, "Thuế", (double)tienThue));
 
                     //string readString4 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Mặt bằng'";
                     //command = new SqlCommand(readString4, connection);
                     //tienMatBang = (double)command.ExecuteScalar();
-                    //chiTraList.Add(new ChiTra(3, "Tiền mặt bằng", (decimal)tienMatBang));
+                    //chiTraList.Add(new ChiTra(3, "Tiền mặt bằng", (double)tienMatBang));
 
                     if (dPickerTuNgay.SelectedDate.Value.Day == 1 || dPickerDenNgay.SelectedDate.Value.Day == 1)
                     {
                         string readString5 = "SELECT SUM(Luong) AS TongLuong FROM NHANVIEN";
                         command = new SqlCommand(readString5, connection);
-                        tongLuong = (decimal)command.ExecuteScalar();
+                        tongLuong = (double)command.ExecuteScalar();
                         chiTraList.Add(new ChiTra(2, "Lương nhân viên", string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(tongLuong.ToString()))));
                     }
 
@@ -130,7 +130,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     tongChi = tongTienNhap + tongLuong;
                     txtTongChi.Text = "TỔNG CHI: " + string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(tongChi.ToString()));
 
-                    decimal loiNhuan = tongThu - tongChi;
+                    double loiNhuan = tongThu - tongChi;
                     txtLoiNhuan.Text = "LỢI NHUẬN: " + string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(loiNhuan.ToString()));
 
                     //Insert chi tiết báo cáo vào database
@@ -203,8 +203,8 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             //int thangHienTai = 5;
             int thangHienTai = DateTime.Now.Month;
-            decimal[] tongThu = new decimal[5];
-            decimal[] tongChi = new decimal[5];
+            double[] tongThu = new double[5];
+            double[] tongChi = new double[5];
             String[] label = new String[5];
 
             for (int i = 0; i < 5; i++)
@@ -229,7 +229,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (command.ExecuteScalar() == DBNull.Value)
                         tongThu[i] = 0;
                     else
-                        tongThu[i] = (decimal)command.ExecuteScalar();
+                        tongThu[i] = (double)command.ExecuteScalar();
                 }
 
                 for (int i = 0; i < 5; i++)
@@ -244,7 +244,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (command.ExecuteScalar() == DBNull.Value)
                         tongChi[i] = 0;
                     else
-                        tongChi[i] = (decimal)command.ExecuteScalar();
+                        tongChi[i] = (double)command.ExecuteScalar();
 
                     //string readString3 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Thuế'";
                     //command = new SqlCommand(readString3, connection);
@@ -256,7 +256,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     string readString5 = "SELECT SUM(Luong) AS TongLuong FROM NHANVIEN";
                     command = new SqlCommand(readString5, connection);
-                    tongChi[i] += (decimal)command.ExecuteScalar();
+                    tongChi[i] += (double)command.ExecuteScalar();
                 }
             }
             catch (Exception e)
@@ -269,12 +269,12 @@ namespace UngDungQuanLyNhaSach.Pages
                     new ColumnSeries
                     {
                         Title = "Thu nhập",
-                        Values = new ChartValues<decimal> {(decimal)tongThu[4], (decimal)tongThu[3], (decimal)tongThu[2], (decimal)tongThu[1], (decimal)tongThu[0]}
+                        Values = new ChartValues<double> {(double)tongThu[4], (double)tongThu[3], (double)tongThu[2], (double)tongThu[1], (double)tongThu[0]}
                     },
                     new ColumnSeries
                     {
                         Title = "Chi trả",
-                        Values = new ChartValues<decimal> { (decimal)tongChi[4], (decimal)tongChi[3], (decimal)tongChi[2], (decimal)tongChi[1], (decimal)tongChi[0] }
+                        Values = new ChartValues<double> { (double)tongChi[4], (double)tongChi[3], (double)tongChi[2], (double)tongChi[1], (double)tongChi[0] }
                     }
                 };
 
