@@ -1,9 +1,12 @@
 ﻿using Microsoft.VisualBasic;
+using Microsoft.Win32;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -19,7 +22,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Excel = Microsoft.Office.Interop.Excel;
 using UngDungQuanLyNhaSach.Model;
+using LicenseContext = OfficeOpenXml.LicenseContext;
+using System.Data.Common;
+using System.Windows.Markup;
+using System.Reflection;
+using Microsoft.Office.Interop.Excel;
+using System.Data.OleDb;
+using DataTable = System.Data.DataTable;
+using Path = System.IO.Path;
+using System.IO.Packaging;
+using Page = System.Windows.Controls.Page;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -77,7 +91,7 @@ namespace UngDungQuanLyNhaSach.Pages
                             soLuong: (int)reader["SoLuong"], donGia: (Decimal)reader["DonGia"], thanhTien: (int)reader["SoLuong"] * (Decimal)reader["DonGia"]));
                             
                     }
-                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {
                         chitietphieuNhapSachTable.ItemsSource = chiTietPhieuNhapSachList;
                     }));
@@ -102,7 +116,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     string readString = "select Count(*) from PHIEUNHAP";
                     SqlCommand commandReader = new SqlCommand(readString, connection);
                     Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
-                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {
                         maPhieuNhap.Text = "PN" + count.ToString("000");
                     }));
@@ -141,7 +155,7 @@ namespace UngDungQuanLyNhaSach.Pages
                                     ngayNhap: (DateTime)reader["NgayNhap"],
                                     tongTien: decimal.Parse(reader["TongTien"].ToString())));
 
-                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        this.Dispatcher.BeginInvoke(new System.Action(() =>
                         {
                             phieuNhapSachTable.ItemsSource = phieuNhapList;
                          
@@ -505,6 +519,7 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
+
         void loadGoiYList()
         {
             Thread thread = new Thread(new ThreadStart(() =>
@@ -536,7 +551,7 @@ namespace UngDungQuanLyNhaSach.Pages
                                     tacGia: (String)reader["TacGia"], nXB: (String)reader["NXB"], giaNhap: (Decimal)reader["GiaNhap"],
                                     namXB: (int)reader["NamXB"], maKho: (String)reader["MaKho"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng"));
 
-                        this.Dispatcher.BeginInvoke(new Action(() =>
+                        this.Dispatcher.BeginInvoke(new System.Action(() =>
                         {
                             GoiYSachTable.ItemsSource = topSPList;
                         }));
@@ -552,7 +567,184 @@ namespace UngDungQuanLyNhaSach.Pages
             }));
 
             thread.IsBackground = true;
-            thread.Start();      
+            thread.Start();
+        }      
+            
+
+        private void importBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            //if (string.IsNullOrEmpty(filePath))
+            //{
+            //    MessageBox.Show("Đường dẫn không hợp lệ hoặc chưa chọn file");
+            //    return;
+            //}
+
+            //List < listSachNhap > = new List<listSachNhap>();
+
+            //DataTable dt = new DataTable();
+            //dt.Columns.Add("#");
+            //dt.Columns.Add("Mã Sản Phẩm");
+            //dt.Columns.Add("Tên Sách");
+            //dt.Columns.Add("Tác Giả");
+            //dt.Columns.Add("NXB");
+            //dt.Columns.Add("Năm XB");
+            //dt.Columns.Add("Đơn Giá");
+            //dt.Columns.Add("Số Lượng");
+
+
+            //try
+            //{
+            //    var package = new ExcelPackage(new FileInfo(filePath));
+            //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            //    ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+
+            //for (int i = workSheet.Dimension.Start.Row; i <= workSheet.Dimension.End.Row; i++)
+            //{
+            //    try
+            //    {
+            //        int j = 1;
+            //        var stt = workSheet.Cells[i, j++].Value.ToString();
+            //        var masanpham = workSheet.Cells[i, j++].Value.ToString();
+            //        var tensach = workSheet.Cells[i, j++].Value.ToString();
+            //        var tacgia = workSheet.Cells[i, j++].Value.ToString();
+            //        var nxb = workSheet.Cells[i, j++].Value.ToString();
+            //        var namxb = workSheet.Cells[i, j++].Value.ToString();
+            //        var dongia = workSheet.Cells[i, j++].Value.ToString();
+            //        var soluong = workSheet.Cells[i, j++].Value.ToString();
+
+            //        dt.Rows.Add(stt, tensach, tacgia, nxb, namxb, dongia, soluong);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show(ex.Message);
+            //    }
+            //}
+            //    do
+            //    {
+            //        rowIndex = 2 + index;
+            //        row = dt.NewRow();
+            //        row[0] = Convert.ToString(((Microsoft.Office.Interop.Excel.Range)workSheet.Cells[rowIndex, 1]).Value2);
+            //        row[1] = Convert.ToString(((Microsoft.Office.Interop.Excel.Range)workSheet.Cells[rowIndex, 2]).Value2);
+            //        row[2] = Convert.ToString(((Microsoft.Office.Interop.Excel.Range)workSheet.Cells[rowIndex, 3]).Value2);
+            //        row[3] = Convert.ToString(((Microsoft.Office.Interop.Excel.Range)workSheet.Cells[rowIndex, 4]).Value2);
+            //        row[4] = Convert.ToString(((Microsoft.Office.Interop.Excel.Range)workSheet.Cells[rowIndex, 5]).Value2);
+            //        index++;
+            //        dt.Rows.Add(row);
+            //    }
+            //    while (((Microsoft.Office.Interop.Excel.Range)workSheet.Cells[rowIndex, 1]).Value2 != null)
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
+
+            //chitietphieuNhapSachTable.ItemsSource = dt.DefaultView;
+
+
+
+            //using (OleDbConnection conn = new OleDbConnection())
+            //    {
+            //    string path = "";
+            //    OpenFileDialog openFile = new OpenFileDialog();
+            //    //openFile.Filter = "Excel | *.xlsx | Excel 2003 | *.xls";
+
+            //    if (openFile.ShowDialog() == true)
+            //    {
+            //        path = openFile.FileName;
+            //    }
+            //    var package = new ExcelPackage(new FileInfo(path));
+            //    //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            //    ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
+
+            //        DataTable dt = new DataTable();
+            //        string Import_FileName = path;
+            //        string fileExtension = Path.GetExtension(Import_FileName);
+            //        if (fileExtension == ".xls")
+            //            conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + Import_FileName + ";" + "Extended Properties='Excel 8.0;HDR=YES;'";
+            //        if (fileExtension == ".xlsx")
+            //            conn.ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Import_FileName + ";" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'";
+            //        using (OleDbCommand comm = new OleDbCommand())
+            //        {
+            //            comm.CommandText = "Select * from [" + workSheet + "$]";
+            //            comm.Connection = conn;
+            //            using (OleDbDataAdapter da = new OleDbDataAdapter())
+            //            {
+            //                da.SelectCommand = comm;
+            //                da.Fill(dt);
+            //            }
+            //        }
+            //    }
+
+
+            //try
+            //{
+            //    System.Data.OleDb.OleDbConnection MyConnection;
+            //    System.Data.DataTable Dt;
+            //    System.Data.OleDb.OleDbDataAdapter MyCommand;
+            //    MyConnection = new System.Data.OleDb.OleDbConnection("provider=Microsoft.Jet.OLEDB.4.0;Data Source='c:\\csharp.net-informations.xls';Extended Properties=Excel 8.0;");
+            //    MyCommand = new System.Data.OleDb.OleDbDataAdapter("select * from [Sheet1$]", MyConnection);
+            //    MyCommand.TableMappings.Add("Table", "TestTable");
+            //    Dt = new System.Data.DataTable();
+            //    MyCommand.Fill(Dt);
+            //    chitietphieuNhapSachTable.ItemsSource = Dt.DefaultView;
+            //    MyConnection.Close();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString());
+            //}
+
+
+            string path = "";
+            OpenFileDialog openFile = new OpenFileDialog();
+            //openFile.Filter = "Excel | *.xlsx | Excel 2003 | *.xls";
+
+            if (openFile.ShowDialog() == true)
+            {
+                path = openFile.FileName;
+                Excel.Application excelApp = new Excel.Application();
+                Excel.Workbook excelBook = excelApp.Workbooks.Open(path, 0, true, 5, "", "", true,
+                    Excel.XlPlatform.xlWindows, "/t", false, false, 0, true, 1, 0);
+                Excel.Worksheet excelSheet = excelBook.Worksheets.get_Item(1);
+                Excel.Range excelRange = excelSheet.UsedRange;
+                string strCellData = "";
+                double douCellData;
+                int rowCnt = 0;
+                int colCnt = 0;
+
+                DataTable dt = new DataTable();
+                for (colCnt = 1; colCnt <= excelRange.Columns.Count; colCnt++)
+                {
+                    string strColumn = "";
+                    strColumn = (string)(excelRange.Cells[1, colCnt] as Excel.Range).Value2;
+                    dt.Columns.Add(strColumn, typeof(string));
+                }
+                for (rowCnt = 2; rowCnt <= excelRange.Rows.Count; rowCnt++)
+                {
+                    string strData = "";
+                    for (colCnt = 1; colCnt <= excelRange.Columns.Count; colCnt++)
+                    {
+                        try
+                        {
+                            strCellData = (string)(excelRange.Cells[rowCnt, colCnt] as Excel.Range).Value2;
+                            strData += strCellData + "|";
+                        }
+                        catch
+                        {
+                            douCellData = (excelRange.Cells[rowCnt, colCnt] as Excel.Range).Value2;
+                            strData += douCellData.ToString() + "|";
+                        }
+
+                    }
+                    strData = strData.Remove(strData.Length -1, 1);
+                    dt.Rows.Add(strData.Split("|"));
+                }
+                chitietphieuNhapSachTable.ItemsSource = dt.DefaultView;
+                excelBook.Close();
+            }
+
         }
     }
 }
