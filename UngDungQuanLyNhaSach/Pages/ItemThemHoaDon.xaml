@@ -225,7 +225,7 @@
             <RowDefinition Height="3.4*"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="2.6*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="3*"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="50"/>
@@ -341,7 +341,7 @@
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
-                  AutoGeneratingColumn="hoaDonTable_AutoGeneratingColumn" Height="288" Background="{x:Null}">
+                  AutoGeneratingColumn="hoaDonTable_AutoGeneratingColumn" Height="185" Background="{x:Null}">
 
 
                 <!--<DataGrid.Columns>
