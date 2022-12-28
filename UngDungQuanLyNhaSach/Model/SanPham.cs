@@ -27,7 +27,7 @@ namespace UngDungQuanLyNhaSach.Model
         public String nXB { get; set; }
 
         [ColumnName("Giá Nhập")]
-        public Decimal giaNhap { get; set; }
+        public double giaNhap { get; set; }
 
         [ColumnName("Năm XB")]
         public Int32 namXB { get; set; }
@@ -40,7 +40,7 @@ namespace UngDungQuanLyNhaSach.Model
 
         public int soLuong { get; set; }
         public SanPham(string maSanPham, string tenSanPham, string theLoai,
-            string tacGia, string nXB, decimal giaNhap, int namXB, string maKho, string trangThai, int soLuong)
+            string tacGia, string nXB, double giaNhap, int namXB, string maKho, string trangThai, int soLuong)
         {
             this.maSanPham = maSanPham;
             this.tenSanPham = tenSanPham;
@@ -54,7 +54,7 @@ namespace UngDungQuanLyNhaSach.Model
 
         }
         public SanPham(int stt, string maSanPham, string tenSanPham, string theLoai,
-            string tacGia, string nXB, decimal giaNhap, int namXB, string maKho, string trangThai)
+            string tacGia, string nXB, double giaNhap, int namXB, string maKho, string trangThai)
         {
             this.stt = stt;
             this.maSanPham = maSanPham;

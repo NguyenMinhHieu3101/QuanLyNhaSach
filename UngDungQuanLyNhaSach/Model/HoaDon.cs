@@ -78,12 +78,12 @@ namespace UngDungQuanLyNhaSach.Model
                 return string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(strMoney));
             }   
         }
-        private Decimal _tongTienHD { get; set; }
+        private double _tongTienHD { get; set; }
 
         String maKhuyenMai;
 
         public HoaDon(string maHoaDon, string maNhanVien,
-            string maKhachHang, DateTime ngayLapHD, decimal tongTienHD)
+            string maKhachHang, DateTime ngayLapHD, double tongTienHD)
         {
             this.maHoaDon = maHoaDon;
             this._maNhanVien = maNhanVien;
@@ -93,7 +93,7 @@ namespace UngDungQuanLyNhaSach.Model
         }
 
         public HoaDon(int stt,string maHoaDon, string maNhanVien,
-            string maKhachHang, string maKhuyenMai, DateTime ngayLapHD, decimal tongTienHD)
+            string maKhachHang, string maKhuyenMai, DateTime ngayLapHD, double tongTienHD)
         {
             this.stt = stt;
             this.maHoaDon = maHoaDon;
@@ -114,7 +114,7 @@ namespace UngDungQuanLyNhaSach.Model
             return _maKhachHang;
         }
 
-        public decimal getTongTienHD()
+        public double getTongTienHD()
         {
             return _tongTienHD;
         }

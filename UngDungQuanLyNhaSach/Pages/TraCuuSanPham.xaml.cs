@@ -58,7 +58,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 //        sanPhamList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
                 //            tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
                 //            theLoai: (String)reader["TheLoai"],nXB: (String)reader["NXB"], 
-                //            giaNhap: (Decimal)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
+                //            giaNhap: (double)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
                 //            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
                 //    }
                 //    this.Dispatcher.BeginInvoke(new Action(() => {
@@ -85,7 +85,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     List<String> itemsTenSP = new List<String>();
                     List<String> itemsTheLoai = new List<String>();
                     List<String> itemsTacGia = new List<String>();
-                    List<decimal> itemsDonGia = new List<decimal>();
+                    List<double> itemsDonGia = new List<double>();
                     List<String> itemsNXB = new List<String>();
                     List<int> itemsNamXB = new List<int>();
 
@@ -95,12 +95,12 @@ namespace UngDungQuanLyNhaSach.Pages
                         //sanPhamList.Add(new SanPham(maSanPham: (String)reader["MaSanPham"],
                         //            tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
                         //            theLoai: (String)reader["TheLoai"], nXB: (String)reader["NXB"],
-                        //            giaNhap: (Decimal)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
+                        //            giaNhap: (double)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
                         //            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
                         itemsTenSP.Add((String)reader["TenSanPham"]);
                         itemsTheLoai.Add((String)reader["TheLoai"]);
                         itemsTacGia.Add((String)reader["TacGia"]);
-                        itemsDonGia.Add((decimal)reader["GiaNhap"]);
+                        itemsDonGia.Add((double)reader["GiaNhap"]);
                         itemsNXB.Add((String)reader["NXB"]);
                         itemsNamXB.Add((int)reader["NamXB"]);
 
@@ -273,7 +273,7 @@ namespace UngDungQuanLyNhaSach.Pages
                             tacGia: (String)reader["TacGia"],
                             theLoai: (String)reader["TheLoai"],
                             nXB: (String)reader["NXB"],
-                            giaNhap: (decimal)reader["GiaNhap"],
+                            giaNhap: (double)reader["GiaNhap"],
                             namXB: (Int32)reader["NamXB"],
                             maKho: (String)reader["MaKho"],
                             trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng")); 

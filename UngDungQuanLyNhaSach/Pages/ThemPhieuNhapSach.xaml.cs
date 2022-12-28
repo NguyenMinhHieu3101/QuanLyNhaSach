@@ -88,7 +88,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                         chiTietPhieuNhapSachList.Add(new ChiTietPhieuNhapSach(stt: count, maSanPham: (String)reader["MaSanPham"],
                            
-                            soLuong: (int)reader["SoLuong"], donGia: (Decimal)reader["DonGia"], thanhTien: (int)reader["SoLuong"] * (Decimal)reader["DonGia"]));
+                            soLuong: (int)reader["SoLuong"], donGia: (double)reader["DonGia"], thanhTien: (int)reader["SoLuong"] * (double)reader["DonGia"]));
                             
                     }
                     this.Dispatcher.BeginInvoke(new System.Action(() =>
@@ -153,7 +153,7 @@ namespace UngDungQuanLyNhaSach.Pages
                                     maNhanVien: (String)reader["MaNhanVien"], maKho: (String)reader["MaKho"],
                                     nhaCungCap: (String)reader["NhaCungCap"],
                                     ngayNhap: (DateTime)reader["NgayNhap"],
-                                    tongTien: decimal.Parse(reader["TongTien"].ToString())));
+                                    tongTien: double.Parse(reader["TongTien"].ToString())));
 
                         this.Dispatcher.BeginInvoke(new System.Action(() =>
                         {
@@ -238,7 +238,7 @@ namespace UngDungQuanLyNhaSach.Pages
             //{
             //    MessageBox.Show(ex.Message);
             //}
-            SanPham sanpham = new SanPham(maSach.Text, tenSach.Text, theLoai.Text, tacGia.Text, nhaXB.Text, Decimal.Parse(donGia.Text), int.Parse(namXB.Text),"K001","1", int.Parse(soLuongNhap.Text));
+            SanPham sanpham = new SanPham(maSach.Text, tenSach.Text, theLoai.Text, tacGia.Text, nhaXB.Text, double.Parse(donGia.Text), int.Parse(namXB.Text),"K001","1", int.Parse(soLuongNhap.Text));
 
             sanPhamTrongPhieuNhap.Add(sanpham);
             if (soLuongNhap.Text.Length > 0)
@@ -250,8 +250,8 @@ namespace UngDungQuanLyNhaSach.Pages
                     return;
                 }
                 string value = Regex.Replace(donGia.Text, "[^0-9]", "");
-                decimal donGia1;
-                if (decimal.TryParse(value, out donGia1))
+                double donGia1;
+                if (double.TryParse(value, out donGia1))
                 {
                     bool check = true;
                     for (int i = 0; i < chiTietPhieuNhapSachList.Count; i++)
@@ -271,7 +271,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     chitietphieuNhapSachTable.ItemsSource = new List<ChiTietPhieuNhapSach>();
                     chitietphieuNhapSachTable.ItemsSource = chiTietPhieuNhapSachList;
                     resetAddProduct();
-                    decimal sum = 0;
+                    double sum = 0;
                     foreach (ChiTietPhieuNhapSach chiTiet in chiTietPhieuNhapSachList)
                     {
                         sum += chiTiet.getThanhTien();
@@ -548,7 +548,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         count++;
                         topSPList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
                                     tenSanPham: (String)reader["TenSanPham"], theLoai: (String)reader["TheLoai"], 
-                                    tacGia: (String)reader["TacGia"], nXB: (String)reader["NXB"], giaNhap: (Decimal)reader["GiaNhap"],
+                                    tacGia: (String)reader["TacGia"], nXB: (String)reader["NXB"], giaNhap: (double)reader["GiaNhap"],
                                     namXB: (int)reader["NamXB"], maKho: (String)reader["MaKho"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng"));
 
                         this.Dispatcher.BeginInvoke(new System.Action(() =>

@@ -24,13 +24,13 @@ namespace UngDungQuanLyNhaSach.Model
         public DateTime ngayNhap { get; set; }
 
         [ColumnName("Tổng Tiền")]
-        public Decimal tongTien { get; set; }
+        public double tongTien { get; set; }
 
         //[ColumnName("Người lập hóa đơn")]
         //public String nguoiLapHD { get; set; }
 
         public PhieuNhapSach(string maPhieuNhap, string maNhanVien,
-            string maKho, string nhaCungCap, DateTime ngayNhap, decimal tongTien)
+            string maKho, string nhaCungCap, DateTime ngayNhap, double tongTien)
         {
             this.maPhieuNhap = maPhieuNhap;
             this.maNhanVien = maNhanVien;
@@ -40,7 +40,7 @@ namespace UngDungQuanLyNhaSach.Model
             this.tongTien = tongTien;
         }
         public PhieuNhapSach(int stt,string maPhieuNhap, string maNhanVien,
-            string maKho, string nhaCungCap, DateTime ngayNhap, decimal tongTien)
+            string maKho, string nhaCungCap, DateTime ngayNhap, double tongTien)
         {
             this.stt = stt;
             this.maPhieuNhap = maPhieuNhap;

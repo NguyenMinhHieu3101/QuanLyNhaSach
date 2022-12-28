@@ -234,8 +234,8 @@ namespace UngDungQuanLyNhaSach.Pages
                     return;
                 }
                 string value = Regex.Replace(donGia_txt.Text, "[^0-9]", "");
-                decimal donGia;
-                if (decimal.TryParse(value, out donGia))
+                double donGia;
+                if (double.TryParse(value, out donGia))
                 {
                     bool check = true;
                     for (int i = 0; i < chiTietHDList.Count; i++)
@@ -255,7 +255,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     hoaDonTable.ItemsSource = new List<ChiTietHoaDon>();
                     hoaDonTable.ItemsSource = chiTietHDList;
                     resetAddProduct();
-                    decimal sum = 0;
+                    double sum = 0;
                     foreach (ChiTietHoaDon chiTiet in chiTietHDList)
                     {
                         sum += chiTiet.getThanhTien();

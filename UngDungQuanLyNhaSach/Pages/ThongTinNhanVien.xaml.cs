@@ -366,8 +366,8 @@ namespace UngDungQuanLyNhaSach.Pages
         private void luong_TextChanged(object sender, TextChangedEventArgs e)
         {
             string value = Regex.Replace(luong.Text, "[^0-9]", "");
-            decimal ul;
-            if (decimal.TryParse(value, out ul))
+            double ul;
+            if (double.TryParse(value, out ul))
             {
                 if (luong.Text.Length == 0 || ul == 0)
                 {

@@ -58,7 +58,7 @@ namespace UngDungQuanLyNhaSach.Pages
                             ngayLapHD: (DateTime)reader["NgayLapHoaDon"],
                             maNhanVien: (String)reader["MaNhanVien"],
                             maKhuyenMai: (String)reader["MaKhuyenMai"],
-                            tongTienHD: (decimal)reader["TongTienHoaDon"]);
+                            tongTienHD: (double)reader["TongTienHoaDon"]);
                     this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {
                         date.Text = "Ngày: " + hoaDon.ngayLapHD.ToString("dd/MM/yyyy");
@@ -103,7 +103,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     {
                         count++;
                         chiTietHDList.Add(new ChiTietHoaDon(count, (String)reader["MaSanPham"],
-                            (int)reader["SoLuong"], (Decimal)reader["DonGia"], (Decimal)reader["ThanhTien"]));
+                            (int)reader["SoLuong"], (double)reader["DonGia"], (double)reader["ThanhTien"]));
                     }
                     this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {

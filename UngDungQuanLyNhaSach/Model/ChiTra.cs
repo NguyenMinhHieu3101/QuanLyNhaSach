@@ -15,9 +15,9 @@ namespace UngDungQuanLyNhaSach.Model
         public String chiTra { get; set; }
 
         [ColumnName("Số tiền")]
-        public decimal soTien { get; set; }
+        public double soTien { get; set; }
 
-        public ChiTra(int stt, string chiTra, decimal soTien)
+        public ChiTra(int stt, string chiTra, double soTien)
         {
             this.stt = stt;
             this.chiTra = chiTra;

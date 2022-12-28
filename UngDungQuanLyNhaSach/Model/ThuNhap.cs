@@ -15,9 +15,9 @@ namespace UngDungQuanLyNhaSach.Model
         public String thuNhap { get; set; }
 
         [ColumnName("Số tiền")]
-        public decimal soTien { get; set; }
+        public double soTien { get; set; }
 
-        public ThuNhap(int stt, string thuNhap, decimal soTien)
+        public ThuNhap(int stt, string thuNhap, double soTien)
         {
             this.stt = stt;
             this.thuNhap = thuNhap;

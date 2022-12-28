@@ -91,7 +91,7 @@ namespace UngDungQuanLyNhaSach.Pages
                             maKho: (String)reader["MaKho"],
                             nhaCungCap: (String)reader["NhaCungCap"],
                             ngayNhap: (DateTime)reader["NgayNhap"],
-                            tongTien: (decimal)reader["TongTien"]
+                            tongTien: (double)reader["TongTien"]
                             ));
                     }
                     this.Dispatcher.BeginInvoke(new System.Action(() =>

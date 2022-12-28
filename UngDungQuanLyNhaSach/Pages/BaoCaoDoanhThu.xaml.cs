@@ -64,10 +64,10 @@ namespace UngDungQuanLyNhaSach.Pages
                 chiTraList = new List<ChiTra>();
                 thuNhapList = new List<ThuNhap>();
 
-                decimal tongThu = 0;
-                decimal tongChi = 0;
-                decimal tongLuong = 0;
-                decimal tongTienNhap = 0;
+                double tongThu = 0;
+                double tongChi = 0;
+                double tongLuong = 0;
+                double tongTienNhap = 0;
                 double tienThue = 0;
                 double tienMatBang = 0;
 
@@ -96,7 +96,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (command.ExecuteScalar() == DBNull.Value)
                         tongThu = 0;
                     else
-                        tongThu = (decimal)command.ExecuteScalar();
+                        tongThu = (double)command.ExecuteScalar();
 
                     txtTongThu.Text = "TỔNG THU: " + tongThu;
 
@@ -117,25 +117,25 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (command.ExecuteScalar() == DBNull.Value)
                         tongTienNhap = 0;
                     else
-                        tongTienNhap = (decimal)command.ExecuteScalar();
+                        tongTienNhap = (double)command.ExecuteScalar();
 
                     chiTraList.Add(new ChiTra(1, "Tiền nhập sách", tongTienNhap));
 
                     string readString3 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Thuế'";
                     command = new SqlCommand(readString3, connection);
                     tienThue = (double)command.ExecuteScalar();
-                    chiTraList.Add(new ChiTra(2, "Thuế", (decimal)tienThue));
+                    chiTraList.Add(new ChiTra(2, "Thuế", (double)tienThue));
 
                     string readString4 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Mặt bằng'";
                     command = new SqlCommand(readString4, connection);
                     tienMatBang = (double)command.ExecuteScalar();
-                    chiTraList.Add(new ChiTra(3, "Tiền mặt bằng", (decimal)tienMatBang));
+                    chiTraList.Add(new ChiTra(3, "Tiền mặt bằng", (double)tienMatBang));
 
                     if (dPickerTuNgay.SelectedDate.Value.Day == 1 || dPickerDenNgay.SelectedDate.Value.Day == 1)
                     {
                         string readString5 = "SELECT SUM(Luong) AS TongLuong FROM NHANVIEN";
                         command = new SqlCommand(readString5, connection);
-                        tongLuong = (decimal)command.ExecuteScalar();
+                        tongLuong = (double)command.ExecuteScalar();
                         chiTraList.Add(new ChiTra(4, "Lương nhân viên", tongLuong));
                     }
 
@@ -144,7 +144,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     tongChi = tongTienNhap + tongLuong;
                     txtTongChi.Text = "TỔNG CHI: " + tongChi;
 
-                    decimal loiNhuan = tongThu - tongChi;
+                    double loiNhuan = tongThu - tongChi;
                     txtLoiNhuan.Text = "LỢI NHUẬN: " + loiNhuan;
 
                     //Insert chi tiết báo cáo vào database
@@ -274,8 +274,8 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             //int thangHienTai = 5;
             int thangHienTai = DateTime.Now.Month;
-            decimal[] tongThu = new decimal[5];
-            decimal[] tongChi = new decimal[5];
+            double[] tongThu = new double[5];
+            double[] tongChi = new double[5];
             String[] label = new String[5];
 
             for (int i = 0; i < 5; i++)
@@ -300,7 +300,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (command.ExecuteScalar() == DBNull.Value)
                         tongThu[i] = 0;
                     else
-                        tongThu[i] = (decimal)command.ExecuteScalar();
+                        tongThu[i] = (double)command.ExecuteScalar();
                 }
 
                 for (int i = 0; i < 5; i++)
@@ -315,19 +315,19 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (command.ExecuteScalar() == DBNull.Value)
                         tongChi[i] = 0;
                     else
-                        tongChi[i] = (decimal)command.ExecuteScalar();
+                        tongChi[i] = (double)command.ExecuteScalar();
 
                     //string readString3 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Thuế'";
                     //command = new SqlCommand(readString3, connection);
-                    //tongChi[i] += (decimal)command.ExecuteScalar();
+                    //tongChi[i] += (double)command.ExecuteScalar();
 
                     //string readString4 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Mặt bằng'";
                     //command = new SqlCommand(readString4, connection);
-                    //tongChi[i] += (decimal)command.ExecuteScalar();
+                    //tongChi[i] += (double)command.ExecuteScalar();
 
                     string readString5 = "SELECT SUM(Luong) AS TongLuong FROM NHANVIEN";
                     command = new SqlCommand(readString5, connection);
-                    tongChi[i] += (decimal)command.ExecuteScalar();
+                    tongChi[i] += (double)command.ExecuteScalar();
                 }
             }
             catch (Exception e)

@@ -72,7 +72,7 @@ namespace UngDungQuanLyNhaSach.Pages
                             ngayLapHD: (DateTime)reader["NgayLapHoaDon"],
                             maNhanVien: (String)reader["MaNhanVien"],
                             maKhuyenMai: (String)reader["MaKhuyenMai"],
-                            tongTienHD: (decimal)reader["TongTienHoaDon"]
+                            tongTienHD: (double)reader["TongTienHoaDon"]
                             ));
                     }
                     this.Dispatcher.BeginInvoke(new System.Action(() =>
@@ -109,7 +109,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     List<String> itemsMaKH = new List<String>();
                     List<String> itemsMaNV = new List<String>();
                     List<DateTime> itemsNgayLapHD = new List<DateTime>();
-                    List<Decimal> itemsTongTien = new List<Decimal>();
+                    List<double> itemsTongTien = new List<double>();
 
                     while (reader.Read())
                     {
@@ -117,7 +117,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         itemsMaKH.Add(getNameKHFromCode((String)reader["MaKhachHang"]));
                         itemsMaNV.Add(getNameNVFromCode((String)reader["MaNhanVien"]));
                         itemsNgayLapHD.Add((DateTime)reader["NgayLapHoaDon"]);
-                        itemsTongTien.Add((Decimal)reader["TongTienHoaDon"]);
+                        itemsTongTien.Add((double)reader["TongTienHoaDon"]);
                     }
                     this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {
@@ -139,7 +139,7 @@ namespace UngDungQuanLyNhaSach.Pages
             thread.Start();
         }
 
-        String toMoney(Decimal money)
+        String toMoney(double money)
         {
             String strMoney = money.ToString().Replace(".0000", "");
             return string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(strMoney));
