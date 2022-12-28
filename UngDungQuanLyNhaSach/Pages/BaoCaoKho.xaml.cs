@@ -175,10 +175,10 @@ namespace UngDungQuanLyNhaSach.Pages
                 }
                 connection.Close();
             }
-            catch (Exception exception)
+            catch
             {
-                MessageBox.Show(exception.Message);
-                //MessageBox.Show("Khoảng thời gian không hợp lệ!");
+                //MessageBox.Show(exception.Message);
+                MessageBox.Show("Khoảng thời gian không hợp lệ!");
             }
         }
 

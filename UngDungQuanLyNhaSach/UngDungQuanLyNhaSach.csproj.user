@@ -16,9 +16,6 @@
     <Compile Update="Pages\BaoCaoKho.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\BaoCaoPdf.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Pages\BaoCaoSanPham.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -32,6 +29,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\CapNhatSanPham.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\DoanhThuPdf.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pages\Invoice.xaml.cs">
@@ -102,9 +102,6 @@
     <Page Update="Pages\BaoCaoKho.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\BaoCaoPdf.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Pages\BaoCaoSanPham.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -118,6 +115,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\CapNhatSanPham.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\DoanhThuPdf.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\Invoice.xaml">
