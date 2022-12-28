@@ -40,7 +40,7 @@ namespace UngDungQuanLyNhaSach.Pages
             ngayBatDau.SelectedDate = DateTime.Now;
             ngayKetThuc.SelectedDate = DateTime.Now;
             updateMaKhuyenMai();
-            loadData();
+            loadData(false);
         }
 
         void reset()
@@ -153,7 +153,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.ExecuteNonQuery();
 
                     connection.Close();
-                    loadData();
+                    loadData(true);
                     MessageBox.Show("Thêm thành công");
                     reset();
                 }
@@ -175,11 +175,32 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-        void loadData()
+        private int getNumberItem()
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+
+                string readString = "select Count(*) from KHUYENMAI";
+                SqlCommand commandReader = new SqlCommand(readString, connection);
+                Int32 count = (Int32)commandReader.ExecuteScalar();
+                connection.Close();
+                return count;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return 0;
+            }
+        }
+
+        void loadData(bool check)
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
                 khuyenMaiList = new List<KhuyenMai>();
+                KhuyenMai khuyenMai = null;
 
                 try
                 {
@@ -192,16 +213,32 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlDataReader reader = command.ExecuteReader();
 
                     int count = 0;
+                    int number = getNumberItem();
 
                     while (reader.Read())
                     {
                         count++;
-                        khuyenMaiList.Add(new KhuyenMai(stt: count, maKhuyenMai: (String)reader["MaKhuyenMai"],
-                            batDau: (DateTime)reader["ThoiGianBatDau"], //DateTime.ParseExact(reader["ThoiGianBatDau"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
-                            ketThuc: (DateTime)reader["ThoiGianKetThuc"], //DateTime.ParseExact(reader["ThoiGianKetThuc"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
-                            maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
-                            soLuong: (int)reader["SoLuongKhuyenMai"], phanTram: (int)reader["PhanTram"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
+                        if (count == number && check)
+                        {
+                            khuyenMai = new KhuyenMai(stt: count, maKhuyenMai: (String)reader["MaKhuyenMai"],
+                                batDau: (DateTime)reader["ThoiGianBatDau"], //DateTime.ParseExact(reader["ThoiGianBatDau"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                                ketThuc: (DateTime)reader["ThoiGianKetThuc"], //DateTime.ParseExact(reader["ThoiGianKetThuc"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                                maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
+                                soLuong: (int)reader["SoLuongKhuyenMai"], phanTram: (int)reader["PhanTram"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực");
+                        }
+                        else
+                        {
+                            khuyenMaiList.Add(new KhuyenMai(stt: count, maKhuyenMai: (String)reader["MaKhuyenMai"],
+                                batDau: (DateTime)reader["ThoiGianBatDau"], //DateTime.ParseExact(reader["ThoiGianBatDau"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                                ketThuc: (DateTime)reader["ThoiGianKetThuc"], //DateTime.ParseExact(reader["ThoiGianKetThuc"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+                                maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
+                                soLuong: (int)reader["SoLuongKhuyenMai"], phanTram: (int)reader["PhanTram"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hạn" : "Còn hiệu lực"));
+                        }
                     }
+                    if (check)
+                    {
+                        khuyenMaiList.Insert(0, khuyenMai!);
+                    }    
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         khuyenMaiTable.ItemsSource = khuyenMaiList;
@@ -276,7 +313,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.ExecuteNonQuery();
 
                     connection.Close();
-                    loadData();
+                    loadData(false);
                     reset();
                     MessageBox.Show("Cập nhật thành công");
                 }
@@ -306,7 +343,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                         command.ExecuteNonQuery();
                         connection.Close();
-                        loadData();
+                        loadData(false);
                         reset();
                         MessageBox.Show("Xóa khuyến mãi thành công");
                     }

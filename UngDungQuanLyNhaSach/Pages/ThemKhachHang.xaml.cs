@@ -38,7 +38,7 @@ namespace UngDungQuanLyNhaSach.Pages
             delete.IsEnabled = false;
             updateMaKhachHang();
             ngaySinh.SelectedDate = DateTime.Now;
-            loadData();
+            loadData(false);
         }
 
         void reset()
@@ -123,7 +123,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.ExecuteNonQuery();
 
                     connection.Close();
-                    loadData();
+                    loadData(true);
                     MessageBox.Show("Thêm thành công");
                     updateMaKhachHang();
                     reset();
@@ -132,6 +132,26 @@ namespace UngDungQuanLyNhaSach.Pages
                 {
                     MessageBox.Show(ex.Message);
                 }
+            }
+        }
+
+        private int getNumberItem()
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+
+                string readString = "select Count(*) from KHACHHANG";
+                SqlCommand commandReader = new SqlCommand(readString, connection);
+                Int32 count = (Int32)commandReader.ExecuteScalar();
+                connection.Close();
+                return count;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return 0;
             }
         }
 
@@ -159,11 +179,12 @@ namespace UngDungQuanLyNhaSach.Pages
             return true;
         }
 
-        void loadData()
+        void loadData(bool check)
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
                 khachHangList = new List<KhachHang>();
+                KhachHang khachHang = null;
 
                 try
                 {
@@ -172,19 +193,33 @@ namespace UngDungQuanLyNhaSach.Pages
                     connection.Open();
                     string readString = "select * from KHACHHANG, LOAIKHACHHANG WHERE KHACHHANG.MaLoaiKhachHang = LOAIKHACHHANG.MaLoaiKhachHang";
                     SqlCommand command = new SqlCommand(readString, connection);
-
                     SqlDataReader reader = command.ExecuteReader();
 
                     int count = 0;
+                    int number = getNumberItem();
 
                     while (reader.Read())
                     {
                         count++;
-                        khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
-                            tenKhachHang: (String)reader["TenKhachHang"], ngaySinh: (DateTime)reader["NgaySinh"],
-                            gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
-                            sdt: (String)reader["SDT"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng"));
+                        if (count == number && check)
+                        {
+                            khachHang = new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
+                                tenKhachHang: (String)reader["TenKhachHang"], ngaySinh: (DateTime)reader["NgaySinh"],
+                                gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
+                                sdt: (String)reader["SDT"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng");
+                        }
+                        else
+                        {
+                            khachHangList.Add(new KhachHang(stt: count, maKhachHang: (String)reader["MaKhachHang"],
+                                tenKhachHang: (String)reader["TenKhachHang"], ngaySinh: (DateTime)reader["NgaySinh"],
+                                gioiTinh: (String)reader["GioiTinh"], maLoaiKhachHang: (String)reader["TenLoaiKhachHang"],
+                                sdt: (String)reader["SDT"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Không tồn tại" : "Còn sử dụng"));
+                        }
                     }
+                    if (check)
+                    {
+                        khachHangList.Insert(0, khachHang!);
+                    }    
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
                         khachHangTable.ItemsSource = khachHangList;    
@@ -297,7 +332,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.ExecuteNonQuery();
 
                     connection.Close();
-                    loadData();
+                    loadData(false);
                     reset();
                     MessageBox.Show("Cập nhật thành công");
                 }
@@ -327,7 +362,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                         command.ExecuteNonQuery();
                         connection.Close();
-                        loadData();
+                        loadData(false);
                         reset();
                         MessageBox.Show("Xóa khách hàng thành công");
                     }

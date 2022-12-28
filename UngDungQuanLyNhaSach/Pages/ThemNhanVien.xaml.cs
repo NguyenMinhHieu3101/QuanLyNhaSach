@@ -41,7 +41,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             InitializeComponent();
             ngaySinh.SelectedDate = DateTime.Now.AddYears(-18);
-            loadListStaff();
+            loadListStaff(false);
             loadTinh();
             updateMaNhanVien();
             ngaySinh.DisplayDateEnd= DateTime.Now.AddYears(-18);
@@ -73,7 +73,27 @@ namespace UngDungQuanLyNhaSach.Pages
             sdt_error.Visibility= Visibility.Hidden;
         }
 
-        void loadListStaff()
+        private int getNumberItem()
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+
+                string readString = "select Count(*) from NHANVIEN";
+                SqlCommand commandReader = new SqlCommand(readString, connection);
+                Int32 count = (Int32)commandReader.ExecuteScalar();
+                connection.Close();
+                return count;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return 0;
+            }
+        }
+
+        void loadListStaff(bool check)
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
@@ -91,17 +111,23 @@ namespace UngDungQuanLyNhaSach.Pages
                     baseNhanVienList = new List<BaseNhanVien>();
 
                     int count = 0;
+                    int number = getNumberItem();
 
                     while (reader.Read())
                     {
                         count++;
-
+                          
                         NhanVien nhanVien = new NhanVien(stt: count, maNhanVien: (String)reader["MaNhanVien"],
                             hoTen: (String)reader["HoTen"], maChucVu: (String)reader["TenChucVu"],
                             ngaySinh: (DateTime)reader["NgaySinh"],  //DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
                             cccd: (String)reader["CCCD"], gioiTinh: (String)reader["GioiTinh"], sdt: (String)reader["SDT"], email: (String)reader["Email"],
                             diaChi: (String)reader["DiaChi"], luong: string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(reader["luong"].ToString())),
                             trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Đã nghỉ việc" : "Còn hoạt động");
+
+                        if (count == number && check)
+                        {
+                            baseNhanVienList.Insert(0, nhanVien.toBase());
+                        }
 
                         baseNhanVienList.Add(nhanVien.toBase());
                         nhanVienList.Add(nhanVien);                       
@@ -409,7 +435,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.ExecuteNonQuery();
 
                     connection.Close();
-                    loadListStaff();
+                    loadListStaff(true);
                     MessageBox.Show("Thêm thành công");
                     resetData();
                 }
@@ -497,7 +523,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.ExecuteNonQuery();
 
                     connection.Close();
-                    loadListStaff();
+                    loadListStaff(false);
                     resetData();
                     MessageBox.Show("Sửa thành công");
                 }
@@ -527,7 +553,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                         command.ExecuteNonQuery();
                         connection.Close();
-                        loadListStaff();
+                        loadListStaff(false);
                         resetData();
                         MessageBox.Show("Xóa nhân viên thành công");
                     }
