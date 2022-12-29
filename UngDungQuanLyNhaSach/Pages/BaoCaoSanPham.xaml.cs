@@ -147,8 +147,8 @@ namespace UngDungQuanLyNhaSach.Pages
 
         void loadChart()
         {
-            int thangHienTai = 5;
-            //int thangHienTai = DateTime.Now.Month;
+            //int thangHienTai = 5;
+            int thangHienTai = DateTime.Now.Month;
             int[] tongBanRa = new int[5];
             String[] label = new String[5];
 
