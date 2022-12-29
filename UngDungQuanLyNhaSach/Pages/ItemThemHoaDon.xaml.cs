@@ -20,6 +20,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UngDungQuanLyNhaSach.Model;
 using Microsoft.Office.Interop.Excel;
+using MessagingToolkit.QRCode.Codec;
+using MessagingToolkit.QRCode.Codec.Data;
+using Microsoft.Win32;
+using System.Drawing;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -640,6 +644,18 @@ namespace UngDungQuanLyNhaSach.Pages
                 }
                 hoaDonTable.ItemsSource = new List<ChiTietHoaDon>();
                 hoaDonTable.ItemsSource = chiTietHDList;
+            }
+        }
+
+        //QR CODE
+        QRCodeDecoder decoder = new QRCodeDecoder();
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+
+        private void qrBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == true)
+            {
+                maSanPham_cbo.Text = decoder.Decode(new QRCodeBitmapImage(new Bitmap(openFileDialog.FileName)));
             }
         }
     }
