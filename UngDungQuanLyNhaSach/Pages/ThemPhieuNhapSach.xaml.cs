@@ -51,10 +51,12 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             InitializeComponent();
             ngayNhap.SelectedDate = DateTime.Now;
+            maNhanVien.Text = NhanVienDangDangNhap.MaNhanVien;
+      
             loadListPhieuNhap();
             loadFilter();
             ngayNhap.SelectedDate = DateTime.Today;
-            ngayNhap.IsEnabled = false;
+     
            // loadListChiTietPhieuNhap();
             updateBtn.IsEnabled = false;
             loadGoiYList();
@@ -63,7 +65,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             maNhanVien.Text = "";
             maPhieuNhap.Text = "";
-            maKho.Text = "";
+   
             nhaCungCap.Text = "";
             tongTien.Text = "";
             ngayNhap.Text = "";
@@ -261,7 +263,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 if (soLuongNhap.Text.Length > 0)
                 {
                  
-                    if (soLuong == 0 || soLuong > getSoLuong(maSach.Text))
+                    if (soLuong == 0)
                     {
                         MessageBox.Show("Số lượng không hợp lệ (Không còn sản phẩm trong kho)");
                         return;
@@ -505,7 +507,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 command.Parameters["@MaNhanVien"].Value = maNhanVien.Text;
 
                 command.Parameters.Add("@MaKho", SqlDbType.NVarChar);
-                command.Parameters["@MaKho"].Value = maKho.Text;
+                command.Parameters["@MaKho"].Value = "K001";
 
                 command.Parameters.Add("@NhaCungCap", SqlDbType.NVarChar);
                 command.Parameters["@NhaCungCap"].Value = nhaCungCap.Text;
@@ -552,7 +554,7 @@ namespace UngDungQuanLyNhaSach.Pages
             maPhieuNhap.Text = phieuNhapSach.maPhieuNhap;
             maNhanVien.Text = phieuNhapSach.maNhanVien;
             //number.Text = sanPham.soLuong;
-            maKho.Text = phieuNhapSach.maKho;
+            //maKho.Text = phieuNhapSach.maKho;
             nhaCungCap.Text = phieuNhapSach.nhaCungCap.ToString();
             ngayNhap.Text = phieuNhapSach.ngayNhap.ToString();
             tongTien.Text = phieuNhapSach.tongTien.ToString();
@@ -602,7 +604,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
 
                     connection.Open();
-                    string readString = "SELECT TOP(5) SANPHAM.MaSanPham, TenSanPham, TacGia, TheLoai, NXB, NamXB, MaKho, TrangThai, GiaNhap FROM HOADON, CHITIETHOADON, SANPHAM WHERE (HOADON.MaHoaDon = CHITIETHOADON.MaHoaDon) AND (SANPHAM.MaSanPham = CHITIETHOADON.MaSanPham) AND (MONTH(NgayLapHoaDon) = @Thang) GROUP BY SANPHAM.MaSanPham, TenSanPham, TacGia, TheLoai, NXB, NamXB, MaKho, TrangThai, GiaNhap ORDER BY COUNT(SoLuong) DESC";
+                    string readString = "SELECT TOP(5) SANPHAM.MaSanPham, TenSanPham, TacGia, TheLoai, NXB, NamXB, MaKho, TrangThai, GiaNhap FROM HOADON, CHITIETHOADON, SANPHAM, Count(soLuong) WHERE (HOADON.MaHoaDon = CHITIETHOADON.MaHoaDon) AND (SANPHAM.MaSanPham = CHITIETHOADON.MaSanPham) AND (MONTH(NgayLapHoaDon) = @Thang) GROUP BY SANPHAM.MaSanPham, TenSanPham, TacGia, TheLoai, NXB, NamXB, MaKho, TrangThai, GiaNhap ORDER BY COUNT(SoLuong) DESC";
                     SqlCommand command = new SqlCommand(readString, connection);
                     command.Parameters.Add("@Thang", SqlDbType.Int);
                     //command.Parameters["@Thang"].Value = DateTime.Now.Month - 1;
@@ -620,7 +622,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         topSPList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
                                     tenSanPham: (String)reader["TenSanPham"], theLoai: (String)reader["TheLoai"], 
                                     tacGia: (String)reader["TacGia"], nXB: (String)reader["NXB"], giaNhap: (double)reader["GiaNhap"],
-                                    namXB: (int)reader["NamXB"], maKho: (String)reader["MaKho"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng", soLuong: (Int32)reader["SoLuongTon"]));
+                                    namXB: (int)reader["NamXB"], maKho: (String)reader["MaKho"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng", soLuong: (Int32)reader["soLuong"]));
 
                         this.Dispatcher.BeginInvoke(new System.Action(() =>
                         {
@@ -704,12 +706,13 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void maSanPham_cbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+          
            
                 try
                 {
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                     connection.Open();
-                    string readString = "select count(*) from SANPHAM WHERE MaSanPham = '" + maSach.Text + "'";
+                    string readString = "select count(*) from SANPHAM WHERE MaSanPham = '" + maSach.SelectedValue + "'";
                     SqlCommand command = new SqlCommand(readString, connection);
 
 
@@ -718,10 +721,11 @@ namespace UngDungQuanLyNhaSach.Pages
                 if (count > 0)
                 {
                    
-                    readString = "select * from SANPHAM WHERE MaSanPham = '" + maSach.Text + "'";
+                    readString = "select * from SANPHAM WHERE MaSanPham = '" + maSach.SelectedValue + "'";
                     command = new SqlCommand(readString, connection);
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
+                    maSach.Text = (String)reader["MaSanPham"];
                     tenSach.Text = (String)reader["TenSanPham"];
                     tacGia.Text = (String)reader["TacGia"];
                     theLoai.Text = (String)reader["TheLoai"];

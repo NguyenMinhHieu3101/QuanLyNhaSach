@@ -336,7 +336,7 @@
 
 
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="1" Grid.Column="1">
+                    <StackPanel Grid.Row="0" Grid.Column="0">
                         <DockPanel LastChildFill="True">
 
                             <TextBlock Text="Ngày nhập:" Width="142"/>
@@ -355,19 +355,14 @@
                             <TextBox x:Name="maPhieuNhap" Template="{StaticResource TextBoxBaseControlTemplate}" Width="200" IsEnabled="false"/>
                         </DockPanel>
                     </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Row="1" Grid.Column="0" >
+                    <StackPanel Margin="5,5,15,5" Grid.Row="1" Grid.Column="1" >
                         <DockPanel  LastChildFill="True" Width="350">
                             <TextBlock Text="Mã nhân viên:" Width="120"/>
-                            <TextBox x:Name="maNhanVien" Template="{StaticResource TextBoxBaseControlTemplate}" Width="200"/>
+                            <TextBox x:Name="maNhanVien" Template="{StaticResource TextBoxBaseControlTemplate}" Width="200" IsEnabled="false"/>
                         </DockPanel>
                     </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Row="0" Grid.Column="0"  >
-                        <DockPanel  LastChildFill="True" Width="350">
-                            <TextBlock Text="Mã kho:" Width="120"/>
-                            <TextBox x:Name="maKho" Template="{StaticResource TextBoxBaseControlTemplate}" Width="200"/>
-                        </DockPanel>
-                    </StackPanel>
-                    <StackPanel Margin="5,5,15,5" Grid.Row="2" Grid.Column="0"  >
+                
+                    <StackPanel Margin="5,5,15,5" Grid.Row="1" Grid.Column="0"  >
                         <DockPanel  LastChildFill="True" Width="350">
                             <TextBlock Text="Nhà cung cấp:" Width="120"/>
                             <TextBox x:Name="nhaCungCap" Template="{StaticResource TextBoxBaseControlTemplate}" Width="200"/>
