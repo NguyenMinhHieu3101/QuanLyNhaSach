@@ -127,10 +127,18 @@ namespace UngDungQuanLyNhaSach.Pages
                         if (count == number && check)
                         {
                             baseNhanVienList.Insert(0, nhanVien.toBase());
+                            nhanVienList.Insert(0, nhanVien);
+                            for (int i =0;i<baseNhanVienList.Count;i++)
+                            {
+                                baseNhanVienList[i].stt = i + 1;
+                                nhanVienList[i].stt = i + 1;
+                            }    
                         }
-
-                        baseNhanVienList.Add(nhanVien.toBase());
-                        nhanVienList.Add(nhanVien);                       
+                        else
+                        {
+                            baseNhanVienList.Add(nhanVien.toBase());
+                            nhanVienList.Add(nhanVien);
+                        }                                              
                     }
                     this.Dispatcher.BeginInvoke(new Action(() => {
                         nhanVienTable.ItemsSource = baseNhanVienList;
@@ -658,7 +666,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void sdt_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length != 10 && sdt.Text.Length != 11)
+            if (!Regex.IsMatch(sdt.Text, "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$") || sdt.Text.Length != 10 && sdt.Text.Length != 11)
             {
                 sdt_error.Text = sdt.Text.Length == 0 ? "Vui lòng nhập vào số điện thoại" : "Số điện thoại không hợp lệ";
                 sdt_error.Visibility = Visibility.Visible;
