@@ -19,6 +19,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UngDungQuanLyNhaSach.Model;
+using Microsoft.Office.Interop.Excel;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -41,6 +42,52 @@ namespace UngDungQuanLyNhaSach.Pages
             giamGia_txt.Text = "0";
             phaiThanhToan_txt.Text = "0";
         }
+
+        int getSoLuong(String maSP)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                string readString = "select * from SANPHAM WHERE MaSanPham = '" + maSP + "'";
+                SqlCommand command = new SqlCommand(readString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                int soLuong = (int)reader["SoLuongTon"];
+                connection.Close();
+                return soLuong;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return 0;
+            }
+        }
+
+        void updateSoLuong(String maSP, int soLuong)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+
+                string updateString = "UPDATE SANPHAM SET SoLuongTon = @SoLuongTon Where MaSanPham = @MaSanPham";
+                SqlCommand command = new SqlCommand(updateString, connection);
+
+                command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
+                command.Parameters["@MaSanPham"].Value = maSP;
+
+                command.Parameters.Add("@SoLuongTon", SqlDbType.Int);
+                command.Parameters["@SoLuongTon"].Value = getSoLuong(maSP) - soLuong;
+
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }    
 
         void loadData()
         {
@@ -224,7 +271,7 @@ namespace UngDungQuanLyNhaSach.Pages
             if (soLuong_txt.Text.Length > 0)
             {
                 int soLuong = int.Parse(soLuong_txt.Text);
-                if (soLuong == 0)
+                if (soLuong == 0 || soLuong > getSoLuong(maSanPham_cbo.Text))
                 {
                     MessageBox.Show("Số lượng không hợp lệ");
                     return;
@@ -448,7 +495,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
                     command.Parameters["@MaSanPham"].Value = chiTiet.getMaSanPham();
 
-                    command.Parameters.Add("@SoLuong", SqlDbType.VarChar);
+                    command.Parameters.Add("@SoLuong", SqlDbType.Int);
                     command.Parameters["@SoLuong"].Value = chiTiet.soLuong;
 
                     command.Parameters.Add("@DonGia", SqlDbType.Money);
@@ -459,6 +506,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     command.ExecuteNonQuery();
                     connection.Close();
+                    updateSoLuong(chiTiet.getMaSanPham(), chiTiet.soLuong);
                 }
                 catch (Exception ex)
                 {

@@ -283,7 +283,7 @@ namespace UngDungQuanLyNhaSach.Pages
             foreach (HoaDon hoaDon in selectedHoaDon)
             {
                 Invoice invoice = new Invoice(hoaDon.maHoaDon);
-                invoice.Show();
+                invoice.ShowDialog();
             }
         }
     }
