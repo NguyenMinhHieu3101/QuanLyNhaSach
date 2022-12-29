@@ -181,39 +181,7 @@ namespace UngDungQuanLyNhaSach.Pages
         {
             Thread thread = new Thread(new ThreadStart(() =>
             {
-                //sanPhamList = new List<SanPham>();
-
-                //try
-                //{
-                //    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-                //    connection.Open();
-                //    string readString = "select * from SANPHAM";
-                //    SqlCommand command = new SqlCommand(readString, connection);
-
-                //    SqlDataReader reader = command.ExecuteReader();
-
-                //    int count = 0;
-                //    while (reader.Read())
-                //    {
-                //        count++;
-
-                //        sanPhamList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
-                //            tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
-                //            theLoai: (String)reader["TheLoai"],nXB: (String)reader["NXB"], 
-                //            giaNhap: (double)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
-                //            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
-                //    }
-                //    this.Dispatcher.BeginInvoke(new Action(() => {
-                //        phieuNhapSachTable.ItemsSource = sanPhamList;
-                //    }));
-                //    connection.Close();
-                //}
-                //catch (Exception e1)
-                //{
-                //    //MessageBox.Show("db error");
-                //    MessageBox.Show(e1.Message);
-
-                //}
+  
 
                 try
                 {
@@ -234,12 +202,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     while (reader.Read())
                     {
-                        //sanPhamList.Add(new SanPham(maSanPham: (String)reader["MaSanPham"],
-                        //            tenSanPham: (String)reader["TenSanPham"], tacGia: (String)reader["TacGia"],
-                        //            theLoai: (String)reader["TheLoai"], nXB: (String)reader["NXB"],
-                        //            giaNhap: (double)reader["GiaNhap"], namXB: (Int32)reader["NamXB"], maKho: (String)reader["MaKho"],
-                        //            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Còn Hàng" : "Hết Hàng"));
-                        itemsMaSP.Add((String)reader["MaSanPham"]);
+                       
                         itemsTenSP.Add((String)reader["TenSanPham"]);
                         itemsTheLoai.Add((String)reader["TheLoai"]);
                         itemsTacGia.Add((String)reader["TacGia"]);
@@ -289,102 +252,65 @@ namespace UngDungQuanLyNhaSach.Pages
         }
         private void addBookBtn_Click(object sender, RoutedEventArgs e)
         {
-            //try
-            //{
-            //    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-            //    connection.Open();
-            //    string readString = "select Count(*) from SANPHAM";
-            //    SqlCommand commandReader = new SqlCommand(readString, connection);
-            //    Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
-
-            //    string insertString = "INSERT INTO SANPHAM(MaSanPham, TenSanPham, TacGia, TheLoai, NXB, GiaNhap, NamXB, MaKho)"
-            //        + "VALUES(@MaSanPham, @TenSanPham, @TacGia, @TheLoai, @NXB, @GiaNhap, @NamXB, @MaKho)";
-            //    SqlCommand command = new SqlCommand(insertString, connection);
-
-            //    command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
-            //    command.Parameters["@MaSanPham"].Value = "SP" + count.ToString("000");
-
-            //    command.Parameters.Add("@TenSanPham", SqlDbType.NVarChar);
-            //    command.Parameters["@TenSanPham"].Value = tenSach.Text;
-
-            //    command.Parameters.Add("@TacGia", SqlDbType.NVarChar);
-            //    command.Parameters["@TacGia"].Value = tacGia.Text;
-
-            //    command.Parameters.Add("@TheLoai", SqlDbType.NVarChar);
-            //    command.Parameters["@TheLoai"].Value = theLoai.Text;
-
-            //    command.Parameters.Add("@NXB", SqlDbType.NVarChar);
-            //    command.Parameters["@NXB"].Value = nhaXB.Text;
-
-            //    command.Parameters.Add("@GiaNhap", SqlDbType.Money);
-            //    command.Parameters["@GiaNhap"].Value = donGia.Text;
-
-            //    command.Parameters.Add("@NamXB", SqlDbType.Int);
-            //    command.Parameters["@NamXB"].Value = int.Parse(namXB.Text);
-
-            //    command.Parameters.Add("@MaKho", SqlDbType.NVarChar);
-            //    command.Parameters["@MaKho"].Value = "K001";
-
-            //    command.ExecuteNonQuery();
-
-            //    connection.Close();
-            //    loadListChiTietPhieuNhap();
-            //    MessageBox.Show("Thêm thành công");
-            //    resetData();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
+            
             SanPham sanpham = new SanPham(maSach.Text, tenSach.Text, theLoai.Text, tacGia.Text, nhaXB.Text, double.Parse(donGia.Text), int.Parse(namXB.Text),"K001","1", int.Parse(soLuongNhap.Text));
-
-            sanPhamTrongPhieuNhap.Add(sanpham);
-            if (soLuongNhap.Text.Length > 0)
+            try
             {
-                int soLuong = int.Parse(soLuongNhap.Text);
-                if (soLuong == 0)
+
+
+                sanPhamTrongPhieuNhap.Add(sanpham);
+                if (soLuongNhap.Text.Length > 0)
                 {
-                    MessageBox.Show("Số lượng không hợp lệ");
-                    return;
-                }
-                string value = Regex.Replace(donGia.Text, "[^0-9]", "");
-                double donGia1;
-                if (double.TryParse(value, out donGia1))
-                {
-                    bool check = true;
-                    for (int i = 0; i < chiTietPhieuNhapSachList.Count; i++)
+                    int soLuong = int.Parse(soLuongNhap.Text);
+                    if (soLuong == 0)
                     {
-                        if (chiTietPhieuNhapSachList[i].getMaSanPham().CompareTo(maSach.Text) == 0)
+                        MessageBox.Show("Số lượng không hợp lệ");
+                        return;
+                    }
+                    string value = Regex.Replace(donGia.Text, "[^0-9]", "");
+                    double donGia1;
+                    if (double.TryParse(value, out donGia1))
+                    {
+                        bool check = true;
+                        for (int i = 0; i < chiTietPhieuNhapSachList.Count; i++)
                         {
-                            chiTietPhieuNhapSachList[i].soLuong += soLuong;
-                            chiTietPhieuNhapSachList[i].setThanhTien(chiTietPhieuNhapSachList[i].soLuong * chiTietPhieuNhapSachList[i].getDonGia());
-                            check = false;
-                            break;
+                            if (chiTietPhieuNhapSachList[i].getMaSanPham().CompareTo(maSach.Text) == 0)
+                            {
+                                chiTietPhieuNhapSachList[i].soLuong += soLuong;
+                                chiTietPhieuNhapSachList[i].setThanhTien(chiTietPhieuNhapSachList[i].soLuong * chiTietPhieuNhapSachList[i].getDonGia());
+                                check = false;
+                                break;
+                            }
                         }
+                        if (check)
+                        {
+                            chiTietPhieuNhapSachList.Add(new ChiTietPhieuNhapSach(chiTietPhieuNhapSachList.Count + 1, maSach.Text, soLuong, donGia1, donGia1 * soLuong));
+                        }
+                        chitietphieuNhapSachTable.ItemsSource = new List<ChiTietPhieuNhapSach>();
+                        chitietphieuNhapSachTable.ItemsSource = chiTietPhieuNhapSachList;
+                        resetAddProduct();
+                        double sum = 0;
+                        foreach (ChiTietPhieuNhapSach chiTiet in chiTietPhieuNhapSachList)
+                        {
+                            sum += chiTiet.getThanhTien();
+                        }
+                        tongTien.Text = sum.ToString();
+
                     }
-                    if (check)
+                    else
                     {
-                        chiTietPhieuNhapSachList.Add(new ChiTietPhieuNhapSach(chiTietPhieuNhapSachList.Count + 1, maSach.Text, soLuong, donGia1, donGia1 * soLuong));
+                        MessageBox.Show("Vui lòng chọn sản phẩm");
                     }
-                    chitietphieuNhapSachTable.ItemsSource = new List<ChiTietPhieuNhapSach>();
-                    chitietphieuNhapSachTable.ItemsSource = chiTietPhieuNhapSachList;
-                    resetAddProduct();
-                    double sum = 0;
-                    foreach (ChiTietPhieuNhapSach chiTiet in chiTietPhieuNhapSachList)
-                    {
-                        sum += chiTiet.getThanhTien();
-                    }
-                    tongTien.Text = sum.ToString();
-             
                 }
                 else
                 {
-                    MessageBox.Show("Vui lòng chọn sản phẩm");
+                    MessageBox.Show("Vui lòng nhập vào số lượng");
                 }
             }
-            else
+            catch (Exception e1)
             {
-                MessageBox.Show("Vui lòng nhập vào số lượng");
+                MessageBox.Show(e1.Message);
+
             }
         }
         void resetAddProduct()
