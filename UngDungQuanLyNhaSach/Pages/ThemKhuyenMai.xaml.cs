@@ -112,56 +112,65 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void add_Click(object sender, RoutedEventArgs e)
         {
-            if (checkDataInput())
+            if (update.IsEnabled == false && delete.IsEnabled == false)
             {
-                try
+                if (checkDataInput())
                 {
-                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-                    connection.Open();
+                    try
+                    {
+                        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                        connection.Open();
 
-                    string readString = "select Count(*) from KHUYENMAI";
-                    SqlCommand commandReader = new SqlCommand(readString, connection);
-                    Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+                        string readString = "select Count(*) from KHUYENMAI";
+                        SqlCommand commandReader = new SqlCommand(readString, connection);
+                        Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
 
 
-                    string insertString = "INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) " +
-                        "VALUES (@MaKhuyenMai, @ThoiGianBatDau, @ThoiGianKetThuc, @MaLoaiKhachHang, @SoLuongKhuyenMai, @PhanTram, @TrangThai)";
-                    SqlCommand command = new SqlCommand(insertString, connection);
+                        string insertString = "INSERT INTO KHUYENMAI (MaKhuyenMai, ThoiGianBatDau, ThoiGianKetThuc, MaLoaiKhachHang, SoLuongKhuyenMai, PhanTram, TrangThai) " +
+                            "VALUES (@MaKhuyenMai, @ThoiGianBatDau, @ThoiGianKetThuc, @MaLoaiKhachHang, @SoLuongKhuyenMai, @PhanTram, @TrangThai)";
+                        SqlCommand command = new SqlCommand(insertString, connection);
 
-                    command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
-                    command.Parameters["@MaKhuyenMai"].Value = "KM" + count.ToString("000");
+                        command.Parameters.Add("@MaKhuyenMai", SqlDbType.VarChar);
+                        command.Parameters["@MaKhuyenMai"].Value = "KM" + count.ToString("000");
 
-                    command.Parameters.Add("@ThoiGianBatDau", SqlDbType.SmallDateTime);
-                    command.Parameters["@ThoiGianBatDau"].Value = ngayBatDau.SelectedDate;
+                        command.Parameters.Add("@ThoiGianBatDau", SqlDbType.SmallDateTime);
+                        command.Parameters["@ThoiGianBatDau"].Value = ngayBatDau.SelectedDate;
 
-                    command.Parameters.Add("@ThoiGianKetThuc", SqlDbType.SmallDateTime);
-                    command.Parameters["@ThoiGianKetThuc"].Value = ngayKetThuc.SelectedDate;
+                        command.Parameters.Add("@ThoiGianKetThuc", SqlDbType.SmallDateTime);
+                        command.Parameters["@ThoiGianKetThuc"].Value = ngayKetThuc.SelectedDate;
 
-                    command.Parameters.Add("@MaLoaiKhachHang", SqlDbType.VarChar);
-                    command.Parameters["@MaLoaiKhachHang"].Value = loaiKhachHang.SelectedIndex == 0 ? "VL" :
-                        (loaiKhachHang.SelectedIndex == 1 ? "B" : (loaiKhachHang.SelectedIndex == 2 ? "V" : "KC"));
+                        command.Parameters.Add("@MaLoaiKhachHang", SqlDbType.VarChar);
+                        command.Parameters["@MaLoaiKhachHang"].Value = loaiKhachHang.SelectedIndex == 0 ? "VL" :
+                            (loaiKhachHang.SelectedIndex == 1 ? "B" : (loaiKhachHang.SelectedIndex == 2 ? "V" : "KC"));
 
-                    command.Parameters.Add("@SoLuongKhuyenMai", SqlDbType.Int);
-                    command.Parameters["@SoLuongKhuyenMai"].Value = int.Parse(soLuong.Text);
-                    
-                    command.Parameters.Add("@PhanTram", SqlDbType.Int);
-                    command.Parameters["@PhanTram"].Value = int.Parse(phanTram.Text);
+                        command.Parameters.Add("@SoLuongKhuyenMai", SqlDbType.Int);
+                        command.Parameters["@SoLuongKhuyenMai"].Value = int.Parse(soLuong.Text);
 
-                    command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
-                    command.Parameters["@TrangThai"].Value = ngayKetThuc.SelectedDate < DateTime.Now ? "0" : "1";
+                        command.Parameters.Add("@PhanTram", SqlDbType.Int);
+                        command.Parameters["@PhanTram"].Value = int.Parse(phanTram.Text);
 
-                    command.ExecuteNonQuery();
+                        command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
+                        command.Parameters["@TrangThai"].Value = ngayKetThuc.SelectedDate < DateTime.Now ? "0" : "1";
 
-                    connection.Close();
-                    loadData(true);
-                    MessageBox.Show("Thêm thành công");
-                    reset();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
+                        command.ExecuteNonQuery();
+
+                        connection.Close();
+                        loadData(true);
+                        MessageBox.Show("Thêm thành công");
+                        reset();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
+            else
+            {
+                reset();
+                update.IsEnabled = false;
+                delete.IsEnabled = false;
+            }    
         }
 
         private void khuyenMaiTable_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -238,6 +247,10 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (check)
                     {
                         khuyenMaiList.Insert(0, khuyenMai!);
+                        for (int i = 0; i < khuyenMaiList.Count; i++)
+                        {
+                            khuyenMaiList[i].stt = i + 1;
+                        }
                     }    
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {

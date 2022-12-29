@@ -209,7 +209,7 @@
                                 </TextBox.Background>
                             </TextBox>
                         </Grid>
-                        <CheckBox Content="Hiển thị mật khẩu" HorizontalAlignment="Right" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
+                        <CheckBox Content="Hiển thị mật khẩu" FontFamily="Montserrat" Margin="0, 5, 10, 0" HorizontalAlignment="Right" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
                         <DockPanel>
                             <Button                          
                             BorderThickness="0"
@@ -280,9 +280,9 @@
                         </DockPanel>-->
                     </StackPanel>
                 </Grid>
-                <WrapPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="30" Cursor="Hand">
+                <WrapPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="60" Cursor="Hand">
                     <TextBlock Width="120">Quên mật khẩu?</TextBlock>
-                    <TextBlock MouseDown="Forget_Password_TextBlock" Foreground="#F03B44">Nhấn vào đây</TextBlock>
+                    <TextBlock Width="100" MouseDown="Forget_Password_TextBlock" Foreground="#F03B44">Nhấn vào đây</TextBlock>
                 </WrapPanel>
             </Grid>
         </Grid>

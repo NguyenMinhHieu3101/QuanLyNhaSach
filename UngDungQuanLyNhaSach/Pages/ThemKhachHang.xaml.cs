@@ -83,56 +83,65 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void add_Click(object sender, RoutedEventArgs e)
         {
-            if (checkDataInput())
+            if (update.IsEnabled == false && delete.IsEnabled == false)
             {
-                try
+                if (checkDataInput())
                 {
-                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-                    connection.Open();
+                    try
+                    {
+                        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                        connection.Open();
 
-                    string readString = "select Count(*) from KHACHHANG";
-                    SqlCommand commandReader = new SqlCommand(readString, connection);
-                    Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+                        string readString = "select Count(*) from KHACHHANG";
+                        SqlCommand commandReader = new SqlCommand(readString, connection);
+                        Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
 
-                    string insertString = "INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) " +
-                        "VALUES (@MaKhachHang, @TenKhachHang, @NgaySinh, @GioiTinh, @MaLoaiKhachHang, @SDT, @TrangThai)";
-                    SqlCommand command = new SqlCommand(insertString, connection);
+                        string insertString = "INSERT INTO KHACHHANG (MaKhachHang, TenKhachHang, NgaySinh, GioiTinh, MaLoaiKhachHang, SDT, TrangThai) " +
+                            "VALUES (@MaKhachHang, @TenKhachHang, @NgaySinh, @GioiTinh, @MaLoaiKhachHang, @SDT, @TrangThai)";
+                        SqlCommand command = new SqlCommand(insertString, connection);
 
-                    command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
-                    command.Parameters["@MaKhachHang"].Value = "KH" + count.ToString("000");
+                        command.Parameters.Add("@MaKhachHang", SqlDbType.VarChar);
+                        command.Parameters["@MaKhachHang"].Value = "KH" + count.ToString("000");
 
-                    command.Parameters.Add("@TenKhachHang", SqlDbType.NVarChar);
-                    command.Parameters["@TenKhachHang"].Value = name.Text;
-                    
-                    command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
-                    command.Parameters["@NgaySinh"].Value = ngaySinh.SelectedDate;
+                        command.Parameters.Add("@TenKhachHang", SqlDbType.NVarChar);
+                        command.Parameters["@TenKhachHang"].Value = name.Text;
 
-                    command.Parameters.Add("@GioiTinh", SqlDbType.NVarChar);
-                    command.Parameters["@GioiTinh"].Value = gioiTinh.Text;
+                        command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
+                        command.Parameters["@NgaySinh"].Value = ngaySinh.SelectedDate;
 
-                    command.Parameters.Add("@MaLoaiKhachHang", SqlDbType.VarChar);
-                    command.Parameters["@MaLoaiKhachHang"].Value = loaiKhachHang.SelectedIndex == 0 ? "VL" :
-                        (loaiKhachHang.SelectedIndex == 1 ? "B" : (loaiKhachHang.SelectedIndex == 2 ? "V" : "KC"));
+                        command.Parameters.Add("@GioiTinh", SqlDbType.NVarChar);
+                        command.Parameters["@GioiTinh"].Value = gioiTinh.Text;
 
-                    command.Parameters.Add("@SDT", SqlDbType.VarChar);
-                    command.Parameters["@SDT"].Value = sdt.Text;
+                        command.Parameters.Add("@MaLoaiKhachHang", SqlDbType.VarChar);
+                        command.Parameters["@MaLoaiKhachHang"].Value = loaiKhachHang.SelectedIndex == 0 ? "VL" :
+                            (loaiKhachHang.SelectedIndex == 1 ? "B" : (loaiKhachHang.SelectedIndex == 2 ? "V" : "KC"));
 
-                    command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
-                    command.Parameters["@TrangThai"].Value = "1";
+                        command.Parameters.Add("@SDT", SqlDbType.VarChar);
+                        command.Parameters["@SDT"].Value = sdt.Text;
 
-                    command.ExecuteNonQuery();
+                        command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
+                        command.Parameters["@TrangThai"].Value = "1";
 
-                    connection.Close();
-                    loadData(true);
-                    MessageBox.Show("Thêm thành công");
-                    updateMaKhachHang();
-                    reset();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
+                        command.ExecuteNonQuery();
+
+                        connection.Close();
+                        loadData(true);
+                        MessageBox.Show("Thêm thành công");
+                        updateMaKhachHang();
+                        reset();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
+            else
+            {
+                reset();
+                update.IsEnabled = false;
+                delete.IsEnabled = false;
+            }    
         }
 
         private int getNumberItem()
@@ -219,6 +228,10 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (check)
                     {
                         khachHangList.Insert(0, khachHang!);
+                        for (int i = 0; i < khachHangList.Count; i++)
+                        {
+                            khachHangList[i].stt = i + 1;
+                        }
                     }    
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
@@ -421,7 +434,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void sdt_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length != 10 && sdt.Text.Length != 11)
+            if (!Regex.IsMatch(sdt.Text, "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$") || sdt.Text.Length != 10 && sdt.Text.Length != 11)
             {
                 sdt_error.Text = sdt.Text.Length > 0 ? "Số điện thoại không hợp lệ" : "Vui lòng nhập vào số điện thoại";
                 sdt_error.Visibility= Visibility.Visible;
@@ -430,6 +443,11 @@ namespace UngDungQuanLyNhaSach.Pages
             {
                 sdt_error.Visibility = Visibility.Hidden;
             }
+        }
+
+        private void khachHangTable_Selected(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

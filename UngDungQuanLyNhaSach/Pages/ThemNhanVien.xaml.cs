@@ -44,7 +44,7 @@ namespace UngDungQuanLyNhaSach.Pages
             loadListStaff(false);
             loadTinh();
             updateMaNhanVien();
-            ngaySinh.DisplayDateEnd= DateTime.Now.AddYears(-18);
+            ngaySinh.DisplayDateEnd = DateTime.Now.AddYears(-18);
             update.IsEnabled = false;
             delete.IsEnabled = false;
         }
@@ -60,17 +60,23 @@ namespace UngDungQuanLyNhaSach.Pages
             gioiTinh.SelectedIndex = 0;
             email.Text = "";
             ngaySinh.SelectedDate = DateTime.Now;
+            tinh.SelectedIndex = -1;
+            huyen.SelectedIndex = -1;
+            huyen.Text = "";
+            phuong.SelectedIndex = -1;
+            phuong.Text = "";
             updateMaNhanVien();
             hideError();
         }
 
         void hideError()
         {
-            cccd_error.Visibility= Visibility.Hidden;
-            email_error.Visibility= Visibility.Hidden;
-            luong_error.Visibility= Visibility.Hidden;
-            name_error.Visibility= Visibility.Hidden;
-            sdt_error.Visibility= Visibility.Hidden;
+            cccd_error.Visibility = Visibility.Hidden;
+            email_error.Visibility = Visibility.Hidden;
+            luong_error.Visibility = Visibility.Hidden;
+            name_error.Visibility = Visibility.Hidden;
+            sdt_error.Visibility = Visibility.Hidden;
+            diaChi_error.Visibility = Visibility.Hidden;
         }
 
         private int getNumberItem()
@@ -116,7 +122,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     while (reader.Read())
                     {
                         count++;
-                          
+
                         NhanVien nhanVien = new NhanVien(stt: count, maNhanVien: (String)reader["MaNhanVien"],
                             hoTen: (String)reader["HoTen"], maChucVu: (String)reader["TenChucVu"],
                             ngaySinh: (DateTime)reader["NgaySinh"],  //DateTime.ParseExact(reader["NgaySinh"].ToString(), "M/d/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
@@ -127,12 +133,21 @@ namespace UngDungQuanLyNhaSach.Pages
                         if (count == number && check)
                         {
                             baseNhanVienList.Insert(0, nhanVien.toBase());
+                            nhanVienList.Insert(0, nhanVien);
+                            for (int i = 0; i < baseNhanVienList.Count; i++)
+                            {
+                                baseNhanVienList[i].stt = i + 1;
+                                nhanVienList[i].stt = i + 1;
+                            }
                         }
-
-                        baseNhanVienList.Add(nhanVien.toBase());
-                        nhanVienList.Add(nhanVien);                       
+                        else
+                        {
+                            baseNhanVienList.Add(nhanVien.toBase());
+                            nhanVienList.Add(nhanVien);
+                        }
                     }
-                    this.Dispatcher.BeginInvoke(new Action(() => {
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
                         nhanVienTable.ItemsSource = baseNhanVienList;
                     }));
                     connection.Close();
@@ -150,7 +165,7 @@ namespace UngDungQuanLyNhaSach.Pages
         void loadTinh()
         {
             Thread thread = new Thread(new ThreadStart(() =>
-            {       
+            {
                 try
                 {
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
@@ -163,9 +178,10 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     while (reader.Read())
                     {
-                        temp.Add(new DonViHanhChinh((String)reader["code"], (String)reader["name"]));                        
+                        temp.Add(new DonViHanhChinh((String)reader["code"], (String)reader["name"]));
                     }
-                    this.Dispatcher.BeginInvoke(new Action(() => {
+                    this.Dispatcher.BeginInvoke(new Action(() =>
+                    {
                         provinces.AddRange(temp.OrderBy(e => e.name).ToList());
                         tinh.ItemsSource = provinces.Select(e => e.name).ToList();
                         huyen.ItemsSource = new List<String>();
@@ -283,7 +299,8 @@ namespace UngDungQuanLyNhaSach.Pages
                         maNv.Text = "NV" + count.ToString("000");
                     }));
                 }
-                catch (Exception e) {
+                catch (Exception e)
+                {
                     MessageBox.Show(e.ToString());
                 }
             }));
@@ -330,17 +347,17 @@ namespace UngDungQuanLyNhaSach.Pages
                 MessageBox.Show("Ngày sinh chưa đủ 18 tuổi");
                 return false;
             }
-            if (tinh.SelectedIndex== -1)
+            if (tinh.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng chọn Tỉnh/Thành Phố");
                 return false;
             }
-            if (huyen.SelectedIndex== -1)
+            if (huyen.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng chọn Quận/Huyện");
                 return false;
             }
-            if (phuong.SelectedIndex== -1)
+            if (phuong.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng chọn Xã/Phường");
                 return false;
@@ -357,7 +374,7 @@ namespace UngDungQuanLyNhaSach.Pages
             }
             foreach (NhanVien nhanVien in nhanVienList)
             {
-                if (nhanVien.maNhanVien != maNv.Text && (nhanVien.sdt == sdt.Text || nhanVien.cccd == cccd.Text || nhanVien.email == email.Text)) 
+                if (nhanVien.maNhanVien != maNv.Text && (nhanVien.sdt == sdt.Text || nhanVien.cccd == cccd.Text || nhanVien.email == email.Text))
                 {
                     if (nhanVien.sdt == sdt.Text)
                     {
@@ -380,69 +397,78 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void add_Click(object sender, RoutedEventArgs e)
         {
-            if (checkDataInput())
+            if (update.IsEnabled == false && delete.IsEnabled == false)
             {
-                try
+                if (checkDataInput())
                 {
-                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
-                    connection.Open();
+                    try
+                    {
+                        SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                        connection.Open();
 
-                    string readString = "select Count(*) from NHANVIEN";
-                    SqlCommand commandReader = new SqlCommand(readString, connection);
-                    Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
+                        string readString = "select Count(*) from NHANVIEN";
+                        SqlCommand commandReader = new SqlCommand(readString, connection);
+                        Int32 count = (Int32)commandReader.ExecuteScalar() + 1;
 
-                    string insertString = "INSERT INTO NHANVIEN(MaNhanVien, MatKhau, HoTen, MaChucVu, NgaySinh, Email, CCCD, GioiTinh, SDT, DiaChi, Luong, TrangThai) " +
-                        "VALUES(@MaNhanVien, @MatKhau, @HoTen, @MaChucVu, @NgaySinh, @Email, @CCCD, @GioiTinh, @SDT, @DiaChi, @Luong, @TrangThai)";
-                    SqlCommand command = new SqlCommand(insertString, connection);
+                        string insertString = "INSERT INTO NHANVIEN(MaNhanVien, MatKhau, HoTen, MaChucVu, NgaySinh, Email, CCCD, GioiTinh, SDT, DiaChi, Luong, TrangThai) " +
+                            "VALUES(@MaNhanVien, @MatKhau, @HoTen, @MaChucVu, @NgaySinh, @Email, @CCCD, @GioiTinh, @SDT, @DiaChi, @Luong, @TrangThai)";
+                        SqlCommand command = new SqlCommand(insertString, connection);
 
-                    command.Parameters.Add("@MaNhanVien", SqlDbType.VarChar);
-                    command.Parameters["@MaNhanVien"].Value = "NV" + count.ToString("000");
+                        command.Parameters.Add("@MaNhanVien", SqlDbType.VarChar);
+                        command.Parameters["@MaNhanVien"].Value = "NV" + count.ToString("000");
 
-                    command.Parameters.Add("@MatKhau", SqlDbType.VarChar);
-                    command.Parameters["@MatKhau"].Value = "12345678";
+                        command.Parameters.Add("@MatKhau", SqlDbType.VarChar);
+                        command.Parameters["@MatKhau"].Value = "12345678";
 
-                    command.Parameters.Add("@HoTen", SqlDbType.NVarChar);
-                    command.Parameters["@HoTen"].Value = name.Text;
+                        command.Parameters.Add("@HoTen", SqlDbType.NVarChar);
+                        command.Parameters["@HoTen"].Value = name.Text;
 
-                    command.Parameters.Add("@MaChucVu", SqlDbType.VarChar);
-                    command.Parameters["@MaChucVu"].Value = chucVu.SelectedIndex == 0 ? "ADMIN" :
-                        (chucVu.SelectedIndex == 1 ? "NVBH" : (chucVu.SelectedIndex == 2 ? "NVK" : "NVKT") );
+                        command.Parameters.Add("@MaChucVu", SqlDbType.VarChar);
+                        command.Parameters["@MaChucVu"].Value = chucVu.SelectedIndex == 0 ? "ADMIN" :
+                            (chucVu.SelectedIndex == 1 ? "NVBH" : (chucVu.SelectedIndex == 2 ? "NVK" : "NVKT"));
 
-                    command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
-                    command.Parameters["@NgaySinh"].Value = ngaySinh.SelectedDate;
+                        command.Parameters.Add("@NgaySinh", SqlDbType.SmallDateTime);
+                        command.Parameters["@NgaySinh"].Value = ngaySinh.SelectedDate;
 
-                    command.Parameters.Add("@Email", SqlDbType.VarChar);
-                    command.Parameters["@Email"].Value = email.Text;
+                        command.Parameters.Add("@Email", SqlDbType.VarChar);
+                        command.Parameters["@Email"].Value = email.Text;
 
-                    command.Parameters.Add("@CCCD", SqlDbType.VarChar);
-                    command.Parameters["@CCCD"].Value = cccd.Text;
+                        command.Parameters.Add("@CCCD", SqlDbType.VarChar);
+                        command.Parameters["@CCCD"].Value = cccd.Text;
 
-                    command.Parameters.Add("@GioiTinh", SqlDbType.NVarChar);
-                    command.Parameters["@GioiTinh"].Value = gioiTinh.Text;
+                        command.Parameters.Add("@GioiTinh", SqlDbType.NVarChar);
+                        command.Parameters["@GioiTinh"].Value = gioiTinh.Text;
 
-                    command.Parameters.Add("@SDT", SqlDbType.VarChar);
-                    command.Parameters["@SDT"].Value = sdt.Text;
+                        command.Parameters.Add("@SDT", SqlDbType.VarChar);
+                        command.Parameters["@SDT"].Value = sdt.Text;
 
-                    command.Parameters.Add("@DiaChi", SqlDbType.NVarChar);
-                    command.Parameters["@DiaChi"].Value = diaChi.Text + ", " + phuong.Text + ", " + huyen.Text + ", " + tinh.Text;
+                        command.Parameters.Add("@DiaChi", SqlDbType.NVarChar);
+                        command.Parameters["@DiaChi"].Value = diaChi.Text + ", " + phuong.Text + ", " + huyen.Text + ", " + tinh.Text;
 
-                    command.Parameters.Add("@Luong", SqlDbType.Money);
-                    command.Parameters["@Luong"].Value = Regex.Replace(luong.Text, "[^0-9]", ""); 
+                        command.Parameters.Add("@Luong", SqlDbType.Money);
+                        command.Parameters["@Luong"].Value = Regex.Replace(luong.Text, "[^0-9]", "");
 
-                    command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
-                    command.Parameters["@TrangThai"].Value = "1";
+                        command.Parameters.Add("@TrangThai", SqlDbType.VarChar);
+                        command.Parameters["@TrangThai"].Value = "1";
 
-                    command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
 
-                    connection.Close();
-                    loadListStaff(true);
-                    MessageBox.Show("Thêm thành công");
-                    resetData();
+                        connection.Close();
+                        loadListStaff(true);
+                        MessageBox.Show("Thêm thành công");
+                        resetData();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+            }
+            else
+            {
+                resetData();
+                update.IsEnabled = false;
+                delete.IsEnabled = false;
             }
         }
 
@@ -566,7 +592,7 @@ namespace UngDungQuanLyNhaSach.Pages
             else
             {
                 MessageBox.Show("Vui lòng chọn một nhân viên để xóa");
-            }    
+            }
         }
 
         void loadNV()
@@ -606,7 +632,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     Style normalStyle = new Style(curentRow.GetType());
                     normalStyle.Setters.Add(normal);
                     curentRow.Style = normalStyle;
-                }    
+                }
                 DataGridRow row = (DataGridRow)nhanVienTable.ItemContainerGenerator.ContainerFromIndex(nhanVienTable.SelectedIndex);
                 Setter bold = new Setter(TextBlock.FontWeightProperty, FontWeights.Bold, null);
                 Style newStyle = new Style(row.GetType());
@@ -658,7 +684,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void sdt_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length != 10 && sdt.Text.Length != 11)
+            if (!Regex.IsMatch(sdt.Text, "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$") || sdt.Text.Length != 10 && sdt.Text.Length != 11)
             {
                 sdt_error.Text = sdt.Text.Length == 0 ? "Vui lòng nhập vào số điện thoại" : "Số điện thoại không hợp lệ";
                 sdt_error.Visibility = Visibility.Visible;
