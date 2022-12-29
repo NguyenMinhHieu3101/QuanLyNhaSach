@@ -384,14 +384,6 @@
 
         <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center"  Height="50" VerticalAlignment="Center" >
 
-            <Button x:Name="luuHD_btn" Margin="0,0,20,0" Content="Lưu Hóa Đơn" 
-                        Height="30" 
-                        Width="150"
-                        Foreground="White"
-                        FontSize="16"
-                        FontWeight="Bold"
-                        Style="{StaticResource AddButton}" Click="luuHD_btn_Click"/>
-
             <Button x:Name="xuatHD_btn" Margin="0,0,20,0" Content="Xuất Hóa Đơn" 
                         Height="30" 
                         Width="150"

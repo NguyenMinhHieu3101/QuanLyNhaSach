@@ -423,11 +423,6 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-        private void luuHD_btn_Click(object sender, RoutedEventArgs e)
-        {
-            addHD();
-        }
-
         void addHD()
         {
             if (checkInput())
@@ -467,7 +462,6 @@ namespace UngDungQuanLyNhaSach.Pages
                     connection.Close();
 
                     addChiTietHD("HD" + count.ToString("000"));
-                    MessageBox.Show("Thêm thành công");
                     resetData();
                 }
                 catch (Exception ex)

@@ -176,7 +176,7 @@
                         <Grid Grid.Column="1" Margin="10">
                             <PasswordBox x:Name="txtMatKhau"
                                          PasswordChar="●"
-                                         FontSize="18"      
+                                         FontSize="18"     
                                          HorizontalContentAlignment="Center"
                                          Foreground="White"
                                          CaretBrush="LightGray"
@@ -200,6 +200,7 @@
                                          Height="35"
                                          Margin="0,5,0,0"
                                          Padding="20,0,0,0" FontWeight="Bold" 
+                                     Text="{Binding Path=Password, ElementName=txtMatKhau, Mode=TwoWay}"
                                      Visibility="Collapsed">
                                 <TextBox.Background>
                                     <ImageBrush  ImageSource="/UngDungQuanLyNhaSach;component/Images/key.png"
