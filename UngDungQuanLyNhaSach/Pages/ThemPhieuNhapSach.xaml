@@ -215,7 +215,7 @@
             <RowDefinition Height="170*"/>
             <RowDefinition Height="200*"/>
             <RowDefinition Height="185*"/>
-            <RowDefinition Height="50*"/>
+            <RowDefinition Height="60*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -412,7 +412,7 @@
             </DockPanel>
         </StackPanel>
         <StackPanel Grid.Row="4" Grid.Column="0" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <DataGrid x:Name="chitietphieuNhapSachTable" Margin="5,10" Style="{DynamicResource DataGridStyle}"
+            <DataGrid x:Name="chitietphieuNhapSachTable" Margin="5,0" Style="{DynamicResource DataGridStyle}"
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 
@@ -434,7 +434,7 @@
             </DataGrid>
         </StackPanel>
         <StackPanel Grid.Row="4" Grid.Column="1" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <DataGrid x:Name="phieuNhapSachTable" Margin="5,10" Style="{DynamicResource DataGridStyle}"
+            <DataGrid x:Name="phieuNhapSachTable" Margin="5,0" Style="{DynamicResource DataGridStyle}"
                   CellStyle="{StaticResource DataGridCellStyle}" 
                   ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
                   RowStyle="{StaticResource DataGridRowStyle}" 

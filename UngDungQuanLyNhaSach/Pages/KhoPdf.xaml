@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
         mc:Ignorable="d"
-        Title="KhoPdf" Height="820" Width="800" WindowStartupLocation="CenterScreen">
+        Title="KhoPdf" Height="850" Width="800" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style x:Key="Header" TargetType="TextBlock">
@@ -87,7 +87,7 @@
 
                 <DataGrid x:Name="sachNhapTable"
                       Margin="75, 15"
-                      Height="175"
+                      Height="150"
                       Style="{DynamicResource DataGridStyle}" 
                       CellStyle="{StaticResource DataGridCellStyle}" 
                       ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
@@ -97,8 +97,8 @@
                 </DataGrid>
 
                 <DataGrid x:Name="sachDaBanTable" 
-                      Margin="75, 15"
-                      Height="175"
+                      Margin="75, 0, 75, 15"
+                      Height="150"
                       Style="{DynamicResource DataGridStyle}" 
                       CellStyle="{StaticResource DataGridCellStyle}" 
                       ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
@@ -122,6 +122,15 @@
                                    Text="CHÊNH LỆCH:"
                                    Style="{StaticResource Title}"
                                    Width="400"/>
+                <TextBlock Margin="300, 0, 0, 0"
+                                   Text="Ngày ... tháng ... năm..."
+                                   Style="{StaticResource Title}"
+                                   TextAlignment="Right"/>
+                <TextBlock Margin="300, 0, 0, 0"
+                           Height="100"
+                                   Text="Giám đốc"
+                                   Style="{StaticResource Title}"
+                                   TextAlignment="Right"/>
 
             </StackPanel>
 

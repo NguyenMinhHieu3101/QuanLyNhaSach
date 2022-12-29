@@ -68,8 +68,29 @@ namespace UngDungQuanLyNhaSach.Pages
 
         void loadInfo()
         {
-            date.Text = "Ngày lập báo cáo: " + DateTime.Now.ToString();
-            author.Text = "Người lập báo cáo: " + NhanVienDangDangNhap.HoTen;
+            SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+            connection.Open();
+
+            try
+            {
+                SqlCommand command = new SqlCommand();
+                string readString = "SELECT TenChucVu FROM NHANVIEN, CHUCVU WHERE MaNhanVien = @MaNhanVien AND NHANVIEN.MaChucVu = CHUCVU.MaChucVu";
+                command = new SqlCommand(readString, connection);
+
+                command.Parameters.Add("@MaNhanVien", SqlDbType.VarChar);
+                command.Parameters["@MaNhanVien"].Value = NhanVienDangDangNhap.MaNhanVien;
+
+                string chucVu = command.ExecuteScalar().ToString();
+
+                date.Text = "Ngày lập báo cáo: " + DateTime.Now.ToString();
+                author.Text = "Người lập báo cáo: " + chucVu + " - " + NhanVienDangDangNhap.HoTen;
+
+                connection.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message);
+            }
         }
 
         void loadDataGrid()

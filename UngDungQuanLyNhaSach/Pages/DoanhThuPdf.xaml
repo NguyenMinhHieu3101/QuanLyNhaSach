@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UngDungQuanLyNhaSach.Pages"
         mc:Ignorable="d"
-        Title="DoanhThuPdf" Height="820" Width="800" WindowStartupLocation="CenterScreen">
+        Title="DoanhThuPdf" Height="850" Width="800" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style x:Key="Header" TargetType="TextBlock">
@@ -57,7 +57,7 @@
 
     <Grid>
         <StackPanel>
-            <StackPanel x:Name="print" Margin="20">
+            <StackPanel x:Name="print" Margin="10">
                 <TextBlock Margin="0,0,0, 10"
                 Style="{StaticResource Header}">
                 - NHÀ SÁCH DOFLAMINGO -
@@ -87,7 +87,7 @@
 
                 <DataGrid x:Name="chiTraTable"
                       Margin="75, 15"
-                      Height="175"
+                      Height="150"
                       Style="{DynamicResource DataGridStyle}" 
                       CellStyle="{StaticResource DataGridCellStyle}" 
                       ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
@@ -97,8 +97,8 @@
                 </DataGrid>
 
                 <DataGrid x:Name="thuNhapTable" 
-                      Margin="75, 15"
-                      Height="175"
+                      Margin="75, 0, 75, 15"
+                      Height="150"
                       Style="{DynamicResource DataGridStyle}" 
                       CellStyle="{StaticResource DataGridCellStyle}" 
                       ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle}" 
@@ -122,6 +122,15 @@
                                    Text="LỢI NHUẬN:"
                                    Style="{StaticResource Title}"
                                    Width="400"/>
+                <TextBlock Margin="300, 0, 0, 0"
+                                   Text="Ngày ... tháng ... năm..."
+                                   Style="{StaticResource Title}"
+                                   TextAlignment="Right"/>
+                <TextBlock Margin="300, 0, 0, 0"
+                           Height="100"
+                                   Text="Giám đốc"
+                                   Style="{StaticResource Title}"
+                                   TextAlignment="Right"/>
 
             </StackPanel>
 
