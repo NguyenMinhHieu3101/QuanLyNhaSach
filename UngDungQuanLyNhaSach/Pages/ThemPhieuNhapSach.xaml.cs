@@ -34,6 +34,7 @@ using DataTable = System.Data.DataTable;
 using Path = System.IO.Path;
 using System.IO.Packaging;
 using Page = System.Windows.Controls.Page;
+using System.Globalization;
 
 namespace UngDungQuanLyNhaSach.Pages
 {
@@ -825,6 +826,19 @@ namespace UngDungQuanLyNhaSach.Pages
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void tongTien_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string value = Regex.Replace(tongTien.Text, "[^0-9]", "");
+            double ul;
+            if (double.TryParse(value, out ul))
+            {
+                tongTien.TextChanged -= tongTien_TextChanged;
+                tongTien.Text = string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", ul);
+                tongTien.TextChanged += tongTien_TextChanged;
+                tongTien.Select(tongTien.Text.Length, 0);
             }
         }
     }

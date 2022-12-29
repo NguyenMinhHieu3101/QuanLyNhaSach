@@ -219,6 +219,10 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (check)
                     {
                         khachHangList.Insert(0, khachHang!);
+                        for (int i = 0; i < khachHangList.Count; i++)
+                        {
+                            khachHangList[i].stt = i + 1;
+                        }
                     }    
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
@@ -421,7 +425,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
         private void sdt_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!Regex.IsMatch(sdt.Text, "^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$") || sdt.Text.Length != 10 && sdt.Text.Length != 11)
+            if (!Regex.IsMatch(sdt.Text, "^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$") || sdt.Text.Length != 10 && sdt.Text.Length != 11)
             {
                 sdt_error.Text = sdt.Text.Length > 0 ? "Số điện thoại không hợp lệ" : "Vui lòng nhập vào số điện thoại";
                 sdt_error.Visibility= Visibility.Visible;

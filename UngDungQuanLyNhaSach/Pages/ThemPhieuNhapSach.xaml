@@ -254,7 +254,7 @@
                     </Grid.RowDefinitions>
                     <StackPanel  Margin="5,5,15,5" Grid.Row="0" Grid.Column="0">
                         <DockPanel LastChildFill="True">
-                            <TextBlock Text="Mã sách:" Width="120"/>
+                            <TextBlock Text="Mã sản phẩm:" Width="120"/>
                             <ComboBox x:Name="maSach" SelectionChanged="maSanPham_cbo_SelectionChanged" IsEditable="true"/>
                         </DockPanel>
                     </StackPanel>
@@ -372,7 +372,7 @@
                     <StackPanel Margin="5,5,15,5"  Grid.Row="2" Grid.Column="1" >
                         <DockPanel  LastChildFill="True" Width="350">
                             <TextBlock Text="Tổng tiền:" Width="120"/>
-                            <TextBox x:Name="tongTien" Template="{StaticResource TextBoxBaseControlTemplate}" Width="200" IsEnabled="false"/>
+                            <TextBox x:Name="tongTien" Template="{StaticResource TextBoxBaseControlTemplate}" Width="200" IsEnabled="false" TextChanged="tongTien_TextChanged"/>
                         </DockPanel>
                     </StackPanel>
                     

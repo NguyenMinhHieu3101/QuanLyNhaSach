@@ -238,6 +238,10 @@ namespace UngDungQuanLyNhaSach.Pages
                     if (check)
                     {
                         khuyenMaiList.Insert(0, khuyenMai!);
+                        for (int i = 0; i < khuyenMaiList.Count; i++)
+                        {
+                            khuyenMaiList[i].stt = i + 1;
+                        }
                     }    
                     this.Dispatcher.BeginInvoke(new Action(() =>
                     {
