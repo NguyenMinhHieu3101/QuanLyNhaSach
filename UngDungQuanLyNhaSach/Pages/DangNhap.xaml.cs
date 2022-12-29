@@ -103,7 +103,6 @@ namespace UngDungQuanLyNhaSach.Pages
             }
             catch (Exception)
             {
-
                 MessageBox.Show("Lỗi xảy ra khi truy vấn dữ liệu hoặc kết nối với server thất bại !");
                 return false;
             }
@@ -114,6 +113,18 @@ namespace UngDungQuanLyNhaSach.Pages
   
         }
 
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            passwordTxtBox.Text = txtMatKhau.Password;
+            txtMatKhau.Visibility = Visibility.Collapsed;
+            passwordTxtBox.Visibility = Visibility.Visible;
+        }
 
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            txtMatKhau.Password = passwordTxtBox.Text;
+            passwordTxtBox.Visibility = Visibility.Collapsed;
+            txtMatKhau.Visibility = Visibility.Visible;
+        }
     }
 }

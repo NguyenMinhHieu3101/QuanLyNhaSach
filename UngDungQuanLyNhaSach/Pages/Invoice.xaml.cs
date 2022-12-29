@@ -61,7 +61,7 @@ namespace UngDungQuanLyNhaSach.Pages
                             tongTienHD: (double)reader["TongTienHoaDon"]);
                     this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {
-                        date.Text = "Ngày: " + hoaDon.ngayLapHD.ToString("dd/MM/yyyy");
+                        date.Text = "Ngày: " + hoaDon.ngayLapHD.ToString("dd/MM/yyyy - hh:mm:ss");
                         maHD.Text = "Mã Hóa Đơn: " + hoaDon.maHoaDon;
                         khachHang.Text = hoaDon.maKhachHang;
                         sdt.Text = hoaDon.getSDT();
