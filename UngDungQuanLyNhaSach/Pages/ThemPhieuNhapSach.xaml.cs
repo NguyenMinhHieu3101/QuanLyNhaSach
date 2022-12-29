@@ -604,7 +604,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
 
                     connection.Open();
-                    string readString = "SELECT TOP(5) SANPHAM.MaSanPham, TenSanPham, TacGia, TheLoai, NXB, NamXB, MaKho, TrangThai, GiaNhap FROM HOADON, CHITIETHOADON, SANPHAM, Count(soLuong) WHERE (HOADON.MaHoaDon = CHITIETHOADON.MaHoaDon) AND (SANPHAM.MaSanPham = CHITIETHOADON.MaSanPham) AND (MONTH(NgayLapHoaDon) = @Thang) GROUP BY SANPHAM.MaSanPham, TenSanPham, TacGia, TheLoai, NXB, NamXB, MaKho, TrangThai, GiaNhap ORDER BY COUNT(SoLuong) DESC";
+                    string readString = "SELECT TOP(5) SANPHAM.MaSanPham, TenSanPham, TacGia, TheLoai, NXB, NamXB, MaKho, TrangThai, GiaNhap, SoLuongTon FROM HOADON, CHITIETHOADON, SANPHAM WHERE (HOADON.MaHoaDon = CHITIETHOADON.MaHoaDon) AND (SANPHAM.MaSanPham = CHITIETHOADON.MaSanPham) AND (MONTH(NgayLapHoaDon) = @Thang) GROUP BY SANPHAM.MaSanPham, TenSanPham, TacGia, TheLoai, NXB, NamXB, MaKho, TrangThai, GiaNhap, SoLuongTon ORDER BY COUNT(CHITIETHOADON.SoLuong) DESC";
                     SqlCommand command = new SqlCommand(readString, connection);
                     command.Parameters.Add("@Thang", SqlDbType.Int);
                     //command.Parameters["@Thang"].Value = DateTime.Now.Month - 1;
@@ -622,7 +622,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         topSPList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
                                     tenSanPham: (String)reader["TenSanPham"], theLoai: (String)reader["TheLoai"], 
                                     tacGia: (String)reader["TacGia"], nXB: (String)reader["NXB"], giaNhap: (double)reader["GiaNhap"],
-                                    namXB: (int)reader["NamXB"], maKho: (String)reader["MaKho"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng", soLuong: (Int32)reader["soLuong"]));
+                                    namXB: (int)reader["NamXB"], maKho: (String)reader["MaKho"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng", soLuong: (int)reader["SoLuongTon"]));
 
                         this.Dispatcher.BeginInvoke(new System.Action(() =>
                         {
@@ -696,11 +696,6 @@ namespace UngDungQuanLyNhaSach.Pages
                 chitietphieuNhapSachTable.ItemsSource = dt.DefaultView;
                 excelBook.Close();
             }
-
-        }
-
-        private void qrBtn_Click(object sender, RoutedEventArgs e)
-        {
 
         }
 

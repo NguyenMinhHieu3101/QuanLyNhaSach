@@ -38,7 +38,9 @@ namespace UngDungQuanLyNhaSach.Model
         [ColumnName("Trạng Thái")]
         public String trangThai { get; set; }
 
+        [ColumnName("Số Lượng")]
         public int soLuong { get; set; }
+
         public SanPham(string maSanPham, string tenSanPham, string theLoai,
             string tacGia, string nXB, double giaNhap, int namXB, string maKho, string trangThai, int soLuong)
         {
