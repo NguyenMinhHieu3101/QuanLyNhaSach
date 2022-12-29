@@ -202,7 +202,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
                     while (reader.Read())
                     {
-                       
+                        itemsMaSP.Add((String)reader["MaSanPham"]);                      
                         itemsTenSP.Add((String)reader["TenSanPham"]);
                         itemsTheLoai.Add((String)reader["TheLoai"]);
                         itemsTacGia.Add((String)reader["TacGia"]);
@@ -326,7 +326,9 @@ namespace UngDungQuanLyNhaSach.Pages
         }
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
-         
+            try
+            {
+
                 SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                 connection.Open();
                 string readString = "select Count(*) from PHIEUNHAP";
@@ -371,6 +373,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     commandReader = new SqlCommand(readString, connection);
                     Int32 countSP = (Int32)commandReader.ExecuteScalar() + 1;
 
+                    
                     insertString = "INSERT INTO SANPHAM(MaSanPham, TenSanPham, TacGia, TheLoai, NXB, GiaNhap, NamXB, MaKho, TrangThai)"
                         + "VALUES(@MaSanPham, @TenSanPham, @TacGia, @TheLoai, @NXB, @GiaNhap, @NamXB, @MaKho, @TrangThai)";
                     command = new SqlCommand(insertString, connection);
@@ -405,7 +408,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.ExecuteNonQuery();
 
 
-            
+
 
                     insertString = "INSERT INTO CHITIETPHIEUNHAP(MaPhieuNhap, MaSanPham, SoLuong,NgayNhap, DonGia)"
                         + "VALUES(@MaPhieuNhap, @MaSanPham, @SoLuong,@NgayNhap, @DonGia)";
@@ -430,15 +433,22 @@ namespace UngDungQuanLyNhaSach.Pages
 
 
                     connection.Close();
-                countSP++;
+                    countSP++;
                 }
-             
+
 
 
                 loadListPhieuNhap();
                 MessageBox.Show("Thêm thành công");
                 resetData();
-        
+            }
+            catch (Exception e1)
+            {
+                //MessageBox.Show("db error");
+                MessageBox.Show(e1.Message);
+
+            }
+
         }
 
         private void updateBtn_Click(object sender, RoutedEventArgs e)
@@ -599,127 +609,6 @@ namespace UngDungQuanLyNhaSach.Pages
         {
 
 
-            //if (string.IsNullOrEmpty(filePath))
-            //{
-            //    MessageBox.Show("Đường dẫn không hợp lệ hoặc chưa chọn file");
-            //    return;
-            //}
-
-            //List < listSachNhap > = new List<listSachNhap>();
-
-            //DataTable dt = new DataTable();
-            //dt.Columns.Add("#");
-            //dt.Columns.Add("Mã Sản Phẩm");
-            //dt.Columns.Add("Tên Sách");
-            //dt.Columns.Add("Tác Giả");
-            //dt.Columns.Add("NXB");
-            //dt.Columns.Add("Năm XB");
-            //dt.Columns.Add("Đơn Giá");
-            //dt.Columns.Add("Số Lượng");
-
-
-            //try
-            //{
-            //    var package = new ExcelPackage(new FileInfo(filePath));
-            //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            //    ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
-
-            //for (int i = workSheet.Dimension.Start.Row; i <= workSheet.Dimension.End.Row; i++)
-            //{
-            //    try
-            //    {
-            //        int j = 1;
-            //        var stt = workSheet.Cells[i, j++].Value.ToString();
-            //        var masanpham = workSheet.Cells[i, j++].Value.ToString();
-            //        var tensach = workSheet.Cells[i, j++].Value.ToString();
-            //        var tacgia = workSheet.Cells[i, j++].Value.ToString();
-            //        var nxb = workSheet.Cells[i, j++].Value.ToString();
-            //        var namxb = workSheet.Cells[i, j++].Value.ToString();
-            //        var dongia = workSheet.Cells[i, j++].Value.ToString();
-            //        var soluong = workSheet.Cells[i, j++].Value.ToString();
-
-            //        dt.Rows.Add(stt, tensach, tacgia, nxb, namxb, dongia, soluong);
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MessageBox.Show(ex.Message);
-            //    }
-            //}
-            //    do
-            //    {
-            //        rowIndex = 2 + index;
-            //        row = dt.NewRow();
-            //        row[0] = Convert.ToString(((Microsoft.Office.Interop.Excel.Range)workSheet.Cells[rowIndex, 1]).Value2);
-            //        row[1] = Convert.ToString(((Microsoft.Office.Interop.Excel.Range)workSheet.Cells[rowIndex, 2]).Value2);
-            //        row[2] = Convert.ToString(((Microsoft.Office.Interop.Excel.Range)workSheet.Cells[rowIndex, 3]).Value2);
-            //        row[3] = Convert.ToString(((Microsoft.Office.Interop.Excel.Range)workSheet.Cells[rowIndex, 4]).Value2);
-            //        row[4] = Convert.ToString(((Microsoft.Office.Interop.Excel.Range)workSheet.Cells[rowIndex, 5]).Value2);
-            //        index++;
-            //        dt.Rows.Add(row);
-            //    }
-            //    while (((Microsoft.Office.Interop.Excel.Range)workSheet.Cells[rowIndex, 1]).Value2 != null)
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
-
-            //chitietphieuNhapSachTable.ItemsSource = dt.DefaultView;
-
-
-
-            //using (OleDbConnection conn = new OleDbConnection())
-            //    {
-            //    string path = "";
-            //    OpenFileDialog openFile = new OpenFileDialog();
-            //    //openFile.Filter = "Excel | *.xlsx | Excel 2003 | *.xls";
-
-            //    if (openFile.ShowDialog() == true)
-            //    {
-            //        path = openFile.FileName;
-            //    }
-            //    var package = new ExcelPackage(new FileInfo(path));
-            //    //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            //    ExcelWorksheet workSheet = package.Workbook.Worksheets[0];
-
-            //        DataTable dt = new DataTable();
-            //        string Import_FileName = path;
-            //        string fileExtension = Path.GetExtension(Import_FileName);
-            //        if (fileExtension == ".xls")
-            //            conn.ConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + Import_FileName + ";" + "Extended Properties='Excel 8.0;HDR=YES;'";
-            //        if (fileExtension == ".xlsx")
-            //            conn.ConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Import_FileName + ";" + "Extended Properties='Excel 12.0 Xml;HDR=YES;'";
-            //        using (OleDbCommand comm = new OleDbCommand())
-            //        {
-            //            comm.CommandText = "Select * from [" + workSheet + "$]";
-            //            comm.Connection = conn;
-            //            using (OleDbDataAdapter da = new OleDbDataAdapter())
-            //            {
-            //                da.SelectCommand = comm;
-            //                da.Fill(dt);
-            //            }
-            //        }
-            //    }
-
-
-            //try
-            //{
-            //    System.Data.OleDb.OleDbConnection MyConnection;
-            //    System.Data.DataTable Dt;
-            //    System.Data.OleDb.OleDbDataAdapter MyCommand;
-            //    MyConnection = new System.Data.OleDb.OleDbConnection("provider=Microsoft.Jet.OLEDB.4.0;Data Source='c:\\csharp.net-informations.xls';Extended Properties=Excel 8.0;");
-            //    MyCommand = new System.Data.OleDb.OleDbDataAdapter("select * from [Sheet1$]", MyConnection);
-            //    MyCommand.TableMappings.Add("Table", "TestTable");
-            //    Dt = new System.Data.DataTable();
-            //    MyCommand.Fill(Dt);
-            //    chitietphieuNhapSachTable.ItemsSource = Dt.DefaultView;
-            //    MyConnection.Close();
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString());
-            //}
-
 
             string path = "";
             OpenFileDialog openFile = new OpenFileDialog();
@@ -775,5 +664,62 @@ namespace UngDungQuanLyNhaSach.Pages
         {
 
         }
+
+        private void maSanPham_cbo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+           
+                try
+                {
+                    SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                    connection.Open();
+                    string readString = "select count(*) from SANPHAM WHERE MaSanPham = '" + maSach.Text + "'";
+                    SqlCommand command = new SqlCommand(readString, connection);
+
+
+                    Int32 count = (Int32)command.ExecuteScalar();
+                
+                if (count > 0)
+                {
+                   
+                    readString = "select * from SANPHAM WHERE MaSanPham = '" + maSach.Text + "'";
+                    command = new SqlCommand(readString, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    tenSach.Text = (String)reader["TenSanPham"];
+                    tacGia.Text = (String)reader["TacGia"];
+                    theLoai.Text = (String)reader["TheLoai"];
+                    nhaXB.Text = (String)reader["NXB"];
+                    namXB.Text = ((Int32)reader["NamXB"]).ToString();
+
+                    tenSach.IsEnabled = false;
+                    tacGia.IsEnabled = false;
+                    theLoai.IsEnabled = false;
+                    namXB.IsEnabled = false;
+                    nhaXB.IsEnabled =false;
+
+                }
+                else
+                {
+                    tenSach.Text = "";
+                    tacGia.Text = "";
+                    theLoai.Text = "";
+                    nhaXB.Text ="";
+                    namXB.Text = "";
+
+                    tenSach.IsEnabled = true;
+                    tacGia.IsEnabled = true;
+                    namXB.IsEnabled = true;
+                    theLoai.IsEnabled = true;
+                    nhaXB.IsEnabled = true;
+                }    
+                connection.Close();
+
+            }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        
     }
 }

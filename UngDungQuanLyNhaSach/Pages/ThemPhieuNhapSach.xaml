@@ -255,7 +255,7 @@
                     <StackPanel  Margin="5,5,15,5" Grid.Row="0" Grid.Column="0">
                         <DockPanel LastChildFill="True">
                             <TextBlock Text="Mã sách:" Width="120"/>
-                            <ComboBox x:Name="maSach" IsEditable="true"/>
+                            <ComboBox x:Name="maSach" SelectionChanged="maSanPham_cbo_SelectionChanged" IsEditable="true"/>
                         </DockPanel>
                     </StackPanel>
                     <StackPanel Margin="5,5,15,5" Grid.Column="1" Grid.Row="0">
