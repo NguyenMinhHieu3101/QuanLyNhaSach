@@ -301,7 +301,7 @@ INSERT INTO SANPHAM  VALUES ('SP002', N'Thám tử lừng danh Conan', N'Aoya
 INSERT INTO SANPHAM  VALUES ('SP003', N'Chú mèo máy Doraemon', N'Fujiko Fujio', N'Sách thiếu nhi', N'NXB Kim Đồng', '22000', '2018', 'K003', '0','0');
 INSERT INTO SANPHAM  VALUES ('SP004', N'TỰ HỌC TOÁN HỌC - TẬP 1 - HÌNH KHÔNG GIAN', N'Lê Văn Tuấn', N'Sách giáo khoa', N'NXB Hồng Đức', '160000', '2022', 'K004', '1','43');
 INSERT INTO SANPHAM  VALUES ('SP005', N'TỰ HỌC TOÁN HỌC - TẬP 2 - HÌNH KHÔNG GIAN', N'Lê Văn Tuấn', N'Sách giáo khoa', N'NXB Hồng Đức', '160000', '2022', 'K001', '1','5');
-INSERT INTO SANPHAM  VALUES ('SP006', N'Hóa Học 12', N'Bộ Giáo Dục', N'Sách giáo khoa', N'NXB Giáo Dục Việt Nam', '19000', '2022', 'K002', '1''70');
+INSERT INTO SANPHAM  VALUES ('SP006', N'Hóa Học 12', N'Bộ Giáo Dục', N'Sách giáo khoa', N'NXB Giáo Dục Việt Nam', '19000', '2022', 'K002', '1','70');
 INSERT INTO SANPHAM  VALUES ('SP007', N'Đắc nhân tâm', N'Dale Carnegie', N'Sách tiểu thuyết', N'NXB Simon & Schuster', '50000', '2020', 'K003', '0','0');
 INSERT INTO SANPHAM  VALUES ('SP008', N'Tôi tài giỏi – Bạn cũng thế', N'Adam Khoo', N'Sách kỹ năng mềm', N'NXB Phụ Nữ Việt Nam', '50000', '2021', 'K004', '1','12');
 INSERT INTO SANPHAM  VALUES ('SP009', N'One Piece', N'Oda Eiichiro', N'Sách kỹ năng mềm', N'NXB Kim Đồng', '21000', '2020', 'K001', '1','88');
