@@ -578,11 +578,17 @@ namespace UngDungQuanLyNhaSach.Pages
             sdt.Text = nhanVien.sdt;
             email.Text = nhanVien.email;
             List<String> donVi = new List<String>();
-            donVi.AddRange(nhanVien.diaChi.Split(','));            
-            diaChi.Text = donVi[0].Trim();
-            phuong.Text = donVi[1].Trim();
-            huyenText = donVi[2].Trim();
-            tinh.Text = donVi[3].Trim();
+            donVi.AddRange(nhanVien.diaChi.Split(','));
+            String diaChiText = "";
+            for (int i = 0; i < donVi.Count - 3; i++)
+            {
+                diaChiText += donVi[i].Trim();
+                if (i < donVi.Count - 4) { diaChiText += ", "; }
+            }
+            diaChi.Text = diaChiText;
+            phuong.Text = donVi[donVi.Count - 3].Trim();
+            huyenText = donVi[donVi.Count - 2].Trim();
+            tinh.Text = donVi[donVi.Count - 1].Trim();
             gioiTinh.SelectedIndex = nhanVien.gioiTinh == "Nam" ? 0 : 1;
             luong.Text = nhanVien.luong.ToString();
             chucVu.SelectedIndex = nhanVien.maChucVu == "Nhân viên bán hàng" ? 1 : (nhanVien.maChucVu == "Nhân viên kho" ? 2 : 0);

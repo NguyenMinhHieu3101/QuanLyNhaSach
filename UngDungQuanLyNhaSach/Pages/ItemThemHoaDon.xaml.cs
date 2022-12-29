@@ -411,7 +411,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@MaKhuyenMai"].Value = khuyenMai_cbo.Text;
 
                     command.Parameters.Add("@NgayLapHoaDon", SqlDbType.SmallDateTime);
-                    command.Parameters["@NgayLapHoaDon"].Value = ngayHoaDon.SelectedDate;
+                    command.Parameters["@NgayLapHoaDon"].Value = DateTime.Now;
 
                     command.Parameters.Add("@TongTienHoaDon", SqlDbType.Money);
                     command.Parameters["@TongTienHoaDon"].Value = Regex.Replace(tongTien_txt.Text, "[^0-9]", "");
@@ -571,6 +571,34 @@ namespace UngDungQuanLyNhaSach.Pages
         private void cancel_btn_Click(object sender, RoutedEventArgs e)
         {
             resetData();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (hoaDonTable.SelectedIndex != -1)
+            {
+                chiTietHDList.RemoveAt(hoaDonTable.SelectedIndex);
+                double sum = 0;
+                
+                for (int i = 0; i < chiTietHDList.Count; i++)
+                {
+                    chiTietHDList[i].stt = i + 1;
+                    sum += chiTietHDList[i].getThanhTien();
+                }
+                tongTien_txt.Text = sum.ToString();
+                if (khuyenMai_txt.Text.Length > 0)
+                {
+                    giamGia_txt.Text = (sum * int.Parse(khuyenMai_txt.Text) / 100).ToString();
+                    phaiThanhToan_txt.Text = (sum * (100 - int.Parse(khuyenMai_txt.Text)) / 100).ToString();
+                }
+                else
+                {
+                    giamGia_txt.Text = "0";
+                    phaiThanhToan_txt.Text = sum.ToString();
+                }
+                hoaDonTable.ItemsSource = new List<ChiTietHoaDon>();
+                hoaDonTable.ItemsSource = chiTietHDList;
+            }
         }
     }
 }
