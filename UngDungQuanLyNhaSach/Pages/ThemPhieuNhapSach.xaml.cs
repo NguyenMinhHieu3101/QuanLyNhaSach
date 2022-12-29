@@ -253,18 +253,17 @@ namespace UngDungQuanLyNhaSach.Pages
         private void addBookBtn_Click(object sender, RoutedEventArgs e)
         {
             
-            SanPham sanpham = new SanPham(maSach.Text, tenSach.Text, theLoai.Text, tacGia.Text, nhaXB.Text, double.Parse(donGia.Text), int.Parse(namXB.Text),"K001","1", int.Parse(soLuongNhap.Text));
+            
             try
             {
-
-
-                sanPhamTrongPhieuNhap.Add(sanpham);
+                SanPham sanpham = new SanPham(maSach.Text, tenSach.Text, theLoai.Text, tacGia.Text, nhaXB.Text, double.Parse(donGia.Text), int.Parse(namXB.Text), "K001", "1", int.Parse(soLuongNhap.Text));
+                int soLuong = int.Parse(soLuongNhap.Text);
                 if (soLuongNhap.Text.Length > 0)
                 {
-                    int soLuong = int.Parse(soLuongNhap.Text);
-                    if (soLuong == 0)
+                 
+                    if (soLuong == 0 || soLuong > getSoLuong(maSach.Text))
                     {
-                        MessageBox.Show("Số lượng không hợp lệ");
+                        MessageBox.Show("Số lượng không hợp lệ (Không còn sản phẩm trong kho)");
                         return;
                     }
                     string value = Regex.Replace(donGia.Text, "[^0-9]", "");
@@ -364,6 +363,44 @@ namespace UngDungQuanLyNhaSach.Pages
 
                 connection.Close();
 
+                foreach(ChiTietPhieuNhapSach ctpns in chiTietPhieuNhapSachList)
+                {
+                    try
+                    {
+                         connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+
+                        connection.Open();
+                        readString = "select * from SANPHAM where MaSanPham = " + ctpns.MaSanPham;
+                        command = new SqlCommand(readString, connection);
+
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        while (reader.Read())
+                        {
+                           
+                            sanPhamTrongPhieuNhap.Add(new SanPham(stt: 1,
+                            maSanPham: (String)reader["MaSanPham"],
+                            tenSanPham: (String)reader["TenSanPham"],
+                            tacGia: (String)reader["TacGia"],
+                            theLoai: (String)reader["TheLoai"],
+                            nXB: (String)reader["NXB"],
+                            giaNhap: (double)reader["GiaNhap"],
+                            namXB: (Int32)reader["NamXB"],
+                            maKho: (String)reader["MaKho"],
+                            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng", soLuong: (Int32)reader["SoLuongTon"]));
+
+                        
+                        }
+                        connection.Close();
+                    }
+                    catch (Exception e1)
+                    {
+                        //MessageBox.Show("db error");
+                        MessageBox.Show(e1.Message);
+
+                    }
+                }
+
 
                 foreach (SanPham sp in sanPhamTrongPhieuNhap)
                 {
@@ -430,7 +467,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@DonGia"].Value = sp.giaNhap;
 
                     command.ExecuteNonQuery();
-
+                    updateSoLuong(sp.maSanPham, sp.soLuong);
 
                     connection.Close();
                     countSP++;
@@ -583,7 +620,7 @@ namespace UngDungQuanLyNhaSach.Pages
                         topSPList.Add(new SanPham(stt: count, maSanPham: (String)reader["MaSanPham"],
                                     tenSanPham: (String)reader["TenSanPham"], theLoai: (String)reader["TheLoai"], 
                                     tacGia: (String)reader["TacGia"], nXB: (String)reader["NXB"], giaNhap: (double)reader["GiaNhap"],
-                                    namXB: (int)reader["NamXB"], maKho: (String)reader["MaKho"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng"));
+                                    namXB: (int)reader["NamXB"], maKho: (String)reader["MaKho"], trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng", soLuong: (Int32)reader["SoLuongTon"]));
 
                         this.Dispatcher.BeginInvoke(new System.Action(() =>
                         {
@@ -744,6 +781,51 @@ namespace UngDungQuanLyNhaSach.Pages
                
                 chitietphieuNhapSachTable.ItemsSource = new List<ChiTietHoaDon>();
                 chitietphieuNhapSachTable.ItemsSource = chiTietPhieuNhapSachList;
+            }
+        }
+        int getSoLuong(String maSP)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+                string readString = "select * from SANPHAM WHERE MaSanPham = '" + maSP + "'";
+                SqlCommand command = new SqlCommand(readString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+                int soLuong = (int)reader["SoLuongTon"];
+                connection.Close();
+                return soLuong;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return 0;
+            }
+        }
+
+        void updateSoLuong(String maSP, int soLuong)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
+                connection.Open();
+
+                string updateString = "UPDATE SANPHAM SET SoLuongTon = @SoLuongTon Where MaSanPham = @MaSanPham";
+                SqlCommand command = new SqlCommand(updateString, connection);
+
+                command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
+                command.Parameters["@MaSanPham"].Value = maSP;
+
+                command.Parameters.Add("@SoLuongTon", SqlDbType.Int);
+                command.Parameters["@SoLuongTon"].Value = getSoLuong(maSP) + soLuong;
+
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

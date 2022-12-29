@@ -42,6 +42,7 @@ namespace UngDungQuanLyNhaSach.Model
         public SanPham(string maSanPham, string tenSanPham, string theLoai,
             string tacGia, string nXB, double giaNhap, int namXB, string maKho, string trangThai, int soLuong)
         {
+            this.stt = stt;
             this.maSanPham = maSanPham;
             this.tenSanPham = tenSanPham;
             this.tacGia = tacGia;
@@ -51,10 +52,11 @@ namespace UngDungQuanLyNhaSach.Model
             this.namXB = namXB;
             this.maKho = maKho;
             this.trangThai = trangThai;
+            this.soLuong = soLuong;
 
         }
         public SanPham(int stt, string maSanPham, string tenSanPham, string theLoai,
-            string tacGia, string nXB, double giaNhap, int namXB, string maKho, string trangThai)
+            string tacGia, string nXB, double giaNhap, int namXB, string maKho, string trangThai, int soLuong)
         {
             this.stt = stt;
             this.maSanPham = maSanPham;
@@ -66,6 +68,7 @@ namespace UngDungQuanLyNhaSach.Model
             this.namXB = namXB;
             this.maKho = maKho;
             this.trangThai = trangThai;
+            this.soLuong = soLuong;
 
         }
     }

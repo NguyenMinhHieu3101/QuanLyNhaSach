@@ -192,7 +192,8 @@ namespace UngDungQuanLyNhaSach.Pages
                             giaNhap: (double)reader["GiaNhap"],
                             namXB: (Int32)reader["NamXB"],
                             maKho: (String)reader["MaKho"],
-                            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng")); 
+                            trangThai: ((String)reader["TrangThai"]).CompareTo("0") == 0 ? "Hết hàng" : "Còn hàng", soLuong: (Int32)reader["SoLuongTon"])
+                            ); 
                     }
                     this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {

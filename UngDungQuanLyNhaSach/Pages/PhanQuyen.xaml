@@ -96,7 +96,7 @@
         
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Grid.Column="2" Grid.Row="6" >
         <Button Content="Lưu" Width="100" Height="30" Margin="30" Style="{StaticResource SaveButton}" Click="Save_Button"></Button>
-        <Button Content="Hủy" Width="100" Height="30" Style="{StaticResource CacelButton}"></Button>
+   
         </StackPanel>
     </Grid>
 </Page>

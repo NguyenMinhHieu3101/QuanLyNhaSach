@@ -449,6 +449,9 @@ namespace UngDungQuanLyNhaSach.Pages
             }
         }
 
-     
+        private void Cancel_Button(object sender, RoutedEventArgs e)
+        {
+          
+        }
     }
 }
