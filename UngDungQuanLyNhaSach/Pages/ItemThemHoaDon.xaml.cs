@@ -411,7 +411,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     command.Parameters["@MaKhuyenMai"].Value = khuyenMai_cbo.Text;
 
                     command.Parameters.Add("@NgayLapHoaDon", SqlDbType.SmallDateTime);
-                    command.Parameters["@NgayLapHoaDon"].Value = ngayHoaDon.SelectedDate;
+                    command.Parameters["@NgayLapHoaDon"].Value = DateTime.Now;
 
                     command.Parameters.Add("@TongTienHoaDon", SqlDbType.Money);
                     command.Parameters["@TongTienHoaDon"].Value = Regex.Replace(tongTien_txt.Text, "[^0-9]", "");

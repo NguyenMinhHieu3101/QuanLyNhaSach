@@ -94,7 +94,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     SqlConnection connection = new SqlConnection(@"Server=(local);Database=QUANLYNHASACH;Trusted_Connection=Yes;");
                     connection.Open();
 
-                    string readString = "select * from CHITIETHOADON where MaHoaDon = '" + maHoaDon + "'";
+                    string readString = "select * from CHITIETHOADON, SANPHAM where CHITIETHOADON.MaSanPham = SANPHAM.MaSanPham And MaHoaDon = '" + maHoaDon + "'";
                     SqlCommand command = new SqlCommand(readString, connection);
                     SqlDataReader reader = command.ExecuteReader();
                     int count = 0;
@@ -102,8 +102,10 @@ namespace UngDungQuanLyNhaSach.Pages
                     while (reader.Read())
                     {
                         count++;
+                        double donGia = (double)reader["GiaNhap"];
+                        int soLuong = (int)reader["SoLuong"];
                         chiTietHDList.Add(new ChiTietHoaDon(count, (String)reader["MaSanPham"],
-                            (int)reader["SoLuong"], (double)reader["DonGia"], (double)reader["ThanhTien"]));
+                            soLuong, donGia, donGia * soLuong));
                     }
                     this.Dispatcher.BeginInvoke(new System.Action(() =>
                     {
