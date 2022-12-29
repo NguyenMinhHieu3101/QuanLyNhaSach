@@ -343,17 +343,20 @@
                   RowStyle="{StaticResource DataGridRowStyle}" 
                   AutoGeneratingColumn="hoaDonTable_AutoGeneratingColumn" Height="185" Background="{x:Null}">
 
-
-                <!--<DataGrid.Columns>
-                        <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                        <DataGridTextColumn Header="" IsReadOnly="True" CanUserResize="False" Width="Auto"/>
-                        <DataGridTextColumn Header="Tên sách" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Đơn giá" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Số lượng" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Ghi chú" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                        <DataGridTextColumn Header="Thành tiền" IsReadOnly="True" CanUserResize="True" Width="*"/>
-                    </DataGrid.Columns>-->
-
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="20" Header="">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="btnDelete" BorderThickness="0" DockPanel.Dock="Right" Background="Transparent"
+                                Margin="5,0,0,0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center" Click="btnDelete_Click" 
+                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabItem}}, Path=Name}">
+                                    <Image Source="/UngDungQuanLyNhaSach;component/Images/close.png" Height="11" Width="11"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+                
             </DataGrid>
         </StackPanel>
 
