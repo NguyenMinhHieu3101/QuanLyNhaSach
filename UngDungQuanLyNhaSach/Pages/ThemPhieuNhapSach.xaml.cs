@@ -720,6 +720,34 @@ namespace UngDungQuanLyNhaSach.Pages
                     MessageBox.Show(ex.Message);
                 }
             }
-        
+
+        private static readonly Regex _regex = new Regex("[0-9]+");
+        private void previewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !_regex.IsMatch(e.Text);
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (chitietphieuNhapSachTable.SelectedIndex != -1)
+            {
+                chiTietPhieuNhapSachList.RemoveAt(chitietphieuNhapSachTable.SelectedIndex);
+                double sum = 0;
+
+                for (int i = 0; i < chiTietPhieuNhapSachList.Count; i++)
+                {
+                    chiTietPhieuNhapSachList[i].stt = i + 1;
+                    sum += chiTietPhieuNhapSachList[i].getThanhTien();
+                }
+             
+                tongTien.Text = sum.ToString();
+               
+                chitietphieuNhapSachTable.ItemsSource = new List<ChiTietHoaDon>();
+                chitietphieuNhapSachTable.ItemsSource = chiTietPhieuNhapSachList;
+            }
+        }
     }
+    
+  
+
 }
