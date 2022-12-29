@@ -173,10 +173,10 @@
                                 
                             </TextBox>
                         </DockPanel>
-                        <DockPanel Grid.Column="1" Margin="10">
+                        <Grid Grid.Column="1" Margin="10">
                             <PasswordBox x:Name="txtMatKhau"
                                          PasswordChar="●"
-                                         FontSize="18"      
+                                         FontSize="18"     
                                          HorizontalContentAlignment="Center"
                                          Foreground="White"
                                          CaretBrush="LightGray"
@@ -191,7 +191,25 @@
                                         AlignmentX="Left" />
                                 </PasswordBox.Background>
                             </PasswordBox>
-                        </DockPanel>
+                            <TextBox Name="passwordTxtBox" FontSize="18"      
+                                         HorizontalContentAlignment="Center"
+                                         Foreground="White"
+                                         CaretBrush="LightGray"
+                                         BorderBrush="White"
+                                         BorderThickness="0,0,0,2"
+                                         Height="35"
+                                         Margin="0,5,0,0"
+                                         Padding="20,0,0,0" FontWeight="Bold" 
+                                     Text="{Binding Path=Password, ElementName=txtMatKhau, Mode=TwoWay}"
+                                     Visibility="Collapsed">
+                                <TextBox.Background>
+                                    <ImageBrush  ImageSource="/UngDungQuanLyNhaSach;component/Images/key.png"
+                                        Stretch="None"
+                                        AlignmentX="Left" />
+                                </TextBox.Background>
+                            </TextBox>
+                        </Grid>
+                        <CheckBox Content="Hiển thị mật khẩu" HorizontalAlignment="Right" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked"/>
                         <DockPanel>
                             <Button                          
                             BorderThickness="0"
