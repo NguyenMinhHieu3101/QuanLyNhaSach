@@ -110,9 +110,9 @@
             </Setter>
 
         </Style>
-        
+
     </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -121,7 +121,7 @@
 
         <Grid Background="#1FAD7A">
 
-            <TextBlock Text="BookStore" 
+            <TextBlock Text="DOFLAMINGO" 
                        HorizontalAlignment="Center" 
                        VerticalAlignment="Center" 
                        Foreground="White"
@@ -144,9 +144,15 @@
                     <ComboBoxItem>Thông tin nhân viên</ComboBoxItem>
                     <ComboBoxItem>Đăng xuất</ComboBoxItem>
                 </ComboBox>
-                
+
             </StackPanel>
-       
+            <TextBlock Text="BookStore" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Center" 
+                Foreground="White"
+                FontSize="30" 
+                FontWeight="Bold" Margin="32,0,0,0"/>
+
         </Grid>
 
         <Grid Grid.Row="1">
@@ -165,7 +171,7 @@
                    ScrollViewer.CanContentScroll="True"
                    ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                    ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-          
+
         </Grid>
     </Grid>
 </Window>
