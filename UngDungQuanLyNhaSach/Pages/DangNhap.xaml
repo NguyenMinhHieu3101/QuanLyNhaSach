@@ -22,7 +22,7 @@
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Width" Value="140"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Foreground" Value="#3A3C77"></Setter>
+            <!--<Setter Property="Foreground" Value="#3A3C77"></Setter>-->
         </Style>
 
         <Style TargetType="TextBox">
@@ -163,8 +163,8 @@
                              Height="35"
                              VerticalContentAlignment="Center"
                              Margin="0,5,0,0"
-                             Padding="20,0,0,0" 
-                                Template="{StaticResource TextBoxBaseControlTemplate}">
+                             Padding="20,0,0,0" >
+                                <!--Template="{StaticResource TextBoxBaseControlTemplate}">-->
                                 <TextBox.Background>
                                     <ImageBrush  ImageSource="/UngDungQuanLyNhaSach;component/Images/login.png"
                                         Stretch="None"
