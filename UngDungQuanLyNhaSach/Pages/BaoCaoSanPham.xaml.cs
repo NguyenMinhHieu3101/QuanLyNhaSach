@@ -147,14 +147,17 @@ namespace UngDungQuanLyNhaSach.Pages
 
         void loadChart()
         {
-            int thangHienTai = 5;
-            //int thangHienTai = DateTime.Now.Month;
+            //int thangHienTai = 5;
+            int thangHienTai = DateTime.Now.Month;
             int[] tongBanRa = new int[5];
             String[] label = new String[5];
 
             for (int i = 0; i < 5; i++)
             {
-                label[i] = "Tháng " + (thangHienTai - i).ToString();
+                int thang = thangHienTai - i;
+                if (thang < 1)
+                    thang += 12;
+                label[i] = "Tháng " + thang.ToString();
             }
 
             try
@@ -168,8 +171,11 @@ namespace UngDungQuanLyNhaSach.Pages
                     string readString1 = "SELECT SUM(SoLuong) AS TongBanRa FROM CHITIETHOADON, HOADON WHERE(CHITIETHOADON.MaHoaDon = HOADON.MaHoaDon) AND(MONTH(NgayLapHoaDon) = @Thang)";
                     command = new SqlCommand(readString1, connection);
 
+                    int thang = thangHienTai - i;
+                    if (thang < 1)
+                        thang += 12;
                     command.Parameters.Add("@Thang", SqlDbType.Int);
-                    command.Parameters["@Thang"].Value = thangHienTai - i;
+                    command.Parameters["@Thang"].Value = thang;
 
                     if (command.ExecuteScalar() == DBNull.Value)
                         tongBanRa[i] = 0;
@@ -191,7 +197,9 @@ namespace UngDungQuanLyNhaSach.Pages
                     },
                 };
 
-            Labels = new[] { label[4], label[3], label[2], label[1], label[0] };
+            //Labels = new[] { label[4], label[3], label[2], label[1], label[0] };
+            Labels = new[] { "Tháng 10", "Tháng 11", "Tháng 12", "Tháng 1", "Tháng 2" };
+
             Formatter = value => value.ToString("N");
         } 
 

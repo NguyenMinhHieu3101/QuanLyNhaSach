@@ -197,41 +197,61 @@ INSERT INTO CHITIETBAOCAOSANPHAM (MaChiTietBaoCao, MaSanPham, MaNVBC, TuNgay, De
 
 
 
-INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD001', 'SP001', '3');
-INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD002', 'SP002', '3');
-INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD003', 'SP003', '2');
-INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD004', 'SP004', '4');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD001', 'SP001', '20');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD002', 'SP002', '10');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD003', 'SP003', '5');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD004', 'SP004', '9');
 INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD005', 'SP005', '8');
-INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD005', 'SP006', '5');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD005', 'SP006', '10');
 INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD003', 'SP007', '7');
 INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD008', 'SP008', '5');
-INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD009', 'SP009', '4');
-INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD010', 'SP010', '3');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD009', 'SP009', '12');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD010', 'SP010', '6');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD011', 'SP017', '25');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD012', 'SP010', '10');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD013', 'SP010', '50');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD014', 'SP015', '43');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD015', 'SP010', '24');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD016', 'SP010', '16');
+INSERT INTO CHITIETHOADON (MaHoaDon, MaSanPham, SoLuong) VALUES ('HD017', 'SP010', '12');
 
-INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD001', 'NV004', 'KH001', 'KM001', '02/01/2022', '125000');
-INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD002', 'NV006', 'KH002', 'KM002', '08/01/2022', '300000');
-INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD003', 'NV007', 'KH003', 'KM009', '09/01/2022', '50000');
-INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD004', 'NV008', 'KH004', 'KM004', '10/01/2022', '50000');
-INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD005', 'NV009', 'KH005', 'KM005', '20/01/2022', '23000');
-INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD006', 'NV004', 'KH006', 'KM006', '21/01/2022', '23000');
-INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD007', 'NV006', 'KH007', 'KM006', '22/01/2022', '23000');
-INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD008', 'NV007', 'KH008', 'KM008', '23/01/2022', '20000');
-INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD009', 'NV008', 'KH009', 'KM008', '24/01/2022', '200000');
-INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD010', 'NV009', 'KH010', 'KM010', '25/01/2022', '245000');
+
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD001', 'NV004', 'KH001', 'KM001', '02/01/2023', '1250000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD002', 'NV006', 'KH002', 'KM002', '08/01/2023', '390000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD003', 'NV007', 'KH003', 'KM009', '09/01/2023', '5000000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD004', 'NV008', 'KH004', 'KM004', '10/01/2023', '500000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD005', 'NV009', 'KH005', 'KM005', '20/01/2023', '935000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD006', 'NV004', 'KH006', 'KM006', '21/01/2023', '235000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD007', 'NV006', 'KH007', 'KM006', '22/01/2023', '230000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD008', 'NV007', 'KH008', 'KM008', '23/01/2023', '2500000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD009', 'NV008', 'KH009', 'KM008', '24/01/2023', '200000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD010', 'NV009', 'KH010', 'KM010', '25/01/2023', '245000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD011', 'NV007', 'KH010', 'KM010', '15/12/2022', '24050000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD012', 'NV007', 'KH003', 'KM010', '03/12/2022', '48350000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD013', 'NV007', 'KH008', 'KM010', '21/11/2022', '15165000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD014', 'NV008', 'KH001', 'KM010', '11/11/2022', '10337000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD015', 'NV006', 'KH002', 'KM010', '5/10/2022', '50965000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD016', 'NV007', 'KH004', 'KM010', '4/02/2023', '5165000');
+INSERT INTO HOADON (MaHoaDon, MaNhanVien, MaKhachHang, MaKhuyenMai, NgayLapHoaDon, TongTienHoaDon) VALUES ('HD017', 'NV007', 'KH008', 'KM010', '6/02/2023', '66165000');
+
 
 INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN001', 'SP003', '100', '1500000');
-INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN001', 'SP004', '150', '97500000');
-INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN001', 'SP005', '200', '3400000');
-INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN001', 'SP006', '300', '48000000');
-INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN001', 'SP007', '500', '10500000');
-INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN002', 'SP008', '400', '2000000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN001', 'SP004', '125', '97500000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN001', 'SP005', '170', '3400000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN001', 'SP006', '200', '48000000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN001', 'SP007', '100', '10500000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN002', 'SP008', '200', '2000000');
 INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN002', 'SP009', '350', '1750000');
-INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN002', 'SP010', '500', '10000000');
-INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN002', 'SP011', '500', '9500000');
-INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN002', 'SP012', '500', '27500000');
-INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN003', 'SP013', '1000', '2000000');
-INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN003', 'SP014', '550', '2200000');
-INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN003', 'SP015', '450', '6750000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN002', 'SP010', '100', '10000000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN002', 'SP011', '100', '9500000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN002', 'SP012', '75', '27500000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN003', 'SP013', '400', '2000000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN003', 'SP014', '450', '2200000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN003', 'SP015', '100', '6750000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN004', 'SP016', '510', '16750000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN004', 'SP017', '350', '26750000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN005', 'SP018', '450', '26950000');
+INSERT INTO CHITIETPHIEUNHAP (MaPhieuNhap, MaSanPham, SoLuong, DonGia) VALUES ('PN005', 'SP019', '250', '14750000');
 
 INSERT INTO CHUCVU (MaChucVu, TenChucVu) VALUES ('ADMIN', 'Admin');
 INSERT INTO CHUCVU (MaChucVu, TenChucVu) VALUES ('NVK', 'Nhân viên kho');
@@ -282,10 +302,12 @@ INSERT INTO NHANVIEN (MaNhanVien, MatKhau, HoTen, MaChucVu, NgaySinh, Email, CCC
 INSERT INTO NHANVIEN (MaNhanVien, MatKhau, HoTen, MaChucVu, NgaySinh, Email, CCCD, GioiTinh, SDT, DiaChi, Luong, TrangThai) VALUES ('NV010', '123456', N'Nguyễn Lê Ngọc Văn', 'NVK', '25/01/2000', 'ngocvan@gmail.com', '312503560', N'Nam', '0334161132', N' 93, phường 5, Tuy Hòa, Phú Yên', '7000000', '1');
 INSERT INTO NHANVIEN (MaNhanVien, MatKhau, HoTen, MaChucVu, NgaySinh, Email, CCCD, GioiTinh, SDT, DiaChi, Luong, TrangThai) VALUES ('NV011', '123456', N'Mai', 'ADMIN', '22/01/2001', 'mai@gmail.com', '312503557', N'Nữ', '0334161129', N' 21, phường 1, Tân Thành, Cà Mau', '13000000', '1');
 
-INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN001', 'NV002', 'K001', N'VPP Hoàng Hà', '10/01/2022', '2500000');
-INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN002', 'NV003', 'K002', N'VPP Phượng Vũ', '25/02/2022', '3000000');
-INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN003', 'NV010', 'K003', N'VPP Hà Nội', '03/12/2021', '2400000');
-INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN004', 'NV005', 'K004', N'VPP Ánh Dương Xanh', '13/11/2021', '2120000');
+INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN001', 'NV002', 'K001', N'VPP Hoàng Hà', '10/01/2023', '25000000');
+INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN002', 'NV003', 'K002', N'VPP Phượng Vũ', '25/12/2022', '30000000');
+INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN003', 'NV010', 'K003', N'VPP Hà Nội', '03/12/2022', '24000000');
+INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN004', 'NV005', 'K004', N'VPP Ánh Dương Xanh', '13/11/2022', '21200000');
+INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN005', 'NV002', 'K004', N'VPP Ánh Dương Xanh', '10/10/2022', '27600000');
+INSERT INTO PHIEUNHAP (MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien) VALUES ('PN006', 'NV005', 'K004', N'VPP Ánh Dương Xanh', '01/02/2023', '34200000');
 
 INSERT INTO THAMSO (MaThuocTinh, TenThuocTinh, GiaTri) VALUES ('TS001', N'Hệ số lợi nhuận sách', '1.5');
 INSERT INTO THAMSO (MaThuocTinh, TenThuocTinh, GiaTri) VALUES ('TS002', N'Hệ số lợi nhuận văn phòng phẩm', '1.8');

@@ -106,7 +106,7 @@ namespace UngDungQuanLyNhaSach.Pages
                     else
                         tongTienNhap = (double)command.ExecuteScalar();
 
-                    chiTraList.Add(new ChiTra(1, "Tiền nhập sách", string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(tongChi.ToString()))));
+                    chiTraList.Add(new ChiTra(1, "Tiền nhập sách", string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", double.Parse(tongTienNhap.ToString()))));
 
                     //string readString3 = "SELECT GiaTri FROM THAMSO WHERE TenThuocTinh = N'Thuế'";
                     //command = new SqlCommand(readString3, connection);
@@ -211,7 +211,10 @@ namespace UngDungQuanLyNhaSach.Pages
 
             for (int i = 0; i < 5; i++)
             {
-                label[i] = "Tháng " + (thangHienTai - i).ToString();
+                int thang = thangHienTai - i;
+                if (thang < 1)
+                    thang += 12;
+                label[i] = "Tháng " + thang.ToString();
             }
 
             try
@@ -225,8 +228,11 @@ namespace UngDungQuanLyNhaSach.Pages
                     string readString1 = "SELECT SUM(TongTienHoaDon) AS TongThu FROM HOADON WHERE MONTH(NgayLapHoaDon) = @Thang";
                     command = new SqlCommand(readString1, connection);
 
+                    int thang = thangHienTai - i;
+                    if (thang < 1)
+                        thang += 12;
                     command.Parameters.Add("@Thang", SqlDbType.Int);
-                    command.Parameters["@Thang"].Value = thangHienTai - i;
+                    command.Parameters["@Thang"].Value = thang;
 
                     if (command.ExecuteScalar() == DBNull.Value)
                         tongThu[i] = 0;
@@ -240,8 +246,11 @@ namespace UngDungQuanLyNhaSach.Pages
                     string readString2 = "SELECT SUM(TongTien) AS TongChi FROM PHIEUNHAP WHERE MONTH(NgayNhap) = @Thang";
                     command = new SqlCommand(readString2, connection);
 
+                    int thang = thangHienTai - i;
+                    if (thang < 1)
+                        thang += 12;
                     command.Parameters.Add("@Thang", SqlDbType.Int);
-                    command.Parameters["@Thang"].Value = thangHienTai - i;
+                    command.Parameters["@Thang"].Value = thang;
 
                     if (command.ExecuteScalar() == DBNull.Value)
                         tongChi[i] = 0;
@@ -281,6 +290,8 @@ namespace UngDungQuanLyNhaSach.Pages
                 };
 
             Labels = new[] { label[4], label[3], label[2], label[1], label[0] };
+            //Labels = new[] { "Tháng 10", "Tháng 11", "Tháng 12", "Tháng 1", "Tháng 2" };
+
             Formatter = value => value.ToString("N");
         }
     }
