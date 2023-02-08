@@ -340,7 +340,7 @@ namespace UngDungQuanLyNhaSach.Pages
 
 
                 string insertString = "INSERT INTO PHIEUNHAP(MaPhieuNhap, MaNhanVien, MaKho, NhaCungCap, NgayNhap, TongTien)"
-                    + "VALUES(@MaPhieuNhap, @MaNhanVien, @MaKho, @NhaCungCap, @NgayNhap, @TongTien)";
+                    + " VALUES(@MaPhieuNhap, @MaNhanVien, @MaKho, @NhaCungCap, @NgayNhap, @TongTien)";
                 SqlCommand command = new SqlCommand(insertString, connection);
 
                 command.Parameters.Add("@MaPhieuNhap", SqlDbType.VarChar);
@@ -359,7 +359,7 @@ namespace UngDungQuanLyNhaSach.Pages
                 command.Parameters["@NgayNhap"].Value = ngayNhap.SelectedDate;
 
                 command.Parameters.Add("@TongTien", SqlDbType.Money);
-                command.Parameters["@TongTien"].Value = tongTien.Text;
+                command.Parameters["@TongTien"].Value = double.Parse(tongTien.Text);
 
 
                 command.ExecuteNonQuery();
@@ -399,81 +399,86 @@ namespace UngDungQuanLyNhaSach.Pages
                     catch (Exception e1)
                     {
                         //MessageBox.Show("db error");
-                        MessageBox.Show(e1.Message);
-
+                        //MessageBox.Show(e1.Message);
                     }
                 }
 
 
                 foreach (SanPham sp in sanPhamTrongPhieuNhap)
                 {
-
-                    connection.Open();
-                    readString = "select Count(*) from SANPHAM";
-                    commandReader = new SqlCommand(readString, connection);
-                    Int32 countSP = (Int32)commandReader.ExecuteScalar() + 1;
-
-                    
-                    insertString = "INSERT INTO SANPHAM(MaSanPham, TenSanPham, TacGia, TheLoai, NXB, GiaNhap, NamXB, MaKho, TrangThai)"
-                        + "VALUES(@MaSanPham, @TenSanPham, @TacGia, @TheLoai, @NXB, @GiaNhap, @NamXB, @MaKho, @TrangThai)";
-                    command = new SqlCommand(insertString, connection);
-
-                    command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
-                    command.Parameters["@MaSanPham"].Value = "SP" + countSP.ToString("000");
-
-                    command.Parameters.Add("@TenSanPham", SqlDbType.NVarChar);
-                    command.Parameters["@TenSanPham"].Value = sp.tenSanPham;
-
-                    command.Parameters.Add("@TacGia", SqlDbType.NVarChar);
-                    command.Parameters["@TacGia"].Value = sp.tacGia;
-
-                    command.Parameters.Add("@TheLoai", SqlDbType.NVarChar);
-                    command.Parameters["@TheLoai"].Value = sp.theLoai;
-
-                    command.Parameters.Add("@NXB", SqlDbType.NVarChar);
-                    command.Parameters["@NXB"].Value = sp.nXB;
-
-                    command.Parameters.Add("@GiaNhap", SqlDbType.Money);
-                    command.Parameters["@GiaNhap"].Value = sp.giaNhap;
-
-                    command.Parameters.Add("@NamXB", SqlDbType.Int);
-                    command.Parameters["@NamXB"].Value = sp.namXB;
-
-                    command.Parameters.Add("@MaKho", SqlDbType.NVarChar);
-                    command.Parameters["@MaKho"].Value = "K001";
-
-                    command.Parameters.Add("@TrangThai", SqlDbType.NVarChar);
-                    command.Parameters["@TrangThai"].Value = "1";
-
-                    command.ExecuteNonQuery();
+                    try
+                    {
+                        connection.Open();
+                        readString = "select Count(*) from SANPHAM";
+                        commandReader = new SqlCommand(readString, connection);
+                        Int32 countSP = (Int32)commandReader.ExecuteScalar() + 1;
 
 
+                        insertString = "INSERT INTO SANPHAM(MaSanPham, TenSanPham, TacGia, TheLoai, NXB, GiaNhap, NamXB, MaKho, TrangThai)"
+                            + " VALUES(@MaSanPham, @TenSanPham, @TacGia, @TheLoai, @NXB, @GiaNhap, @NamXB, @MaKho, @TrangThai)";
+                        command = new SqlCommand(insertString, connection);
+
+                        command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
+                        command.Parameters["@MaSanPham"].Value = "SP" + countSP.ToString("000");
+
+                        command.Parameters.Add("@TenSanPham", SqlDbType.NVarChar);
+                        command.Parameters["@TenSanPham"].Value = sp.tenSanPham;
+
+                        command.Parameters.Add("@TacGia", SqlDbType.NVarChar);
+                        command.Parameters["@TacGia"].Value = sp.tacGia;
+
+                        command.Parameters.Add("@TheLoai", SqlDbType.NVarChar);
+                        command.Parameters["@TheLoai"].Value = sp.theLoai;
+
+                        command.Parameters.Add("@NXB", SqlDbType.NVarChar);
+                        command.Parameters["@NXB"].Value = sp.nXB;
+
+                        command.Parameters.Add("@GiaNhap", SqlDbType.Money);
+                        command.Parameters["@GiaNhap"].Value = sp.giaNhap;
+
+                        command.Parameters.Add("@NamXB", SqlDbType.Int);
+                        command.Parameters["@NamXB"].Value = sp.namXB;
+
+                        command.Parameters.Add("@MaKho", SqlDbType.NVarChar);
+                        command.Parameters["@MaKho"].Value = "K001";
+
+                        command.Parameters.Add("@TrangThai", SqlDbType.NVarChar);
+                        command.Parameters["@TrangThai"].Value = "1";
+
+                        command.ExecuteNonQuery();
 
 
-                    insertString = "INSERT INTO CHITIETPHIEUNHAP(MaPhieuNhap, MaSanPham, SoLuong,NgayNhap, DonGia)"
-                        + "VALUES(@MaPhieuNhap, @MaSanPham, @SoLuong,@NgayNhap, @DonGia)";
-                    command = new SqlCommand(insertString, connection);
 
-                    command.Parameters.Add("@MaPhieuNhap", SqlDbType.VarChar);
-                    command.Parameters["@MaPhieuNhap"].Value = "PN" + countPN.ToString("000");
 
-                    command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
-                    command.Parameters["@MaSanPham"].Value = "SP" + countSP.ToString("000");
+                        insertString = "INSERT INTO CHITIETPHIEUNHAP(MaPhieuNhap, MaSanPham, SoLuong,NgayNhap, DonGia)"
+                            + " VALUES(@MaPhieuNhap, @MaSanPham, @SoLuong,@NgayNhap, @DonGia)";
+                        command = new SqlCommand(insertString, connection);
 
-                    command.Parameters.Add("@SoLuong", SqlDbType.Int);
-                    command.Parameters["@SoLuong"].Value = sp.soLuong;
+                        command.Parameters.Add("@MaPhieuNhap", SqlDbType.VarChar);
+                        command.Parameters["@MaPhieuNhap"].Value = "PN" + countPN.ToString("000");
 
-                    command.Parameters.Add("@NgayNhap", SqlDbType.SmallDateTime);
-                    command.Parameters["@NgayNhap"].Value = DateTime.Today;
+                        command.Parameters.Add("@MaSanPham", SqlDbType.VarChar);
+                        command.Parameters["@MaSanPham"].Value = "SP" + countSP.ToString("000");
 
-                    command.Parameters.Add("@DonGia", SqlDbType.Money);
-                    command.Parameters["@DonGia"].Value = sp.giaNhap;
+                        command.Parameters.Add("@SoLuong", SqlDbType.Int);
+                        command.Parameters["@SoLuong"].Value = sp.soLuong;
 
-                    command.ExecuteNonQuery();
-                    updateSoLuong(sp.maSanPham, sp.soLuong);
+                        command.Parameters.Add("@NgayNhap", SqlDbType.SmallDateTime);
+                        command.Parameters["@NgayNhap"].Value = DateTime.Today;
 
-                    connection.Close();
-                    countSP++;
+                        command.Parameters.Add("@DonGia", SqlDbType.Money);
+                        command.Parameters["@DonGia"].Value = sp.giaNhap;
+
+                        command.ExecuteNonQuery();
+                        updateSoLuong(sp.maSanPham, sp.soLuong);
+
+                        connection.Close();
+                        countSP++;
+                    }
+                    catch (Exception e2)
+                    {
+                        MessageBox.Show("lỗi");
+                    }
                 }
 
 
@@ -836,7 +841,7 @@ namespace UngDungQuanLyNhaSach.Pages
             if (double.TryParse(value, out ul))
             {
                 tongTien.TextChanged -= tongTien_TextChanged;
-                tongTien.Text = string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", ul);
+                //tongTien.Text = string.Format(CultureInfo.CreateSpecificCulture("vi-VN"), "{0:C0}", ul);
                 tongTien.TextChanged += tongTien_TextChanged;
                 tongTien.Select(tongTien.Text.Length, 0);
             }
